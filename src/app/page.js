@@ -138,20 +138,20 @@ export default function Home() {
           </div>
           
           <h1 className={styles.title}>
-            AURUM: The AI That Pays You <span className={styles.highlight}>While You Sleep</span>
+            Stop Donating Your Wealth to <span className={styles.highlight}>Legacy Banks.</span>
           </h1>
           
+          <h2 className={styles.heroSubtitle}>
+            Let AURUM’s AI Make You Money While You Sleep.
+          </h2>
+          
           <p className={styles.subtitle}>
-            Stop watching your money collect dust in a bank account while inflation eats it alive. Let AURUM’s AI bots hunt hidden market gaps 24/7 and deposit real passive income straight into your dashboard — completely on autopilot.
-          </p>
-
-          <p className={styles.socialProofSmall}>
-            Join 18,000+ everyday people already earning monthly yield from AI-powered crypto finance.
+            Join 18,000+ everyday people earning real passive income from AI-powered crypto finance — 24/7, completely on autopilot.
           </p>
 
           <div className={styles.ctaContainer}>
             <button className={styles.primaryCta} onClick={() => setIsModalOpen(true)}>Claim My Free AI Breakdown →</button>
-            <div className={styles.ctaMicroProof}>✓ Only 15 spots left in this cohort</div>
+            <div className={styles.ctaMicroProof}>✓ Only 15 slots remaining for this cohort</div>
           </div>
         </div>
       </section>
@@ -221,7 +221,7 @@ export default function Home() {
       <section className={styles.ecosystemSection}>
         <div className={styles.sectionHeader}>
           <h2 className={styles.sectionTitle}>Everything You Need to Earn Passive Income in One AI-Powered Ecosystem</h2>
-          <p className={styles.sectionSub}>Global Infrastructure. Institutional Security. Personal Profit.</p>
+          <p className={styles.sectionSub}>Global Infrastructure. Institutional Security. Individual Freedom.</p>
         </div>
         <div className={styles.ecosystemGrid}>
 
@@ -229,23 +229,23 @@ export default function Home() {
             <div className={styles.ecoImageWrapper}>
               <img src="/images/aurum_subscription_promo.png" alt="Aurum Subscription" className={styles.ecoImage} />
             </div>
-            <h3>AURUM SUBSCRIPTION</h3>
-            <p><strong>$19.99/year unlocks the entire money-making machine.</strong> Get full access to the bots, premium cards, NeoBank, community, and our built-in marketing plan so you can earn even more by inviting others.</p>
+            <h3>AURUM Subscription</h3>
+            <p><strong>Unlock the entire money-making machine for just $19.99/year.</strong> Full access to the bots, premium cards, NeoBank, community, and our built-in marketing plan so you can earn even more by inviting others.</p>
           </div>
 
           <div className={styles.ecoCard}>
             <div className={styles.ecoImageWrapper}>
               <img src="/images/aurum_card_promo.png" alt="Aurum Cards" className={styles.ecoImage} />
             </div>
-            <h3>AURUM CARDS</h3>
-            <p><strong>Spend your crypto like normal money — anywhere in the world.</strong> Four premium tiers from instant-use Nova to the elite Infinity Card. Turn your AI earnings into everyday spending power, online or offline.</p>
+            <h3>Aurum Cards</h3>
+            <p><strong>Spend your AI earnings like normal money — anywhere in the world.</strong> Four premium tiers from instant-use Nova to the elite Infinity Card. Turn your passive yield into everyday spending power, online or offline.</p>
           </div>
 
           <div className={styles.ecoCard}>
             <div className={styles.ecoImageWrapper}>
               <img src="/images/aurum_neobank_promo.png" alt="Aurum NeoBank" className={styles.ecoImage} />
             </div>
-            <h3>AURUM NEOBANK</h3>
+            <h3>Aurum NeoBank</h3>
             <p><strong>Your all-in-one crypto + fiat bank account.</strong> Secure, private Web3 banking in a single app. Manage everything in one place with zero compromise.</p>
           </div>
 
@@ -253,15 +253,15 @@ export default function Home() {
             <div className={styles.ecoImageWrapper}>
               <img src="/images/aurum_zeus_bot_promo.png" alt="Aurum Zeus Bot" className={styles.ecoImage} />
             </div>
-            <h3>ZEUS AI BOT</h3>
-            <p><strong>Mid-term yield optimizer that works while you live your life.</strong> Institutional-grade AI that spots opportunities and automatically adjusts strategies — no charts, no stress, just steady gains.</p>
+            <h3>Zeus AI Bot</h3>
+            <p><strong>Mid-term yield optimizer that works while you live your life.</strong> Institutional-grade AI that spots opportunities and automatically adjusts strategies — no charts, no stress, just steady passive gains.</p>
           </div>
 
           <div className={styles.ecoCard}>
             <div className={styles.ecoImageWrapper}>
               <img src="/images/aurum_exai_bot_promo.png" alt="Aurum EX-AI Bot" className={styles.ecoImage} />
             </div>
-            <h3>EX-AI DELTA BOT</h3>
+            <h3>EX-AI Delta Bot</h3>
             <p><strong>The 24/7 autonomous trader that does all the work for you.</strong> Fully autonomous gap-capturing bot. It scans, executes, and compounds profits 24/7 with zero effort on your end.</p>
           </div>
 
@@ -275,16 +275,16 @@ export default function Home() {
           <div className={styles.problemCard}>
             <div className={styles.problemEmoji}>😤</div>
             <p className={styles.problemQuote}>“My bank pays me 0.01% while they make billions with my money.”</p>
-            <p className={styles.problemDesc}>You grind for every dollar, but traditional banks use it to print money for themselves and throw you pennies.</p>
+            <p className={styles.problemDesc}>You grind side hustles and side gigs, but traditional banks use your money to print profits for themselves and throw you pennies.</p>
           </div>
           <div className={styles.problemCard}>
             <div className={styles.problemEmoji}>🤯</div>
             <p className={styles.problemQuote}>“Every ‘AI bot’ I tried felt like a 2017 crypto scam.”</p>
-            <p className={styles.problemDesc}>The internet is full of hype. You want something legitimate, institutional-grade, and actually built for real passive income.</p>
+            <p className={styles.problemDesc}>The internet is flooded with hype. You want something legitimate, institutional-grade, and actually built for real passive income.</p>
           </div>
           <div className={styles.problemCard}>
             <div className={styles.problemEmoji}>😰</div>
-            <p className={styles.problemQuote}>“Inflation is destroying my savings faster than I can hustle side gigs.”</p>
+            <p className={styles.problemQuote}>“Inflation is destroying my savings faster than I can hustle.”</p>
             <p className={styles.problemDesc}>Cash is no longer safe — it’s a guaranteed loss. You need an AI system that outpaces inflation on autopilot.</p>
           </div>
         </div>
@@ -297,7 +297,7 @@ export default function Home() {
           <div className={styles.stepCard}>
             <div className={styles.stepNumber}>01</div>
             <h3>Identify the Gap</h3>
-            <p>Our AI scans 400+ data points every second to find tiny price imbalances that normal people (and most traders) never see.</p>
+            <p>Our AI scans 400+ data points every second to find tiny price imbalances normal people (and most traders) never see.</p>
           </div>
           <div className={styles.stepCard}>
             <div className={styles.stepNumber}>02</div>
@@ -343,7 +343,7 @@ export default function Home() {
             <p className={styles.testimonialAuthor}>— Marcus T., Former Portfolio Manager</p>
           </div>
           <div className={styles.testimonialCard}>
-            <p className={styles.testimonialText}>“The first yield hit my dashboard in under 24 hours. It’s not hype — it’s a real process that just keeps scaling.”</p>
+            <p className={styles.testimonialText}>“The first yield hit my dashboard in under 24 hours. It’s not hype — it’s a real process that just keeps scaling while I focus on my own business.”</p>
             <p className={styles.testimonialAuthor}>— Sarah L., Tech Consultant & Side-Hustler</p>
           </div>
           <div className={styles.testimonialCard}>
@@ -353,14 +353,32 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Final CTA Override */}
+      {/* FAQ Section */}
+      <section className={styles.faqSection}>
+        <h2 className={styles.sectionTitle}>Handling the Hard Questions</h2>
+        <div className={styles.faqGrid}>
+          <div className={styles.faqItem}>
+            <h4 className={styles.faqQuestion}>Is my money locked up?</h4>
+            <p className={styles.faqAnswer}>Absolutely not. Your funds stay 100% liquid. Withdraw or spend anytime with no penalties.</p>
+          </div>
+          <div className={styles.faqItem}>
+            <h4 className={styles.faqQuestion}>How does the AI actually make money?</h4>
+            <p className={styles.faqAnswer}>It finds “Liquidity Gaps” — tiny temporary imbalances in the market — and fills them faster than anyone else, capturing the difference as profit that gets paid to you.</p>
+          </div>
+          <div className={styles.faqItem}>
+            <h4 className={styles.faqQuestion}>Is it really free to join?</h4>
+            <p className={styles.faqAnswer}>Yes — 100% free to start. You only pay the tiny $19.99/year subscription once you’re ready to unlock everything. We only make money when you do (small success fee on the yield we generate).</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA Section */}
       <section className={styles.finalCta}>
         <h2 className={styles.title}>Ready to Turn On Your Personal AI Money Machine?</h2>
-        <p className={styles.finalCtaSub}>Once they’re gone, the next opening could be weeks away.</p>
-        
-        <div className={styles.urgencyBox}>
-          <p>⚠️ <strong>Limited Opening:</strong> Only 15 spots left in this cohort.</p>
-        </div>
+        <p className={styles.finalCtaSub}>
+          ⚠️ <strong>Limited Opening:</strong> Maintaining our yield ratio requires strict partner limits. 
+          <strong>Only 15 slots remaining for this cohort.</strong>
+        </p>
 
         <button 
           className={styles.primaryCta} 
@@ -371,9 +389,10 @@ export default function Home() {
         </button>
 
         <div className={styles.ctaBadges}>
-          <span>✓ No credit card needed</span>
+          <span>✓ 100% Free Access</span>
+          <span>✓ No Credit Card Required</span>
           <span>✓ Starts working in under 24 hours</span>
-          <span>✓ 100% liquid — withdraw or spend anytime</span>
+          <span>✓ 100% liquid — withdraw anytime!</span>
         </div>
       </section>
 
