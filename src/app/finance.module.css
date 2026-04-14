@@ -254,7 +254,7 @@
   border: none;
 }
 
-/* Calculator Styles */
+/* Testimonials Styles */
 .testimonialsSection {
   padding: 100px 24px;
   text-align: center;
@@ -267,7 +267,6 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 32px;
   margin-top: 56px;
-  justify-items: center;
 }
 
 .testimonialCard {
@@ -276,8 +275,26 @@
   border-radius: 24px;
   border: 1px solid var(--border-light);
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
+.testimonialText {
+  font-size: 18px;
+  line-height: 1.6;
+  margin-bottom: 24px;
+  font-style: italic;
+}
+
+.testimonialAuthor {
+  color: var(--blue-primary);
+  font-weight: 700;
+  font-size: 14px;
+}
+
+/* Calculator Styles */
 .calculatorSection {
   padding: 100px 24px;
   display: flex;
@@ -371,7 +388,7 @@
   text-align: center;
 }
 
-/* Ecosystem Grid */
+/* How It Works Styles */
 .howItWorks {
   padding: 100px 24px;
   text-align: center;
@@ -384,13 +401,54 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 32px;
   margin-top: 56px;
-  justify-items: center;
 }
 
 .stepCard {
   text-align: center;
 }
 
+.stepNumber {
+  font-size: 48px;
+  font-weight: 900;
+  color: rgba(255,255,255,0.1);
+  margin-bottom: 16px;
+}
+
+/* Stats Section Styles */
+.statsSection {
+  padding: 80px 24px;
+  background: rgba(255,255,255,0.02);
+  text-align: center;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.statItem {
+  text-align: center;
+}
+
+.statValue {
+  font-size: 40px;
+  font-weight: 900;
+  color: var(--blue-primary);
+  margin-bottom: 8px;
+}
+
+.statLabel {
+  font-size: 14px;
+  color: var(--text-dim);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Ecosystem Grid */
 .ecosystemSection {
   padding: 100px 24px;
 }
@@ -407,10 +465,22 @@
   .ecosystemGrid {
     grid-template-columns: repeat(2, 1fr);
   }
+  .statsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media (max-width: 600px) {
   .ecosystemGrid {
+    grid-template-columns: 1fr;
+  }
+  .statsGrid {
+    grid-template-columns: 1fr;
+  }
+  .stepGrid {
+    grid-template-columns: 1fr;
+  }
+  .testimonialGrid {
     grid-template-columns: 1fr;
   }
 }
@@ -578,7 +648,7 @@
   border: 1px solid rgba(255,0,0,0.1);
   padding: 40px;
   border-radius: 24px;
-  text-align: left;
+  text-align: center;
 }
 
 .problemEmoji {
