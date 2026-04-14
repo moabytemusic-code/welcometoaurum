@@ -670,16 +670,50 @@
   color: var(--text-dim);
 }
 
+.finalCta {
+  padding: 120px 24px;
+  text-align: center;
+  background: linear-gradient(to top, rgba(45, 140, 240, 0.05), transparent);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .finalCta h2 {
   font-size: 48px;
+  font-weight: 900;
   max-width: 800px;
   margin: 0 auto 16px;
+  line-height: 1.1;
 }
 
 .finalCtaSub {
   font-size: 20px;
   color: var(--text-dim);
   margin-bottom: 32px;
+  max-width: 600px;
+}
+
+.urgencyBox {
+  margin-bottom: 8px;
+  font-size: 16px;
+}
+
+.ctaBadges {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 24px;
+  color: var(--text-dim);
+  font-size: 14px;
+  font-weight: 500;
+  flex-wrap: wrap;
+}
+
+.ctaBadges span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .disclaimer {
