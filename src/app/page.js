@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import styles from './finance-breakdown/finance.module.css';
+import styles from './finance.module.css';
 
 export default function Home() {
   const [deposit, setDeposit] = useState(5000);

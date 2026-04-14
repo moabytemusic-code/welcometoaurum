@@ -1,0 +1,532 @@
+:root {
+  --blue-primary: #2d8cf0;
+  --panel-bg: rgba(255, 255, 255, 0.03);
+  --border-light: rgba(255, 255, 255, 0.1);
+  --text-dim: rgba(255, 255, 255, 0.6);
+}
+
+.main {
+  background: #050505;
+  color: white;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  font-family: var(--font-inter), sans-serif;
+}
+
+/* Hero Styles */
+.hero {
+  padding: 120px 24px 80px;
+  text-align: center;
+  position: relative;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.heroGlow {
+  position: absolute;
+  top: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(45, 140, 240, 0.1) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.topNav {
+  margin-bottom: 40px;
+  display: flex;
+  justify-content: center;
+}
+
+.liveBadge {
+  background: rgba(0, 255, 136, 0.05);
+  border: 1px solid rgba(0, 255, 136, 0.2);
+  padding: 6px 16px;
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #00ff88;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  letter-spacing: 1px;
+}
+
+.liveDot {
+  width: 8px;
+  height: 8px;
+  background: #00ff88;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #00ff88;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(0.95); opacity: 0.8; }
+  70% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(0.95); opacity: 0.8; }
+}
+
+.badge {
+  background: var(--panel-bg);
+  border: 1px solid var(--border-light);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  margin-bottom: 24px;
+  display: inline-block;
+  color: var(--text-dim);
+}
+
+.title {
+  font-size: 64px;
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -2px;
+  margin-bottom: 24px;
+}
+
+.highlight {
+  color: var(--blue-primary);
+  text-shadow: 0 0 40px rgba(45, 140, 240, 0.3);
+}
+
+.subtitle {
+  font-size: 20px;
+  color: var(--text-dim);
+  max-width: 700px;
+  margin: 0 auto 48px;
+  line-height: 1.6;
+}
+
+.ctaContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.primaryCta {
+  background: var(--blue-primary);
+  color: white;
+  border: none;
+  padding: 20px 48px;
+  font-size: 18px;
+  font-weight: 800;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 8px 32px rgba(45, 140, 240, 0.4);
+}
+
+.primaryCta:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 48px rgba(45, 140, 240, 0.5);
+  background: #3b9bff;
+}
+
+.ctaMicroProof {
+  font-size: 13px;
+  color: #00ff88;
+  font-weight: 600;
+}
+
+/* Trust Section */
+.trustSection {
+  padding: 60px 24px;
+  background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.02), transparent);
+}
+
+.trustContent {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.forbesBadge {
+  font-weight: 900;
+  letter-spacing: 4px;
+  color: var(--text-dim);
+  margin-bottom: 24px;
+  font-size: 14px;
+}
+
+.trustQuote {
+  font-size: 24px;
+  font-weight: 500;
+  font-style: italic;
+  line-height: 1.5;
+  color: white;
+  margin-bottom: 20px;
+}
+
+.trustAuthor {
+  color: var(--blue-primary);
+  font-weight: 700;
+  font-size: 14px;
+}
+
+/* Video Section */
+.videoSection {
+  padding: 100px 24px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.sectionHeader {
+  text-align: center;
+  margin-bottom: 54px;
+}
+
+.sectionTitle {
+  font-size: 40px;
+  font-weight: 800;
+  margin-bottom: 16px;
+}
+
+.sectionSub {
+  color: var(--text-dim);
+  font-size: 18px;
+}
+
+.videoWrapper {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 40px 100px rgba(0,0,0,0.8), 0 0 50px rgba(45, 140, 240, 0.1);
+  border: 1px solid var(--border-light);
+}
+
+.videoFrame {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* Calculator Styles */
+.calculatorSection {
+  padding: 100px 24px;
+  display: flex;
+  justify-content: center;
+}
+
+.calculatorCard {
+  background: var(--panel-bg);
+  border: 1px solid var(--border-light);
+  padding: 48px;
+  border-radius: 32px;
+  max-width: 800px;
+  width: 100%;
+  backdrop-filter: blur(20px);
+}
+
+.calculatorTitle {
+  font-size: 28px;
+  font-weight: 800;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.calcGrid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 64px;
+  align-items: center;
+}
+
+.inputGroup label {
+  display: block;
+  font-size: 14px;
+  color: var(--text-dim);
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+
+.inputValue {
+  font-size: 32px;
+  font-weight: 900;
+  margin-top: 16px;
+  color: var(--blue-primary);
+}
+
+.rangeInput {
+  width: 100%;
+  height: 6px;
+  background: #333;
+  border-radius: 5px;
+  appearance: none;
+}
+
+.rangeInput::-webkit-slider-thumb {
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  background: var(--blue-primary);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.resultItem {
+  margin-bottom: 32px;
+}
+
+.resultLabel {
+  display: block;
+  font-size: 13px;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.resultValue {
+  font-size: 32px;
+  font-weight: 800;
+}
+
+.resultValueHighlight {
+  font-size: 44px;
+  font-weight: 900;
+  color: #00ff88;
+}
+
+.calcNote {
+  margin-top: 40px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.3);
+  text-align: center;
+}
+
+/* Ecosystem Grid */
+.ecosystemSection {
+  padding: 100px 24px;
+}
+
+.ecosystemGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+@media (max-width: 900px) {
+  .ecosystemGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .ecosystemGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.ecoCard {
+  background: linear-gradient(160deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+  border-radius: 24px;
+  border: 1px solid var(--border-light);
+  overflow: hidden;
+  transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), border-color 0.3s, box-shadow 0.4s;
+  display: flex;
+  flex-direction: column;
+}
+
+.ecoCard:hover {
+  transform: translateY(-10px);
+  border-color: rgba(45, 140, 240, 0.4);
+  box-shadow: 0 30px 60px rgba(0,0,0,0.5), 0 0 60px rgba(45, 140, 240, 0.08);
+}
+
+.ecoImageWrapper {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  overflow: hidden;
+  background: #0a0a0a;
+}
+
+.ecoImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  mix-blend-mode: luminosity;
+  filter: brightness(0.85) contrast(1.1) saturate(0.9);
+  transition: transform 0.5s;
+}
+
+.ecoCard:hover .ecoImage {
+  transform: scale(1.05);
+}
+
+.ecoImageWrapper::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 30%, rgba(5,5,5,0.85) 100%);
+  pointer-events: none;
+}
+
+.ecoCard h3 {
+  font-size: 19px;
+  font-weight: 800;
+  margin: 20px 24px 10px;
+  letter-spacing: -0.3px;
+}
+
+.ecoCard p {
+  color: var(--text-dim);
+  line-height: 1.6;
+  font-size: 14px;
+  margin: 0 24px 24px;
+  flex-grow: 1;
+}
+
+/* Modal Styles */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.9);
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modalContent {
+  background: #0a0a0a;
+  border: 1px solid var(--border-light);
+  padding: 60px;
+  border-radius: 32px;
+  max-width: 500px;
+  width: 100%;
+  position: relative;
+  text-align: center;
+}
+
+.modalTitle {
+  font-size: 32px;
+  font-weight: 900;
+  margin-bottom: 12px;
+}
+
+.modalSub {
+  color: var(--text-dim);
+  margin-bottom: 40px;
+}
+
+.modalForm {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.modalInput {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border-light);
+  padding: 16px;
+  border-radius: 12px;
+  color: white;
+  font-size: 16px;
+}
+
+.modalInput:focus {
+  outline: none;
+  border-color: var(--blue-primary);
+}
+
+.closeModal {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 32px;
+  cursor: pointer;
+  opacity: 0.5;
+}
+
+.processingState {
+  padding: 40px 0;
+}
+
+.statusText {
+  margin-top: 24px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--blue-primary);
+}
+
+/* Problem/Solution Sections */
+.problemSection {
+  padding: 100px 24px;
+  text-align: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.problemGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  margin-top: 56px;
+}
+
+.problemCard {
+  background: rgba(255,0,0,0.03);
+  border: 1px solid rgba(255,0,0,0.1);
+  padding: 40px;
+  border-radius: 24px;
+  text-align: left;
+}
+
+.problemEmoji {
+  font-size: 40px;
+  margin-bottom: 24px;
+}
+
+.problemQuote {
+  font-weight: 800;
+  font-style: italic;
+  margin-bottom: 16px;
+}
+
+/* Utility classes and Footer */
+.footer {
+  padding: 80px 24px;
+  border-top: 1px solid var(--border-light);
+  text-align: center;
+  color: var(--text-dim);
+}
+
+.footerLinks {
+  margin-top: 24px;
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+}
+
+.footerLinks a:hover {
+  color: var(--blue-primary);
+}
+
+@media (max-width: 768px) {
+  .title { font-size: 42px; }
+  .calcGrid { grid-template-columns: 1fr; }
+  .problemGrid { grid-template-columns: 1fr; }
+}
