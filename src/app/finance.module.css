@@ -16,9 +16,44 @@
 
 /* Hero Styles */
 .hero {
-  padding: 120px 24px 80px;
-  text-align: center;
   position: relative;
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 24px;
+  text-align: center;
+  overflow: hidden;
+}
+
+.videoBg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.bgVideo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.3;
+  filter: grayscale(1) brightness(0.5);
+}
+
+.videoOverlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, transparent 0%, #050505 100%),
+              linear-gradient(to bottom, transparent 60%, #050505 100%);
+  z-index: 2;
+}
+
+.heroContent {
+  position: relative;
+  z-index: 3;
   max-width: 1000px;
   margin: 0 auto;
 }
@@ -32,6 +67,15 @@
   height: 400px;
   background: radial-gradient(circle, rgba(45, 140, 240, 0.1) 0%, transparent 70%);
   pointer-events: none;
+  z-index: 2;
+}
+
+.socialProofSmall {
+  font-size: 14px;
+  color: var(--text-dim);
+  margin-bottom: 32px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
 }
 
 .topNav {
@@ -512,6 +556,31 @@
   border-top: 1px solid var(--border-light);
   text-align: center;
   color: var(--text-dim);
+}
+
+.finalCta h2 {
+  font-size: 48px;
+  max-width: 800px;
+  margin: 0 auto 16px;
+}
+
+.finalCtaSub {
+  font-size: 20px;
+  color: var(--text-dim);
+  margin-bottom: 32px;
+}
+
+.disclaimer {
+  max-width: 600px;
+  margin: 0 auto 32px;
+  font-size: 11px;
+  line-height: 1.6;
+  opacity: 0.5;
+  text-align: center;
+}
+
+.copyright {
+  font-size: 14px;
 }
 
 .footerLinks {
