@@ -255,6 +255,29 @@
 }
 
 /* Calculator Styles */
+.testimonialsSection {
+  padding: 100px 24px;
+  text-align: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.testimonialGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  margin-top: 56px;
+  justify-items: center;
+}
+
+.testimonialCard {
+  background: var(--panel-bg);
+  padding: 40px;
+  border-radius: 24px;
+  border: 1px solid var(--border-light);
+  text-align: center;
+}
+
 .calculatorSection {
   padding: 100px 24px;
   display: flex;
@@ -349,6 +372,25 @@
 }
 
 /* Ecosystem Grid */
+.howItWorks {
+  padding: 100px 24px;
+  text-align: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.stepGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  margin-top: 56px;
+  justify-items: center;
+}
+
+.stepCard {
+  text-align: center;
+}
+
 .ecosystemSection {
   padding: 100px 24px;
 }
