@@ -149,7 +149,7 @@ export default function Home() {
             Join 18,000+ everyday people earning real passive income from AI-powered crypto finance — 24/7, completely on autopilot.
           </p>
           <div className={styles.calculatorCard} style={{ margin: '40px auto 48px auto', textAlign: 'left' }}>
-            <h2 className={styles.calculatorTitle} style={{ textAlign: 'center' }}>See Your Artificial Wealth Projection</h2>
+            <h2 className={styles.calculatorTitle} style={{ textAlign: 'center' }}>See Your Aurum Wealth Projection</h2>
             <div className={styles.calcGrid}>
               <div className={styles.inputGroup}>
                 <label>Initial Liquidity Bridge (Deposit) <span style={{float: 'right', color: '#2d8cf0', fontWeight: 'bold'}}>${parseInt(deposit).toLocaleString()}</span></label>
@@ -165,13 +165,15 @@ export default function Home() {
                 />
               </div>
               <div className={styles.resultsGroup} style={{ textAlign: 'center' }}>
-                <div className={styles.resultItem}>
-                  <span className={styles.resultLabel}>Est. Monthly Yield</span>
-                  <span className={styles.resultValue}>+${Math.round(yieldValue).toLocaleString()}</span>
-                </div>
-                <div className={styles.resultItem}>
-                  <span className={styles.resultLabel}>Est. Annual Generation (142.4%)</span>
-                  <span className={styles.resultValueHighlight}>+${Math.round(yieldValue * 12).toLocaleString()}</span>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                  <div className={styles.resultItem}>
+                    <span className={styles.resultLabel}>Est. Monthly Yield</span>
+                    <span className={styles.resultValue}>+${Math.round(yieldValue).toLocaleString()}</span>
+                  </div>
+                  <div className={styles.resultItem}>
+                    <span className={styles.resultLabel}>Est. Annual Generation (142.4%)</span>
+                    <span className={styles.resultValueHighlight}>+${Math.round(yieldValue * 12).toLocaleString()}</span>
+                  </div>
                 </div>
                 <div className={styles.resultItem} style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '20px' }}>
                   <span className={styles.resultLabel}>Total Projected Balance (1 Year)</span>
