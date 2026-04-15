@@ -22,7 +22,7 @@ export default function Onboarding() {
     name: "Loading Sponsor...",
     email: "",
     phone: "",
-    url: "https://backoffice.aurum.foundation/register" 
+    url: "https://backoffice.aurum.foundation/auth/sign-up" 
   });
 
   useEffect(() => {
@@ -51,7 +51,7 @@ export default function Onboarding() {
           name: "Aurum Corporate",
           email: "support@aurum.foundation",
           phone: "N/A",
-          url: "https://backoffice.aurum.foundation/register?ref=1W145K"
+          url: "https://backoffice.aurum.foundation/auth/sign-up?ref=1W145K"
         };
         setRotatorData(fallback);
       }

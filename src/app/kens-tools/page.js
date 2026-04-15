@@ -84,7 +84,7 @@ export default function KensTools() {
           Connect your marketing engine to the core of the AI Finance Breakdown.
         </p>
         <a 
-          href={process.env.NEXT_PUBLIC_AURUM_REGISTER_URL || "https://backoffice.aurum.foundation/register"}
+          href={process.env.NEXT_PUBLIC_AURUM_REGISTER_URL || "https://backoffice.aurum.foundation/auth/sign-up?ref=1W145K"}
           className={styles.aurumLink}
           target="_blank"
           rel="noopener noreferrer"
