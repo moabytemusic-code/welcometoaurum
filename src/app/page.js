@@ -1,13 +1,49 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import styles from './finance.module.css';
+
+const TradingViewTicker = () => {
+  const container = useRef();
+  useEffect(() => {
+    if (container.current && !container.current.querySelector('script')) {
+      const script = document.createElement("script");
+      script.src = "https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js";
+      script.type = "text/javascript";
+      script.async = true;
+      script.innerHTML = JSON.stringify({
+        "symbols": [
+          {"proName": "CRYPTOCAP:BTC", "title": "Bitcoin"},
+          {"proName": "CRYPTOCAP:ETH", "title": "Ethereum"},
+          {"proName": "CRYPTOCAP:USDT", "title": "Tether"},
+          {"proName": "CRYPTOCAP:BNB", "title": "BNB"},
+          {"proName": "CRYPTOCAP:SOL", "title": "Solana"},
+          {"proName": "CRYPTOCAP:USDC", "title": "USDC"},
+          {"proName": "CRYPTOCAP:XRP", "title": "XRP"},
+          {"proName": "CRYPTOCAP:DOGE", "title": "Dogecoin"},
+          {"proName": "CRYPTOCAP:ADA", "title": "Cardano"},
+          {"proName": "CRYPTOCAP:AVAX", "title": "Avalanche"}
+        ],
+        "showSymbolLogo": true,
+        "isTransparent": true,
+        "displayMode": "regular",
+        "colorTheme": "dark",
+        "locale": "en"
+      });
+      container.current.appendChild(script);
+    }
+  }, []);
+  return (
+    <div className="tradingview-widget-container" ref={container} style={{ width: '100%' }}>
+      <div className="tradingview-widget-container__widget"></div>
+    </div>
+  );
+};
 
 export default function Home() {
   const [deposit, setDeposit] = useState(5000);
   const [yieldValue, setYieldValue] = useState(0);
 
-  const [stream, setStream] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [formData, setFormData] = useState({ name: '', email: '' });
@@ -54,19 +90,6 @@ export default function Home() {
     }
   };
 
-  useEffect(() => {
-    const locations = ['London', 'New York', 'Singapore', 'Dubai', 'Tokyo', 'Zurich', 'Seoul'];
-    const interval = setInterval(() => {
-      const newOp = {
-        id: Date.now(),
-        location: locations[Math.floor(Math.random() * locations.length)],
-        amount: (Math.random() * 45 + 5).toFixed(2),
-        time: 'JUST NOW'
-      };
-      setStream(prev => [newOp, ...prev].slice(0, 3));
-    }, 4000);
-    return () => clearInterval(interval);
-  }, []);
 
   return (
     <main className={styles.main}>
@@ -125,11 +148,8 @@ export default function Home() {
           </video>
         </div>
         
-        <div className={styles.topNav} style={{ position: 'absolute', top: '16px', width: '100%', zIndex: 10, left: 0 }}>
-          <div className={styles.liveBadge}>
-            <span className={styles.liveDot} /> 
-            LIVE OPS: {stream.length > 0 ? `GAP CAPTURED IN ${stream[0].location.toUpperCase()} (+$${stream[0].amount})` : 'SCANNING FOR GAPS...'}
-          </div>
+        <div className={styles.topNav} style={{ position: 'absolute', top: '0', width: '100%', zIndex: 10, left: 0 }}>
+          <TradingViewTicker />
         </div>
 
         <div className={styles.heroContent}>
