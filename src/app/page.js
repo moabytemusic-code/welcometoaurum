@@ -69,44 +69,74 @@ const BotEarningsBadge = () => {
   if (!earnings) return null;
 
   return (
-    <div style={{ animation: 'fadeIn 1s ease-out' }}>
+    <div style={{ animation: 'fadeIn 1s ease-out', height: '100%' }}>
       <div style={{ 
+        height: '100%',
         background: 'rgba(10, 10, 10, 0.6)',
-        backdropFilter: 'blur(10px)',
+        backdropFilter: 'blur(20px)',
         border: '1px solid rgba(8, 255, 136, 0.2)',
         boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4)',
         borderRadius: '24px',
-        padding: '20px',
+        padding: '16px',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'space-between',
         gap: '12px',
         maxWidth: '280px',
         textAlign: 'center'
       }}>
-        <div style={{ 
-          width: '100%', 
-          height: '160px', 
-          borderRadius: '16px', 
-          overflow: 'hidden',
-          marginBottom: '8px',
-          border: '1px solid rgba(255,255,255,0.05)'
-        }}>
-          <img 
-            src="/images/aurum_exai_bot_promo.png" 
-            alt="Aurum EX-AI Bot" 
-            style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
-          />
-        </div>
+        <div style={{ width: '100%' }}>
+          <div style={{ 
+            width: '100%', 
+            height: '130px', 
+            borderRadius: '16px', 
+            overflow: 'hidden',
+            marginBottom: '12px',
+            border: '1px solid rgba(255,255,255,0.05)',
+            boxShadow: '0 4px 20px rgba(0,0,0,0.3)'
+          }}>
+            <img 
+              src="/images/aurum_exai_bot_promo.png" 
+              alt="Aurum EX-AI Bot" 
+              style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+            />
+          </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <div style={{ width: '8px', height: '8px', background: '#00ff88', borderRadius: '50%', boxShadow: '0 0 8px #00ff88', animation: 'aurumPulseDot 2s infinite' }}></div>
-          <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.6)', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '1.5px' }}>EX-AI BOT OUTPUT</span>
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+            <div style={{ width: '8px', height: '8px', background: '#00ff88', borderRadius: '50%', boxShadow: '0 0 8px #00ff88', animation: 'aurumPulseDot 2s infinite' }}></div>
+            <span style={{ fontSize: '12px', color: '#00ff88', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '2px' }}>EX-AI BOT ACTIVE</span>
+          </div>
         </div>
         
-        <span style={{ fontSize: '32px', color: '#00ff88', fontWeight: '900', textShadow: '0 0 15px rgba(0,255,136,0.3)' }}>{earnings}</span>
-        <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)', marginTop: '-8px' }}>Performance Today</span>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+          <span style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '1px' }}>Daily Performance</span>
+          <span style={{ fontSize: '42px', color: '#00ff88', fontWeight: '900', textShadow: '0 0 20px rgba(0,255,136,0.4)', lineHeight: '1' }}>{earnings}</span>
+        </div>
+
+        <div style={{ 
+          width: '100%', 
+          background: 'rgba(255,255,255,0.03)', 
+          borderRadius: '12px', 
+          padding: '12px',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '8px',
+          border: '1px solid rgba(255,255,255,0.05)'
+        }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px' }}>
+            <span style={{ color: 'rgba(255,255,255,0.4)' }}>Algorithm</span>
+            <span style={{ color: '#fff', fontWeight: '600' }}>Neural-X v4.2</span>
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px' }}>
+            <span style={{ color: 'rgba(255,255,255,0.4)' }}>Execution</span>
+            <span style={{ color: '#fff', fontWeight: '600' }}>Arbitrage High-Freq</span>
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px' }}>
+            <span style={{ color: 'rgba(255,255,255,0.4)' }}>Last Update</span>
+            <span style={{ color: 'rgba(255,255,255,0.8)' }}>Just Now</span>
+          </div>
+        </div>
         
         <style jsx>{`
           @keyframes aurumPulseDot {
@@ -251,7 +281,7 @@ export default function Home() {
             Join 118,000+ everyday people earning real passive income from AI-powered crypto finance — 24/7, completely on autopilot. No KYC Required.
           </p>
 
-          <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'center', gap: '24px', flexWrap: 'wrap', margin: '0 auto 24px auto', maxWidth: '1000px', width: '100%' }}>
+          <div style={{ display: 'flex', alignItems: 'stretch', justifyContent: 'center', gap: '16px', flexWrap: 'wrap', margin: '0 auto 16px auto', maxWidth: '1000px', width: '100%' }}>
             
             <div className={styles.calculatorCard} style={{ margin: '0', textAlign: 'left', flex: '1', minWidth: '320px', maxWidth: '500px' }}>
               <h2 className={styles.calculatorTitle} style={{ textAlign: 'center' }}>See Your Aurum Wealth Projection</h2>
@@ -289,7 +319,7 @@ export default function Home() {
             <p className={styles.calcNote}>Projections based on historical 2025 performance. Past results do not guarantee future returns. Yield is generated through automated market activities and involves risk.</p>
           </div>
 
-          <div style={{ alignSelf: 'center', flexShrink: 0 }}>
+          <div style={{ flexShrink: 0 }}>
             <BotEarningsBadge />
           </div>
 

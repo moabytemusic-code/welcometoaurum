@@ -17,11 +17,11 @@
 /* Hero Styles */
 .hero {
   position: relative;
-  min-height: 90vh;
+  min-height: auto;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 60px 24px 40px;
+  padding: 80px 24px 40px;
   text-align: center;
   overflow: hidden;
 }
@@ -125,27 +125,27 @@
 }
 
 .title {
-  font-size: 64px;
+  font-size: 48px;
   font-weight: 900;
   line-height: 1.1;
-  letter-spacing: -2px;
+  letter-spacing: -1.5px;
   margin-bottom: 8px;
 }
 
 .heroSubtitle {
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 700;
   color: white;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
   letter-spacing: -0.5px;
 }
 
 .subtitle {
-  font-size: 18px;
+  font-size: 16px;
   color: var(--text-dim);
-  max-width: 700px;
-  margin: 0 auto 24px;
-  line-height: 1.6;
+  max-width: 650px;
+  margin: 0 auto 16px;
+  line-height: 1.5;
 }
 
 .ctaContainer {
