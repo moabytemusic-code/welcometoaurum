@@ -346,6 +346,41 @@ export default function Home() {
       </section>
 
 
+      {/* Performance Analysis Section */}
+      <section className={styles.statsSection} style={{ background: 'transparent' }}>
+        <div className={styles.sectionHeader}>
+          <div className={styles.liveBadge} style={{ margin: '0 auto 16px', width: 'fit-content' }}>
+            <div className={styles.liveDot}></div>
+            VERIFIED INSTITUTIONAL YIELD (2025)
+          </div>
+          <h2 className={styles.sectionTitle}>Institutional Performance, Individual Control</h2>
+          <p className={styles.sectionSub}>Visualize the compounding power of the Aurum AI algorithms through verified historical returns.</p>
+        </div>
+
+        <div style={{ maxWidth: '1000px', margin: '0 auto', background: 'rgba(255,255,255,0.02)', padding: '40px', borderRadius: '32px', border: '1px solid rgba(255,255,255,0.05)' }}>
+          <PerformanceChart />
+          
+          <div className={styles.statsGrid} style={{ marginTop: '40px', borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '40px' }}>
+            <div className={styles.statItem}>
+              <div className={styles.statValue} style={{ fontSize: '24px' }}>{stats.totalAnnualYield}</div>
+              <div className={styles.statLabel}>2025 Net Yield</div>
+            </div>
+            <div className={styles.statItem}>
+              <div className={styles.statValue} style={{ fontSize: '24px' }}>{stats.averageMonthly}</div>
+              <div className={styles.statLabel}>Avg. Monthly</div>
+            </div>
+            <div className={styles.statItem}>
+              <div className={styles.statValue} style={{ fontSize: '24px' }}>{stats.bestMonth}</div>
+              <div className={styles.statLabel}>Peak Momentum</div>
+            </div>
+            <div className={styles.statItem}>
+              <div className={styles.statValue} style={{ fontSize: '24px' }}>{stats.winningDays}</div>
+              <div className={styles.statLabel}>Winning Days</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Product Ecosystem Section */}
       <section className={styles.ecosystemSection}>
         <div className={styles.sectionHeader}>
@@ -397,40 +432,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Performance Analysis Section */}
-      <section className={styles.statsSection} style={{ background: 'transparent' }}>
-        <div className={styles.sectionHeader}>
-          <div className={styles.liveBadge} style={{ margin: '0 auto 16px', width: 'fit-content' }}>
-            <div className={styles.liveDot}></div>
-            VERIFIED INSTITUTIONAL YIELD (2025)
-          </div>
-          <h2 className={styles.sectionTitle}>Institutional Performance, Individual Control</h2>
-          <p className={styles.sectionSub}>Visualize the compounding power of the Aurum AI algorithms through verified historical returns.</p>
-        </div>
-
-        <div style={{ maxWidth: '1000px', margin: '0 auto', background: 'rgba(255,255,255,0.02)', padding: '40px', borderRadius: '32px', border: '1px solid rgba(255,255,255,0.05)' }}>
-          <PerformanceChart />
-          
-          <div className={styles.statsGrid} style={{ marginTop: '40px', borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '40px' }}>
-            <div className={styles.statItem}>
-              <div className={styles.statValue} style={{ fontSize: '24px' }}>{stats.totalAnnualYield}</div>
-              <div className={styles.statLabel}>2025 Net Yield</div>
-            </div>
-            <div className={styles.statItem}>
-              <div className={styles.statValue} style={{ fontSize: '24px' }}>{stats.averageMonthly}</div>
-              <div className={styles.statLabel}>Avg. Monthly</div>
-            </div>
-            <div className={styles.statItem}>
-              <div className={styles.statValue} style={{ fontSize: '24px' }}>{stats.bestMonth}</div>
-              <div className={styles.statLabel}>Peak Momentum</div>
-            </div>
-            <div className={styles.statItem}>
-              <div className={styles.statValue} style={{ fontSize: '24px' }}>{stats.winningDays}</div>
-              <div className={styles.statLabel}>Winning Days</div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Problem Agitation Section */}
       <section className={styles.problemSection}>
