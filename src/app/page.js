@@ -3,39 +3,44 @@
 import { useState, useEffect, useRef } from 'react';
 import styles from './finance.module.css';
 
-const TradingViewTicker = () => {
-  const container = useRef();
+const CustomTicker = () => {
+  const [data, setData] = useState([]);
+
   useEffect(() => {
-    if (container.current && !container.current.querySelector('script')) {
-      const script = document.createElement("script");
-      script.src = "https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js";
-      script.type = "text/javascript";
-      script.async = true;
-      script.innerHTML = JSON.stringify({
-        "symbols": [
-          {"proName": "CRYPTOCAP:BTC", "title": "Bitcoin"},
-          {"proName": "CRYPTOCAP:ETH", "title": "Ethereum"},
-          {"proName": "CRYPTOCAP:USDT", "title": "Tether"},
-          {"proName": "CRYPTOCAP:BNB", "title": "BNB"},
-          {"proName": "CRYPTOCAP:SOL", "title": "Solana"},
-          {"proName": "CRYPTOCAP:USDC", "title": "USDC"},
-          {"proName": "CRYPTOCAP:XRP", "title": "XRP"},
-          {"proName": "CRYPTOCAP:DOGE", "title": "Dogecoin"},
-          {"proName": "CRYPTOCAP:ADA", "title": "Cardano"},
-          {"proName": "CRYPTOCAP:AVAX", "title": "Avalanche"}
-        ],
-        "showSymbolLogo": true,
-        "isTransparent": true,
-        "displayMode": "regular",
-        "colorTheme": "dark",
-        "locale": "en"
-      });
-      container.current.appendChild(script);
-    }
+    const fetchPrices = async () => {
+      try {
+        const res = await fetch('/api/ticker');
+        if (!res.ok) throw new Error('Proxy API Error');
+        const formatted = await res.json();
+        setData(formatted);
+      } catch (err) {
+        console.error('Ticker fetch error:', err);
+      }
+    };
+    fetchPrices();
+    const interval = setInterval(fetchPrices, 10000);
+    return () => clearInterval(interval);
   }, []);
+
+  if (data.length === 0) return <div style={{ height: '48px', background: '#050505', width: '100%', borderBottom: '1px solid rgba(255,255,255,0.05)' }}></div>;
+
   return (
-    <div className="tradingview-widget-container" ref={container} style={{ width: '100%' }}>
-      <div className="tradingview-widget-container__widget"></div>
+    <div className={styles.tickerTape}>
+      <div className={styles.tickerTrack}>
+        {data.concat(data).map((coin, index) => {
+           let symbol = coin.symbol.replace('USDT', '');
+           let change = parseFloat(coin.priceChangePercent);
+           return (
+            <div key={`${coin.symbol}-${index}`} className={styles.tickerItem}>
+              <span style={{ fontWeight: '800', color: '#fff' }}>{symbol}</span>
+              <span style={{ color: 'rgba(255,255,255,0.8)' }}>${parseFloat(coin.lastPrice).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 4})}</span>
+              <span style={{ color: change > 0 ? '#00ff88' : '#ff4444', fontWeight: 'bold' }}>
+                {change > 0 ? '+' : ''}{change.toFixed(2)}%
+              </span>
+            </div>
+          )
+        })}
+      </div>
     </div>
   );
 };
@@ -149,7 +154,7 @@ export default function Home() {
         </div>
         
         <div className={styles.topNav} style={{ position: 'absolute', top: '0', width: '100%', zIndex: 10, left: 0 }}>
-          <TradingViewTicker />
+          <CustomTicker />
         </div>
 
         <div className={styles.heroContent}>
