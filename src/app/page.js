@@ -183,7 +183,7 @@ export default function Home() {
           </div>
 
           <div className={styles.ctaContainer}>
-            <button className={styles.primaryCta} onClick={() => setIsModalOpen(true)}>Claim My Free AI Breakdown →</button>
+            <button className={styles.primaryCta} onClick={() => setIsModalOpen(true)}>Activate Wealth Generator →</button>
             <div className={styles.ctaMicroProof}>✓ Only 15 slots remaining for this cohort</div>
           </div>
         </div>
