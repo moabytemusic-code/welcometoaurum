@@ -146,7 +146,7 @@ export default function Home() {
           </h2>
           
           <p className={styles.subtitle}>
-            Join 18,000+ everyday people earning real passive income from AI-powered crypto finance — 24/7, completely on autopilot.
+            Join 118,000+ everyday people earning real passive income from AI-powered crypto finance — 24/7, completely on autopilot. No KYC Required.
           </p>
           <div className={styles.calculatorCard} style={{ margin: '40px auto 48px auto', textAlign: 'left' }}>
             <h2 className={styles.calculatorTitle} style={{ textAlign: 'center' }}>See Your Aurum Wealth Projection</h2>
@@ -155,13 +155,13 @@ export default function Home() {
                 <label>Initial Liquidity Bridge (Deposit) <span style={{float: 'right', color: '#2d8cf0', fontWeight: 'bold'}}>${parseInt(deposit).toLocaleString()}</span></label>
                 <input 
                   type="range" 
-                  min="500" 
-                  max="50000" 
-                  step="500" 
+                  min="100" 
+                  max="99999" 
+                  step="100" 
                   value={deposit}
                   onChange={(e) => setDeposit(Number(e.target.value))}
                   className={styles.rangeInput}
-                  style={{ background: `linear-gradient(to right, #2d8cf0 ${((deposit - 500) / 49500) * 100}%, #333 ${((deposit - 500) / 49500) * 100}%)` }}
+                  style={{ background: `linear-gradient(to right, #2d8cf0 ${((deposit - 100) / 99899) * 100}%, #333 ${((deposit - 100) / 99899) * 100}%)` }}
                 />
               </div>
               <div className={styles.resultsGroup} style={{ textAlign: 'center' }}>
