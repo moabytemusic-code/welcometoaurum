@@ -15,7 +15,7 @@ export default function Home() {
 
   useEffect(() => {
     // Simulated yield calculation based on historical 142% avg
-    const monthlyRate = 1.42 / 12;
+    const monthlyRate = 1.784 / 12;
     setYieldValue(deposit * monthlyRate);
   }, [deposit]);
 
@@ -171,7 +171,7 @@ export default function Home() {
                     <span className={styles.resultValue}>+${Math.round(yieldValue).toLocaleString()}</span>
                   </div>
                   <div className={styles.resultItem}>
-                    <span className={styles.resultLabel}>Est. Annual Generation (142.4%)</span>
+                    <span className={styles.resultLabel}>Est. Annual Generation (178.4%)</span>
                     <span className={styles.resultValueHighlight}>+${Math.round(yieldValue * 12).toLocaleString()}</span>
                   </div>
                 </div>
@@ -302,15 +302,15 @@ export default function Home() {
       <section className={styles.statsSection}>
         <div className={styles.statsGrid}>
           <div className={styles.statItem}>
-            <div className={styles.statValue}>18K+</div>
+            <div className={styles.statValue}>118K+</div>
             <div className={styles.statLabel}>Global Partners</div>
           </div>
           <div className={styles.statItem}>
-            <div className={styles.statValue}>$30M+</div>
+            <div className={styles.statValue}>$115M+</div>
             <div className={styles.statLabel}>Assets Orchestrated</div>
           </div>
           <div className={styles.statItem}>
-            <div className={styles.statValue}>142.4%</div>
+            <div className={styles.statValue}>178.4%</div>
             <div className={styles.statLabel}>2025 Avg. Yield</div>
           </div>
           <div className={styles.statItem}>
@@ -345,7 +345,7 @@ export default function Home() {
         <div className={styles.faqGrid}>
           <div className={styles.faqItem}>
             <h4 className={styles.faqQuestion}>Is my money locked up?</h4>
-            <p className={styles.faqAnswer}>Absolutely not. Your funds stay 100% liquid. Withdraw or spend anytime with no penalties.</p>
+            <p className={styles.faqAnswer}>Absolutely not. Your funds stay 100% liquid. Withdraw or spend anytime with no penalties. (Unless the money is deposited into a bot where it is locked for 365 days and the profits are available within 24/48 hours)</p>
           </div>
           <div className={styles.faqItem}>
             <h4 className={styles.faqQuestion}>How does the AI actually make money?</h4>
