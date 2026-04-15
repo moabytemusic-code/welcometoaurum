@@ -45,6 +45,85 @@ const CustomTicker = () => {
   );
 };
 
+const BotEarningsBadge = () => {
+  const [earnings, setEarnings] = useState(null);
+
+  useEffect(() => {
+    const fetchEarnings = async () => {
+      try {
+        const res = await fetch('/api/aurum-bot');
+        if (!res.ok) throw new Error('Bot proxy fail');
+        const data = await res.json();
+        if (data && data.bot && data.bot !== "N/A") {
+          setEarnings(data.bot);
+        }
+      } catch (err) {
+        console.error('Earnings fetch error:', err);
+      }
+    };
+    fetchEarnings();
+    const interval = setInterval(fetchEarnings, 600000);
+    return () => clearInterval(interval);
+  }, []);
+
+  if (!earnings) return null;
+
+  return (
+    <div style={{ animation: 'fadeIn 1s ease-out' }}>
+      <div style={{ 
+        background: 'rgba(10, 10, 10, 0.6)',
+        backdropFilter: 'blur(10px)',
+        border: '1px solid rgba(8, 255, 136, 0.2)',
+        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4)',
+        borderRadius: '24px',
+        padding: '20px',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: '12px',
+        maxWidth: '280px',
+        textAlign: 'center'
+      }}>
+        <div style={{ 
+          width: '100%', 
+          height: '160px', 
+          borderRadius: '16px', 
+          overflow: 'hidden',
+          marginBottom: '8px',
+          border: '1px solid rgba(255,255,255,0.05)'
+        }}>
+          <img 
+            src="/images/aurum_exai_bot_promo.png" 
+            alt="Aurum EX-AI Bot" 
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+          />
+        </div>
+
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <div style={{ width: '8px', height: '8px', background: '#00ff88', borderRadius: '50%', boxShadow: '0 0 8px #00ff88', animation: 'aurumPulseDot 2s infinite' }}></div>
+          <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.6)', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '1.5px' }}>EX-AI BOT OUTPUT</span>
+        </div>
+        
+        <span style={{ fontSize: '32px', color: '#00ff88', fontWeight: '900', textShadow: '0 0 15px rgba(0,255,136,0.3)' }}>{earnings}</span>
+        <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)', marginTop: '-8px' }}>Performance Today</span>
+        
+        <style jsx>{`
+          @keyframes aurumPulseDot {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.3); }
+            100% { opacity: 1; transform: scale(1); }
+          }
+          @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
+          }
+        `}</style>
+      </div>
+    </div>
+  )
+}
+
 export default function Home() {
   const [deposit, setDeposit] = useState(5000);
   const [yieldValue, setYieldValue] = useState(0);
@@ -171,8 +250,11 @@ export default function Home() {
           <p className={styles.subtitle}>
             Join 118,000+ everyday people earning real passive income from AI-powered crypto finance — 24/7, completely on autopilot. No KYC Required.
           </p>
-          <div className={styles.calculatorCard} style={{ margin: '16px auto 24px auto', textAlign: 'left' }}>
-            <h2 className={styles.calculatorTitle} style={{ textAlign: 'center' }}>See Your Aurum Wealth Projection</h2>
+
+          <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'center', gap: '24px', flexWrap: 'wrap', margin: '0 auto 24px auto', maxWidth: '1000px', width: '100%' }}>
+            
+            <div className={styles.calculatorCard} style={{ margin: '0', textAlign: 'left', flex: '1', minWidth: '320px', maxWidth: '500px' }}>
+              <h2 className={styles.calculatorTitle} style={{ textAlign: 'center' }}>See Your Aurum Wealth Projection</h2>
             <div className={styles.calcGrid}>
               <div className={styles.inputGroup}>
                 <label>Initial Liquidity Bridge (Deposit) <span style={{float: 'right', color: '#2d8cf0', fontWeight: 'bold'}}>${parseInt(deposit).toLocaleString()}</span></label>
@@ -205,6 +287,12 @@ export default function Home() {
               </div>
             </div>
             <p className={styles.calcNote}>Projections based on historical 2025 performance. Past results do not guarantee future returns. Yield is generated through automated market activities and involves risk.</p>
+          </div>
+
+          <div style={{ alignSelf: 'center', flexShrink: 0 }}>
+            <BotEarningsBadge />
+          </div>
+
           </div>
 
           <div className={styles.ctaContainer}>
