@@ -197,7 +197,7 @@ export default function Home() {
                 max="50000" 
                 step="500" 
                 value={deposit}
-                onChange={(e) => setDeposit(e.target.value)}
+                onChange={(e) => setDeposit(Number(e.target.value))}
                 className={styles.rangeInput}
               />
               <div className={styles.inputValue}>${parseInt(deposit).toLocaleString()}</div>
