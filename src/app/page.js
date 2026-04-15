@@ -125,18 +125,16 @@ export default function Home() {
           </video>
         </div>
         
-        <div className={styles.heroContent}>
-          <div className={styles.topNav}>
-            <div className={styles.liveBadge}>
-              <span className={styles.liveDot} /> 
-              LIVE OPS: {stream.length > 0 ? `GAP CAPTURED IN ${stream[0].location.toUpperCase()} (+$${stream[0].amount})` : 'SCANNING FOR GAPS...'}
-            </div>
+        <div className={styles.topNav} style={{ position: 'absolute', top: '16px', width: '100%', zIndex: 10, left: 0 }}>
+          <div className={styles.liveBadge}>
+            <span className={styles.liveDot} /> 
+            LIVE OPS: {stream.length > 0 ? `GAP CAPTURED IN ${stream[0].location.toUpperCase()} (+$${stream[0].amount})` : 'SCANNING FOR GAPS...'}
           </div>
+        </div>
 
-          <div className={styles.badge}>
-            Institutional Liquidity Active
-          </div>
-          
+        <div className={styles.heroContent}>
+
+
           <h1 className={styles.title}>
             Stop Donating Your Wealth to <span className={styles.highlight}>Legacy Banks.</span>
           </h1>
@@ -148,7 +146,7 @@ export default function Home() {
           <p className={styles.subtitle}>
             Join 118,000+ everyday people earning real passive income from AI-powered crypto finance — 24/7, completely on autopilot. No KYC Required.
           </p>
-          <div className={styles.calculatorCard} style={{ margin: '40px auto 48px auto', textAlign: 'left' }}>
+          <div className={styles.calculatorCard} style={{ margin: '16px auto 24px auto', textAlign: 'left' }}>
             <h2 className={styles.calculatorTitle} style={{ textAlign: 'center' }}>See Your Aurum Wealth Projection</h2>
             <div className={styles.calcGrid}>
               <div className={styles.inputGroup}>
@@ -175,7 +173,7 @@ export default function Home() {
                     <span className={styles.resultValueHighlight}>+${Math.round(yieldValue * 12).toLocaleString()}</span>
                   </div>
                 </div>
-                <div className={styles.resultItem} style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '20px' }}>
+                <div className={styles.resultItem} style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '16px' }}>
                   <span className={styles.resultLabel}>Total Projected Balance (1 Year)</span>
                   <span className={styles.resultValueTotal}>${Math.round(deposit + (yieldValue * 12)).toLocaleString()}</span>
                 </div>

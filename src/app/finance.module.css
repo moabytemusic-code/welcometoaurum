@@ -21,7 +21,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 80px 24px;
+  padding: 60px 24px 40px;
   text-align: center;
   overflow: hidden;
 }
@@ -133,18 +133,18 @@
 }
 
 .heroSubtitle {
-  font-size: 32px;
+  font-size: 24px;
   font-weight: 700;
   color: white;
-  margin-bottom: 24px;
-  letter-spacing: -1px;
+  margin-bottom: 16px;
+  letter-spacing: -0.5px;
 }
 
 .subtitle {
-  font-size: 20px;
+  font-size: 18px;
   color: var(--text-dim);
   max-width: 700px;
-  margin: 0 auto 48px;
+  margin: 0 auto 24px;
   line-height: 1.6;
 }
 
@@ -307,9 +307,9 @@
 .calculatorCard {
   background: linear-gradient(145deg, rgba(20,20,25,0.8), rgba(5,5,10,0.95));
   border: 1px solid rgba(45, 140, 240, 0.3);
-  padding: 32px;
+  padding: 20px 24px;
   border-radius: 24px;
-  max-width: 600px;
+  max-width: 500px;
   width: 100%;
   box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 40px rgba(45, 140, 240, 0.1);
   backdrop-filter: blur(20px);
@@ -321,30 +321,30 @@
 }
 
 .calculatorTitle {
-  font-size: 22px;
+  font-size: 18px;
   font-weight: 800;
-  margin-bottom: 24px;
+  margin-bottom: 12px;
   text-align: center;
 }
 
 .calcGrid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 32px;
+  gap: 20px;
   align-items: center;
 }
 
 .resultsGroup {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 12px;
 }
 
 .inputGroup label {
   display: block;
   font-size: 14px;
   color: var(--text-dim);
-  margin-bottom: 16px;
+  margin-bottom: 12px;
   font-weight: 600;
 }
 
@@ -393,26 +393,26 @@
 }
 
 .resultValue {
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 800;
 }
 
 .resultValueHighlight {
-  font-size: 32px;
+  font-size: 28px;
   font-weight: 900;
   color: #00ff88;
   text-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
 }
 
 .resultValueTotal {
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 800;
   color: white;
 }
 
 .calcNote {
-  margin-top: 24px;
-  font-size: 12px;
+  margin-top: 16px;
+  font-size: 11px;
   color: rgba(255,255,255,0.3);
   text-align: center;
 }
