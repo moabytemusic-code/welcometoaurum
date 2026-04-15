@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useEffect } from 'react';
 import styles from './onboarding.module.css';
 import { Shield, Smartphone, Globe, ArrowRight, CheckCircle2 } from 'lucide-react';
