@@ -148,6 +148,39 @@ export default function Home() {
           <p className={styles.subtitle}>
             Join 18,000+ everyday people earning real passive income from AI-powered crypto finance — 24/7, completely on autopilot.
           </p>
+          <div className={styles.calculatorCard} style={{ margin: '40px auto 48px auto', textAlign: 'left' }}>
+            <h2 className={styles.calculatorTitle} style={{ textAlign: 'center' }}>See Your Artificial Wealth Projection</h2>
+            <div className={styles.calcGrid}>
+              <div className={styles.inputGroup}>
+                <label>Initial Liquidity Bridge (Deposit) <span style={{float: 'right', color: '#2d8cf0', fontWeight: 'bold'}}>${parseInt(deposit).toLocaleString()}</span></label>
+                <input 
+                  type="range" 
+                  min="500" 
+                  max="50000" 
+                  step="500" 
+                  value={deposit}
+                  onChange={(e) => setDeposit(Number(e.target.value))}
+                  className={styles.rangeInput}
+                  style={{ background: `linear-gradient(to right, #2d8cf0 ${((deposit - 500) / 49500) * 100}%, #333 ${((deposit - 500) / 49500) * 100}%)` }}
+                />
+              </div>
+              <div className={styles.resultsGroup} style={{ textAlign: 'center' }}>
+                <div className={styles.resultItem}>
+                  <span className={styles.resultLabel}>Est. Monthly Yield</span>
+                  <span className={styles.resultValue}>+${Math.round(yieldValue).toLocaleString()}</span>
+                </div>
+                <div className={styles.resultItem}>
+                  <span className={styles.resultLabel}>Est. Annual Generation (142.4%)</span>
+                  <span className={styles.resultValueHighlight}>+${Math.round(yieldValue * 12).toLocaleString()}</span>
+                </div>
+                <div className={styles.resultItem} style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '20px' }}>
+                  <span className={styles.resultLabel}>Total Projected Balance (1 Year)</span>
+                  <span className={styles.resultValueTotal}>${Math.round(deposit + (yieldValue * 12)).toLocaleString()}</span>
+                </div>
+              </div>
+            </div>
+            <p className={styles.calcNote}>Projections based on historical 2025 performance. Past results do not guarantee future returns. Yield is generated through automated market activities and involves risk.</p>
+          </div>
 
           <div className={styles.ctaContainer}>
             <button className={styles.primaryCta} onClick={() => setIsModalOpen(true)}>Claim My Free AI Breakdown →</button>
@@ -167,55 +200,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Main Breakdown Video Section */}
-      <section className={styles.videoSection}>
-        <div className={styles.sectionHeader}>
-          <h2 className={styles.sectionTitle}>The Internal Breakdown</h2>
-          <p className={styles.sectionSub}>Watch exactly how our AI captures liquidity gaps in real-time.</p>
-        </div>
-        <div className={styles.videoWrapper}>
-          <iframe 
-            src="https://www.youtube.com/embed/WnrMvNnGYkk?rel=0&autoplay=0" 
-            title="AURUM Breakdown" 
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-            allowFullScreen
-            className={styles.videoFrame}
-          ></iframe>
-        </div>
-      </section>
-
-      {/* Yield Projector Section */}
-      <section className={styles.calculatorSection}>
-        <div className={styles.calculatorCard}>
-          <h2 className={styles.calculatorTitle}>See How Much Passive Income AURUM Could Make You</h2>
-          <div className={styles.calcGrid}>
-            <div className={styles.inputGroup}>
-              <label>Initial Liquidity Bridge (Deposit)</label>
-              <input 
-                type="range" 
-                min="500" 
-                max="50000" 
-                step="500" 
-                value={deposit}
-                onChange={(e) => setDeposit(Number(e.target.value))}
-                className={styles.rangeInput}
-              />
-              <div className={styles.inputValue}>${parseInt(deposit).toLocaleString()}</div>
-            </div>
-            <div className={styles.resultsGroup}>
-              <div className={styles.resultItem}>
-                <span className={styles.resultLabel}>Est. Monthly Yield</span>
-                <span className={styles.resultValue}>+${Math.round(yieldValue).toLocaleString()}</span>
-              </div>
-              <div className={styles.resultItem}>
-                <span className={styles.resultLabel}>Est. Annual Projection (142.4%)</span>
-                <span className={styles.resultValueHighlight}>+${Math.round(yieldValue * 12).toLocaleString()}</span>
-              </div>
-            </div>
-          </div>
-          <p className={styles.calcNote}>Projections based on historical 2025 performance. Past results do not guarantee future returns. Yield is generated through automated market activities and involves risk.</p>
-        </div>
-      </section>
 
       {/* Product Ecosystem Section */}
       <section className={styles.ecosystemSection}>
@@ -374,6 +358,18 @@ export default function Home() {
 
       {/* Final CTA Section */}
       <section className={styles.finalCta}>
+        <div style={{ width: '100%', maxWidth: '1000px', margin: '0 auto 64px auto' }}>
+          <div className={styles.videoWrapper}>
+            <iframe 
+              src="https://www.youtube.com/embed/WnrMvNnGYkk?rel=0&autoplay=0" 
+              title="AURUM Breakdown" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+              allowFullScreen
+              className={styles.videoFrame}
+            ></iframe>
+          </div>
+        </div>
+
         <h2 className={styles.title}>Ready to Turn On Your Personal AI Money Machine?</h2>
         <p className={styles.finalCtaSub}>
           ⚠️ <strong>Limited Opening:</strong> Maintaining our yield ratio requires strict partner limits. 
