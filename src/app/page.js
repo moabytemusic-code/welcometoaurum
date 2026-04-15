@@ -357,8 +357,10 @@ export default function Home() {
           <p className={styles.sectionSub}>Visualize the compounding power of the Aurum AI algorithms through verified historical returns.</p>
         </div>
 
-        <div style={{ maxWidth: '1000px', margin: '0 auto', background: 'rgba(255,255,255,0.02)', padding: '40px', borderRadius: '32px', border: '1px solid rgba(255,255,255,0.05)' }}>
-          <PerformanceChart />
+        <div className={styles.performanceContainer}>
+          <div className={styles.performanceChartWrapper}>
+            <PerformanceChart />
+          </div>
           
           <div className={styles.statsGrid} style={{ marginTop: '40px', borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '40px' }}>
             <div className={styles.statItem}>

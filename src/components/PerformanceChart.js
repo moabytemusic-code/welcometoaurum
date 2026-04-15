@@ -43,7 +43,7 @@ const CustomTooltip = ({ active, payload, label }) => {
 
 export default function PerformanceChart() {
   return (
-    <div style={{ width: '100%', height: '400px', margin: '40px 0' }}>
+    <div style={{ width: '100%', height: '100%' }}>
       <ResponsiveContainer width="100%" height="100%">
         <ComposedChart
           data={performanceData}
