@@ -1,11 +1,48 @@
-'use client';
-
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './onboarding.module.css';
 import { Shield, Smartphone, Globe, ArrowRight, CheckCircle2 } from 'lucide-react';
 
 export default function Onboarding() {
   const [complete, setComplete] = useState([false, false, false]);
+  const [rotatorData, setRotatorData] = useState({ 
+    code: "...", 
+    url: "https://backoffice.aurum.foundation/register" 
+  });
+
+  useEffect(() => {
+    const resolveCode = async () => {
+      // Step 1: Check persistence
+      const stored = localStorage.getItem('aurum_affiliate');
+      if (stored) {
+        try {
+          const parsed = JSON.parse(stored);
+          setRotatorData(parsed);
+          return;
+        } catch (e) {
+          localStorage.removeItem('aurum_affiliate');
+        }
+      }
+
+      // Step 2: Fetch from rotator API
+      try {
+        const res = await fetch('/api/rotator');
+        if (!res.ok) throw new Error('Rotator fail');
+        const data = await res.json();
+        setRotatorData(data);
+        localStorage.setItem('aurum_affiliate', JSON.stringify(data));
+      } catch (err) {
+        console.error('Rotator error:', err);
+        // Fallback to env default
+        const fallback = {
+          code: "1W145K",
+          url: "https://backoffice.aurum.foundation/register?ref=1W145K"
+        };
+        setRotatorData(fallback);
+      }
+    };
+
+    resolveCode();
+  }, []);
 
   const toggleStep = (index) => {
     const newComplete = [...complete];
@@ -65,7 +102,7 @@ export default function Onboarding() {
             </div>
             <p>Click the button below to secure your position in the backoffice and create your account.</p>
             <a 
-              href={process.env.NEXT_PUBLIC_AURUM_REGISTER_URL || "https://backoffice.aurum.foundation/register"}
+              href={rotatorData.url}
               target="_blank" 
               rel="noopener noreferrer"
               className={styles.registerBtn}
@@ -77,7 +114,7 @@ export default function Onboarding() {
         </div>
 
         <footer className={styles.footer}>
-          <p>Questions? Your sponsor's invite code ({process.env.NEXT_PUBLIC_SPONSOR_ID || "ACTIVE"}) is pre-filled for your security.</p>
+          <p>Questions? Your sponsor's invite code ({rotatorData.code}) is pre-filled for your security.</p>
           <div className={styles.disclaimer}>
             Every Aurum member generates yield daily. Time is precious.
           </div>

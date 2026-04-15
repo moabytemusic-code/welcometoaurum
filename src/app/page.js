@@ -501,7 +501,7 @@ export default function Home() {
 
       {/* Final CTA Section */}
       <section className={styles.finalCta}>
-        <div style={{ width: '100%', maxWidth: '1000px', margin: '0 auto 64px auto' }}>
+        <div style={{ width: '100%', maxWidth: '1000px', margin: '0 auto 24px auto' }}>
           <div className={styles.videoWrapper}>
             <iframe 
               src="https://www.youtube.com/embed/WnrMvNnGYkk?rel=0&autoplay=0" 

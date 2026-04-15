@@ -732,7 +732,7 @@
 }
 
 .finalCta {
-  padding: 120px 24px;
+  padding: 60px 24px 20px;
   text-align: center;
   background: linear-gradient(to top, rgba(45, 140, 240, 0.05), transparent);
   display: flex;
@@ -764,7 +764,7 @@
   display: flex;
   justify-content: center;
   gap: 24px;
-  margin-top: 24px;
+  margin-top: 16px;
   color: var(--text-dim);
   font-size: 14px;
   font-weight: 500;
@@ -777,9 +777,14 @@
   gap: 6px;
 }
 
+.footer {
+  padding: 0 24px 40px;
+  background: transparent;
+}
+
 .disclaimer {
   max-width: 600px;
-  margin: 0 auto 32px;
+  margin: 0 auto 16px;
   font-size: 11px;
   line-height: 1.6;
   opacity: 0.5;
