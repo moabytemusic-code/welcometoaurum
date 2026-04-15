@@ -2,6 +2,8 @@
 
 import { useState, useEffect, useRef } from 'react';
 import styles from './finance.module.css';
+import PerformanceChart from '@/components/PerformanceChart';
+import { stats } from '@/data/performance';
 
 const CustomTicker = () => {
   const [data, setData] = useState([]);
@@ -262,7 +264,7 @@ export default function Home() {
           </video>
         </div>
         
-        <div className={styles.topNav} style={{ position: 'absolute', top: '0', width: '100%', zIndex: 10, left: 0 }}>
+        <div className={styles.topNav}>
           <CustomTicker />
         </div>
 
@@ -281,9 +283,9 @@ export default function Home() {
             Join 118,000+ everyday people earning real passive income from AI-powered crypto finance — 24/7, completely on autopilot. No KYC Required.
           </p>
 
-          <div style={{ display: 'flex', alignItems: 'stretch', justifyContent: 'center', gap: '16px', flexWrap: 'wrap', margin: '0 auto 16px auto', maxWidth: '1000px', width: '100%' }}>
+          <div className={styles.heroRow}>
             
-            <div className={styles.calculatorCard} style={{ margin: '0', textAlign: 'left', flex: '1', minWidth: '320px', maxWidth: '500px' }}>
+            <div className={styles.calculatorCard} style={{ margin: '0', textAlign: 'left' }}>
               <h2 className={styles.calculatorTitle} style={{ textAlign: 'center' }}>See Your Aurum Wealth Projection</h2>
             <div className={styles.calcGrid}>
               <div className={styles.inputGroup}>
@@ -319,7 +321,7 @@ export default function Home() {
             <p className={styles.calcNote}>Projections based on historical 2025 performance. Past results do not guarantee future returns. Yield is generated through automated market activities and involves risk.</p>
           </div>
 
-          <div style={{ flexShrink: 0 }}>
+          <div className={styles.badgeWrapper}>
             <BotEarningsBadge />
           </div>
 
@@ -392,6 +394,41 @@ export default function Home() {
             <p><strong>The 24/7 autonomous trader that does all the work for you.</strong> Fully autonomous gap-capturing bot. It scans, executes, and compounds profits 24/7 with zero effort on your end.</p>
           </div>
 
+        </div>
+      </section>
+
+      {/* Performance Analysis Section */}
+      <section className={styles.statsSection} style={{ background: 'transparent' }}>
+        <div className={styles.sectionHeader}>
+          <div className={styles.liveBadge} style={{ margin: '0 auto 16px', width: 'fit-content' }}>
+            <div className={styles.liveDot}></div>
+            VERIFIED INSTITUTIONAL YIELD (2025)
+          </div>
+          <h2 className={styles.sectionTitle}>Institutional Performance, Individual Control</h2>
+          <p className={styles.sectionSub}>Visualize the compounding power of the Aurum AI algorithms through verified historical returns.</p>
+        </div>
+
+        <div style={{ maxWidth: '1000px', margin: '0 auto', background: 'rgba(255,255,255,0.02)', padding: '40px', borderRadius: '32px', border: '1px solid rgba(255,255,255,0.05)' }}>
+          <PerformanceChart />
+          
+          <div className={styles.statsGrid} style={{ marginTop: '40px', borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '40px' }}>
+            <div className={styles.statItem}>
+              <div className={styles.statValue} style={{ fontSize: '24px' }}>{stats.totalAnnualYield}</div>
+              <div className={styles.statLabel}>2025 Net Yield</div>
+            </div>
+            <div className={styles.statItem}>
+              <div className={styles.statValue} style={{ fontSize: '24px' }}>{stats.averageMonthly}</div>
+              <div className={styles.statLabel}>Avg. Monthly</div>
+            </div>
+            <div className={styles.statItem}>
+              <div className={styles.statValue} style={{ fontSize: '24px' }}>{stats.bestMonth}</div>
+              <div className={styles.statLabel}>Peak Momentum</div>
+            </div>
+            <div className={styles.statItem}>
+              <div className={styles.statValue} style={{ fontSize: '24px' }}>{stats.winningDays}</div>
+              <div className={styles.statLabel}>Winning Days</div>
+            </div>
+          </div>
         </div>
       </section>
 
