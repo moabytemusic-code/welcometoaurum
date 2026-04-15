@@ -818,7 +818,7 @@
 .tickerTrack {
   display: flex;
   white-space: nowrap;
-  animation: scrollTicker 30s linear infinite;
+  animation: scrollTicker 80s linear infinite;
   gap: 40px;
   padding-left: 100%;
 }
