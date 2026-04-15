@@ -1,32 +1,39 @@
 import { NextResponse } from 'next/server';
-import rotatorData from '../../../data/rotator.json';
+import { supabase } from '@/lib/supabase';
 
 export async function GET() {
   try {
-    const codes = rotatorData.codes || [];
+    // Note: To get a truly random row efficiently in large tables, 
+    // a common pattern is querying a random offset.
+    // However, for small/medium affiliate tables, fetching all active IDs is safe.
     
-    // Fallback if list is empty
-    if (codes.length === 0) {
-      const fallbackCode = process.env.NEXT_PUBLIC_SPONSOR_ID || "1W145K";
-      return NextResponse.json({
-        code: fallbackCode,
-        url: `https://backoffice.aurum.foundation/register?ref=${fallbackCode}`
-      });
+    const { data: partners, error } = await supabase
+      .from('aurum_affiliates')
+      .select('affiliate_code, full_name, email, phone');
+
+    if (error || !partners || partners.length === 0) {
+      throw new Error(error?.message || 'No partners found in Supabase');
     }
 
-    // Pick a random code
-    const randomIndex = Math.floor(Math.random() * codes.length);
-    const selectedCode = codes[randomIndex];
+    // Pick a random partner
+    const randomIndex = Math.floor(Math.random() * partners.length);
+    const selected = partners[randomIndex];
 
     return NextResponse.json({
-      code: selectedCode,
-      url: `https://backoffice.aurum.foundation/register?ref=${selectedCode}`
+      code: selected.affiliate_code,
+      name: selected.full_name,
+      email: selected.email,
+      phone: selected.phone,
+      url: `https://backoffice.aurum.foundation/register?ref=${selected.affiliate_code}`
     });
   } catch (error) {
-    console.error('Rotator API Error:', error);
-    // Safe hard fallback
+    console.error('Rotator Supabase API Error:', error);
+    // Safe hard fallback to primary sponsor
     return NextResponse.json({
       code: "1W145K",
+      name: "Aurum Corporate",
+      email: "support@aurum.foundation",
+      phone: "N/A",
       url: "https://backoffice.aurum.foundation/register?ref=1W145K"
     });
   }
