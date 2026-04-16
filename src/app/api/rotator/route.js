@@ -24,10 +24,25 @@ export async function GET() {
       // LOGIC: Override affiliate_code with the first item in rotator_pool if it exists
       let activeCode = selected.affiliate_code;
       if (selected.rotator_pool && selected.rotator_pool.trim().length > 0) {
-        // Split by comma, space, or newline
-        const poolCodes = selected.rotator_pool.split(/[,\s\n]+/).filter(c => c.length > 0);
-        if (poolCodes.length > 0) {
-          activeCode = poolCodes[0];
+        let poolItems = [];
+        
+        try {
+          // Attempt JSON parse for structured pools
+          const parsed = JSON.parse(selected.rotator_pool);
+          if (parsed && typeof parsed === 'object') {
+            if (parsed.default && Array.isArray(parsed.default)) {
+              poolItems = parsed.default;
+            } else if (Array.isArray(parsed)) {
+              poolItems = parsed;
+            }
+          }
+        } catch (e) {
+          // Not JSON, fall back to simple split logic (comma, space, or newline)
+          poolItems = selected.rotator_pool.split(/[,\s\n]+/).filter(c => c.length > 0);
+        }
+
+        if (poolItems.length > 0 && typeof poolItems[0] === 'string') {
+          activeCode = poolItems[0].trim();
         }
       }
 
