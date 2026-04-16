@@ -565,7 +565,7 @@ export default function Home() {
         <div className={styles.faqGrid}>
           <div className={styles.faqItem}>
             <h4 className={styles.faqQuestion}>Is my money locked up?</h4>
-            <p className={styles.faqAnswer}>Absolutely not. Your funds stay 100% liquid. Withdraw or spend anytime with no penalties. (Unless the money is deposited into a bot where it is locked for 365 days and the profits are available within 24/48 hours)</p>
+            <p className={styles.faqAnswer}>Yes, If you make a deposit into the Ex-Ai bot the initial deposit will be locked for 365 days. Early withdrawal available with a 30% fee. The profits from the bot are available for withdrawal every 24-48 hours.</p>
           </div>
           <div className={styles.faqItem}>
             <h4 className={styles.faqQuestion}>How does the AI actually make money?</h4>

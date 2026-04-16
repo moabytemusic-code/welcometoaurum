@@ -565,7 +565,7 @@ export default function Home() {
         <div className={styles.faqGrid}>
           <div className={styles.faqItem}>
             <h4 className={styles.faqQuestion}>Can I actually take my money out?</h4>
-            <p className={styles.faqAnswer}>How important is it to you that you can withdraw or spend your daily profits without friction? With the Aurum ecosystem, your daily profits are always available (processing within 24-48 hours). If you decide to put your initial deposit into the automated bot, that specific deposit is locked in for one year to keep the system stable—but the profits it makes every single day are 100% yours to spend or withdraw whenever you want. Fair, right?</p>
+            <p className={styles.faqAnswer}>How important is it to you that you can withdraw or spend your daily profits without friction? With the Aurum ecosystem, your daily profits are always available (processing within 24-48 hours). If you decide to put your initial deposit into the automated bot, that specific deposit is locked in for one year to keep the system stable. While early withdrawal is available with a 30% fee, the profits it makes every single day are 100% yours to spend or withdraw whenever you want. Fair, right?</p>
           </div>
           <div className={styles.faqItem}>
             <h4 className={styles.faqQuestion}>How does the software actually make money?</h4>
