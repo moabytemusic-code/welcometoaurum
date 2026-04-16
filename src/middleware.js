@@ -10,12 +10,20 @@ export function middleware(request) {
     return NextResponse.next();
   }
 
-  // Check if user already has an assigned variant cookie
-  let variant = request.cookies.get('landing_variant')?.value;
+  // Check for a URL parameter 'v' to manually force a variant (useful for affiliates)
+  const urlVariant = request.nextUrl.searchParams.get('v');
+  let variant = '';
 
-  // If no variant is set or it's invalid, flip a coin
-  if (!variant || (variant !== 'pitch' && variant !== 'consultative')) {
-    variant = Math.random() < 0.5 ? 'pitch' : 'consultative';
+  if (urlVariant === 'pitch' || urlVariant === 'consultative') {
+    variant = urlVariant;
+  } else {
+    // Check if user already has an assigned variant cookie
+    variant = request.cookies.get('landing_variant')?.value;
+
+    // If no variant is set or it's invalid, flip a coin
+    if (!variant || (variant !== 'pitch' && variant !== 'consultative')) {
+      variant = Math.random() < 0.5 ? 'pitch' : 'consultative';
+    }
   }
 
   // Rewrite the request to the chosen variant's page folder
