@@ -872,15 +872,13 @@
 .tickerTrack {
   display: flex;
   white-space: nowrap;
-  animation: scrollTicker 40s linear infinite;
+  animation: scrollTicker 60s linear infinite;
   gap: 40px;
-  padding-left: 20px;
 }
 
 @media (min-width: 769px) {
   .tickerTrack {
-    animation: scrollTicker 80s linear infinite;
-    padding-left: 100%;
+    animation: scrollTicker 120s linear infinite;
   }
 }
 
@@ -898,7 +896,7 @@
 
 @keyframes scrollTicker {
   0% { transform: translateX(0); }
-  100% { transform: translateX(-100%); }
+  100% { transform: translateX(-50%); }
 }
 
 @media (max-width: 768px) {
