@@ -30,7 +30,7 @@ const CustomTicker = () => {
     <div className={styles.tickerTape}>
       <div className={styles.tickerTrack}>
         {data.concat(data).map((coin, index) => {
-           let symbol = coin.symbol.replace('USDT', '');
+           let symbol = coin.symbol === 'USDT' ? 'USDT' : coin.symbol.replace('USDT', '');
            let change = parseFloat(coin.priceChangePercent);
            return (
             <div key={`${coin.symbol}-${index}`} className={styles.tickerItem}>
