@@ -164,8 +164,35 @@ export default function Home() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [formData, setFormData] = useState({ name: '', email: '' });
   const [status, setStatus] = useState('');
+  const [sponsorData, setSponsorData] = useState({ code: '1W145K', name: 'Aurum Corporate' });
 
   useEffect(() => {
+    // Determine Sponsor on Land
+    const resolveSponsor = async () => {
+      const stored = localStorage.getItem('aurum_affiliate');
+      if (stored) {
+        try {
+          const parsed = JSON.parse(stored);
+          setSponsorData(parsed);
+          return;
+        } catch (e) {
+          localStorage.removeItem('aurum_affiliate');
+        }
+      }
+
+      try {
+        const res = await fetch('/api/rotator');
+        if (res.ok) {
+          const data = await res.json();
+          setSponsorData(data);
+          localStorage.setItem('aurum_affiliate', JSON.stringify(data));
+        }
+      } catch (err) {
+        console.error('Landing rotator error:', err);
+      }
+    };
+    resolveSponsor();
+
     // Simulated yield calculation based on historical 142% avg
     const monthlyRate = 1.784 / 12;
     setYieldValue(deposit * monthlyRate);
@@ -187,7 +214,12 @@ export default function Home() {
     try {
       const res = await fetch('/api/optin', {
         method: 'POST',
-        body: JSON.stringify({ email: formData.email, first_name: formData.name }),
+        body: JSON.stringify({ 
+          email: formData.email, 
+          first_name: formData.name,
+          sponsor_code: sponsorData.code,
+          sponsor_name: sponsorData.name
+        }),
         headers: { 'Content-Type': 'application/json' }
       });
       
