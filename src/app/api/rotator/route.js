@@ -9,7 +9,7 @@ export async function GET() {
     
     const { data: partners, error } = await supabase
       .from('aurum_affiliates')
-      .select('affiliate_code, full_name, email, phone')
+      .select('affiliate_code, full_name, email, phone, rotator_pool')
       .eq('is_promoted', true);
 
     if (error || !partners || partners.length === 0) {
@@ -21,12 +21,22 @@ export async function GET() {
       const randomIndex = Math.floor(Math.random() * partners.length);
       const selected = partners[randomIndex];
 
+      // LOGIC: Override affiliate_code with the first item in rotator_pool if it exists
+      let activeCode = selected.affiliate_code;
+      if (selected.rotator_pool && selected.rotator_pool.trim().length > 0) {
+        // Split by comma, space, or newline
+        const poolCodes = selected.rotator_pool.split(/[,\s\n]+/).filter(c => c.length > 0);
+        if (poolCodes.length > 0) {
+          activeCode = poolCodes[0];
+        }
+      }
+
       return NextResponse.json({
-        code: selected.affiliate_code,
+        code: activeCode,
         name: selected.full_name,
         email: selected.email,
         phone: selected.phone,
-        url: `https://backoffice.aurum.foundation/auth/sign-up?ref=${selected.affiliate_code}`
+        url: `https://backoffice.aurum.foundation/auth/sign-up?ref=${activeCode}`
       });
     }
 
