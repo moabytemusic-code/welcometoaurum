@@ -67,7 +67,7 @@ export default function LeadCapture() {
           margin: '0 auto 32px auto'
         }}>
           <div style={{ width: '8px', height: '8px', background: '#00ff88', borderRadius: '50%', boxShadow: '0 0 10px #00ff88', animation: 'pulse 1.5s infinite' }} />
-          <span style={{ fontSize: '12px', fontWeight: '800', color: '#fff', letterSpacing: '1px', textTransform: 'uppercase' }}>Secure Node: Active 94%</span>
+          <span style={{ fontSize: '11px', fontWeight: '800', color: '#fff', letterSpacing: '1px', textTransform: 'uppercase' }}>Algorithmic Node: Active 94%</span>
         </div>
 
         {!isProcessing ? (
@@ -77,31 +77,31 @@ export default function LeadCapture() {
               justifyContent: 'center', 
               alignItems: 'center', 
               gap: '8px', 
-              marginBottom: '24px',
+              marginBottom: '20px',
               background: 'rgba(45, 140, 240, 0.1)',
               padding: '8px 16px',
               borderRadius: '100px',
               width: 'max-content',
               maxWidth: '100%',
-              margin: '0 auto 24px auto',
+              margin: '0 auto 20px auto',
               border: '1px solid rgba(45, 140, 240, 0.2)'
             }}>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2d8cf0" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
               </svg>
-              <span style={{ fontSize: '11px', color: '#2d8cf0', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '1.5px', whiteSpace: 'nowrap' }}>Institutional Grade Portal</span>
+              <span style={{ fontSize: '11px', color: '#2d8cf0', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '1.5px', whiteSpace: 'nowrap' }}>Institutional Yield Protocol</span>
             </div>
 
-            <h1 className={styles.captureTitle}>The World's First <br/><span style={{textShadow: '0 0 30px rgba(0, 255, 136, 0.3)'}}>AI Money Machine.</span></h1>
-            <p className={styles.captureSub}>
-              Enter your authorization details to secure your private access link and institutional yield breakdown.
+            <h1 className={styles.captureTitle}>Stop Donating Wealth to <br/><span style={{textShadow: '0 0 30px rgba(0, 255, 136, 0.3)'}}>Legacy Banks.</span></h1>
+            <p className={styles.captureSub} style={{ maxWidth: '420px', margin: '0 auto 40px auto' }}>
+              Join <strong>118,000+ partners</strong> leveraging the world’s first AI-driven ecosystem designed to squeeze maximum yield from global trades.
             </p>
 
             <form onSubmit={handleSubmit} className={styles.captureForm}>
               <div style={{ position: 'relative' }}>
                 <input 
                   type="text" 
-                  placeholder="First Name" 
+                  placeholder="First Name (Authorization)" 
                   required 
                   className={styles.captureInput}
                   value={formData.name}
@@ -111,7 +111,7 @@ export default function LeadCapture() {
               <div style={{ position: 'relative' }}>
                 <input 
                   type="email" 
-                  placeholder="Institutional Email" 
+                  placeholder="Institutional Email Address" 
                   required 
                   className={styles.captureInput}
                   value={formData.email}
@@ -121,7 +121,7 @@ export default function LeadCapture() {
               <div style={{ position: 'relative' }}>
                 <input 
                   type="tel" 
-                  placeholder="SMS Enabled Mobile Number" 
+                  placeholder="Secure Phone (SMS Yield Alerts)" 
                   required 
                   className={styles.captureInput}
                   value={formData.phone}
@@ -129,16 +129,23 @@ export default function LeadCapture() {
                 />
               </div>
               <button type="submit" className={styles.primaryCta} style={{ width: '100%', marginTop: '8px' }}>
-                Initialize Connection Flow →
+                Initialize Security Flow →
               </button>
             </form>
 
             <div className={styles.captureSafe}>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
-                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-              </svg>
-              <span>Privacy Protected. End-to-End Encryption Active.</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#00ff88" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                <span>No Credit Card Required</span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#00ff88" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                <span>Free-to-Join Access</span>
+              </div>
             </div>
           </>
         ) : (
