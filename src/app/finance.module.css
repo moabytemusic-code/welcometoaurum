@@ -1137,10 +1137,21 @@
 
 @media (max-width: 768px) {
   .captureCard {
-    padding: 40px 24px;
-    border-radius: 24px;
+    padding: 48px 20px;
+    border-radius: 32px;
+    margin: 0 16px;
   }
   .captureTitle {
-    font-size: 30px;
+    font-size: 28px;
+    margin-bottom: 20px;
+  }
+  .captureSub {
+    font-size: 16px;
+    margin-bottom: 32px;
+  }
+  .captureSafe {
+    font-size: 13px;
+    line-height: 1.4;
+    padding: 0 10px;
   }
 }

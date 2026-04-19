@@ -64,14 +64,15 @@ export default function LeadCapture() {
               background: 'rgba(45, 140, 240, 0.1)',
               padding: '8px 16px',
               borderRadius: '100px',
-              width: 'fit-content',
+              width: 'max-content',
+              maxWidth: '100%',
               margin: '0 auto 24px auto',
               border: '1px solid rgba(45, 140, 240, 0.2)'
             }}>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2d8cf0" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
               </svg>
-              <span style={{ fontSize: '11px', color: '#2d8cf0', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '1.5px' }}>Institutional Grade Port</span>
+              <span style={{ fontSize: '11px', color: '#2d8cf0', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '1.5px', whiteSpace: 'nowrap' }}>Institutional Grade Portal</span>
             </div>
 
             <h1 className={styles.captureTitle}>Access the World's First <br/><span style={{color: '#00ff88'}}>AI Money Machine.</span></h1>
@@ -110,11 +111,11 @@ export default function LeadCapture() {
             </form>
 
             <div className={styles.captureSafe}>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
                 <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
                 <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
               </svg>
-              Privacy Protected. No KYC Required. No Credit Card Needed.
+              <span>Privacy Protected. No KYC Required. No Credit Card Needed.</span>
             </div>
           </>
         ) : (
@@ -126,8 +127,8 @@ export default function LeadCapture() {
         )}
       </div>
 
-      {/* Subtle Background Elements */}
-      <div style={{
+      {/* Subtle Background Elements - Hidden on small mobile to prevent overflow issues */}
+      <div className="mobile-hide" style={{
         position: 'absolute',
         top: '20%',
         left: '10%',
@@ -137,7 +138,7 @@ export default function LeadCapture() {
         pointerEvents: 'none',
         zIndex: 0
       }}></div>
-      <div style={{
+      <div className="mobile-hide" style={{
         position: 'absolute',
         bottom: '10%',
         right: '5%',
@@ -147,6 +148,11 @@ export default function LeadCapture() {
         pointerEvents: 'none',
         zIndex: 0
       }}></div>
+      <style jsx>{`
+        @media (max-width: 600px) {
+          .mobile-hide { display: none; }
+        }
+      `}</style>
     </main>
   );
 }
