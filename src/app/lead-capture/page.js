@@ -53,6 +53,23 @@ export default function LeadCapture() {
   return (
     <main className={styles.captureContainer}>
       <div className={styles.captureCard}>
+        {/* Connection Pulse Indicator */}
+        <div style={{ 
+          display: 'flex', 
+          alignItems: 'center', 
+          gap: '12px', 
+          marginBottom: '32px',
+          background: 'rgba(0, 0, 0, 0.4)',
+          border: '1px solid rgba(255, 255, 255, 0.1)',
+          padding: '8px 20px',
+          borderRadius: '100px',
+          width: 'max-content',
+          margin: '0 auto 32px auto'
+        }}>
+          <div style={{ width: '8px', height: '8px', background: '#00ff88', borderRadius: '50%', boxShadow: '0 0 10px #00ff88', animation: 'pulse 1.5s infinite' }} />
+          <span style={{ fontSize: '12px', fontWeight: '800', color: '#fff', letterSpacing: '1px', textTransform: 'uppercase' }}>Secure Node: Active 94%</span>
+        </div>
+
         {!isProcessing ? (
           <>
             <div style={{ 
@@ -75,38 +92,44 @@ export default function LeadCapture() {
               <span style={{ fontSize: '11px', color: '#2d8cf0', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '1.5px', whiteSpace: 'nowrap' }}>Institutional Grade Portal</span>
             </div>
 
-            <h1 className={styles.captureTitle}>Access the World's First <br/><span style={{color: '#00ff88'}}>AI Money Machine.</span></h1>
+            <h1 className={styles.captureTitle}>The World's First <br/><span style={{textShadow: '0 0 30px rgba(0, 255, 136, 0.3)'}}>AI Money Machine.</span></h1>
             <p className={styles.captureSub}>
-              Enter your details below to receive your private access link and institutional yield breakdown via SMS and Email.
+              Enter your authorization details to secure your private access link and institutional yield breakdown.
             </p>
 
             <form onSubmit={handleSubmit} className={styles.captureForm}>
-              <input 
-                type="text" 
-                placeholder="First Name" 
-                required 
-                className={styles.captureInput}
-                value={formData.name}
-                onChange={(e) => setFormData({...formData, name: e.target.value})}
-              />
-              <input 
-                type="email" 
-                placeholder="Best Email Address" 
-                required 
-                className={styles.captureInput}
-                value={formData.email}
-                onChange={(e) => setFormData({...formData, email: e.target.value})}
-              />
-              <input 
-                type="tel" 
-                placeholder="Phone Number (for yields alerts)" 
-                required 
-                className={styles.captureInput}
-                value={formData.phone}
-                onChange={(e) => setFormData({...formData, phone: e.target.value})}
-              />
+              <div style={{ position: 'relative' }}>
+                <input 
+                  type="text" 
+                  placeholder="First Name" 
+                  required 
+                  className={styles.captureInput}
+                  value={formData.name}
+                  onChange={(e) => setFormData({...formData, name: e.target.value})}
+                />
+              </div>
+              <div style={{ position: 'relative' }}>
+                <input 
+                  type="email" 
+                  placeholder="Institutional Email" 
+                  required 
+                  className={styles.captureInput}
+                  value={formData.email}
+                  onChange={(e) => setFormData({...formData, email: e.target.value})}
+                />
+              </div>
+              <div style={{ position: 'relative' }}>
+                <input 
+                  type="tel" 
+                  placeholder="SMS Enabled Mobile Number" 
+                  required 
+                  className={styles.captureInput}
+                  value={formData.phone}
+                  onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                />
+              </div>
               <button type="submit" className={styles.primaryCta} style={{ width: '100%', marginTop: '8px' }}>
-                Initialize Connection →
+                Initialize Connection Flow →
               </button>
             </form>
 
@@ -115,7 +138,7 @@ export default function LeadCapture() {
                 <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
                 <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
               </svg>
-              <span>Privacy Protected. No KYC Required. No Credit Card Needed.</span>
+              <span>Privacy Protected. End-to-End Encryption Active.</span>
             </div>
           </>
         ) : (
@@ -130,27 +153,44 @@ export default function LeadCapture() {
       {/* Subtle Background Elements - Hidden on small mobile to prevent overflow issues */}
       <div className="mobile-hide" style={{
         position: 'absolute',
-        top: '20%',
-        left: '10%',
-        width: '400px',
-        height: '400px',
-        background: 'radial-gradient(circle, rgba(45, 140, 240, 0.03) 0%, transparent 70%)',
-        pointerEvents: 'none',
-        zIndex: 0
+        top: '15%',
+        right: '15%',
+        width: '120px',
+        height: '120px',
+        background: 'rgba(45, 140, 240, 0.05)',
+        borderRadius: '30px',
+        backdropFilter: 'blur(10px)',
+        border: '1px solid rgba(255, 255, 255, 0.1)',
+        transform: 'rotate(15deg)',
+        animation: 'float 10s infinite alternate',
+        zIndex: 1
       }}></div>
       <div className="mobile-hide" style={{
         position: 'absolute',
-        bottom: '10%',
-        right: '5%',
-        width: '500px',
-        height: '500px',
-        background: 'radial-gradient(circle, rgba(0, 255, 136, 0.03) 0%, transparent 70%)',
-        pointerEvents: 'none',
-        zIndex: 0
+        bottom: '20%',
+        left: '10%',
+        width: '80px',
+        height: '80px',
+        background: 'rgba(0, 255, 136, 0.05)',
+        borderRadius: '50%',
+        backdropFilter: 'blur(10px)',
+        border: '1px solid rgba(255, 255, 255, 0.1)',
+        animation: 'float 8s infinite alternate-reverse',
+        zIndex: 1
       }}></div>
+
       <style jsx>{`
         @media (max-width: 600px) {
           .mobile-hide { display: none; }
+        }
+        @keyframes pulse {
+          0% { transform: scale(1); opacity: 0.8; }
+          50% { transform: scale(1.2); opacity: 1; }
+          100% { transform: scale(1); opacity: 0.8; }
+        }
+        @keyframes float {
+          0% { transform: translateY(0) rotate(0deg); }
+          100% { transform: translateY(-40px) rotate(10deg); }
         }
       `}</style>
     </main>
