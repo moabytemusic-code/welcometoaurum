@@ -162,7 +162,7 @@ export default function Home() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
-  const [formData, setFormData] = useState({ name: '', email: '' });
+  const [formData, setFormData] = useState({ name: '', email: '', phone: '' });
   const [status, setStatus] = useState('');
   const [sponsorData, setSponsorData] = useState({ code: '1W145K', name: 'Aurum Corporate' });
 
@@ -223,6 +223,7 @@ export default function Home() {
         body: JSON.stringify({ 
           email: formData.email, 
           first_name: formData.name,
+          phone: formData.phone,
           sponsor_code: sponsorData.code,
           sponsor_name: sponsorData.name,
           landing_variant: getVariant()
@@ -298,6 +299,16 @@ export default function Home() {
                       className={styles.modalInput}
                       value={formData.email}
                       onChange={(e) => setFormData({...formData, email: e.target.value})}
+                    />
+                  </div>
+                  <div style={{ position: 'relative' }}>
+                    <input 
+                      type="tel" 
+                      placeholder="Secure Phone (Yield Alerts)" 
+                      required 
+                      className={styles.modalInput}
+                      value={formData.phone}
+                      onChange={(e) => setFormData({...formData, phone: e.target.value})}
                     />
                   </div>
                   <button type="submit" className={styles.primaryCta} style={{ width: '100%', marginTop: '8px' }}>

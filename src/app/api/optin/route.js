@@ -4,6 +4,10 @@ export async function POST(req) {
   try {
     const { email, first_name, phone, sponsor_code, sponsor_name, landing_variant } = await req.json();
 
+    if (!phone || phone.trim() === '') {
+      return NextResponse.json({ success: false, error: 'Phone number is required' }, { status: 400 });
+    }
+
     if (!process.env.BREVO_API_KEY) {
       console.error('BREVO_API_KEY is not defined');
       return NextResponse.json({ success: true, message: 'Simulated success (API Key missing)' });
