@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 
 export async function POST(req) {
   try {
-    const { email, first_name, sponsor_code, sponsor_name, landing_variant } = await req.json();
+    const { email, first_name, phone, sponsor_code, sponsor_name, landing_variant } = await req.json();
 
     if (!process.env.BREVO_API_KEY) {
       console.error('BREVO_API_KEY is not defined');
@@ -13,6 +13,7 @@ export async function POST(req) {
       email,
       attributes: {
         FIRSTNAME: first_name,
+        SMS: phone || '', // Phone support added for lead capture
         SPONSOR_CODE: sponsor_code || '1W145K',
         SPONSOR_NAME: sponsor_name || 'Aurum Corporate',
         LANDING_VARIANT: landing_variant || 'unknown'

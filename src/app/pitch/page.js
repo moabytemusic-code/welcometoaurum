@@ -254,33 +254,66 @@ export default function Home() {
           <div className={styles.modalContent}>
             {!isProcessing ? (
               <>
+                <div style={{ 
+                  display: 'flex', 
+                  justifyContent: 'center', 
+                  alignItems: 'center', 
+                  gap: '8px', 
+                  marginBottom: '24px',
+                  background: 'rgba(45, 140, 240, 0.1)',
+                  padding: '8px 16px',
+                  borderRadius: '100px',
+                  width: 'fit-content',
+                  margin: '0 auto 24px auto',
+                  border: '1px solid rgba(45, 140, 240, 0.2)'
+                }}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2d8cf0" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                  </svg>
+                  <span style={{ fontSize: '11px', color: '#2d8cf0', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '1.5px' }}>Institutional Secure Portal</span>
+                </div>
+
                 <h2 className={styles.modalTitle}>Establish Your Connection</h2>
-                <p className={styles.modalSub}>Where should we send your official partner link and personalized yield breakdown?</p>
+                <p className={styles.modalSub}>
+                  Enter your details to receive your <strong>Official Partner Link</strong> and a personalized <strong>Institutional Yield Breakdown</strong> based on your capital.
+                </p>
+                
                 <form onSubmit={handleOptIn} className={styles.modalForm}>
-                  <input 
-                    type="text" 
-                    placeholder="First Name" 
-                    required 
-                    className={styles.modalInput}
-                    value={formData.name}
-                    onChange={(e) => setFormData({...formData, name: e.target.value})}
-                  />
-                  <input 
-                    type="email" 
-                    placeholder="Best Email Address" 
-                    required 
-                    className={styles.modalInput}
-                    value={formData.email}
-                    onChange={(e) => setFormData({...formData, email: e.target.value})}
-                  />
-                  <button type="submit" className={styles.primaryCta}>Initialize Connection →</button>
-                  <p className={styles.modalSafe}>✓ No Credit Card Required. Institutional Privacy Active.</p>
+                  <div style={{ position: 'relative' }}>
+                    <input 
+                      type="text" 
+                      placeholder="First Name" 
+                      required 
+                      className={styles.modalInput}
+                      value={formData.name}
+                      onChange={(e) => setFormData({...formData, name: e.target.value})}
+                    />
+                  </div>
+                  <div style={{ position: 'relative' }}>
+                    <input 
+                      type="email" 
+                      placeholder="Institutional Email Address" 
+                      required 
+                      className={styles.modalInput}
+                      value={formData.email}
+                      onChange={(e) => setFormData({...formData, email: e.target.value})}
+                    />
+                  </div>
+                  <button type="submit" className={styles.primaryCta} style={{ width: '100%', marginTop: '8px' }}>
+                    Initialize Your Access →
+                  </button>
+                  <div style={{ marginTop: '20px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    <p className={styles.modalSafe}>🔒 End-to-End Encryption Active</p>
+                    <p style={{ fontSize: '10px', color: 'rgba(255,255,255,0.2)', textTransform: 'uppercase', letterSpacing: '1px' }}>Verified by Aurum Security Protocol v4.2</p>
+                  </div>
                 </form>
               </>
             ) : (
               <div className={styles.processingState}>
                 <div className={styles.spinner} />
                 <div className={styles.statusText}>{status}</div>
+                <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)', marginTop: '-8px' }}>Creating your secure encrypted node...</p>
               </div>
             )}
             <button className={styles.closeModal} onClick={() => setIsModalOpen(false)}>×</button>
