@@ -59,6 +59,25 @@ export async function PATCH(request) {
   }
 }
 
+export async function POST(request) {
+  if (!checkAuth(request)) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
+  try {
+    const body = await request.json();
+    const { data, error } = await supabase
+      .from('aurum_affiliates')
+      .insert([body])
+      .select();
+
+    if (error) throw error;
+    return NextResponse.json(data[0]);
+  } catch (err) {
+    return NextResponse.json({ error: err.message }, { status: 500 });
+  }
+}
+
 export async function DELETE(request) {
   if (!checkAuth(request)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });

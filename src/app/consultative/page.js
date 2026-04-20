@@ -169,6 +169,7 @@ export default function Home() {
   useEffect(() => {
     // Determine Sponsor on Land
     const resolveSponsor = async () => {
+      // 1. Check for existing session
       const stored = localStorage.getItem('aurum_affiliate');
       if (stored) {
         try {
@@ -180,15 +181,21 @@ export default function Home() {
         }
       }
 
+      // 2. Resolve New Sponsor (Individual ref or Rotator)
       try {
-        const res = await fetch('/api/rotator');
+        const params = new URLSearchParams(window.location.search);
+        const refCode = params.get('ref');
+        
+        const url = refCode ? `/api/rotator?code=${refCode}` : '/api/rotator';
+        const res = await fetch(url);
+        
         if (res.ok) {
           const data = await res.json();
           setSponsorData(data);
           localStorage.setItem('aurum_affiliate', JSON.stringify(data));
         }
       } catch (err) {
-        console.error('Landing rotator error:', err);
+        console.error('Sponsor resolution error:', err);
       }
     };
     resolveSponsor();

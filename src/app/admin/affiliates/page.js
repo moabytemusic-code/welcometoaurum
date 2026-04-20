@@ -7,6 +7,9 @@ export default function AffiliatesManager() {
   const [partners, setPartners] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [newPartner, setNewPartner] = useState({ full_name: '', email: '', affiliate_code: '', phone: '' });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const fetchPartners = async () => {
     try {
@@ -63,6 +66,27 @@ export default function AffiliatesManager() {
     }
   };
 
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    try {
+      const res = await fetch('/api/admin/affiliates', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newPartner),
+      });
+      if (res.ok) {
+        setShowAddModal(false);
+        setNewPartner({ full_name: '', email: '', affiliate_code: '', phone: '' });
+        fetchPartners();
+      }
+    } catch (e) {
+      console.error('Registration error:', e);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   const availableFunnels = [
     { id: 'pitch', label: 'Pitch' },
     { id: 'consultative', label: 'Consultative' },
@@ -83,15 +107,82 @@ export default function AffiliatesManager() {
           <h1 className={styles.sectionTitle} style={{ textAlign: 'left', marginBottom: '8px' }}>Partner Management</h1>
           <p className={styles.sectionSub} style={{ textAlign: 'left' }}>Oversee the active affiliate pool and manage funnel access.</p>
         </div>
-        <input 
-          type="text" 
-          placeholder="Search partners..." 
-          className={styles.modalInput}
-          style={{ maxWidth: '300px', marginBottom: '0' }}
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
+        <div style={{ display: 'flex', gap: '16px' }}>
+          <button 
+            onClick={() => setShowAddModal(true)}
+            className={styles.primaryCta} 
+            style={{ padding: '12px 24px', fontSize: '14px' }}
+          >
+            + Add New Partner
+          </button>
+          <input 
+            type="text" 
+            placeholder="Search partners..." 
+            className={styles.modalInput}
+            style={{ maxWidth: '300px', marginBottom: '0' }}
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
       </div>
+
+      {showAddModal && (
+        <div className={styles.modalOverlay} style={{ zIndex: 100 }}>
+          <div className={styles.modalContent} style={{ maxWidth: '500px' }}>
+            <h2 className={styles.modalTitle}>Register New Partner</h2>
+            <form onSubmit={handleRegister} className={styles.modalForm}>
+              <input 
+                type="text" 
+                placeholder="Full Name" 
+                required 
+                className={styles.modalInput}
+                value={newPartner.full_name}
+                onChange={(e) => setNewPartner({...newPartner, full_name: e.target.value})}
+              />
+              <input 
+                type="email" 
+                placeholder="Email Address" 
+                required 
+                className={styles.modalInput}
+                value={newPartner.email}
+                onChange={(e) => setNewPartner({...newPartner, email: e.target.value})}
+              />
+              <input 
+                type="text" 
+                placeholder="Affiliate Reference Code" 
+                required 
+                className={styles.modalInput}
+                value={newPartner.affiliate_code}
+                onChange={(e) => setNewPartner({...newPartner, affiliate_code: e.target.value})}
+              />
+              <input 
+                type="tel" 
+                placeholder="Phone (Optional)" 
+                className={styles.modalInput}
+                value={newPartner.phone}
+                onChange={(e) => setNewPartner({...newPartner, phone: e.target.value})}
+              />
+              <div style={{ display: 'flex', gap: '12px', marginTop: '12px' }}>
+                <button type="submit" disabled={isSubmitting} className={styles.primaryCta} style={{ flex: 1 }}>
+                  {isSubmitting ? 'Registering...' : 'Complete Registration'}
+                </button>
+                <button 
+                  type="button" 
+                  onClick={() => setShowAddModal(false)} 
+                  className={styles.secondaryBtn} 
+                  style={{ 
+                    background: 'rgba(255,255,255,0.05)', 
+                    border: '1px solid rgba(255,255,255,0.1)',
+                    padding: '0 24px'
+                  }}
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
 
       <div style={{ 
         background: 'rgba(255,255,255,0.02)', 
@@ -108,6 +199,7 @@ export default function AffiliatesManager() {
                 <th style={{ textAlign: 'left', padding: '20px 24px', fontSize: '12px', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase' }}>Partner</th>
                 <th style={{ textAlign: 'left', padding: '20px 24px', fontSize: '12px', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase' }}>Code</th>
                 <th style={{ textAlign: 'left', padding: '20px 24px', fontSize: '12px', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase' }}>Unlocked Funnels</th>
+                <th style={{ textAlign: 'left', padding: '20px 24px', fontSize: '12px', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase' }}>Last Served</th>
                 <th style={{ textAlign: 'center', padding: '20px 24px', fontSize: '12px', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase' }}>Rotator</th>
               </tr>
             </thead>
@@ -148,6 +240,11 @@ export default function AffiliatesManager() {
                             </button>
                           );
                         })}
+                      </div>
+                    </td>
+                    <td style={{ padding: '20px 24px' }}>
+                      <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)' }}>
+                        {p.last_served_at ? new Date(p.last_served_at).toLocaleString() : 'Never'}
                       </div>
                     </td>
                     <td style={{ padding: '20px 24px', textAlign: 'center' }}>

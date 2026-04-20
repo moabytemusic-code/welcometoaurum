@@ -1,12 +1,47 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from '../finance.module.css';
 
 export default function LeadCapture() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [status, setStatus] = useState('');
   const [formData, setFormData] = useState({ name: '', email: '', phone: '' });
+  const [sponsorData, setSponsorData] = useState({ code: '1W145K', name: 'Aurum Corporate' });
+
+  useEffect(() => {
+    const resolveSponsor = async () => {
+      // 1. Check for existing session
+      const stored = localStorage.getItem('aurum_affiliate');
+      if (stored) {
+        try {
+          const parsed = JSON.parse(stored);
+          setSponsorData(parsed);
+          return;
+        } catch (e) {
+          localStorage.removeItem('aurum_affiliate');
+        }
+      }
+
+      // 2. Resolve New Sponsor (Individual ref or Rotator)
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const refCode = params.get('ref');
+        
+        const url = refCode ? `/api/rotator?code=${refCode}` : '/api/rotator';
+        const res = await fetch(url);
+        
+        if (res.ok) {
+          const data = await res.json();
+          setSponsorData(data);
+          localStorage.setItem('aurum_affiliate', JSON.stringify(data));
+        }
+      } catch (err) {
+        console.error('Sponsor resolution error:', err);
+      }
+    };
+    resolveSponsor();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,6 +62,8 @@ export default function LeadCapture() {
           email: formData.email,
           first_name: formData.name,
           phone: formData.phone,
+          sponsor_code: sponsorData.code,
+          sponsor_name: sponsorData.name,
           landing_variant: 'lead-capture'
         }),
         headers: { 'Content-Type': 'application/json' }
