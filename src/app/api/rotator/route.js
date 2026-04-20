@@ -28,13 +28,15 @@ export async function GET(request) {
     // 2. Sequential Rotator Logic (Fair Round-Robin)
     // We look for partners who:
     // - Are promoted (LIVE)
-    // - Have permission for the core site funnels (pitch or consultative)
+    // - Have permission for the SPECIFIC funnel requested (defaults to 'pitch')
     // - Order by 'last_served_at' ASC to pick the person who hasn't had a lead in the longest time.
+    const funnelId = searchParams.get('funnel') || 'pitch';
+    
     const { data: partners, error } = await supabase
       .from('aurum_affiliates')
       .select('id, affiliate_code, full_name, email, phone, rotator_pool')
       .eq('is_promoted', true)
-      .or('unlocked_funnels.ilike.%pitch%,unlocked_funnels.ilike.%consultative%')
+      .ilike('unlocked_funnels', `%${funnelId}%`)
       .order('last_served_at', { ascending: true })
       .limit(1);
 

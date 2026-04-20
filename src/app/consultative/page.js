@@ -186,7 +186,9 @@ export default function Home() {
         const params = new URLSearchParams(window.location.search);
         const refCode = params.get('ref');
         
-        const url = refCode ? `/api/rotator?code=${refCode}` : '/api/rotator';
+        const url = refCode 
+          ? `/api/rotator?code=${refCode}&funnel=consultative` 
+          : '/api/rotator?funnel=consultative';
         const res = await fetch(url);
         
         if (res.ok) {

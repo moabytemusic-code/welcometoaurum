@@ -28,7 +28,9 @@ export default function LeadCapture() {
         const params = new URLSearchParams(window.location.search);
         const refCode = params.get('ref');
         
-        const url = refCode ? `/api/rotator?code=${refCode}` : '/api/rotator';
+        const url = refCode 
+          ? `/api/rotator?code=${refCode}&funnel=pitch` 
+          : '/api/rotator?funnel=pitch';
         const res = await fetch(url);
         
         if (res.ok) {
