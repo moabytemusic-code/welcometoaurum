@@ -1,14 +1,9 @@
 import { NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
-
-// Check for admin session
-function checkAuth(request) {
-  const session = request.cookies.get('aurum_admin_session')?.value;
-  return session === 'authenticated';
-}
+import { isValidAdminSession } from '@/lib/auth';
 
 export async function GET(request) {
-  if (!checkAuth(request)) {
+  if (!(await isValidAdminSession())) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
@@ -38,7 +33,7 @@ export async function GET(request) {
 }
 
 export async function PATCH(request) {
-  if (!checkAuth(request)) {
+  if (!(await isValidAdminSession())) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
@@ -60,7 +55,7 @@ export async function PATCH(request) {
 }
 
 export async function POST(request) {
-  if (!checkAuth(request)) {
+  if (!(await isValidAdminSession())) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
@@ -79,7 +74,7 @@ export async function POST(request) {
 }
 
 export async function DELETE(request) {
-  if (!checkAuth(request)) {
+  if (!(await isValidAdminSession())) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 

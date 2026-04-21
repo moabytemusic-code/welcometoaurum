@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { QrCode, Download, X } from 'lucide-react';
 import styles from '@/app/finance.module.css';
 
 export default function AffiliatesManager() {
@@ -10,6 +11,14 @@ export default function AffiliatesManager() {
   const [showAddModal, setShowAddModal] = useState(false);
   const [newPartner, setNewPartner] = useState({ full_name: '', email: '', affiliate_code: '', phone: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showSyncModal, setShowSyncModal] = useState(false);
+  const [syncData, setSyncData] = useState(JSON.stringify([
+    { "full_name": "John Doe", "email": "john@example.com", "affiliate_code": "JD100" },
+    { "full_name": "Jane Smith", "email": "jane@example.com", "affiliate_code": "JS200" }
+  ], null, 2));
+  const [isSyncing, setIsSyncing] = useState(false);
+  const [showQrModal, setShowQrModal] = useState(false);
+  const [qrData, setQrData] = useState({ title: '', url: '' });
 
   const fetchPartners = async () => {
     try {
@@ -87,6 +96,55 @@ export default function AffiliatesManager() {
     }
   };
 
+  const handleBulkSync = async (e) => {
+    e.preventDefault();
+    setIsSyncing(true);
+    try {
+      let parsed;
+      try {
+        parsed = JSON.parse(syncData);
+      } catch (err) {
+        alert('Invalid JSON format. Please ensure you are pasting a valid array of partners.');
+        setIsSyncing(false);
+        return;
+      }
+
+      const res = await fetch('/api/admin/affiliates/import', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ partners: Array.isArray(parsed) ? parsed : [parsed] }),
+      });
+
+      const contentType = res.headers.get('content-type');
+      let result = {};
+      
+      if (contentType && contentType.includes('application/json')) {
+        result = await res.json();
+      } else {
+        const text = await res.text();
+        console.error('Non-JSON response received:', text);
+        result = { error: 'Server returned an unexpected response format.' };
+      }
+
+      if (res.ok) {
+        alert(`SUCCESS: Imported ${result.count} partners.`);
+        setShowSyncModal(false);
+        setSyncData('');
+        fetchPartners();
+      } else {
+        console.error(`Import API Failure [${res.status}]:`, result);
+        const msg = result.error || 'Server error or invalid response';
+        alert(`IMPORT FAILED (Status ${res.status})\n\nDetail: ${msg}\n\nTIP: If status is 401, please log out and back in.`);
+      }
+    } catch (e) {
+      console.error('Sync error:', e);
+      alert('An error occurred during synchronization.');
+    } finally {
+      setIsSyncing(false);
+    }
+  };
+
   const availableFunnels = [
     { id: 'pitch', label: 'Pitch' },
     { id: 'consultative', label: 'Consultative' },
@@ -99,6 +157,14 @@ export default function AffiliatesManager() {
     p.full_name?.toLowerCase().includes(searchTerm.toLowerCase()) || 
     p.affiliate_code?.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const openQr = (title, url) => {
+    const fullUrl = url.startsWith('http') ? url : window.location.origin + url;
+    setQrData({ title, url: fullUrl });
+    setShowQrModal(true);
+  };
+
+  const qrImageUrl = (data) => `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(data)}`;
 
   return (
     <div>
@@ -115,11 +181,43 @@ export default function AffiliatesManager() {
           >
             + Add New Partner
           </button>
+          <button 
+            onClick={() => openQr('Global Rotator', '/')}
+            className={styles.secondaryBtn} 
+            style={{ 
+              padding: '12px 20px', 
+              fontSize: '14px',
+              background: 'rgba(45, 140, 240, 0.05)',
+              border: '1px solid rgba(45, 140, 240, 0.1)',
+              color: '#2d8cf0',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px'
+            }}
+          >
+            <QrCode size={16} /> Rotator QR
+          </button>
+          <button 
+            onClick={() => setShowSyncModal(true)}
+            className={styles.secondaryBtn} 
+            style={{ 
+              padding: '12px 20px', 
+              fontSize: '14px',
+              background: 'rgba(0, 255, 136, 0.05)',
+              border: '1px solid rgba(0, 255, 136, 0.1)',
+              color: '#00ff88',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px'
+            }}
+          >
+            Bulk Sync
+          </button>
           <input 
             type="text" 
             placeholder="Search partners..." 
             className={styles.modalInput}
-            style={{ maxWidth: '300px', marginBottom: '0' }}
+            style={{ maxWidth: '250px', marginBottom: '0' }}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
@@ -183,6 +281,43 @@ export default function AffiliatesManager() {
           </div>
         </div>
       )}
+      {showSyncModal && (
+        <div className={styles.modalOverlay} style={{ zIndex: 100 }}>
+          <div className={styles.modalContent} style={{ maxWidth: '600px' }}>
+            <h2 className={styles.modalTitle}>Bulk Partner Sync</h2>
+            <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.5)', marginBottom: '20px' }}>
+              Paste a JSON array of partners to import them in bulk. Required fields per object: <code>email</code>, <code>full_name</code>, <code>affiliate_code</code>.
+            </p>
+            <form onSubmit={handleBulkSync} className={styles.modalForm}>
+              <textarea 
+                placeholder='[{"full_name": "Bob", "email": "bob@example.com", "affiliate_code": "BOB123"}]'
+                required 
+                className={styles.modalInput}
+                style={{ minHeight: '200px', fontFamily: 'monospace', fontSize: '12px', padding: '15px' }}
+                value={syncData}
+                onChange={(e) => setSyncData(e.target.value)}
+              />
+              <div style={{ display: 'flex', gap: '12px', marginTop: '12px' }}>
+                <button type="submit" disabled={isSyncing} className={styles.primaryCta} style={{ flex: 1, background: '#00ff88', color: '#000' }}>
+                  {isSyncing ? 'Syncing...' : 'Start Bulk Import'}
+                </button>
+                <button 
+                  type="button" 
+                  onClick={() => setShowSyncModal(false)} 
+                  className={styles.secondaryBtn} 
+                  style={{ 
+                    background: 'rgba(255,255,255,0.05)', 
+                    border: '1px solid rgba(255,255,255,0.1)',
+                    padding: '0 24px'
+                  }}
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
 
       <div style={{ 
         background: 'rgba(255,255,255,0.02)', 
@@ -213,7 +348,16 @@ export default function AffiliatesManager() {
                       <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)' }}>{p.email}</div>
                     </td>
                     <td style={{ padding: '20px 24px' }}>
-                      <code style={{ background: 'rgba(45, 140, 240, 0.1)', color: '#2d8cf0', padding: '4px 8px', borderRadius: '6px', fontSize: '12px' }}>{p.affiliate_code}</code>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <code style={{ background: 'rgba(45, 140, 240, 0.1)', color: '#2d8cf0', padding: '4px 8px', borderRadius: '6px', fontSize: '12px' }}>{p.affiliate_code}</code>
+                        <button 
+                          onClick={() => openQr(`Partner: ${p.full_name}`, `/?ref=${p.affiliate_code}`)}
+                          style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.3)', cursor: 'pointer', display: 'flex' }}
+                          title="Generate QR Code"
+                        >
+                          <QrCode size={14} />
+                        </button>
+                      </div>
                     </td>
                     <td style={{ padding: '20px 24px' }}>
                       <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
@@ -271,6 +415,60 @@ export default function AffiliatesManager() {
           </table>
         ) }
       </div>
+
+      {showQrModal && (
+        <div className={styles.modalOverlay} style={{ zIndex: 110 }}>
+          <div className={styles.modalContent} style={{ maxWidth: '380px', textAlign: 'center' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+              <h2 className={styles.modalTitle} style={{ margin: 0 }}>QR Resolution</h2>
+              <button 
+                onClick={() => setShowQrModal(false)}
+                style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.4)', cursor: 'pointer' }}
+              >
+                <X size={20} />
+              </button>
+            </div>
+            
+            <div style={{ 
+              background: '#fff', 
+              padding: '16px', 
+              borderRadius: '16px', 
+              display: 'inline-block',
+              marginBottom: '24px',
+              boxShadow: '0 0 40px rgba(45, 140, 240, 0.3)'
+            }}>
+              <img 
+                src={qrImageUrl(qrData.url)} 
+                alt="QR Code" 
+                style={{ display: 'block', width: '250px', height: '250px' }}
+              />
+            </div>
+            
+            <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '13px', marginBottom: '24px' }}>
+              Pointing to:<br/>
+              <code style={{ color: '#2d8cf0', fontSize: '11px', wordBreak: 'break-all' }}>{qrData.url}</code>
+            </p>
+            
+            <div style={{ display: 'flex', gap: '12px' }}>
+              <a 
+                href={qrImageUrl(qrData.url)} 
+                download={`QR_${qrData.title.replace(/\s+/g, '_')}.png`}
+                className={styles.primaryCta}
+                style={{ flex: 1, textDecoration: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}
+              >
+                <Download size={18} /> Save Image
+              </a>
+              <button 
+                onClick={() => setShowQrModal(false)}
+                className={styles.secondaryBtn}
+                style={{ flex: 0.5 }}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -14,8 +14,8 @@ export const config = {
 export async function middleware(request) {
   const { pathname } = request.nextUrl;
 
-  // 1. Protection for Admin Routes
-  if (pathname.startsWith('/admin')) {
+  // 1. Protection for Admin Pages (Excluding API routes and Login)
+  if (pathname.startsWith('/admin') && !pathname.startsWith('/api')) {
     if (pathname === '/admin/login') return NextResponse.next();
 
     const session = request.cookies.get('aurum_admin_session')?.value;
