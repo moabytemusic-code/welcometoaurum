@@ -19,6 +19,13 @@ export async function POST(request) {
   }
 
   try {
+    // PRE-FLIGHT CHECK: Verify Supabase is configured on the server
+    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+      return NextResponse.json({ 
+        error: 'DATABASE CONFIG MISSING: The server cannot find your Supabase URL or Key. Please check your Vercel Environment Variables.' 
+      }, { status: 500 });
+    }
+
     const { partners } = await request.json();
 
     if (!Array.isArray(partners)) {
