@@ -24,6 +24,7 @@ export default function AffiliatesManager() {
   const fetchPartners = async () => {
     try {
       const res = await fetch('/api/admin/affiliates', { 
+        headers: { 'Authorization': 'Bearer authenticated' },
         credentials: 'include',
         cache: 'no-store' 
       });
@@ -41,6 +42,7 @@ export default function AffiliatesManager() {
   const checkHeartbeat = async () => {
     try {
       const res = await fetch('/api/admin/auth/check', { 
+        headers: { 'Authorization': 'Bearer authenticated' },
         credentials: 'include',
         cache: 'no-store' 
       });
@@ -62,7 +64,10 @@ export default function AffiliatesManager() {
     const updated = !partner.is_promoted;
     const res = await fetch('/api/admin/affiliates', {
       method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer authenticated'
+      },
       credentials: 'include',
       cache: 'no-store',
       body: JSON.stringify({ id: partner.id, is_promoted: updated }),
@@ -88,7 +93,10 @@ export default function AffiliatesManager() {
 
     const res = await fetch('/api/admin/affiliates', {
       method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer authenticated'
+      },
       credentials: 'include',
       cache: 'no-store',
       body: JSON.stringify({ id: partner.id, unlocked_funnels: updatedString }),
@@ -105,7 +113,10 @@ export default function AffiliatesManager() {
     try {
       const res = await fetch('/api/admin/affiliates', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer authenticated'
+        },
         credentials: 'include',
         cache: 'no-store',
         body: JSON.stringify(newPartner),
@@ -137,7 +148,10 @@ export default function AffiliatesManager() {
 
       const res = await fetch('/api/admin/affiliates/import', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer authenticated'
+        },
         credentials: 'include',
         cache: 'no-store',
         body: JSON.stringify({ partners: Array.isArray(parsed) ? parsed : [parsed] }),
