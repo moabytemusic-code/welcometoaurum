@@ -58,28 +58,10 @@ export async function POST(request) {
       last_served_at: now
     }));
 
-    // ULTIMATE DIRECT CONNECT logic (Bypassing Library)
-    console.log('--- DIRECT CONNECT UPSERT START ---');
+    // ULTIMATE DIRECT CONNECT logic (Bypassing Library for absolute production stability)
+    console.log('--- DB SYNC START ---');
     const restUrl = `${supabaseUrl}/rest/v1/aurum_affiliates?on_conflict=email`;
     
-    // DIAGNOSTIC 1: Sanity Ping to GitHub (Connectivity Check)
-    let sanityStatus = 'UNTESTED';
-    try {
-      const sanityCheck = await fetch('https://api.github.com/zen', { signal: AbortSignal.timeout(3000) });
-      sanityStatus = sanityCheck.ok ? 'CONNECTED' : `FAILED (${sanityCheck.status})`;
-    } catch (e) {
-      sanityStatus = `BLOCKED: ${e.message}`;
-    }
-
-    // DIAGNOSTIC 2: URL Integrity
-    const urlMetrics = {
-      length: supabaseUrl.length,
-      domain: supabaseUrl.split('/')[2] || 'NONE',
-      hasSpace: supabaseUrl.includes(' '),
-      hasNewLine: supabaseUrl.includes('\n'),
-      protocol: supabaseUrl.split(':')[0]
-    };
-
     const dbRes = await fetch(restUrl, {
       method: 'POST',
       headers: {
@@ -95,8 +77,7 @@ export async function POST(request) {
       const errorText = await dbRes.text();
       return NextResponse.json({ 
         error: `DATABASE REJECTED REQUEST: ${dbRes.status}`,
-        details: errorText,
-        diagnostics: { sanityStatus, urlMetrics }
+        details: errorText
       }, { status: 500 });
     }
 
@@ -104,26 +85,14 @@ export async function POST(request) {
 
     return NextResponse.json({ 
       success: true, 
-      count: data?.length || 0,
-      diagnostics: { sanityStatus, urlMetrics }
+      count: data?.length || 0
     });
 
   } catch (err) {
-    console.error('Import API CRITICAL Error:', err);
-    
-    // Perform GitHub ping even in general failure catch
-    let sanityStatusFallback = 'OFFLINE';
-    try {
-      const s = await fetch('https://api.github.com/zen', { signal: AbortSignal.timeout(2000) });
-      if (s.ok) sanityStatusFallback = 'ONLINE';
-    } catch(e) {}
-
+    console.error('Import API Error:', err);
     return NextResponse.json({ 
       error: `PROD NETWORK ERROR: ${err.message}`,
-      cause: err.cause?.message || 'Check project pause status on Supabase',
-      sanity: sanityStatusFallback,
-      stack: err.stack?.split('\n')[0],
-      code: err.code || 'NO_CODE'
+      cause: err.cause?.message || 'Check connection settings'
     }, { status: 500 });
   }
 }

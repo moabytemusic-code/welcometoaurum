@@ -176,11 +176,7 @@ export default function AffiliatesManager() {
       } else {
         console.error(`Import API Failure [${res.status}]:`, result);
         const msg = result.error || 'Server error';
-        const cause = result.cause ? `\n\nCAUSE: ${result.cause}` : '';
-        const sanity = result.sanity || result.diagnostics?.sanityStatus ? `\n\nSANITY PING: ${result.sanity || result.diagnostics?.sanityStatus}` : '';
-        const url = result.diagnostics?.urlMetrics ? `\n\nURL LEN: ${result.diagnostics.urlMetrics.length} | SPACES: ${result.diagnostics.urlMetrics.hasSpace}` : '';
-        
-        alert(`IMPORT FAILED (Status ${res.status})\n\nDetail: ${msg}${cause}${sanity}${url}\n\nTIP: If status is 401, please log out and back in.`);
+        alert(`IMPORT FAILED (Status ${res.status})\n\nDetail: ${msg}\n\nTIP: Ensure your Service Role Key is correctly configured in Vercel.`);
       }
     } catch (e) {
       console.error('Sync error:', e);
