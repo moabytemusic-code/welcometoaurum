@@ -22,8 +22,13 @@ export async function POST(request) {
     const rawKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
 
     // Strip any hidden spaces, newlines, or invisible characters
-    const supabaseUrl = rawUrl.trim().replace(/[\n\r]/g, '');
+    let supabaseUrl = rawUrl.trim().replace(/[\n\r]/g, '');
     const supabaseAnonKey = rawKey.trim().replace(/[\n\r]/g, '');
+
+    // FORCE PROTOCOL: Ensure URL starts with https://
+    if (supabaseUrl && !supabaseUrl.startsWith('http')) {
+      supabaseUrl = `https://${supabaseUrl}`;
+    }
 
     if (!supabaseUrl || !supabaseAnonKey) {
       return NextResponse.json({ 
