@@ -37,7 +37,7 @@ export async function GET(request) {
     // - Order by 'last_served_at' ASC to pick the person who hasn't had a lead in the longest time.
     const funnelId = searchParams.get('funnel') || 'pitch';
     
-    const { data: partners, error } = await supabase
+    let { data: partners, error } = await supabase
       .from('aurum_affiliates')
       .select('id, affiliate_code, full_name, email, phone, rotator_pool')
       .eq('is_promoted', true)
@@ -45,10 +45,23 @@ export async function GET(request) {
       .order('last_served_at', { ascending: true })
       .limit(1);
 
+    // TIERED SEARCH: If no one found for specific funnel, fallback to ANY promoted partner
+    if (!partners || partners.length === 0) {
+      const fallbackSearch = await supabase
+        .from('aurum_affiliates')
+        .select('id, affiliate_code, full_name, email, phone, rotator_pool')
+        .eq('is_promoted', true)
+        .order('last_served_at', { ascending: true })
+        .limit(1);
+      
+      partners = fallbackSearch.data;
+      if (fallbackSearch.error) error = fallbackSearch.error;
+    }
+
     if (error) throw error;
 
     if (!partners || partners.length === 0) {
-      console.log('No promoted partners with permission found, using fallback.');
+      console.log('No promoted partners found even with fallback, using Corporate.');
       return NextResponse.json({
         code: "1W145K",
         name: "Aurum Corporate",
