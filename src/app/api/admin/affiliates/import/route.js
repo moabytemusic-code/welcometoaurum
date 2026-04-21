@@ -60,7 +60,7 @@ export async function POST(request) {
 
     // ULTIMATE DIRECT CONNECT logic (Bypassing Library)
     console.log('--- DIRECT CONNECT UPSERT START ---');
-    const restUrl = `${supabaseUrl}/rest/v1/aurum_affiliates`;
+    const restUrl = `${supabaseUrl}/rest/v1/aurum_affiliates?on_conflict=email`;
     
     // DIAGNOSTIC 1: Sanity Ping to GitHub (Connectivity Check)
     let sanityStatus = 'UNTESTED';
