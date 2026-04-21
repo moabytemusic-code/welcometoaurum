@@ -2,9 +2,11 @@ import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { isValidAdminSession } from '@/lib/auth';
 
+export const runtime = 'nodejs'; // FORCE FULL SERVER COMPATIBILITY
+
 /**
  * PRODUCTION IMPORT API
- * Now using dynamic client initialization for maximum Vercel/Edge reliability.
+ * Now using Dynamic Native Fetch + Node.js Runtime for absolute resilience.
  */
 export async function POST(request) {
   // Check auth using standard Next.js headers system
