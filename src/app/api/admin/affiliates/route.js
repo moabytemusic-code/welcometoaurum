@@ -23,7 +23,7 @@ export async function GET(request) {
     const { data, error } = await supabase
       .from('aurum_affiliates')
       .select('*')
-      .order('created_at', { ascending: false });
+      .order('last_served_at', { ascending: false, nullsFirst: false });
 
     if (error) throw error;
     return NextResponse.json(data);
