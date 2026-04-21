@@ -17,12 +17,15 @@ export default function AffiliatesManager() {
     { "full_name": "Jane Smith", "email": "jane@example.com", "affiliate_code": "JS200" }
   ], null, 2));
   const [isSyncing, setIsSyncing] = useState(false);
-  const [showQrModal, setShowQrModal] = useState(false);
   const [qrData, setQrData] = useState({ title: '', url: '' });
+  const [isSessionAlive, setIsSessionAlive] = useState(null);
 
   const fetchPartners = async () => {
     try {
-      const res = await fetch('/api/admin/affiliates', { cache: 'no-store' });
+      const res = await fetch('/api/admin/affiliates', { 
+        credentials: 'include',
+        cache: 'no-store' 
+      });
       if (res.ok) {
         const data = await res.json();
         setPartners(data);
@@ -34,8 +37,24 @@ export default function AffiliatesManager() {
     }
   };
 
+  const checkHeartbeat = async () => {
+    try {
+      const res = await fetch('/api/admin/auth/check', { 
+        credentials: 'include',
+        cache: 'no-store' 
+      });
+      const data = await res.json();
+      setIsSessionAlive(data.authenticated);
+    } catch (e) {
+      setIsSessionAlive(false);
+    }
+  };
+
   useEffect(() => {
     fetchPartners();
+    checkHeartbeat();
+    const interval = setInterval(checkHeartbeat, 30000);
+    return () => clearInterval(interval);
   }, []);
 
   const togglePromoted = async (partner) => {
@@ -43,6 +62,7 @@ export default function AffiliatesManager() {
     const res = await fetch('/api/admin/affiliates', {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
       cache: 'no-store',
       body: JSON.stringify({ id: partner.id, is_promoted: updated }),
     });
@@ -68,6 +88,7 @@ export default function AffiliatesManager() {
     const res = await fetch('/api/admin/affiliates', {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
       cache: 'no-store',
       body: JSON.stringify({ id: partner.id, unlocked_funnels: updatedString }),
     });
@@ -84,6 +105,8 @@ export default function AffiliatesManager() {
       const res = await fetch('/api/admin/affiliates', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        cache: 'no-store',
         body: JSON.stringify(newPartner),
       });
       if (res.ok) {
@@ -482,8 +505,8 @@ export default function AffiliatesManager() {
         color: 'rgba(255,255,255,0.3)',
         fontSize: '11px'
       }}>
-        Session Health: <span style={{ color: typeof document !== 'undefined' && document.cookie.includes('aurum_admin_session') ? '#00ff88' : '#ff4444' }}>
-          {typeof document !== 'undefined' && document.cookie.includes('aurum_admin_session') ? 'ACTIVE (Token Detected)' : 'INACTIVE (Token Missing from Browser)'}
+        Server Session Status: <span style={{ color: isSessionAlive === true ? '#00ff88' : isSessionAlive === false ? '#ff4444' : '#ffcc00' }}>
+          {isSessionAlive === true ? 'ACTIVE (Verified by Server)' : isSessionAlive === false ? 'INACTIVE (No Valid Cookie Found)' : 'CONNECTING...'}
         </span>
         <div style={{ marginTop: '8px' }}>
           Production Node Path: /admin/affiliates • Vercel Edge Optimized
