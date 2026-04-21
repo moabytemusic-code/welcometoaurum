@@ -1,11 +1,22 @@
 import { NextResponse } from 'next/server';
-import { supabase } from '@/lib/supabase';
+import { createClient } from '@supabase/supabase-js';
 import { isValidAdminSession } from '@/lib/auth';
+
+/**
+ * SHARED MASTER CLIENT UTILITY
+ */
+function getMasterClient() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
+  const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
+  return createClient(supabaseUrl, supabaseKey);
+}
 
 export async function GET(request) {
   if (!(await isValidAdminSession())) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
+
+  const supabase = getMasterClient();
 
   const { searchParams } = new URL(request.url);
   const quick = searchParams.get('quick');
@@ -38,6 +49,7 @@ export async function PATCH(request) {
   }
 
   try {
+    const supabase = getMasterClient();
     const body = await request.json();
     const { id, ...updates } = body;
 
@@ -60,6 +72,7 @@ export async function POST(request) {
   }
 
   try {
+    const supabase = getMasterClient();
     const body = await request.json();
     const { data, error } = await supabase
       .from('aurum_affiliates')
@@ -79,6 +92,7 @@ export async function DELETE(request) {
   }
 
   try {
+    const supabase = getMasterClient();
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
 
