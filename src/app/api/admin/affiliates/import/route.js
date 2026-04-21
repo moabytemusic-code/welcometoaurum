@@ -19,18 +19,19 @@ export async function POST(request) {
   try {
     // 1. HARDENED ENVIRONMENT SANITIZATION
     const rawUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-    const rawKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
+    // Prioritize Service Role Key for Admin Access, fallback to Anon Key
+    const rawKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
 
     // Strip any hidden spaces, newlines, or invisible characters
     let supabaseUrl = rawUrl.trim().replace(/[\n\r]/g, '');
-    const supabaseAnonKey = rawKey.trim().replace(/[\n\r]/g, '');
+    const supabaseKey = rawKey.trim().replace(/[\n\r]/g, '');
 
     // FORCE PROTOCOL: Ensure URL starts with https://
     if (supabaseUrl && !supabaseUrl.startsWith('http')) {
       supabaseUrl = `https://${supabaseUrl}`;
     }
 
-    if (!supabaseUrl || !supabaseAnonKey) {
+    if (!supabaseUrl || !supabaseKey) {
       return NextResponse.json({ 
         error: 'DATABASE CONFIG MISSING: No Supabase keys found on the server. Please check your Vercel Dashboard.' 
       }, { status: 500 });
@@ -82,8 +83,8 @@ export async function POST(request) {
     const dbRes = await fetch(restUrl, {
       method: 'POST',
       headers: {
-        'apikey': supabaseAnonKey,
-        'Authorization': `Bearer ${supabaseAnonKey}`,
+        'apikey': supabaseKey,
+        'Authorization': `Bearer ${supabaseKey}`,
         'Content-Type': 'application/json',
         'Prefer': 'resolution=merge-duplicates,return=representation'
       },
