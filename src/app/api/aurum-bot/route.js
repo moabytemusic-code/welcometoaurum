@@ -22,10 +22,9 @@ export async function GET() {
     if (!res.ok) throw new Error('Telegram fetch failed');
     const html = await res.text();
     
-    // Scrape HTML specifically for the highly predictable bot earnings pattern
-    // e.g. EX-AI BOT<br/>Daily return: +0.38%
-    const botMatch = html.match(/EX-AI BOT(?:<br\/>|\s)*Daily return:\s*([+-]?[\d.]+)%/i);
-    const proMatch = html.match(/EX-AI PRO(?:<br\/>|\s)*Daily return:\s*([+-]?[\d.]+)%/i);
+    // More robust regex to handle various tag nesting and whitespace
+    const botMatch = html.match(/EX-AI BOT[\s\S]*?Daily return:\s*(?:<b>)?([+-]?[\d.]+)%/i);
+    const proMatch = html.match(/EX-AI PRO[\s\S]*?Daily return:\s*(?:<b>)?([+-]?[\d.]+)%/i);
     
     let botVal = botMatch ? botMatch[1] : null;
     let proVal = proMatch ? proMatch[1] : null;

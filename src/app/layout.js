@@ -12,6 +12,8 @@ export const metadata = {
   keywords: ["AURUM", "AI Finance", "Neobanking", "Yield", "Passive Income"],
 };
 
+import GoogleTranslate from "@/components/GoogleTranslate";
+
 export default function RootLayout({ children }) {
   return (
     <html
@@ -20,6 +22,7 @@ export default function RootLayout({ children }) {
       suppressHydrationWarning
     >
       <body suppressHydrationWarning className="min-h-full flex flex-col font-sans bg-[#050505] text-white">
+        <GoogleTranslate />
         {children}
       </body>
     </html>
