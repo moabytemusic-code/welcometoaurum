@@ -15,8 +15,13 @@ export async function POST(request) {
   }
 
   try {
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+    // 1. HARDENED ENVIRONMENT SANITIZATION
+    const rawUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
+    const rawKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
+
+    // Strip any hidden spaces, newlines, or invisible characters
+    const supabaseUrl = rawUrl.trim().replace(/[\n\r]/g, '');
+    const supabaseAnonKey = rawKey.trim().replace(/[\n\r]/g, '');
 
     if (!supabaseUrl || !supabaseAnonKey) {
       return NextResponse.json({ 
@@ -24,7 +29,7 @@ export async function POST(request) {
       }, { status: 500 });
     }
 
-    // Build the client FRESH for this request to ensure latest env vars are used
+    // Build the client FRESH for this request
     const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
     // DEEP DIAGNOSTIC: Test the URL format
