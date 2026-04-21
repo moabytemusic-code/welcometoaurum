@@ -17,6 +17,7 @@ export default function AffiliatesManager() {
     { "full_name": "Jane Smith", "email": "jane@example.com", "affiliate_code": "JS200" }
   ], null, 2));
   const [isSyncing, setIsSyncing] = useState(false);
+  const [showQrModal, setShowQrModal] = useState(false);
   const [qrData, setQrData] = useState({ title: '', url: '' });
   const [isSessionAlive, setIsSessionAlive] = useState(null);
 
