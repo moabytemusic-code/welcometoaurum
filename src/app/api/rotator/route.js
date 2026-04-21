@@ -1,7 +1,12 @@
 import { NextResponse } from 'next/server';
-import { supabase } from '@/lib/supabase';
+import { createClient } from '@supabase/supabase-js';
 
 export async function GET(request) {
+  // CREATE MASTER CLIENT DYNAMICALLY FOR ROTATION
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
+  const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
+  const supabase = createClient(supabaseUrl, supabaseKey);
+
   const { searchParams } = new URL(request.url);
   const code = searchParams.get('code');
 
