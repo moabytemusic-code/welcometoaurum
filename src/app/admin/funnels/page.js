@@ -1,8 +1,26 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import styles from '@/app/finance.module.css';
 
 export default function FunnelLibrary() {
+  const [liveStats, setLiveStats] = useState({});
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const res = await fetch('/api/admin/funnels/stats', { cache: 'no-store' });
+        if (res.ok) {
+          const data = await res.json();
+          setLiveStats(data);
+        }
+      } catch (e) {
+        console.error('Stats fetch error:', e);
+      }
+    };
+    fetchStats();
+  }, []);
+
   const funnels = [
     { 
       id: 'pitch', 
@@ -10,7 +28,7 @@ export default function FunnelLibrary() {
       desc: 'High-pressure financial pitching focusing on rapid returns and LEGACY banking frustrations.',
       status: 'Active',
       audience: 'Newbies / General',
-      leads: '42' 
+      leads: liveStats['pitch'] || 0
     },
     { 
       id: 'consultative', 
@@ -18,7 +36,7 @@ export default function FunnelLibrary() {
       desc: '"Telling Ain\'t Selling" framework. Uses interrogative psychology to build deep trust.',
       status: 'Active',
       audience: 'Educated / Skeptics',
-      leads: '128' 
+      leads: liveStats['consultative'] || 0
     },
     { 
       id: 'breakdown', 
@@ -26,7 +44,7 @@ export default function FunnelLibrary() {
       desc: 'The original high-conversion funnel. Focuses on the "Digital Marketing Lifestyle" and automated wealth building.',
       status: 'Active',
       audience: 'Entrepreneurial / Wealth Seekers',
-      leads: '2.4k' 
+      leads: liveStats['breakdown'] || 0
     },
     { 
       id: 'v3', 
@@ -34,7 +52,7 @@ export default function FunnelLibrary() {
       desc: 'Focuses on the Neobanking utility and global spending power of the Aurum Card.',
       status: 'Locked',
       audience: 'Global Travelers',
-      leads: '--' 
+      leads: liveStats['v3'] || 0
     },
     { 
       id: 'v4', 
@@ -42,7 +60,7 @@ export default function FunnelLibrary() {
       desc: 'Deep dive into the EX-AI Bot algorithms for technical or math-oriented audiences.',
       status: 'Locked',
       audience: 'Tech/Crypto Savvy',
-      leads: '--' 
+      leads: liveStats['v4'] || 0
     }
   ];
 
