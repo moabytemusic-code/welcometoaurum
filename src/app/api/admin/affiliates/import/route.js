@@ -27,6 +27,16 @@ export async function POST(request) {
     // Build the client FRESH for this request to ensure latest env vars are used
     const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
+    // DEEP DIAGNOSTIC: Test the URL format
+    const urlCheck = {
+      length: supabaseUrl.length,
+      startsWithHttps: supabaseUrl.startsWith('https://'),
+      domain: supabaseUrl.split('/')[2] || 'UNKNOWN'
+    };
+    
+    console.log('--- DB CONNECTION DIAGNOSTIC ---');
+    console.log('URL Info:', urlCheck);
+
     const { partners } = await request.json();
 
     if (!Array.isArray(partners)) {
@@ -45,32 +55,29 @@ export async function POST(request) {
       last_served_at: now
     }));
 
-    console.log(`Attempting to upsert ${formatted.length} partners...`);
-
     const { data, error } = await supabase
       .from('aurum_affiliates')
       .upsert(formatted, { onConflict: 'email' })
       .select();
 
     if (error) {
-      console.error('Supabase Upsert Error:', error);
-      // Detailed error for common failures (like missing columns)
-      if (error.message.includes('column') && error.message.includes('not found')) {
-        return NextResponse.json({ 
-          error: 'DATABASE SHEMA MISMATCH: Please ensure the "last_served_at" column exists in Supabase. Check console for details.' 
-        }, { status: 500 });
-      }
-      throw error;
+      return NextResponse.json({ 
+        error: `DATABASE REJECTED REQUEST: ${error.message}`,
+        details: error
+      }, { status: 500 });
     }
 
     return NextResponse.json({ 
       success: true, 
-      count: data?.length || 0,
-      partners: data || []
+      count: data?.length || 0
     });
 
   } catch (err) {
     console.error('Import API CRITICAL Error:', err);
-    return NextResponse.json({ error: `Server Error: ${err.message}` }, { status: 500 });
+    return NextResponse.json({ 
+      error: `PROD NETWORK ERROR: ${err.message}`,
+      cause: err.cause?.message || 'Unknown network blockage',
+      stack: err.stack?.split('\n')[0] // Safely return the first stack line
+    }, { status: 500 });
   }
 }
