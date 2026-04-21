@@ -29,18 +29,8 @@ export async function POST(request) {
       }, { status: 500 });
     }
 
-    // Build the client FRESH for this request
-    const supabase = createClient(supabaseUrl, supabaseAnonKey);
-
-    // DEEP DIAGNOSTIC: Test the URL format
-    const urlCheck = {
-      length: supabaseUrl.length,
-      startsWithHttps: supabaseUrl.startsWith('https://'),
-      domain: supabaseUrl.split('/')[2] || 'UNKNOWN'
-    };
-    
-    console.log('--- DB CONNECTION DIAGNOSTIC ---');
-    console.log('URL Info:', urlCheck);
+    // Build the client FRESH for this request to ensure latest env vars are used
+    // const supabase = createClient(supabaseUrl, supabaseAnonKey); // BYPASSING LIBRARY
 
     const { partners } = await request.json();
 
@@ -60,17 +50,30 @@ export async function POST(request) {
       last_served_at: now
     }));
 
-    const { data, error } = await supabase
-      .from('aurum_affiliates')
-      .upsert(formatted, { onConflict: 'email' })
-      .select();
+    // ULTIMATE DIRECT CONNECT logic (Bypassing Library)
+    console.log('--- DIRECT CONNECT UPSERT START ---');
+    const restUrl = `${supabaseUrl}/rest/v1/aurum_affiliates`;
+    
+    const dbRes = await fetch(restUrl, {
+      method: 'POST',
+      headers: {
+        'apikey': supabaseAnonKey,
+        'Authorization': `Bearer ${supabaseAnonKey}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'resolution=merge-duplicates,return=representation'
+      },
+      body: JSON.stringify(formatted)
+    });
 
-    if (error) {
+    if (!dbRes.ok) {
+      const errorText = await dbRes.text();
       return NextResponse.json({ 
-        error: `DATABASE REJECTED REQUEST: ${error.message}`,
-        details: error
+        error: `DATABASE REJECTED REQUEST (Direct Connect): ${dbRes.status}`,
+        details: errorText
       }, { status: 500 });
     }
+
+    const data = await dbRes.json();
 
     return NextResponse.json({ 
       success: true, 
