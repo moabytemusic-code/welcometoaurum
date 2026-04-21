@@ -11,6 +11,8 @@ export default function AdminOverview() {
     rotatorStatus: 'Active'
   });
 
+  const [activities, setActivities] = useState([]);
+
   useEffect(() => {
     const fetchQuickStats = async () => {
       try {
@@ -23,8 +25,41 @@ export default function AdminOverview() {
         console.error('Stats fetch error:', e);
       }
     };
+
+    const fetchActivity = async () => {
+      try {
+        const res = await fetch('/api/admin/activity', { cache: 'no-store' });
+        if (res.ok) {
+          const data = await res.json();
+          setActivities(data);
+        }
+      } catch (e) {
+        console.error('Activity fetch error:', e);
+      }
+    };
+
     fetchQuickStats();
+    fetchActivity();
+    
+    const interval = setInterval(() => {
+      fetchQuickStats();
+      fetchActivity();
+    }, 30000);
+
+    return () => clearInterval(interval);
   }, []);
+
+  const formatRelativeTime = (timestamp) => {
+    const now = new Date();
+    const then = new Date(timestamp);
+    const diffSeconds = Math.floor((now - then) / 1000);
+    
+    if (diffSeconds < 0) return 'Just now';
+    if (diffSeconds < 60) return 'Just now';
+    if (diffSeconds < 3600) return `${Math.floor(diffSeconds / 60)} mins ago`;
+    if (diffSeconds < 86400) return `${Math.floor(diffSeconds / 3600)} hours ago`;
+    return then.toLocaleDateString();
+  };
 
   return (
     <div>
@@ -47,12 +82,23 @@ export default function AdminOverview() {
           borderRadius: '24px', 
           padding: '32px' 
         }}>
-          <h3 style={{ fontSize: '18px', fontWeight: '800', marginBottom: '24px' }}>System Activity Stream</h3>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+            <h3 style={{ fontSize: '18px', fontWeight: '800', margin: 0 }}>System Activity Stream</h3>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <div style={{ width: '8px', height: '8px', background: '#00ff88', borderRadius: '50%', boxShadow: '0 0 8px #00ff88' }}></div>
+              <span style={{ fontSize: '10px', color: '#00ff88', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '1px' }}>Live Feed</span>
+            </div>
+          </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-            <ActivityItem text="New affiliate 'MAXWELL' joined the pool." time="2 mins ago" />
-            <ActivityItem text="Consultative variant outperforming Pitch by 12% in last 24h." time="1 hour ago" />
-            <ActivityItem text="Telegram scraper updated bot percentages to +0.38%." time="4 hours ago" />
-            <ActivityItem text="Rotator re-balanced based on weighting settings." time="Yesterday" />
+            {activities.length > 0 ? (
+              activities.map(activity => (
+                <ActivityItem key={activity.id} text={activity.text} time={formatRelativeTime(activity.timestamp)} />
+              ))
+            ) : (
+              <div style={{ color: 'rgba(255,255,255,0.2)', fontSize: '14px', textAlign: 'center', padding: '20px' }}>
+                No recent activity detected.
+              </div>
+            )}
           </div>
         </div>
 
