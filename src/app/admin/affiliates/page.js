@@ -22,7 +22,7 @@ export default function AffiliatesManager() {
 
   const fetchPartners = async () => {
     try {
-      const res = await fetch('/api/admin/affiliates');
+      const res = await fetch('/api/admin/affiliates', { cache: 'no-store' });
       if (res.ok) {
         const data = await res.json();
         setPartners(data);
@@ -43,6 +43,7 @@ export default function AffiliatesManager() {
     const res = await fetch('/api/admin/affiliates', {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
+      cache: 'no-store',
       body: JSON.stringify({ id: partner.id, is_promoted: updated }),
     });
     
@@ -67,6 +68,7 @@ export default function AffiliatesManager() {
     const res = await fetch('/api/admin/affiliates', {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
+      cache: 'no-store',
       body: JSON.stringify({ id: partner.id, unlocked_funnels: updatedString }),
     });
     
@@ -113,6 +115,7 @@ export default function AffiliatesManager() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
+        cache: 'no-store',
         body: JSON.stringify({ partners: Array.isArray(parsed) ? parsed : [parsed] }),
       });
 
@@ -469,6 +472,23 @@ export default function AffiliatesManager() {
           </div>
         </div>
       )}
+
+      {/* Production Debug Footer */}
+      <div style={{ 
+        marginTop: '60px', 
+        padding: '24px', 
+        textAlign: 'center', 
+        borderTop: '1px solid rgba(255,255,255,0.05)',
+        color: 'rgba(255,255,255,0.3)',
+        fontSize: '11px'
+      }}>
+        Session Health: <span style={{ color: typeof document !== 'undefined' && document.cookie.includes('aurum_admin_session') ? '#00ff88' : '#ff4444' }}>
+          {typeof document !== 'undefined' && document.cookie.includes('aurum_admin_session') ? 'ACTIVE (Token Detected)' : 'INACTIVE (Token Missing from Browser)'}
+        </span>
+        <div style={{ marginTop: '8px' }}>
+          Production Node Path: /admin/affiliates • Vercel Edge Optimized
+        </div>
+      </div>
     </div>
   );
 }
