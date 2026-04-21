@@ -1,16 +1,12 @@
 import { NextResponse } from 'next/server';
-import { supabase } from '@/lib/supabase';
+import { createClient } from '@supabase/supabase-js';
 import { isValidAdminSession } from '@/lib/auth';
 
+/**
+ * PRODUCTION IMPORT API
+ * Now using dynamic client initialization for maximum Vercel/Edge reliability.
+ */
 export async function POST(request) {
-  // DEEP DIAGNOSTIC: Log headers to see if cookie is physically present
-  const cookieHeader = request.headers.get('cookie');
-  console.log('--- RAW REQUEST HEADERS ---');
-  console.log('Cookie Header Found:', !!cookieHeader);
-  if (cookieHeader) {
-    console.log('Contains aurum_admin_session:', cookieHeader.includes('aurum_admin_session'));
-  }
-  
   // Check auth using standard Next.js headers system
   if (!(await isValidAdminSession())) {
     return NextResponse.json({ 
@@ -19,12 +15,17 @@ export async function POST(request) {
   }
 
   try {
-    // PRE-FLIGHT CHECK: Verify Supabase is configured on the server
-    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+    if (!supabaseUrl || !supabaseAnonKey) {
       return NextResponse.json({ 
-        error: 'DATABASE CONFIG MISSING: The server cannot find your Supabase URL or Key. Please check your Vercel Environment Variables.' 
+        error: 'DATABASE CONFIG MISSING: No Supabase keys found on the server. Please check your Vercel Dashboard.' 
       }, { status: 500 });
     }
+
+    // Build the client FRESH for this request to ensure latest env vars are used
+    const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
     const { partners } = await request.json();
 
