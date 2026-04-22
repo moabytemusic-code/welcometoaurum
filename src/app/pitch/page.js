@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import styles from '../finance.module.css';
 import PerformanceChart from '@/components/PerformanceChart';
+import OptInBadge from '@/components/OptInBadge';
 import { stats } from '@/data/performance';
 
 const CustomTicker = () => {
@@ -160,9 +161,7 @@ export default function Home() {
   const [deposit, setDeposit] = useState(5000);
   const [yieldValue, setYieldValue] = useState(0);
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
-  const [formData, setFormData] = useState({ name: '', email: '' });
   const [status, setStatus] = useState('');
   const [sponsorData, setSponsorData] = useState({ code: '1W145K', name: 'Aurum Corporate' });
 
@@ -207,10 +206,9 @@ export default function Home() {
     setYieldValue(deposit * monthlyRate);
   }, [deposit]);
 
-  const handleOptIn = async (e) => {
-    e.preventDefault();
+  const handleOptInSubmit = async (data) => {
     setIsProcessing(true);
-    setStatus('SCANNIG LIQUIDITY GAPS...');
+    setStatus('SCANNING LIQUIDITY GAPS...');
     
     // Step 1: Simulated "Live Processing"
     await new Promise(r => setTimeout(r, 800));
@@ -230,8 +228,8 @@ export default function Home() {
       const res = await fetch('/api/optin', {
         method: 'POST',
         body: JSON.stringify({ 
-          email: formData.email, 
-          first_name: formData.name,
+          email: data.email, 
+          first_name: data.name,
           sponsor_code: sponsorData.code,
           sponsor_name: sponsorData.name,
           landing_variant: getVariant()
@@ -255,80 +253,11 @@ export default function Home() {
   };
 
 
+
+
   return (
     <main className={styles.main}>
-      {/* Modal Gate */}
-      {isModalOpen && (
-        <div className={styles.modalOverlay}>
-          <div className={styles.modalContent}>
-            {!isProcessing ? (
-              <>
-                <div style={{ 
-                  display: 'flex', 
-                  justifyContent: 'center', 
-                  alignItems: 'center', 
-                  gap: '8px', 
-                  marginBottom: '24px',
-                  background: 'rgba(45, 140, 240, 0.1)',
-                  padding: '8px 16px',
-                  borderRadius: '100px',
-                  width: 'fit-content',
-                  margin: '0 auto 24px auto',
-                  border: '1px solid rgba(45, 140, 240, 0.2)'
-                }}>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2d8cf0" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                  </svg>
-                  <span style={{ fontSize: '11px', color: '#2d8cf0', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '1.5px' }}>Institutional Secure Portal</span>
-                </div>
 
-                <h2 className={styles.modalTitle}>Establish Your Connection</h2>
-                <p className={styles.modalSub}>
-                  Enter your details to receive your <strong>Official Partner Link</strong> and a personalized <strong>Institutional Yield Breakdown</strong> based on your capital.
-                </p>
-                
-                <form onSubmit={handleOptIn} className={styles.modalForm}>
-                  <div style={{ position: 'relative' }}>
-                    <input 
-                      type="text" 
-                      placeholder="First Name" 
-                      required 
-                      className={styles.modalInput}
-                      value={formData.name}
-                      onChange={(e) => setFormData({...formData, name: e.target.value})}
-                    />
-                  </div>
-                  <div style={{ position: 'relative' }}>
-                    <input 
-                      type="email" 
-                      placeholder="Institutional Email Address" 
-                      required 
-                      className={styles.modalInput}
-                      value={formData.email}
-                      onChange={(e) => setFormData({...formData, email: e.target.value})}
-                    />
-                  </div>
-                  <button type="submit" className={styles.primaryCta} style={{ width: '100%', marginTop: '8px' }}>
-                    Initialize Your Access →
-                  </button>
-                  <div style={{ marginTop: '20px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                    <p className={styles.modalSafe}>🔒 End-to-End Encryption Active</p>
-                    <p style={{ fontSize: '10px', color: 'rgba(255,255,255,0.2)', textTransform: 'uppercase', letterSpacing: '1px' }}>Verified by Aurum Security Protocol v4.2</p>
-                  </div>
-                </form>
-              </>
-            ) : (
-              <div className={styles.processingState}>
-                <div className={styles.spinner} />
-                <div className={styles.statusText}>{status}</div>
-                <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)', marginTop: '-8px' }}>Creating your secure encrypted node...</p>
-              </div>
-            )}
-            <button className={styles.closeModal} onClick={() => setIsModalOpen(false)}>×</button>
-          </div>
-        </div>
-      )}
 
       {/* Hero Section with Video Background */}
       <section className={styles.hero}>
@@ -408,16 +337,17 @@ export default function Home() {
 
           </div>
 
-          <div className={styles.ctaContainer}>
-            <button className={styles.primaryCta} onClick={() => setIsModalOpen(true)}>Activate Wealth Generator →</button>
-            <div className={styles.ctaMicroProof}>✓ Only 15 slots remaining for this cohort</div>
-          </div>
+
         </div>
       </section>
 
       {/* Trust Proof Section (Forbes) */}
       <section className={styles.trustSection}>
         <div className={styles.trustContent}>
+          <div id="activation-portal" style={{ marginBottom: '64px', width: '100%', maxWidth: '800px', marginLeft: 'auto', marginRight: 'auto' }}>
+            <div className={styles.ctaMicroProof} style={{ marginBottom: '16px' }}>✓ Only 15 slots remaining for this cohort</div>
+            <OptInBadge onOptIn={handleOptInSubmit} isProcessing={isProcessing} status={status} wide={true} />
+          </div>
           <div className={styles.forbesBadge}>AS SEEN IN FORBES</div>
           <blockquote className={styles.trustQuote}>
             “Making digital assets as spendable as cash — without friction.”
@@ -640,13 +570,13 @@ export default function Home() {
           <strong>Only 15 slots remaining for this cohort.</strong>
         </p>
 
-        <button 
+        <a 
+          href="#activation-portal"
           className={styles.primaryCta} 
-          style={{ margin: '32px 0' }}
-          onClick={() => setIsModalOpen(true)}
+          style={{ margin: '32px 0', display: 'inline-block', textDecoration: 'none' }}
         >
           Claim My Free Invite & Activate AURUM →
-        </button>
+        </a>
 
         <div className={styles.ctaBadges}>
           <span>✓ 100% Free Access</span>
