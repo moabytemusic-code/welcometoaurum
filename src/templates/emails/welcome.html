@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to the Aurum Ecosystem</title>
+  <style>
+    body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: #f8f9fa; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
+    .wrapper { width: 100%; background-color: #f8f9fa; padding: 40px 0; }
+    .container { max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+    .header { background-color: #050505; padding: 40px; text-align: center; }
+    .logo { color: #d4af37; font-size: 24px; font-weight: 900; letter-spacing: 8px; text-transform: uppercase; }
+    .content { padding: 48px; color: #1a1a1a; line-height: 1.6; }
+    h1 { font-size: 28px; font-weight: 800; color: #050505; margin-bottom: 24px; letter-spacing: -0.5px; }
+    p { font-size: 16px; margin-bottom: 20px; color: #4a4a4a; }
+    .highlight { color: #d4af37; font-weight: 700; }
+    .cta-button { display: inline-block; background-color: #d4af37; color: #000000; padding: 18px 36px; border-radius: 12px; text-decoration: none; font-weight: 900; font-size: 14px; text-transform: uppercase; letter-spacing: 2px; margin: 20px 0; transition: all 0.2s; }
+    .footer { background-color: #fcfcfc; padding: 32px; border-top: 1px solid #eeeeee; text-align: center; font-size: 12px; color: #888888; }
+    .sponsor-card { background-color: #f8f9fa; border: 1px solid #eeeeee; border-radius: 12px; padding: 16px; margin-top: 32px; display: flex; align-items: center; gap: 12px; }
+    .avatar { width: 40px; height: 40px; background-color: #d4af37; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #000; font-weight: 900; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="container">
+      <div class="header">
+        <div class="logo">AURUM</div>
+      </div>
+      
+      <div class="content">
+        <h1>Welcome to the Inner Circle, {{ contact.FIRSTNAME | default: "Friend" }}.</h1>
+        
+        <p>Your request to join the Aurum AI Finance ecosystem has been accepted.</p>
+        
+        <p>You are now part of a global network of <span class="highlight">118,000+ members</span> leveraging autonomous AI to capture market yield on autopilot.</p>
+        
+        <p>To finalize your institutional access and activate your NeoBank bridge, please complete the onboarding process below:</p>
+        
+        <div style="text-align: center;">
+          <a href="https://yourdomain.com/onboarding" class="cta-button">Complete Activation →</a>
+        </div>
+        
+        <p>Once activated, you will receive access to your private dashboard, including:</p>
+        <ul style="padding-left: 20px; color: #4a4a4a;">
+          <li style="margin-bottom: 8px;"><strong>Neural-X Bot Access:</strong> Deploy the core AI trader.</li>
+          <li style="margin-bottom: 8px;"><strong>Institutional Wallet:</strong> Your private fiat + crypto bridge.</li>
+          <li style="margin-bottom: 8px;"><strong>The Neobank Card:</strong> Spend your yield globally, online or offline.</li>
+        </ul>
+
+        <div class="sponsor-card">
+          <div class="avatar">A</div>
+          <div>
+            <div style="font-size: 11px; text-transform: uppercase; color: #888; font-weight: 700;">Authorized By</div>
+            <div style="font-size: 14px; color: #1a1a1a; font-weight: 700;">{{ contact.SPONSOR_NAME | default: "Aurum Corporate" }}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <p>&copy; 2026 Aurum Institutional. All rights reserved.</p>
+        <p style="margin-top: 10px;">Past performance does not guarantee future results. Yield is generated through automated market activities and involves risk.</p>
+        <p style="margin-top: 10px;"><a href="#" style="color: #d4af37; text-decoration: none;">Unsubscribe</a> | <a href="#" style="color: #d4af37; text-decoration: none;">Privacy Policy</a></p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

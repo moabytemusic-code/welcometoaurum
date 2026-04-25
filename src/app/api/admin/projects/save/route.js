@@ -19,7 +19,27 @@ export async function POST(request) {
     }
 
     const filePath = path.join(projectsDir, `${slug}.json`);
-    fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
+    
+    // Preserve isActive status if the file already exists
+    let isActive = true;
+    if (fs.existsSync(filePath)) {
+      try {
+        const existing = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+        if (existing.isActive !== undefined) {
+          isActive = existing.isActive;
+        }
+      } catch (e) {
+        console.error('Error reading existing project during save:', e);
+      }
+    }
+
+    // If the incoming data explicitly has isActive, use that, otherwise use preserved
+    const finalData = {
+      ...data,
+      isActive: data.isActive !== undefined ? data.isActive : isActive
+    };
+
+    fs.writeFileSync(filePath, JSON.stringify(finalData, null, 2));
 
     return NextResponse.json({ success: true, path: `/f/${slug}/${data.angle}` });
   } catch (err) {

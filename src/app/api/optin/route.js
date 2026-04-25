@@ -27,16 +27,22 @@ export async function POST(req) {
       return NextResponse.json({ success: true, message: 'Simulated success (API Key missing)' });
     }
 
+    // Determine which list to add the contact to
+    const defaultList = parseInt(process.env.BREVO_LIST_ID || '1');
+    const variantList = landing_variant === 'pay-it-forward' || landing_variant === 'pay-it-forward-v2' 
+      ? parseInt(process.env.BREVO_LIST_ID_VOUCHER || process.env.BREVO_LIST_ID || '1')
+      : defaultList;
+
     const payload = {
       email,
       attributes: {
         FIRSTNAME: first_name,
-        SMS: phone || '', // Phone support added for lead capture
+        SMS: phone || '', 
         SPONSOR_CODE: sponsor_code || '1W145K',
         SPONSOR_NAME: sponsor_name || 'Aurum Corporate',
         LANDING_VARIANT: landing_variant || 'unknown'
       },
-      listIds: [parseInt(process.env.BREVO_LIST_ID || '1')],
+      listIds: [variantList],
       updateEnabled: true
     };
 
