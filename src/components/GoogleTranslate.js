@@ -16,14 +16,27 @@ export default function GoogleTranslate() {
       }
     };
 
-    // Country to Language mapping provided by user
+    // Tier 1 & Tier 2 Country to Language mapping
     const countryToLang = {
-      "ID": "id",   // Indonesia → Bahasa Indonesia
-      "BR": "pt",   // Brazil → Portuguese
-      "PH": "tl",   // Philippines → Tagalog/Filipino
-      "IN": "hi",   // India → Hindi
-      "PK": "ur",   // Pakistan → Urdu
-      "NG": "en",   // Nigeria → English (no translation)
+      // Tier 1
+      "AU": "en", "AT": "de", "BE": "nl", "CA": "en", "DK": "da",
+      "FI": "fi", "FR": "fr", "DE": "de", "IE": "en", "IT": "it",
+      "JP": "ja", "LU": "fr", "NL": "nl", "NZ": "en", "NO": "no",
+      "SG": "en", "ES": "es", "SE": "sv", "CH": "de", "GB": "en", "US": "en",
+
+      // Tier 2
+      "AR": "es", "BR": "pt", "BG": "bg", "CL": "es", "CN": "zh-CN",
+      "CO": "es", "HR": "hr", "CY": "el", "CZ": "cs", "EE": "et",
+      "GR": "el", "HK": "zh-CN", "HU": "hu", "IS": "is", "IN": "hi",
+      "ID": "id", "IL": "iw", "LV": "lv", "LT": "lt", "MY": "ms",
+      "MT": "mt", "MX": "es", "MA": "ar", "OM": "ar", "PA": "es",
+      "PE": "es", "PH": "tl", "PL": "pl", "PT": "pt", "QA": "ar",
+      "RO": "ro", "RU": "ru", "SA": "ar", "RS": "sr", "SK": "sk",
+      "SI": "sl", "ZA": "en", "KR": "ko", "TH": "th", "TR": "tr",
+      "UA": "uk", "AE": "ar", "UY": "es", "VN": "vi",
+
+      // Original/Additional High-Traffic
+      "PK": "ur", "NG": "en"
     };
 
     const runAutoTranslate = () => {
@@ -45,7 +58,7 @@ export default function GoogleTranslate() {
                 select.dispatchEvent(new Event('change'));
                 clearInterval(timer);
               }
-              if (++attempts > 20) clearInterval(timer);
+              if (++attempts > 25) clearInterval(timer);
             }, 800);
           } else {
             console.log(`🌍 Keeping English for ${country || 'unknown'}`);
