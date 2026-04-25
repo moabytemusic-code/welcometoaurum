@@ -1,61 +1,53 @@
-'use client';
+import FunnelEngineClient from '@/components/funnel/FunnelEngineClient';
 
-import { useState, useEffect } from 'react';
-import { useParams, useRouter } from 'next/navigation';
-import AngleRegistry from '@/components/funnel/AngleRegistry';
+async function getProject(projectId) {
+  try {
+    // For Server Components, we use an absolute URL or fetch from the filesystem directly
+    // Since we are in a local dev environment, we use the internal API URL
+    const res = await fetch(`http://localhost:3001/api/admin/projects/load?slug=${projectId}`, { 
+      cache: 'no-store' 
+    });
+    if (!res.ok) return null;
+    return res.json();
+  } catch (e) {
+    console.error('Server-side project fetch failed:', e);
+    return null;
+  }
+}
 
-export default function FunnelEnginePage() {
-  const { projectId, angleId } = useParams();
-  const router = useRouter();
+export async function generateMetadata({ params }) {
+  const { projectId } = await params;
+  const project = await getProject(projectId);
   
-  const [project, setProject] = useState(null);
-  const [isProcessing, setIsProcessing] = useState(false);
-  const [status, setStatus] = useState('');
-
-  useEffect(() => {
-    // In a real FaaS app, this would fetch from Supabase:
-    // const { data } = await supabase.from('projects').select('*').eq('id', projectId).single();
-    
-    // For now, we mock the project data
-    const mockProject = {
-      id: projectId,
-      name: projectId === 'aurum' ? 'AURUM Ecosystem' : 'New Project',
-      content: {
-        hero: {
-          title: projectId === 'aurum' 
-            ? 'Stop Donating Your Wealth to <span style="color: #d4af37">Legacy Banks.</span>'
-            : `Welcome to the ${projectId} Revolution.`,
-          subtitle: 'Let AI handle the heavy lifting while you scale.',
-          description: 'Join the world\'s first automated prospecting engine.'
-        }
-      }
+  if (!project) {
+    return {
+      title: "Funnel Offline",
+      description: "This project is currently unavailable."
     };
-    
-    setProject(mockProject);
-  }, [projectId]);
+  }
 
-  const handleOptIn = async (data) => {
-    setIsProcessing(true);
-    setStatus('VALIDATING PROJECT ACCESS...');
-    await new Promise(r => setTimeout(r, 1500));
-    setStatus('SUCCESS. REDIRECTING...');
-    setTimeout(() => {
-       // In production, redirect to project-specific onboarding
-       window.location.href = '/onboarding';
-    }, 1000);
+  return {
+    title: `${project.name} | ${project.content.subtitle || 'Official Page'}`,
+    description: project.content.description || 'Welcome to our platform.'
   };
+}
 
-  if (!project) return null;
+export default async function FunnelEnginePage({ params }) {
+  const { projectId, angleId } = await params;
+  const project = await getProject(projectId);
 
-  // Resolve the Angle Component from the Registry
-  const AngleComponent = AngleRegistry[angleId] || AngleRegistry['pitch'];
+  if (!project || project.isActive === false) {
+    return (
+      <div style={{ background: '#050505', color: '#fff', height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '24px' }}>
+        <div>
+          <h1 style={{ color: '#d4af37', marginBottom: '16px' }}>404: Funnel Offline</h1>
+          <p>Project not found or currently inactive. Please check the URL or create it in the Builder.</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <AngleComponent 
-      project={project} 
-      handleOptIn={handleOptIn}
-      isProcessing={isProcessing}
-      status={status}
-    />
+    <FunnelEngineClient initialProject={project} angleId={angleId} />
   );
 }

@@ -53,12 +53,7 @@ export default function AffiliatesManager() {
     }
   };
 
-  useEffect(() => {
-    fetchPartners();
-    checkHeartbeat();
-    const interval = setInterval(checkHeartbeat, 30000);
-    return () => clearInterval(interval);
-  }, []);
+
 
   const togglePromoted = async (partner) => {
     const updated = !partner.is_promoted;
@@ -186,13 +181,25 @@ export default function AffiliatesManager() {
     }
   };
 
-  const availableFunnels = [
-    { id: 'pitch', label: 'Pitch' },
-    { id: 'consultative', label: 'Consultative' },
-    { id: 'breakdown', label: 'Breakdown' },
-    { id: 'v3', label: 'V3' },
-    { id: 'v4', label: 'V4' }
-  ];
+  const [availableFunnels, setAvailableFunnels] = useState([]);
+
+  useEffect(() => {
+    fetchPartners();
+    fetchProjects();
+    checkHeartbeat();
+    const interval = setInterval(checkHeartbeat, 30000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const fetchProjects = async () => {
+    try {
+      const res = await fetch('/api/admin/projects/list');
+      const data = await res.json();
+      setAvailableFunnels(data.map(p => ({ id: p.slug, label: p.name })));
+    } catch (e) {
+      console.error('Fetch projects error:', e);
+    }
+  };
 
   const filteredPartners = partners.filter(p => 
     p.full_name?.toLowerCase().includes(searchTerm.toLowerCase()) || 

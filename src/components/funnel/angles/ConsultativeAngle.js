@@ -91,8 +91,8 @@ const BotEarningsBadge = ({ fallbackValue }) => {
   );
 };
 
-const PitchAngle = ({ project, handleOptIn, isProcessing, status }) => {
-  const { content = {} } = project;
+const ConsultativeAngle = ({ project, handleOptIn, isProcessing, status }) => {
+  const { content = {}, config = {} } = project;
   const [deposit, setDeposit] = useState(5000);
   const [yieldValue, setYieldValue] = useState(0);
 
@@ -104,7 +104,7 @@ const PitchAngle = ({ project, handleOptIn, isProcessing, status }) => {
   return (
     <main className={styles.main}>
 
-      {/* Hero Section */}
+      {/* Hero Section with Video Background */}
       <section className={styles.hero}>
         <div className={styles.videoBg}>
           <div className={styles.videoOverlay} />
@@ -119,13 +119,13 @@ const PitchAngle = ({ project, handleOptIn, isProcessing, status }) => {
 
         <div className={styles.heroContent}>
           <h1 className={styles.title}>
-            Stop Donating Your Wealth to <span className={styles.highlight}>Legacy Banks.</span>
+            Is Your Money Actually Working For You, or Just <span className={styles.highlight}>Losing to Inflation?</span>
           </h1>
           <h2 className={styles.heroSubtitle}>
-            Let AURUM's AI Make You Money While You Sleep.
+            What if smart technology could generate daily profits for you, while you keep 100% control of your funds?
           </h2>
           <p className={styles.subtitle}>
-            Join 118,000+ everyday people earning real passive income from AI-powered crypto finance — 24/7, completely on autopilot. No KYC Required.
+            Over 118,000 everyday people have stopped guessing and started letting automation do the heavy lifting. Are you ready to see what a 24/7 passive income system looks like? No KYC Required.
           </p>
 
           <div className={styles.heroRow}>
@@ -172,7 +172,7 @@ const PitchAngle = ({ project, handleOptIn, isProcessing, status }) => {
         </div>
       </section>
 
-      {/* Trust Proof + Opt-In */}
+      {/* Opt-In + Trust Section */}
       <section className={styles.trustSection}>
         <div className={styles.trustContent}>
           <div id="activation-portal" style={{ marginBottom: '64px', width: '100%', maxWidth: '800px', marginLeft: 'auto', marginRight: 'auto' }}>
@@ -194,18 +194,30 @@ const PitchAngle = ({ project, handleOptIn, isProcessing, status }) => {
             <div className={styles.liveDot}></div>
             VERIFIED INSTITUTIONAL YIELD (2025)
           </div>
-          <h2 className={styles.sectionTitle}>Institutional Performance, Individual Control</h2>
-          <p className={styles.sectionSub}>Visualize the compounding power of the Aurum AI algorithms through verified historical returns.</p>
+          <h2 className={styles.sectionTitle}>Have You Ever Watched Your Balance Grow While You Sleep?</h2>
+          <p className={styles.sectionSub}>Instead of trying to convince you this works, we prefer to just show you the exact numbers from previous years.</p>
         </div>
         <div className={styles.performanceContainer}>
           <div className={styles.performanceChartWrapper}>
             <PerformanceChart />
           </div>
           <div className={styles.statsGrid} style={{ marginTop: '40px', borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '40px' }}>
-            <div className={styles.statItem}><div className={styles.statValue} style={{ fontSize: '24px' }}>{stats.totalAnnualYield}</div><div className={styles.statLabel}>2025 Net Yield</div></div>
-            <div className={styles.statItem}><div className={styles.statValue} style={{ fontSize: '24px' }}>{stats.averageMonthly}</div><div className={styles.statLabel}>Avg. Monthly</div></div>
-            <div className={styles.statItem}><div className={styles.statValue} style={{ fontSize: '24px' }}>{stats.bestMonth}</div><div className={styles.statLabel}>Peak Momentum</div></div>
-            <div className={styles.statItem}><div className={styles.statValue} style={{ fontSize: '24px' }}>{stats.winningDays}</div><div className={styles.statLabel}>Winning Days</div></div>
+            <div className={styles.statItem}>
+              <div className={styles.statValue} style={{ fontSize: '24px' }}>{stats.totalAnnualYield}</div>
+              <div className={styles.statLabel}>2025 Net Yield</div>
+            </div>
+            <div className={styles.statItem}>
+              <div className={styles.statValue} style={{ fontSize: '24px' }}>{stats.averageMonthly}</div>
+              <div className={styles.statLabel}>Avg. Monthly</div>
+            </div>
+            <div className={styles.statItem}>
+              <div className={styles.statValue} style={{ fontSize: '24px' }}>{stats.bestMonth}</div>
+              <div className={styles.statLabel}>Peak Momentum</div>
+            </div>
+            <div className={styles.statItem}>
+              <div className={styles.statValue} style={{ fontSize: '24px' }}>{stats.winningDays}</div>
+              <div className={styles.statLabel}>Winning Days</div>
+            </div>
           </div>
         </div>
       </section>
@@ -245,46 +257,46 @@ const PitchAngle = ({ project, handleOptIn, isProcessing, status }) => {
         </div>
       </section>
 
-      {/* Problem Agitation */}
+      {/* Problem Agitation Section */}
       <section className={styles.problemSection}>
-        <h2 className={styles.sectionTitle}>Why Traditional Finance is Failing You</h2>
+        <h2 className={styles.sectionTitle}>Which of These Frustrations is Holding You Back?</h2>
         <div className={styles.problemGrid}>
           <div className={styles.problemCard}>
-            <div className={styles.problemEmoji}>😤</div>
-            <p className={styles.problemQuote}>"My bank pays me 0.01% while they make billions with my money."</p>
-            <p className={styles.problemDesc}>You grind side hustles and side gigs, but traditional banks use your money to print profits for themselves and throw you pennies.</p>
+            <div className={styles.problemEmoji}>📉</div>
+            <p className={styles.problemQuote}>"I know inflation is eating my savings, but my bank only pays 0.01%."</p>
+            <p className={styles.problemDesc}>Are you tired of watching your money lose its value while big banks use your deposits to make billions for themselves?</p>
           </div>
           <div className={styles.problemCard}>
-            <div className={styles.problemEmoji}>🤯</div>
-            <p className={styles.problemQuote}>"Every 'AI bot' I tried felt like a 2017 crypto scam."</p>
-            <p className={styles.problemDesc}>The internet is flooded with hype. You want something legitimate, institutional-grade, and actually built for real passive income.</p>
+            <div className={styles.problemEmoji}>⏳</div>
+            <p className={styles.problemQuote}>"I want to participate in the markets, but I don't have time to stare at charts."</p>
+            <p className={styles.problemDesc}>Are you looking for an extra income stream, but simply can't afford to take on a highly stressful part-time job acting as a day trader?</p>
           </div>
           <div className={styles.problemCard}>
-            <div className={styles.problemEmoji}>😰</div>
-            <p className={styles.problemQuote}>"Inflation is destroying my savings faster than I can hustle."</p>
-            <p className={styles.problemDesc}>Cash is no longer safe — it's a guaranteed loss. You need an AI system that outpaces inflation on autopilot.</p>
+            <div className={styles.problemEmoji}>🔒</div>
+            <p className={styles.problemQuote}>"I don't trust crypto. I've heard the horror stories of locked funds."</p>
+            <p className={styles.problemDesc}>How important is it to you that you keep total control of your money, with the ability to easily withdraw or spend your profits at any moment?</p>
           </div>
         </div>
       </section>
 
-      {/* How It Works */}
+      {/* Solution Section */}
       <section className={styles.howItWorks}>
-        <h2 className={styles.sectionTitle}>How AURUM's AI Actually Prints You Passive Income (3 Simple Steps)</h2>
+        <h2 className={styles.sectionTitle}>What Does the Solution Look Like For You?</h2>
         <div className={styles.stepGrid}>
           <div className={styles.stepCard}>
             <div className={styles.stepNumber}>01</div>
-            <h3>Identify the Gap</h3>
-            <p>Our AI scans 400+ data points every second to find tiny price imbalances normal people (and most traders) never see.</p>
+            <h3>Remove the Emotion</h3>
+            <p>Instead of guessing when to buy or sell, what if you allowed a smart software to quietly scan 400+ data points per second to identify safe, profitable opportunities?</p>
           </div>
           <div className={styles.stepCard}>
             <div className={styles.stepNumber}>02</div>
-            <h3>Automated Capture</h3>
-            <p>The ecosystem instantly executes millisecond-fast trades to lock in the profit — stacking micro-wins around the clock.</p>
+            <h3>Automate the Capture</h3>
+            <p>Could you sleep better knowing an automated tool was executing split-second trades to lock in small, steady profits on your behalf, without ever needing your input?</p>
           </div>
           <div className={styles.stepCard}>
             <div className={styles.stepNumber}>03</div>
-            <h3>Real-Time Payout</h3>
-            <p>Profits hit your dashboard immediately. No lock-ups. No waiting. 100% liquid — withdraw or spend anytime.</p>
+            <h3>Keep Your Freedom</h3>
+            <p>What if the profits hit your dashboard immediately? No lock-ups, no waiting. Just the absolute freedom to withdraw or spend your earnings anytime using your Neobank card.</p>
           </div>
         </div>
       </section>
@@ -320,19 +332,19 @@ const PitchAngle = ({ project, handleOptIn, isProcessing, status }) => {
 
       {/* FAQ */}
       <section className={styles.faqSection}>
-        <h2 className={styles.sectionTitle}>Handling the Hard Questions</h2>
+        <h2 className={styles.sectionTitle}>Let's Address the Elephant in the Room</h2>
         <div className={styles.faqGrid}>
           <div className={styles.faqItem}>
-            <h4 className={styles.faqQuestion}>Is my money locked up?</h4>
-            <p className={styles.faqAnswer}>Yes, If you make a deposit into the Ex-Ai bot the initial deposit will be locked for 365 days. Early withdrawal available with a 30% fee. The profits from the bot are available for withdrawal every 24-48 hours.</p>
+            <h4 className={styles.faqQuestion}>Can I actually take my money out?</h4>
+            <p className={styles.faqAnswer}>How important is it to you that you can withdraw or spend your daily profits without friction? With the Aurum ecosystem, your daily profits are always available (processing within 24-48 hours). If you decide to put your initial deposit into the automated bot, that specific deposit is locked in for one year to keep the system stable. While early withdrawal is available with a 30% fee, the profits it makes every single day are 100% yours to spend or withdraw whenever you want. Fair, right?</p>
           </div>
           <div className={styles.faqItem}>
-            <h4 className={styles.faqQuestion}>How does the AI actually make money?</h4>
-            <p className={styles.faqAnswer}>It finds "Liquidity Gaps" — tiny temporary imbalances in the market — and fills them faster than anyone else, capturing the difference as profit that gets paid to you.</p>
+            <h4 className={styles.faqQuestion}>How does the software actually make money?</h4>
+            <p className={styles.faqAnswer}>Have you ever wondered how big banks make billions while paying you pennies? They buy assets for slightly less and sell them for slightly more across different global markets. Our software just does the exact same thing—finding tiny price differences and making split-second trades. Instead of the banks keeping all that profit, the software drops it directly into your account. Makes sense, right?</p>
           </div>
           <div className={styles.faqItem}>
-            <h4 className={styles.faqQuestion}>Is it really free to join?</h4>
-            <p className={styles.faqAnswer}>Yes — 100% free to start. You only pay the tiny $19.99/year subscription once you're ready to unlock everything. We only make money when you do (small success fee on the yield we generate).</p>
+            <h4 className={styles.faqQuestion}>What's the catch? Is this really free to test?</h4>
+            <p className={styles.faqAnswer}>Would you ever buy a car without test-driving it first? Neither would we. You can open your account and explore the software 100% risk-free. When you're ready to unlock the full features, it's just a flat $19.99/year. Beyond that, the platform only takes a small success fee on the actual profits it generates for you. In other words: If you don't make money, the system doesn't make money.</p>
           </div>
         </div>
       </section>
@@ -350,13 +362,12 @@ const PitchAngle = ({ project, handleOptIn, isProcessing, status }) => {
             ></iframe>
           </div>
         </div>
-        <h2 className={styles.title}>Ready to Turn On Your Personal AI Money Machine?</h2>
+        <h2 className={styles.title}>Is It Time to See the Numbers for Yourself?</h2>
         <p className={styles.finalCtaSub}>
-          ⚠️ <strong>Limited Opening:</strong> Maintaining our yield ratio requires strict partner limits.{' '}
-          <strong>Only 15 slots remaining for this cohort.</strong>
+          Instead of trying to convince you with hype, we believe in radical transparency. See the live algorithms, test the system, and decide if the Aurum ecosystem is the logical fit for your capital.
         </p>
         <a href="#activation-portal" className={styles.primaryCta} style={{ margin: '32px 0', display: 'inline-block', textDecoration: 'none' }}>
-          Claim My Free Invite & Activate AURUM →
+          View The Dashboards & Explore Risk-Free →
         </a>
         <div className={styles.ctaBadges}>
           <span>✓ 100% Free Access</span>
@@ -382,4 +393,4 @@ const PitchAngle = ({ project, handleOptIn, isProcessing, status }) => {
   );
 };
 
-export default PitchAngle;
+export default ConsultativeAngle;

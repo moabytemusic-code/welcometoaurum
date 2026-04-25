@@ -1218,3 +1218,127 @@
     padding: 0 10px;
   }
 }
+/* Admin Layout Styles */
+.adminWrapper {
+  display: flex;
+  min-height: 100vh;
+  background: #050505;
+}
+
+.sidebar {
+  width: 280px;
+  background: #0a0a0a;
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  height: 100vh;
+  z-index: 100;
+}
+
+.content {
+  flex-grow: 1;
+  margin-left: 280px;
+  padding: 60px;
+  min-height: 100vh;
+}
+
+.logo {
+  padding: 40px 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logoIcon {
+  width: 32px;
+  height: 32px;
+  background: #d4af37;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  font-weight: 900;
+  font-size: 18px;
+}
+
+.logo span {
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: 2px;
+  color: white;
+}
+
+.logo span span {
+  color: #d4af37;
+  letter-spacing: 1px;
+}
+
+.nav {
+  flex-grow: 1;
+  padding: 0 16px;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 20px;
+  color: rgba(255, 255, 255, 0.5);
+  text-decoration: none;
+  border-radius: 12px;
+  transition: all 0.3s;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.navItem:hover {
+  background: rgba(255, 255, 255, 0.03);
+  color: white;
+}
+
+.navIcon {
+  width: 18px;
+  height: 18px;
+}
+
+.sidebarFooter {
+  padding: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.userBadge {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.userAvatar {
+  width: 36px;
+  height: 36px;
+  background: #222;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.userName {
+  font-size: 13px;
+  font-weight: 700;
+  color: white;
+}
+
+.userRole {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.4);
+}

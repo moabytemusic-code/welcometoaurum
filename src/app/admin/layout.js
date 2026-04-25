@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import styles from '@/app/finance.module.css';
+import { Layout, Users, Zap, Sparkles, Settings } from 'lucide-react';
 
 export default function AdminLayout({ children }) {
   const pathname = usePathname();
@@ -18,76 +19,47 @@ export default function AdminLayout({ children }) {
     router.push('/admin/login');
   };
 
-  const navItems = [
-    { label: 'Overview', path: '/admin', icon: '📊' },
-    { label: 'Affiliates', path: '/admin/affiliates', icon: '🤝' },
-    { label: 'Funnels', path: '/admin/funnels', icon: '🚀' },
-    { label: 'Audience Segments', path: '/admin/segments', icon: '👥' },
-  ];
-
   return (
-    <div className={styles.main} style={{ display: 'flex', minHeight: '100vh', background: '#050505' }}>
-      {/* Sidebar Navigation */}
-      <aside style={{ 
-        width: '260px', 
-        borderRight: '1px solid rgba(255,255,255,0.05)', 
-        padding: '40px 24px',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '40px',
-        position: 'sticky',
-        top: 0,
-        height: '100vh'
-      }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <div style={{ width: '32px', height: '32px', background: '#2d8cf0', borderRadius: '8px' }}></div>
-          <span style={{ fontWeight: '900', fontSize: '20px', letterSpacing: '-1px' }}>AURUM <span style={{ color: '#2d8cf0' }}>ADMIN</span></span>
+    <div className={styles.adminWrapper}>
+      {/* Sidebar */}
+      <aside className={styles.sidebar}>
+        <div className={styles.logo}>
+          <div className={styles.logoIcon}>A</div>
+          <span>AURUM <span>ADMIN</span></span>
         </div>
-
-        <nav style={{ display: 'flex', flexDirection: 'column', gap: '8px', flexGrow: 1 }}>
-          {navItems.map((item) => (
-            <Link 
-              key={item.path} 
-              href={item.path}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '12px',
-                padding: '12px 16px',
-                borderRadius: '12px',
-                color: pathname === item.path ? '#fff' : 'rgba(255,255,255,0.4)',
-                background: pathname === item.path ? 'rgba(45, 140, 240, 0.1)' : 'transparent',
-                transition: 'all 0.2s',
-                textDecoration: 'none',
-                fontWeight: '600',
-                fontSize: '14px'
-              }}
-            >
-              <span>{item.icon}</span>
-              {item.label}
-            </Link>
-          ))}
+        
+        <nav className={styles.nav}>
+          <Link href="/admin" className={styles.navItem}>
+            <Layout className={styles.navIcon} />
+            <span>Dashboard</span>
+          </Link>
+          <Link href="/admin/affiliates" className={styles.navItem}>
+            <Users className={styles.navIcon} />
+            <span>Affiliates</span>
+          </Link>
+          <Link href="/admin/manage" className={styles.navItem}>
+            <Zap className={styles.navIcon} />
+            <span>Campaigns & Rotator</span>
+          </Link>
+          <Link href="/admin/builder" className={styles.navItem}>
+            <Sparkles className={styles.navIcon} style={{ color: '#d4af37' }} />
+            <span style={{ color: '#d4af37', fontWeight: 'bold' }}>Project Architect</span>
+          </Link>
         </nav>
 
-        <button 
-          onClick={handleLogout}
-          style={{
-            background: 'transparent',
-            border: '1px solid rgba(255,255,255,0.05)',
-            color: 'rgba(255,255,255,0.4)',
-            padding: '12px',
-            borderRadius: '10px',
-            cursor: 'pointer',
-            fontSize: '13px',
-            fontWeight: '600'
-          }}
-        >
-          Logout
-        </button>
+        <div className={styles.sidebarFooter}>
+          <div className={styles.userBadge}>
+            <div className={styles.userAvatar}>JD</div>
+            <div className={styles.userInfo}>
+              <span className={styles.userName}>James Doe</span>
+              <span className={styles.userRole}>System Architect</span>
+            </div>
+          </div>
+        </div>
       </aside>
 
       {/* Main Content Area */}
-      <main style={{ flexGrow: 1, padding: '60px', overflowY: 'auto' }}>
+      <main className={styles.content}>
         {children}
       </main>
     </div>

@@ -1,0 +1,23 @@
+{
+  "name": "Aurum Direct Pitch",
+  "slug": "aurum-pitch",
+  "angle": "pitch",
+  "isActive": true,
+  "content": {
+    "title": "The World's First <span class=\"highlight\">AI-Powered NeoBank</span> Is Here.",
+    "subtitle": "Stop letting legacy banks profit from your money while you earn nothing. Aurum's autonomous AI generates daily yield directly into your account — 24/7, on autopilot.",
+    "description": "Join 118,000+ members who have already switched to the future of finance. No minimums, no hidden fees, and no experience required.",
+    "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-data-processing-in-a-computer-server-room-41004-large.mp4",
+    "botImageUrl": "/images/nexus_ai_core_badge.png",
+    "botLabel": "EX-AI BOT",
+    "botStatus": "ACTIVELY GENERATING",
+    "botValue": "$1.04/day",
+    "ctaProof": "✓ Live: 118,000+ active Aurum nodes generating right now"
+  },
+  "config": {
+    "showCalculator": true,
+    "showBotBadge": true,
+    "showYieldStats": true,
+    "showTicker": true
+  }
+}

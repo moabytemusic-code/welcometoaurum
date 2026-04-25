@@ -2,8 +2,9 @@
 
 import { useState } from 'react';
 import styles from '../app/finance.module.css';
+import { Shield, Lock, Globe, ArrowRight } from 'lucide-react';
 
-const OptInBadge = ({ onOptIn, isProcessing, status, wide = false }) => {
+const OptInBadge = ({ onOptIn, isProcessing, status, wide = false, angle = 'pitch' }) => {
   const [formData, setFormData] = useState({ name: '', email: '' });
 
   const handleSubmit = (e) => {
@@ -14,120 +15,115 @@ const OptInBadge = ({ onOptIn, isProcessing, status, wide = false }) => {
   const now = new Date();
   const dateStr = now.toLocaleDateString('en-GB').split('/').join('.');
 
+  const buttonText = angle === 'pay-it-forward' 
+    ? 'Claim My Free $100 →' 
+    : 'Activate Wealth Generator →';
+
+  const portalSubtitle = angle === 'pay-it-forward'
+    ? 'Secure Claim Portal'
+    : 'Unified Activation Portal';
+
   return (
     <div style={{
       width: '100%',
-      padding: wide ? '40px' : '24px',
-      background: 'rgba(10, 10, 10, 0.6)',
-      backdropFilter: 'blur(20px)',
-      border: '1px solid rgba(45, 140, 240, 0.3)',
-      borderRadius: '24px',
-      boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4)',
+      padding: wide ? '48px' : '32px',
+      background: 'rgba(5, 5, 5, 0.7)',
+      backdropFilter: 'blur(40px) saturate(150%)',
+      border: '1px solid rgba(255, 255, 255, 0.08)',
+      borderRadius: '32px',
+      boxShadow: '0 24px 80px rgba(0, 0, 0, 0.6), inset 0 0 0 1px rgba(255, 255, 255, 0.05)',
       position: 'relative',
       overflow: 'hidden',
       display: 'flex',
       flexDirection: 'column'
     }}>
-      <div className={styles.scanline} />
-      <div className={styles.windowGlow} />
+      {/* Decorative Elements */}
+      <div style={{ position: 'absolute', top: 0, left: 0, width: '4px', height: '100%', background: 'linear-gradient(to bottom, #d4af37, transparent)' }} />
+      <div className={styles.scanline} style={{ opacity: 0.1 }} />
       
       {/* Header */}
-      <div className={styles.windowHeader} style={{ marginBottom: wide ? '32px' : '20px' }}>
-        <div className={styles.windowTitle}>AURUM</div>
-        <div className={styles.windowSubtitle}>{wide ? 'Unified Activation Portal' : 'Activation Portal'}</div>
-        <div className={styles.windowTimestamp}>
-          <span className={styles.indicatorPulse} style={{ background: '#2D8CF0' }} />
-          SECURE: {dateStr}
+      <div className={styles.windowHeader} style={{ marginBottom: '40px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+        <div style={{ textAlign: 'left' }}>
+          <div style={{ fontSize: '12px', fontWeight: '900', letterSpacing: '4px', color: '#d4af37', marginBottom: '8px' }}>AURUM</div>
+          <div style={{ fontSize: wide ? '24px' : '18px', fontWeight: '800', color: '#fff', letterSpacing: '-0.5px' }}>{portalSubtitle}</div>
+        </div>
+        <div style={{ textAlign: 'right' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: 'rgba(255,255,255,0.03)', padding: '6px 12px', borderRadius: '100px', border: '1px solid rgba(255,255,255,0.05)' }}>
+            <span style={{ width: '6px', height: '6px', background: '#00ff88', borderRadius: '50%', boxShadow: '0 0 10px #00ff88' }} />
+            <span style={{ fontSize: '10px', fontWeight: '700', color: 'rgba(255,255,255,0.6)', letterSpacing: '1px' }}>SECURE NODE: {dateStr}</span>
+          </div>
         </div>
       </div>
 
       {/* Form Section */}
-      <div style={{ width: '100%', flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', zIndex: 2 }}>
+      <div style={{ width: '100%', zIndex: 2 }}>
         {!isProcessing ? (
-          <form 
-            onSubmit={handleSubmit} 
-            style={{ 
-              display: 'flex', 
-              flexDirection: 'column', 
-              gap: '24px',
-              width: '100%'
-            }}
-          >
-            {/* Input Row */}
-            <div style={{ 
-              display: 'flex', 
-              flexDirection: wide ? 'row' : 'column', 
-              gap: '20px' 
-            }}>
-              <div style={{ flex: 1 }}>
-                <label style={{ display: 'block', fontSize: '10px', color: 'rgba(255,255,255,0.5)', marginBottom: '8px', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '1px' }}>
-                  Operator Name
-                </label>
-                <input
-                  type="text"
-                  placeholder="Full Name"
-                  required
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className={styles.modalInput}
-                  style={{ width: '100%', height: '48px', padding: '0 16px', borderRadius: '12px', fontSize: '13px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)' }}
-                />
-              </div>
-              <div style={{ flex: 1 }}>
-                <label style={{ display: 'block', fontSize: '10px', color: 'rgba(255,255,255,0.5)', marginBottom: '8px', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '1px' }}>
-                  Institutional Email
+          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+              <div style={{ width: '100%', maxWidth: '420px' }}>
+                <label style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '11px', color: 'rgba(255,255,255,0.4)', marginBottom: '12px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px' }}>
+                  <Globe size={12} /> Institutional Email
                 </label>
                 <input
                   type="email"
-                  placeholder="name@institution.com"
+                  placeholder="name@company.com"
                   required
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   className={styles.modalInput}
-                  style={{ width: '100%', height: '48px', padding: '0 16px', borderRadius: '12px', fontSize: '13px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)' }}
+                  style={{ width: '100%', height: '56px', padding: '0 20px', borderRadius: '16px', fontSize: '15px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', color: '#fff', textAlign: 'center' }}
                 />
               </div>
             </div>
             
-            {/* Button Row (Centered Below) */}
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
               <button
                 type="submit"
                 className={styles.primaryCta}
                 style={{
-                  width: wide ? '360px' : '100%',
-                  height: '56px',
-                  padding: '0 24px',
-                  fontSize: '15px',
-                  fontWeight: '950',
+                  width: '100%',
+                  maxWidth: '420px',
+                  height: '64px',
+                  padding: '0 32px',
+                  fontSize: '16px',
+                  fontWeight: '900',
                   letterSpacing: '2px',
                   textTransform: 'uppercase',
-                  whiteSpace: 'nowrap',
-                  borderRadius: '16px',
-                  boxShadow: '0 10px 40px rgba(45, 140, 240, 0.4)'
+                  borderRadius: '20px',
+                  boxShadow: '0 15px 45px rgba(212, 175, 55, 0.25)',
+                  background: 'linear-gradient(135deg, #d4af37 0%, #b8860b 100%)',
+                  color: '#000',
+                  border: 'none',
+                  cursor: 'pointer'
                 }}
               >
-                Activate Wealth Generator →
+                {buttonText}
               </button>
+              
+              <div style={{ display: 'flex', alignItems: 'center', gap: '24px', color: 'rgba(255,255,255,0.3)', flexWrap: 'wrap', justifyContent: 'center' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '11px', fontWeight: '600' }}>
+                  <Lock size={12} /> 256-BIT ENCRYPTION
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '11px', fontWeight: '600', color: '#00ff88' }}>
+                  <Shield size={12} /> NO CREDIT CARD REQUIRED
+                </div>
+              </div>
             </div>
           </form>
         ) : (
-          <div style={{ textAlign: 'center' }}>
-            <div className={styles.spinner} style={{ margin: '0 auto 24px', width: '48px', height: '48px' }} />
-            <span style={{ fontSize: '11px', color: '#fff', fontWeight: '900', letterSpacing: '2px', textTransform: 'uppercase', opacity: 0.8 }}>{status || 'SYNCING NODE...'}</span>
+          <div style={{ padding: '40px 0', textAlign: 'center' }}>
+            <div className={styles.spinner} style={{ margin: '0 auto 32px', width: '56px', height: '56px', borderTopColor: '#d4af37' }} />
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <span style={{ fontSize: '14px', color: '#fff', fontWeight: '900', letterSpacing: '3px', textTransform: 'uppercase' }}>{status || 'SYNCING NODE...'}</span>
+              <span style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)', fontWeight: '500' }}>AUTHORIZED SESSION IN PROGRESS</span>
+            </div>
           </div>
         )}
       </div>
 
-      {/* Footer */}
-      <div className={styles.windowFooter}>
-        PORTAL-NODE-2026-FINAL
-      </div>
-
       <style jsx>{`
-        @keyframes aurumSpin {
-          to { transform: rotate(360deg); }
-        }
+        input::placeholder { color: rgba(255,255,255,0.15); }
+        .primaryCta:hover { transform: translateY(-2px); filter: brightness(1.1); transition: all 0.2s; }
       `}</style>
     </div>
   );

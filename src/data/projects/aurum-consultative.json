@@ -1,0 +1,23 @@
+{
+  "name": "Aurum Consultative",
+  "slug": "aurum-consultative",
+  "angle": "consultative",
+  "isActive": true,
+  "content": {
+    "title": "Are You Actually <span class=\"highlight\">Winning</span> With Your Money?",
+    "subtitle": "Most people are unknowingly losing thousands a year to inflation, low-yield savings, and legacy bank fees. Let's find out where you stand.",
+    "description": "Our AI-powered financial diagnostic walks you through exactly how much you're losing — and shows you a better way with Aurum's autonomous yield engine.",
+    "videoUrl": "",
+    "botImageUrl": "/images/nexus_ai_performance_chart.png",
+    "botLabel": "PORTFOLIO ANALYSIS",
+    "botStatus": "DIAGNOSTIC READY",
+    "botValue": "Start Free",
+    "ctaProof": "✓ Trusted by 118,000+ members in 40+ countries"
+  },
+  "config": {
+    "showCalculator": true,
+    "showBotBadge": false,
+    "showYieldStats": false,
+    "showTicker": false
+  }
+}

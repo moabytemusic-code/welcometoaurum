@@ -1,0 +1,23 @@
+{
+  "name": "The First $100 On Us (Vibrant)",
+  "slug": "100-on-us-v2",
+  "angle": "pay-it-forward-v2",
+  "isActive": true,
+  "content": {
+    "title": "Claim Your Free <span class=\"highlight-v2\">$100 Starting Capital.</span>",
+    "subtitle": "We're funding 1,000 accounts with $100 starting capital to prove our AI generates at least $1 a day on autopilot.",
+    "description": "Don't risk your own money. Claim your $100 allocation today and watch your account grow by $365+ this year, completely free.",
+    "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-futuristic-digital-connection-technology-background-40432-large.mp4",
+    "botImageUrl": "/images/aurum_funding_voucher.png",
+    "botLabel": "VOUCHER YIELD",
+    "botStatus": "PROJECTED ANNUAL RETURN",
+    "botValue": "$365.00+",
+    "ctaProof": "✓ Verified: $8,400 remaining in today's funding pool"
+  },
+  "config": {
+    "showCalculator": false,
+    "showBotBadge": false,
+    "showYieldStats": false,
+    "showTicker": false
+  }
+}
