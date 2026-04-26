@@ -57,8 +57,7 @@ const OptInBadge = ({ onOptIn, isProcessing, status, wide = false, angle = 'pitc
             text-align: center !important;
           }
           .secure-node-badge {
-            order: -1;
-            margin-bottom: 8px;
+            margin-top: 12px;
             text-align: center;
           }
           .field-label {
