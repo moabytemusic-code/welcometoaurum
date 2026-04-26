@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { QrCode, Download, X, Edit2, Save, Trash2, AlertTriangle } from 'lucide-react';
+import { QrCode, Download, X, Edit2, Save, Trash2, AlertTriangle, Info } from 'lucide-react';
 import styles from '@/app/finance.module.css';
 import Link from 'next/link';
 
@@ -26,6 +26,9 @@ export default function AffiliatesManager() {
   const [isSessionAlive, setIsSessionAlive] = useState(null);
   const [availableFunnels, setAvailableFunnels] = useState([]);
 
+  // Validation
+  const [warnings, setWarnings] = useState([]);
+
   useEffect(() => {
     fetchPartners();
     fetchProjects();
@@ -44,6 +47,7 @@ export default function AffiliatesManager() {
       if (res.ok) {
         const data = await res.json();
         setPartners(data);
+        validatePartners(data);
       }
     } catch (e) {
       console.error('Fetch error:', e);
@@ -52,11 +56,15 @@ export default function AffiliatesManager() {
     }
   };
 
+  const validatePartners = (data) => {
+    const issues = data.filter(p => p.is_rotator && (!p.unlocked_funnels || p.unlocked_funnels.trim() === ''));
+    setWarnings(issues);
+  };
+
   const fetchProjects = async () => {
     try {
       const res = await fetch('/api/admin/projects/list');
       const data = await res.json();
-      // Only show funnels that are globally ACTIVE
       const activeOnly = data.filter(p => p.isActive === true);
       setAvailableFunnels(activeOnly.map(p => ({ id: p.slug, label: p.name })));
     } catch (e) {
@@ -92,7 +100,9 @@ export default function AffiliatesManager() {
     });
     
     if (res.ok) {
-      setPartners(partners.map(p => p.id === partner.id ? { ...p, is_rotator: updated } : p));
+      const updatedList = partners.map(p => p.id === partner.id ? { ...p, is_rotator: updated } : p);
+      setPartners(updatedList);
+      validatePartners(updatedList);
     }
   };
 
@@ -134,7 +144,9 @@ export default function AffiliatesManager() {
       });
       
       if (res.ok) {
-        setPartners(partners.filter(p => p.id !== deletingPartner.id));
+        const updatedList = partners.filter(p => p.id !== deletingPartner.id);
+        setPartners(updatedList);
+        validatePartners(updatedList);
         setShowDeleteModal(false);
         setDeletingPartner(null);
       }
@@ -146,7 +158,7 @@ export default function AffiliatesManager() {
   };
 
   const toggleFunnel = async (partner, funnelId) => {
-    let current = (partner.unlocked_funnels || 'pitch').split(',').map(s => s.trim()).filter(Boolean);
+    let current = (partner.unlocked_funnels || '').split(',').map(s => s.trim()).filter(Boolean);
     let updated;
     
     if (current.includes(funnelId)) {
@@ -169,7 +181,9 @@ export default function AffiliatesManager() {
     });
     
     if (res.ok) {
-      setPartners(partners.map(p => p.id === partner.id ? { ...p, unlocked_funnels: updatedString } : p));
+      const updatedList = partners.map(p => p.id === partner.id ? { ...p, unlocked_funnels: updatedString } : p);
+      setPartners(updatedList);
+      validatePartners(updatedList);
     }
   };
 
@@ -229,6 +243,36 @@ export default function AffiliatesManager() {
         </div>
       </div>
 
+      {/* Global Warnings Banner */}
+      {warnings.length > 0 && (
+        <div style={{ 
+          background: 'rgba(255, 68, 68, 0.1)', 
+          border: '1px solid rgba(255, 68, 68, 0.2)', 
+          padding: '16px 24px', 
+          borderRadius: '16px', 
+          marginBottom: '32px',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '16px',
+          animation: 'pulse 2s infinite ease-in-out'
+        }}>
+          <AlertTriangle color="#ff4444" size={24} />
+          <div style={{ flex: 1 }}>
+            <h4 style={{ color: '#fff', fontSize: '14px', fontWeight: '700', margin: 0 }}>Configuration Warning</h4>
+            <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '13px', margin: '4px 0 0 0' }}>
+              {warnings.length} partner{warnings.length > 1 ? 's are' : ' is'} set to LIVE in the Rotator but {warnings.length > 1 ? 'have' : 'has'} <strong>zero funnels unlocked</strong>. They will never receive leads.
+            </p>
+          </div>
+          <style jsx>{`
+            @keyframes pulse {
+              0% { box-shadow: 0 0 0 0 rgba(255, 68, 68, 0.1); }
+              70% { box-shadow: 0 0 0 10px rgba(255, 68, 68, 0); }
+              100% { box-shadow: 0 0 0 0 rgba(255, 68, 68, 0); }
+            }
+          `}</style>
+        </div>
+      )}
+
       {/* Stats Bar */}
       <div className={styles.statsGrid} style={{ marginBottom: '40px' }}>
         <div className={styles.statCard}>
@@ -273,81 +317,89 @@ export default function AffiliatesManager() {
             </tr>
           </thead>
           <tbody>
-            {filteredPartners.map(p => (
-              <tr key={p.id} style={{ borderBottom: '1px solid rgba(255,255,255,0.03)' }}>
-                <td style={{ padding: '20px 24px' }}>
-                  <div style={{ fontWeight: '700', color: '#fff' }}>{p.full_name}</div>
-                  <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)' }}>{p.email}</div>
-                </td>
-                <td style={{ padding: '20px 24px' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <code style={{ background: 'rgba(45, 140, 240, 0.1)', color: '#2d8cf0', padding: '4px 8px', borderRadius: '6px', fontSize: '12px' }}>{p.affiliate_code}</code>
-                    <button onClick={() => openQr(p.full_name, `/?ref=${p.affiliate_code}`)} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.2)', cursor: 'pointer' }}><QrCode size={14} /></button>
-                  </div>
-                </td>
-                <td style={{ padding: '20px 24px' }}>
-                  <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-                    {availableFunnels.map(f => {
-                      const isUnlocked = (p.unlocked_funnels || 'pitch').includes(f.id);
-                      return (
-                        <button
-                          key={f.id}
-                          onClick={() => toggleFunnel(p, f.id)}
-                          style={{
-                            padding: '4px 10px',
-                            borderRadius: '100px',
-                            fontSize: '10px',
-                            fontWeight: '700',
-                            border: '1px solid',
-                            cursor: 'pointer',
-                            background: isUnlocked ? 'rgba(45, 140, 240, 0.15)' : 'transparent',
-                            borderColor: isUnlocked ? '#2d8cf0' : 'rgba(255,255,255,0.1)',
-                            color: isUnlocked ? '#2d8cf0' : 'rgba(255,255,255,0.3)',
-                          }}
-                        >
-                          {f.label}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </td>
-                <td style={{ padding: '20px 24px' }}>
-                  <button 
-                    onClick={() => toggleRotator(p)}
-                    style={{ 
-                      padding: '6px 16px', 
-                      borderRadius: '100px', 
-                      fontSize: '10px', 
-                      fontWeight: '900', 
-                      cursor: 'pointer',
-                      background: p.is_rotator ? 'rgba(0, 255, 136, 0.1)' : 'rgba(255, 255, 255, 0.05)',
-                      border: `1px solid ${p.is_rotator ? 'rgba(0, 255, 136, 0.2)' : 'rgba(255,255,255,0.05)'}`,
-                      color: p.is_rotator ? '#00ff88' : 'rgba(255,255,255,0.3)',
-                    }}
-                  >
-                    {p.is_rotator ? 'LIVE' : 'OFF'}
-                  </button>
-                </td>
-                <td style={{ padding: '20px 24px', textAlign: 'right' }}>
-                  <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '16px' }}>
+            {filteredPartners.map(p => {
+              const hasConfigIssue = p.is_rotator && (!p.unlocked_funnels || p.unlocked_funnels.trim() === '');
+              return (
+                <tr key={p.id} style={{ borderBottom: '1px solid rgba(255,255,255,0.03)', background: hasConfigIssue ? 'rgba(255,68,68,0.02)' : 'transparent' }}>
+                  <td style={{ padding: '20px 24px' }}>
+                    <div style={{ fontWeight: '700', color: '#fff', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      {p.full_name}
+                      {hasConfigIssue && <AlertTriangle size={14} color="#ff4444" title="Configuration Error: No Funnels Unlocked" />}
+                    </div>
+                    <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)' }}>{p.email}</div>
+                  </td>
+                  <td style={{ padding: '20px 24px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <code style={{ background: 'rgba(45, 140, 240, 0.1)', color: '#2d8cf0', padding: '4px 8px', borderRadius: '6px', fontSize: '12px' }}>{p.affiliate_code}</code>
+                      <button onClick={() => openQr(p.full_name, `/?ref=${p.affiliate_code}`)} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.2)', cursor: 'pointer' }}><QrCode size={14} /></button>
+                    </div>
+                  </td>
+                  <td style={{ padding: '20px 24px' }}>
+                    <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                      {availableFunnels.length === 0 ? (
+                        <span style={{ fontSize: '10px', color: 'rgba(255,255,255,0.2)' }}>No active funnels found.</span>
+                      ) : availableFunnels.map(f => {
+                        const isUnlocked = (p.unlocked_funnels || '').includes(f.id);
+                        return (
+                          <button
+                            key={f.id}
+                            onClick={() => toggleFunnel(p, f.id)}
+                            style={{
+                              padding: '4px 10px',
+                              borderRadius: '100px',
+                              fontSize: '10px',
+                              fontWeight: '700',
+                              border: '1px solid',
+                              cursor: 'pointer',
+                              background: isUnlocked ? 'rgba(45, 140, 240, 0.15)' : 'transparent',
+                              borderColor: isUnlocked ? '#2d8cf0' : 'rgba(255,255,255,0.1)',
+                              color: isUnlocked ? '#2d8cf0' : 'rgba(255,255,255,0.3)',
+                            }}
+                          >
+                            {f.label}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </td>
+                  <td style={{ padding: '20px 24px' }}>
                     <button 
-                      onClick={() => { setEditingPartner(p); setShowEditModal(true); }}
-                      style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.3)', cursor: 'pointer' }}
-                      title="Edit Partner"
+                      onClick={() => toggleRotator(p)}
+                      style={{ 
+                        padding: '6px 16px', 
+                        borderRadius: '100px', 
+                        fontSize: '10px', 
+                        fontWeight: '900', 
+                        cursor: 'pointer',
+                        background: p.is_rotator ? 'rgba(0, 255, 136, 0.1)' : 'rgba(255, 255, 255, 0.05)',
+                        border: `1px solid ${p.is_rotator ? 'rgba(0, 255, 136, 0.2)' : 'rgba(255,255,255,0.05)'}`,
+                        color: p.is_rotator ? '#00ff88' : 'rgba(255,255,255,0.3)',
+                      }}
                     >
-                      <Edit2 size={16} />
+                      {p.is_rotator ? 'LIVE' : 'OFF'}
                     </button>
-                    <button 
-                      onClick={() => { setDeletingPartner(p); setShowDeleteModal(true); }}
-                      style={{ background: 'none', border: 'none', color: 'rgba(255, 68, 68, 0.3)', cursor: 'pointer' }}
-                      title="Delete Partner"
-                    >
-                      <Trash2 size={16} />
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
+                  </td>
+                  <td style={{ padding: '20px 24px', textAlign: 'right' }}>
+                    <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '16px' }}>
+                      <button 
+                        onClick={() => { setEditingPartner(p); setShowEditModal(true); }}
+                        style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.3)', cursor: 'pointer' }}
+                        title="Edit Partner"
+                      >
+                        <Edit2 size={16} />
+                      </button>
+                      <button 
+                        onClick={() => { setDeletingPartner(p); setShowDeleteModal(true); }}
+                        style={{ background: 'none', border: 'none', color: 'rgba(255, 68, 68, 0.3)', cursor: 'pointer' }}
+                        title="Delete Partner"
+                      >
+                        <Trash2 size={16} />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
