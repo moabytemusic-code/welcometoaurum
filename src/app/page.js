@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation';
 
 export default function Home() {
-  // Fallback redirect in case middleware doesn't rewrite correctly or for environments without middleware
-  redirect('/pitch');
+  // The middleware (src/middleware.js) handles the smart redirect to active funnels.
+  // This page is a fallback in case middleware is disabled.
+  return null;
 }

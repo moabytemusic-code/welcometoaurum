@@ -4,7 +4,8 @@ async function getProject(projectId) {
   try {
     // For Server Components, we use an absolute URL or fetch from the filesystem directly
     // Since we are in a local dev environment, we use the internal API URL
-    const res = await fetch(`http://localhost:3001/api/admin/projects/load?slug=${projectId}`, { 
+    const baseUrl = process.env.SITE_URL || 'http://localhost:3001';
+    const res = await fetch(`${baseUrl}/api/admin/projects/load?slug=${projectId}`, { 
       cache: 'no-store' 
     });
     if (!res.ok) return null;
