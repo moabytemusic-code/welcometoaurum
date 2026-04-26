@@ -41,6 +41,17 @@ const OptInBadge = ({ onOptIn, isProcessing, status, wide = false, angle = 'pitc
         div {
           --badge-padding: 48px;
         }
+        .window-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start;
+        }
+        .header-content {
+          text-align: left;
+        }
+        .header-title {
+          font-size: ${wide ? '24px' : '18px'};
+        }
         @media (max-width: 600px) {
           div {
             --badge-padding: 24px !important;
@@ -50,6 +61,9 @@ const OptInBadge = ({ onOptIn, isProcessing, status, wide = false, angle = 'pitc
             flex-direction: column !important;
             align-items: center !important;
             gap: 16px !important;
+            text-align: center !important;
+          }
+          .header-content {
             text-align: center !important;
           }
           .header-title {
@@ -80,10 +94,10 @@ const OptInBadge = ({ onOptIn, isProcessing, status, wide = false, angle = 'pitc
       <div className={styles.scanline} style={{ opacity: 0.1 }} />
       
       {/* Header */}
-      <div className={`${styles.windowHeader} window-header`} style={{ marginBottom: '40px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-        <div style={{ textAlign: 'left' }}>
+      <div className={`${styles.windowHeader} window-header`} style={{ marginBottom: '40px' }}>
+        <div className="header-content">
           <div style={{ fontSize: '12px', fontWeight: '900', letterSpacing: '4px', color: '#d4af37', marginBottom: '8px' }}>AURUM</div>
-          <div className="header-title" style={{ fontSize: wide ? '24px' : '18px', fontWeight: '800', color: '#fff', letterSpacing: '-0.5px' }}>{portalSubtitle}</div>
+          <div className="header-title" style={{ fontWeight: '800', color: '#fff', letterSpacing: '-0.5px' }}>{portalSubtitle}</div>
         </div>
         <div className="secure-node-badge">
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: 'rgba(255,255,255,0.03)', padding: '6px 12px', borderRadius: '100px', border: '1px solid rgba(255,255,255,0.05)' }}>
