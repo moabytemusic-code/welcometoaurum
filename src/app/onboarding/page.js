@@ -1,185 +1,114 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import styles from './onboarding.module.css';
-import { 
-  Shield, 
-  Smartphone, 
-  Globe, 
-  ArrowRight, 
-  CheckCircle2, 
-  Mail, 
-  Phone, 
-  User, 
-  Check, 
-  AlertCircle 
-} from 'lucide-react';
+import styles from '@/app/finance.module.css';
+import Link from 'next/link';
 
-export default function Onboarding() {
-  const [complete, setComplete] = useState([false, false, false]);
-  const [rotatorData, setRotatorData] = useState({ 
-    code: "...", 
-    name: "Loading Sponsor...",
-    email: "",
-    phone: "",
-    url: "https://backoffice.aurum.foundation/auth/sign-up" 
-  });
+export default function OnboardingPage() {
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    const resolveCode = async () => {
-      const stored = localStorage.getItem('aurum_affiliate');
-      if (stored) {
-        try {
-          const parsed = JSON.parse(stored);
-          setRotatorData(parsed);
-          return;
-        } catch (e) {
-          localStorage.removeItem('aurum_affiliate');
-        }
-      }
-
-      try {
-        const res = await fetch('/api/rotator');
-        if (!res.ok) throw new Error('Rotator fail');
-        const data = await res.json();
-        setRotatorData(data);
-        localStorage.setItem('aurum_affiliate', JSON.stringify(data));
-      } catch (err) {
-        console.error('Rotator error:', err);
-        const fallback = {
-          code: "1W145K",
-          name: "Aurum Corporate",
-          email: "support@aurum.foundation",
-          phone: "N/A",
-          url: "https://backoffice.aurum.foundation/auth/sign-up?ref=1W145K"
-        };
-        setRotatorData(fallback);
-      }
-    };
-
-    resolveCode();
+    setMounted(true);
   }, []);
 
-  const toggleStep = (index) => {
-    const newComplete = [...complete];
-    newComplete[index] = !newComplete[index];
-    setComplete(newComplete);
-  };
+  if (!mounted) return null;
 
   return (
-    <main className={styles.main}>
-      <div className={styles.container}>
+    <main className={styles.main} style={{ background: '#050505', minHeight: '100vh', padding: '60px 24px' }}>
+      
+      {/* Top Security Bar */}
+      <div style={{ position: 'fixed', top: 0, left: 0, right: 0, height: '4px', background: 'rgba(255,255,255,0.05)', zIndex: 1000 }}>
+        <div style={{ 
+          width: '65%', 
+          height: '100%', 
+          background: 'linear-gradient(90deg, #d4af37, #f1c40f)', 
+          boxShadow: '0 0 15px #d4af37' 
+        }}></div>
+      </div>
+
+      <div style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
         
-        {/* Floating Sponsor Badge */}
-        <div className={styles.sponsorBadge}>
-          <div className={styles.sponsorLabel}>Your Trusted Sponsor</div>
-          <div className={styles.sponsorInfo}>
-            <div className={styles.sponsorMeta}><User size={14}/> {rotatorData.name}</div>
-            {rotatorData.email && <div className={styles.sponsorMeta}><Mail size={14}/> {rotatorData.email}</div>}
-            {rotatorData.phone && rotatorData.phone !== "N/A" && <div className={styles.sponsorMeta}><Phone size={14}/> {rotatorData.phone}</div>}
-            <div className={styles.sponsorMeta} style={{color: '#2D8CF0', fontWeight: 'bold'}}>ID: {rotatorData.code}</div>
-          </div>
+        {/* Security Alert */}
+        <div style={{ 
+          display: 'inline-flex', 
+          alignItems: 'center', 
+          gap: '12px', 
+          background: 'rgba(255, 255, 255, 0.03)', 
+          border: '1px solid rgba(255, 255, 255, 0.08)',
+          padding: '10px 24px',
+          borderRadius: '100px',
+          marginBottom: '40px'
+        }}>
+          <span style={{ fontSize: '10px', color: 'rgba(255,255,255,0.4)', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '2px' }}>System Status:</span>
+          <span style={{ fontSize: '10px', color: '#00ff88', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '2px' }}>Initialization 65% Complete</span>
         </div>
 
-        <header className={styles.header}>
-          <div className={styles.badge}>Phase 2: Account Activation</div>
-          <h1 className={styles.title}>System Initialization</h1>
-          <p className={styles.subtitle}>
-            Follow these verified steps from the Aurum Institutional team to secure your position and activate your AI trading node.
-          </p>
-        </header>
+        <h1 className={styles.pitchTitle} style={{ fontSize: 'clamp(32px, 5vw, 48px)', marginBottom: '16px' }}>
+          Welcome to the <span style={{ color: '#d4af37' }}>Aurum Inner Circle.</span>
+        </h1>
+        <p className={styles.pitchSub} style={{ fontSize: '18px', color: 'rgba(255,255,255,0.6)', marginBottom: '60px' }}>
+          Your briefing is ready. Follow these 3 steps to activate your EX-AI automated account.
+        </p>
 
-        <div className={styles.stepsGrid}>
+        {/* Steps Grid */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '24px', textAlign: 'left' }}>
           
-          {/* Step 1: Liquidity */}
-          <div className={`${styles.stepCard} ${complete[0] ? styles.active : ''}`}>
-            <div className={styles.stepNumber}>01</div>
-            <div className={styles.iconWrapper}><Smartphone /></div>
-            <h3 className={styles.stepTitle}>Prepare Liquidity</h3>
-            <p className={styles.stepDesc}>Ensure your Web3 wallet (Exodus or Trust) is staged with the activation minimums.</p>
-            
-            <div className={styles.proTip}>
-              <AlertCircle size={14} style={{marginBottom: '4px'}}/>
-              <strong>EXODUS TIP:</strong> Ensure you have matching gas fees (BNB or ETH) in your wallet before proceeding.
+          {/* Step 1 */}
+          <div className={styles.modalContent} style={{ padding: '32px', border: '1px solid rgba(212, 175, 55, 0.2)', background: 'rgba(212, 175, 55, 0.02)' }}>
+            <div style={{ display: 'flex', gap: '24px' }}>
+              <div style={{ fontSize: '32px', opacity: 0.5 }}>01</div>
+              <div>
+                <h3 style={{ fontSize: '20px', color: '#fff', marginBottom: '8px' }}>Activate Your NeoBank Account</h3>
+                <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '15px', lineHeight: '1.6', marginBottom: '20px' }}>
+                  To begin receiving your automated payouts, you must first initialize your Aurum NeoBank vault. This is where the EX-AI system deposits your earnings.
+                </p>
+                <Link 
+                  href={process.env.NEXT_PUBLIC_AURUM_REGISTER_URL || '#'} 
+                  target="_blank"
+                  className={styles.primaryCta} 
+                  style={{ display: 'inline-block', width: 'auto', padding: '12px 32px' }}
+                >
+                  Initialize Vault →
+                </Link>
+              </div>
             </div>
-
-            <ul className={styles.checklist}>
-              <li><Check className={styles.checkIcon}/> $19.99 for annual License</li>
-              <li><Check className={styles.checkIcon}/> $100.00 min for Bot Liquidity</li>
-              <li><Check className={styles.checkIcon}/> Gas for Network Fees</li>
-            </ul>
-
-            <button 
-              className={`${styles.checkBtn} ${complete[0] ? styles.btnActive : ''}`} 
-              onClick={() => toggleStep(0)}
-            >
-              {complete[0] ? 'LIQUIDITY READY' : 'MARK AS READY'}
-              {complete[0] && <CheckCircle2 className="ml-2 w-4 h-4" />}
-            </button>
           </div>
 
-          {/* Step 2: Global Guard */}
-          <div className={`${styles.stepCard} ${complete[1] ? styles.active : ''}`}>
-            <div className={styles.stepNumber}>02</div>
-            <div className={styles.iconWrapper}><Globe /></div>
-            <h3 className={styles.stepTitle}>Global Gateway</h3>
-            <p className={styles.stepDesc}>North American members (US/CA/MX) must establish a secure tunnel for registration.</p>
-            
-            <div className={styles.proTip}>
-              <strong>GATEWAY TIP:</strong> Set your VPN to "Europe" or "Asia" before clicking the create button.
+          {/* Step 2 */}
+          <div className={styles.modalContent} style={{ padding: '32px' }}>
+            <div style={{ display: 'flex', gap: '24px' }}>
+              <div style={{ fontSize: '32px', opacity: 0.5 }}>02</div>
+              <div>
+                <h3 style={{ fontSize: '20px', color: '#fff', marginBottom: '8px' }}>Join the Private Briefing Channel</h3>
+                <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '15px', lineHeight: '1.6', marginBottom: '10px' }}>
+                  Our team releases daily performance updates and strategy guides inside the private Telegram channel. Do not miss these briefings.
+                </p>
+                <p style={{ color: '#d4af37', fontSize: '14px', fontWeight: 'bold' }}>Link arriving in your email within 5 minutes.</p>
+              </div>
             </div>
-
-            <ul className={styles.checklist}>
-              <li><Check className={styles.checkIcon}/> VPN Active & Verified</li>
-              <li><Check className={styles.checkIcon}/> Location: Outside NA</li>
-              <li><Check className={styles.checkIcon}/> Encryption: AES-256</li>
-            </ul>
-
-            <button 
-              className={`${styles.checkBtn} ${complete[1] ? styles.btnActive : ''}`} 
-              onClick={() => toggleStep(1)}
-            >
-              {complete[1] ? 'GATEWAY SECURED' : 'VERIFY CONNECTION'}
-              {complete[1] && <CheckCircle2 className="ml-2 w-4 h-4" />}
-            </button>
           </div>
 
-          {/* Step 3: Deployment */}
-          <div className={`${styles.stepCard} ${complete[2] ? styles.active : ''}`}>
-            <div className={styles.stepNumber}>03</div>
-            <div className={styles.iconWrapper}><Shield /></div>
-            <h3 className={styles.stepTitle}>Launch Node</h3>
-            <p className={styles.stepDesc}>Initialize your profile. Ensure you use the specific country logic for verification.</p>
-            
-            <div className={styles.proTip}>
-              <strong>REGISTRATION LOGIC:</strong> Use country code "CRYPTONATION" in the dropdown for seamless setup.
+          {/* Step 3 */}
+          <div className={styles.modalContent} style={{ padding: '32px' }}>
+            <div style={{ display: 'flex', gap: '24px' }}>
+              <div style={{ fontSize: '32px', opacity: 0.5 }}>03</div>
+              <div>
+                <h3 style={{ fontSize: '20px', color: '#fff', marginBottom: '8px' }}>Schedule Your Orientation</h3>
+                <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '15px', lineHeight: '1.6' }}>
+                  If you have questions about the EX-AI performance metrics, you can book a 1-on-1 strategy call with our onboarding specialists.
+                </p>
+              </div>
             </div>
-
-            <ul className={styles.checklist}>
-              <li><Check className={styles.checkIcon}/> Photo ID ready for upload</li>
-              <li><Check className={styles.checkIcon}/> Email verification pending</li>
-              <li><Check className={styles.checkIcon}/> Sponsor: {rotatorData.code}</li>
-            </ul>
-
-            <a 
-              href={rotatorData.url}
-              target="_blank" 
-              rel="noopener noreferrer"
-              className={styles.registerBtn}
-              onClick={() => toggleStep(2)}
-            >
-              Deploy My Account <ArrowRight className="ml-2" />
-            </a>
           </div>
 
         </div>
 
-        <footer className={styles.footer}>
-          <div className={styles.countdown}>TIME IS PRECIOUS. EVERY SECOND IS A MISSED EARNING EVENT.</div>
-          <p className={styles.terms}>
-            By proceeding, you verify that you have contacted your sponsor ({rotatorData.name}) for final briefing. Aurum algorithms generate yield daily.
+        {/* Footer */}
+        <div style={{ marginTop: '80px', paddingTop: '40px', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+          <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.3)', textTransform: 'uppercase', letterSpacing: '2px' }}>
+            Powered by Aurum EX-AI Engine | v2.0 Production
           </p>
-        </footer>
+        </div>
 
       </div>
     </main>
