@@ -45,19 +45,40 @@ const OptInBadge = ({ onOptIn, isProcessing, status, wide = false, angle = 'pitc
           display: flex;
           justify-content: space-between;
           align-items: flex-start;
+          margin-bottom: 40px;
         }
         .header-content {
           text-align: left;
         }
+        .header-top {
+          font-size: 12px;
+          font-weight: 900;
+          letter-spacing: 4px;
+          color: #d4af37;
+          margin-bottom: 8px;
+        }
         .header-title {
           font-size: ${wide ? '24px' : '18px'};
+          font-weight: 800;
+          color: #fff;
+          letter-spacing: -0.5px;
+        }
+        .field-label {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          font-size: 11px;
+          color: rgba(255,255,255,0.4);
+          margin-bottom: 12px;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: 1px;
         }
         @media (max-width: 600px) {
           div {
             --badge-padding: 24px !important;
           }
           .window-header {
-            display: flex !important;
             flex-direction: column !important;
             align-items: center !important;
             gap: 16px !important;
@@ -66,12 +87,15 @@ const OptInBadge = ({ onOptIn, isProcessing, status, wide = false, angle = 'pitc
           .header-content {
             text-align: center !important;
           }
+          .header-top {
+            text-align: center !important;
+          }
           .header-title {
             font-size: 20px !important;
             text-align: center !important;
           }
           .secure-node-badge {
-            margin-top: 12px;
+            margin-top: 4px;
             text-align: center;
           }
           .field-label {
@@ -94,10 +118,10 @@ const OptInBadge = ({ onOptIn, isProcessing, status, wide = false, angle = 'pitc
       <div className={styles.scanline} style={{ opacity: 0.1 }} />
       
       {/* Header */}
-      <div className={`${styles.windowHeader} window-header`} style={{ marginBottom: '40px' }}>
+      <div className="window-header">
         <div className="header-content">
-          <div style={{ fontSize: '12px', fontWeight: '900', letterSpacing: '4px', color: '#d4af37', marginBottom: '8px' }}>AURUM</div>
-          <div className="header-title" style={{ fontWeight: '800', color: '#fff', letterSpacing: '-0.5px' }}>{portalSubtitle}</div>
+          <div className="header-top">AURUM</div>
+          <div className="header-title">{portalSubtitle}</div>
         </div>
         <div className="secure-node-badge">
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: 'rgba(255,255,255,0.03)', padding: '6px 12px', borderRadius: '100px', border: '1px solid rgba(255,255,255,0.05)' }}>
@@ -113,7 +137,7 @@ const OptInBadge = ({ onOptIn, isProcessing, status, wide = false, angle = 'pitc
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '24px' }}>
               <div style={{ width: '100%', maxWidth: '420px' }}>
-                <label className="field-label" style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '11px', color: 'rgba(255,255,255,0.4)', marginBottom: '12px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px' }}>
+                <label className="field-label">
                   First Name
                 </label>
                 <input
@@ -128,7 +152,7 @@ const OptInBadge = ({ onOptIn, isProcessing, status, wide = false, angle = 'pitc
               </div>
 
               <div style={{ width: '100%', maxWidth: '420px' }}>
-                <label className="field-label" style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '11px', color: 'rgba(255,255,255,0.4)', marginBottom: '12px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px' }}>
+                <label className="field-label">
                   <Globe size={12} /> Institutional Email
                 </label>
                 <input
