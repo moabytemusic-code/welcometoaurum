@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
+import { createClient } from '@supabase/supabase-js';
 
 export async function POST(req) {
   try {
@@ -9,24 +8,20 @@ export async function POST(req) {
       return NextResponse.json({ error: 'Missing slug or newName' }, { status: 400 });
     }
 
-    const dataDir = path.join(process.cwd(), 'src', 'data', 'projects');
-    const filePath = path.join(dataDir, `${slug}.json`);
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
+    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
+    const supabase = createClient(supabaseUrl, supabaseKey);
 
-    if (!fs.existsSync(filePath)) {
-      return NextResponse.json({ error: 'Project not found' }, { status: 404 });
-    }
+    const { error } = await supabase
+      .from('aurum_projects')
+      .update({ name: newName, updated_at: new Date().toISOString() })
+      .eq('slug', slug);
 
-    const fileContent = fs.readFileSync(filePath, 'utf-8');
-    const project = JSON.parse(fileContent);
+    if (error) throw error;
 
-    // Update the internal display name
-    project.name = newName;
-
-    fs.writeFileSync(filePath, JSON.stringify(project, null, 2));
-
-    return NextResponse.json({ success: true, project });
+    return NextResponse.json({ success: true });
   } catch (error) {
-    console.error('Failed to rename project:', error);
+    console.error('Failed to rename project in Supabase:', error);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
 }

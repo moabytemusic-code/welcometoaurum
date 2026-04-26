@@ -1,49 +1,49 @@
 import { NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
+import { createClient } from '@supabase/supabase-js';
 
 export async function POST(request) {
   try {
     const data = await request.json();
-    const { slug } = data;
+    const { slug, name, angle, content, config } = data;
 
     if (!slug) {
       return NextResponse.json({ error: 'Slug is required' }, { status: 400 });
     }
 
-    const projectsDir = path.join(process.cwd(), 'src/data/projects');
-    
-    // Ensure directory exists
-    if (!fs.existsSync(projectsDir)) {
-      fs.mkdirSync(projectsDir, { recursive: true });
-    }
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
+    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
+    const supabase = createClient(supabaseUrl, supabaseKey);
 
-    const filePath = path.join(projectsDir, `${slug}.json`);
-    
-    // Preserve isActive status if the file already exists
+    // 1. Fetch current status to preserve it
     let isActive = true;
-    if (fs.existsSync(filePath)) {
-      try {
-        const existing = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-        if (existing.isActive !== undefined) {
-          isActive = existing.isActive;
-        }
-      } catch (e) {
-        console.error('Error reading existing project during save:', e);
-      }
+    const { data: existing } = await supabase
+      .from('aurum_projects')
+      .select('is_active')
+      .eq('slug', slug)
+      .maybeSingle();
+    
+    if (existing) {
+      isActive = existing.is_active;
     }
 
-    // If the incoming data explicitly has isActive, use that, otherwise use preserved
-    const finalData = {
-      ...data,
-      isActive: data.isActive !== undefined ? data.isActive : isActive
-    };
+    // 2. Upsert with preserved status
+    const { error } = await supabase
+      .from('aurum_projects')
+      .upsert({
+        slug,
+        name,
+        angle,
+        content,
+        config,
+        is_active: isActive,
+        updated_at: new Date().toISOString()
+      }, { onConflict: 'slug' });
 
-    fs.writeFileSync(filePath, JSON.stringify(finalData, null, 2));
+    if (error) throw error;
 
-    return NextResponse.json({ success: true, path: `/f/${slug}/${data.angle}` });
+    return NextResponse.json({ success: true, path: `/f/${slug}/${angle}` });
   } catch (err) {
-    console.error('Save error:', err);
+    console.error('Save error in Supabase:', err);
     return NextResponse.json({ error: 'Failed to save project' }, { status: 500 });
   }
 }

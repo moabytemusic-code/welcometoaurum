@@ -1,34 +1,30 @@
 import { NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
+import { createClient } from '@supabase/supabase-js';
+
+export const dynamic = 'force-dynamic';
 
 export async function GET() {
   try {
-    const dataDir = path.join(process.cwd(), 'src', 'data', 'projects');
-    if (!fs.existsSync(dataDir)) {
-      return NextResponse.json([]);
-    }
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
+    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
+    const supabase = createClient(supabaseUrl, supabaseKey);
 
-    const files = fs.readdirSync(dataDir).filter(file => file.endsWith('.json'));
-    const projects = [];
+    const { data: projects, error } = await supabase
+      .from('aurum_projects')
+      .select('*')
+      .order('updated_at', { ascending: false });
 
-    for (const file of files) {
-      try {
-        const fileContent = fs.readFileSync(path.join(dataDir, file), 'utf-8');
-        const project = JSON.parse(fileContent);
-        // By default, if isActive is undefined, it's active
-        if (project.isActive === undefined) {
-          project.isActive = true;
-        }
-        projects.push(project);
-      } catch (err) {
-        console.error(`Error parsing ${file}:`, err);
-      }
-    }
+    if (error) throw error;
 
-    return NextResponse.json(projects);
+    // Map DB fields to UI expectations
+    const mappedProjects = projects.map(p => ({
+      ...p,
+      isActive: p.is_active
+    }));
+
+    return NextResponse.json(mappedProjects);
   } catch (error) {
-    console.error('Failed to list projects:', error);
+    console.error('Failed to list projects from Supabase:', error);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
 }
