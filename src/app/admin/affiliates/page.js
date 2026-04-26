@@ -248,19 +248,19 @@ export default function AffiliatesManager() {
         <div style={{ 
           background: 'rgba(255, 68, 68, 0.1)', 
           border: '1px solid rgba(255, 68, 68, 0.2)', 
-          padding: '16px 24px', 
+          padding: '20px 24px', 
           borderRadius: '16px', 
           marginBottom: '32px',
           display: 'flex',
           alignItems: 'center',
           gap: '16px',
-          animation: 'pulse 2s infinite ease-in-out'
+          boxShadow: '0 8px 32px rgba(255,68,68,0.05)'
         }}>
-          <AlertTriangle color="#ff4444" size={24} />
+          <AlertTriangle color="#ff4444" size={28} />
           <div style={{ flex: 1 }}>
-            <h4 style={{ color: '#fff', fontSize: '14px', fontWeight: '700', margin: 0 }}>Configuration Warning</h4>
+            <h4 style={{ color: '#fff', fontSize: '15px', fontWeight: '800', margin: 0 }}>Configuration Conflict Detected</h4>
             <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '13px', margin: '4px 0 0 0' }}>
-              {warnings.length} partner{warnings.length > 1 ? 's are' : ' is'} set to LIVE in the Rotator but {warnings.length > 1 ? 'have' : 'has'} <strong>zero funnels unlocked</strong>. They will never receive leads.
+              {warnings.length} partner{warnings.length > 1 ? 's are' : ' is'} currently LIVE in the Rotator but {warnings.length > 1 ? 'has' : 'have'} <strong>no active funnels unlocked</strong>.
             </p>
           </div>
         </div>
@@ -281,12 +281,12 @@ export default function AffiliatesManager() {
       </div>
 
       {/* Search Bar */}
-      <div style={{ marginBottom: '24px' }}>
+      <div style={{ marginBottom: '32px' }}>
         <input 
           type="text" 
-          placeholder="Search by name or code..." 
+          placeholder="Search partners..." 
           className={styles.modalInput}
-          style={{ maxWidth: '400px', marginBottom: '0' }}
+          style={{ maxWidth: '400px', marginBottom: '0', background: 'rgba(255,255,255,0.03)', borderRadius: '12px' }}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
@@ -297,61 +297,77 @@ export default function AffiliatesManager() {
         background: 'rgba(255,255,255,0.02)', 
         border: '1px solid rgba(255,255,255,0.05)', 
         borderRadius: '24px', 
-        overflow: 'hidden' 
+        overflow: 'hidden',
+        boxShadow: '0 20px 50px rgba(0,0,0,0.3)'
       }}>
         <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
           <thead>
             <tr style={{ background: 'rgba(255,255,255,0.03)', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-              <th style={{ padding: '20px 24px', fontSize: '12px', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase' }}>Partner</th>
-              <th style={{ padding: '20px 24px', fontSize: '12px', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase' }}>Main Code</th>
-              <th style={{ padding: '20px 24px', fontSize: '12px', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase' }}>Unlocked Funnels (Click for QR)</th>
-              <th style={{ padding: '20px 24px', fontSize: '12px', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase' }}>Rotator Status</th>
-              <th style={{ padding: '20px 24px', textAlign: 'right' }}>Actions</th>
+              <th style={{ padding: '24px 32px', fontSize: '11px', color: 'rgba(255,255,255,0.3)', textTransform: 'uppercase', letterSpacing: '1px' }}>Partner</th>
+              <th style={{ padding: '24px 32px', fontSize: '11px', color: 'rgba(255,255,255,0.3)', textTransform: 'uppercase', letterSpacing: '1px' }}>Main Code</th>
+              <th style={{ padding: '24px 32px', fontSize: '11px', color: 'rgba(255,255,255,0.3)', textTransform: 'uppercase', letterSpacing: '1px' }}>Unlocked Funnels</th>
+              <th style={{ padding: '24px 32px', fontSize: '11px', color: 'rgba(255,255,255,0.3)', textTransform: 'uppercase', letterSpacing: '1px' }}>Rotator</th>
+              <th style={{ padding: '24px 32px', textAlign: 'right' }}>Actions</th>
             </tr>
           </thead>
           <tbody>
             {filteredPartners.map(p => {
               const hasConfigIssue = p.is_rotator && (!p.unlocked_funnels || p.unlocked_funnels.trim() === '');
               return (
-                <tr key={p.id} style={{ borderBottom: '1px solid rgba(255,255,255,0.03)', background: hasConfigIssue ? 'rgba(255,68,68,0.02)' : 'transparent' }}>
-                  <td style={{ padding: '20px 24px' }}>
-                    <div style={{ fontWeight: '700', color: '#fff', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <tr key={p.id} style={{ 
+                  borderBottom: '1px solid rgba(255,255,255,0.03)', 
+                  background: hasConfigIssue ? 'rgba(255,68,68,0.02)' : 'transparent',
+                  transition: 'background 0.2s'
+                }}>
+                  <td style={{ padding: '28px 32px' }}>
+                    <div style={{ fontWeight: '800', color: '#fff', fontSize: '15px', marginBottom: '4px', display: 'flex', alignItems: 'center', gap: '10px' }}>
                       {p.full_name}
-                      {hasConfigIssue && <AlertTriangle size={14} color="#ff4444" title="Configuration Error: No Funnels Unlocked" />}
+                      {hasConfigIssue && <AlertTriangle size={14} color="#ff4444" />}
                     </div>
-                    <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)' }}>{p.email}</div>
+                    <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.3)' }}>{p.email}</div>
                   </td>
-                  <td style={{ padding: '20px 24px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      <code style={{ background: 'rgba(45, 140, 240, 0.1)', color: '#2d8cf0', padding: '4px 8px', borderRadius: '6px', fontSize: '12px' }}>{p.affiliate_code}</code>
+                  <td style={{ padding: '28px 32px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                      <code style={{ 
+                        background: 'rgba(45, 140, 240, 0.08)', 
+                        color: '#2d8cf0', 
+                        padding: '6px 12px', 
+                        borderRadius: '8px', 
+                        fontSize: '12px',
+                        fontWeight: '700',
+                        letterSpacing: '1px',
+                        border: '1px solid rgba(45,140,240,0.1)'
+                      }}>{p.affiliate_code}</code>
                       <button 
                         onClick={() => openQr(`Master: ${p.full_name}`, `/?ref=${p.affiliate_code}`)}
-                        style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.2)', cursor: 'pointer' }}
-                        title="Root QR Code"
+                        style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.15)', cursor: 'pointer', transition: 'color 0.2s' }}
+                        onMouseEnter={(e) => e.currentTarget.style.color = '#fff'}
+                        onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255,255,255,0.15)'}
                       >
-                        <QrCode size={14} />
+                        <QrCode size={16} />
                       </button>
                     </div>
                   </td>
-                  <td style={{ padding: '20px 24px' }}>
-                    <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                  <td style={{ padding: '28px 32px' }}>
+                    <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', maxWidth: '400px' }}>
                       {availableFunnels.map(f => {
                         const isUnlocked = (p.unlocked_funnels || '').includes(f.id);
                         return (
-                          <div key={f.id} style={{ display: 'flex', alignItems: 'center', gap: '2px' }}>
+                          <div key={f.id} style={{ display: 'flex', alignItems: 'center' }}>
                             <button
                               onClick={() => toggleFunnel(p, f.id)}
                               style={{
-                                padding: '4px 10px',
-                                borderRadius: '100px 0 0 100px',
-                                fontSize: '10px',
+                                padding: '6px 14px',
+                                borderRadius: '8px 0 0 8px',
+                                fontSize: '11px',
                                 fontWeight: '700',
                                 border: '1px solid',
                                 borderRight: 'none',
                                 cursor: 'pointer',
-                                background: isUnlocked ? 'rgba(45, 140, 240, 0.15)' : 'transparent',
-                                borderColor: isUnlocked ? '#2d8cf0' : 'rgba(255,255,255,0.1)',
-                                color: isUnlocked ? '#2d8cf0' : 'rgba(255,255,255,0.3)',
+                                background: isUnlocked ? 'rgba(45, 140, 240, 0.12)' : 'transparent',
+                                borderColor: isUnlocked ? 'rgba(45,140,240,0.3)' : 'rgba(255,255,255,0.08)',
+                                color: isUnlocked ? '#2d8cf0' : 'rgba(255,255,255,0.25)',
+                                transition: 'all 0.2s'
                               }}
                             >
                               {f.label}
@@ -360,18 +376,18 @@ export default function AffiliatesManager() {
                               <button 
                                 onClick={() => openQr(`${f.label}: ${p.full_name}`, `/f/${f.id}/${f.angle || 'pitch'}?ref=${p.affiliate_code}`)}
                                 style={{ 
-                                  padding: '4px 8px', 
-                                  borderRadius: '0 100px 100px 0', 
-                                  background: 'rgba(45, 140, 240, 0.1)', 
-                                  border: '1px solid #2d8cf0',
+                                  padding: '6px 10px', 
+                                  borderRadius: '0 8px 8px 0', 
+                                  background: 'rgba(45, 140, 240, 0.15)', 
+                                  border: '1px solid rgba(45,140,240,0.3)',
                                   borderLeft: 'none',
                                   color: '#2d8cf0',
                                   cursor: 'pointer',
-                                  display: 'flex'
+                                  display: 'flex',
+                                  alignItems: 'center'
                                 }}
-                                title={`Get QR for ${f.label}`}
                               >
-                                <QrCode size={12} />
+                                <QrCode size={13} />
                               </button>
                             )}
                           </div>
@@ -379,27 +395,28 @@ export default function AffiliatesManager() {
                       })}
                     </div>
                   </td>
-                  <td style={{ padding: '20px 24px' }}>
+                  <td style={{ padding: '28px 32px' }}>
                     <button 
                       onClick={() => toggleRotator(p)}
                       style={{ 
-                        padding: '6px 16px', 
+                        padding: '8px 18px', 
                         borderRadius: '100px', 
-                        fontSize: '10px', 
+                        fontSize: '11px', 
                         fontWeight: '900', 
                         cursor: 'pointer',
-                        background: p.is_rotator ? 'rgba(0, 255, 136, 0.1)' : 'rgba(255, 255, 255, 0.05)',
+                        background: p.is_rotator ? 'rgba(0, 255, 136, 0.08)' : 'rgba(255, 255, 255, 0.03)',
                         border: `1px solid ${p.is_rotator ? 'rgba(0, 255, 136, 0.2)' : 'rgba(255,255,255,0.05)'}`,
-                        color: p.is_rotator ? '#00ff88' : 'rgba(255,255,255,0.3)',
+                        color: p.is_rotator ? '#00ff88' : 'rgba(255,255,255,0.2)',
+                        transition: 'all 0.2s'
                       }}
                     >
                       {p.is_rotator ? 'LIVE' : 'OFF'}
                     </button>
                   </td>
-                  <td style={{ padding: '20px 24px', textAlign: 'right' }}>
-                    <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '16px' }}>
-                      <button onClick={() => { setEditingPartner(p); setShowEditModal(true); }} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.3)', cursor: 'pointer' }}><Edit2 size={16} /></button>
-                      <button onClick={() => { setDeletingPartner(p); setShowDeleteModal(true); }} style={{ background: 'none', border: 'none', color: 'rgba(255, 68, 68, 0.3)', cursor: 'pointer' }}><Trash2 size={16} /></button>
+                  <td style={{ padding: '28px 32px', textAlign: 'right' }}>
+                    <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '20px' }}>
+                      <button onClick={() => { setEditingPartner(p); setShowEditModal(true); }} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.2)', cursor: 'pointer' }}><Edit2 size={18} /></button>
+                      <button onClick={() => { setDeletingPartner(p); setShowDeleteModal(true); }} style={{ background: 'none', border: 'none', color: 'rgba(255, 68, 68, 0.25)', cursor: 'pointer' }}><Trash2 size={18} /></button>
                     </div>
                   </td>
                 </tr>
@@ -409,18 +426,76 @@ export default function AffiliatesManager() {
         </table>
       </div>
 
-      {/* Modals (Keep existing modals) */}
+      {/* --- MODALS --- */}
+
+      {showQrModal && (
+        <div className={styles.modalOverlay} style={{ zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div className={styles.modalContent} style={{ 
+            maxWidth: '440px', 
+            width: '90%',
+            textAlign: 'center', 
+            padding: '40px',
+            position: 'relative',
+            background: '#111',
+            borderRadius: '32px',
+            border: '1px solid rgba(255,255,255,0.1)',
+            boxShadow: '0 30px 60px rgba(0,0,0,0.8)'
+          }}>
+            <button onClick={() => setShowQrModal(false)} style={{ position: 'absolute', top: '24px', right: '24px', background: 'none', border: 'none', color: 'rgba(255,255,255,0.4)', cursor: 'pointer' }}><X size={24} /></button>
+            
+            <h2 className={styles.modalTitle} style={{ fontSize: '20px', color: '#fff', marginBottom: '8px', lineHeight: '1.4' }}>{qrData.title}</h2>
+            <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '13px', marginBottom: '32px' }}>Download and share this code</p>
+
+            <div style={{ 
+              background: '#fff', 
+              padding: '24px', 
+              borderRadius: '24px', 
+              display: 'inline-block', 
+              marginBottom: '32px',
+              boxShadow: '0 10px 30px rgba(0,0,0,0.2)' 
+            }}>
+              <img src={qrImageUrl(qrData.url)} alt="QR" style={{ display: 'block', width: '280px', height: '280px' }} />
+            </div>
+
+            <div style={{ marginBottom: '32px', padding: '0 10px' }}>
+              <p style={{ color: 'rgba(255,255,255,0.3)', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '8px' }}>Destination Link</p>
+              <div style={{ 
+                color: '#2d8cf0', 
+                fontSize: '12px', 
+                wordBreak: 'break-all', 
+                background: 'rgba(45,140,240,0.05)', 
+                padding: '12px', 
+                borderRadius: '12px',
+                border: '1px solid rgba(45,140,240,0.1)'
+              }}>
+                {qrData.url}
+              </div>
+            </div>
+
+            <a 
+              href={qrImageUrl(qrData.url)} 
+              download={`QR_${qrData.title.replace(/\s+/g, '_')}.png`} 
+              className={styles.primaryCta} 
+              style={{ textDecoration: 'none', width: '100%', justifyContent: 'center', padding: '16px', borderRadius: '14px' }}
+            >
+              <Download size={20} /> Save Image
+            </a>
+          </div>
+        </div>
+      )}
+
+      {/* Keep other modals but ensure they use high z-index and flex centering */}
       {showAddModal && (
-        <div className={styles.modalOverlay} style={{ zIndex: 100 }}>
-          <div className={styles.modalContent} style={{ maxWidth: '500px' }}>
-            <h2 className={styles.modalTitle}>Register New Partner</h2>
+        <div className={styles.modalOverlay} style={{ zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div className={styles.modalContent} style={{ maxWidth: '500px', width: '90%', padding: '40px', background: '#111', borderRadius: '32px' }}>
+            <h2 className={styles.modalTitle} style={{ fontSize: '24px', marginBottom: '32px' }}>Register New Partner</h2>
             <form onSubmit={handleRegister} className={styles.modalForm}>
               <input type="text" placeholder="Full Name" required className={styles.modalInput} value={newPartner.full_name} onChange={(e) => setNewPartner({...newPartner, full_name: e.target.value})} />
               <input type="email" placeholder="Email Address" required className={styles.modalInput} value={newPartner.email} onChange={(e) => setNewPartner({...newPartner, email: e.target.value})} />
-              <input type="text" placeholder="Affiliate Reference Code" required className={styles.modalInput} value={newPartner.affiliate_code} onChange={(e) => setNewPartner({...newPartner, affiliate_code: e.target.value})} />
-              <div style={{ display: 'flex', gap: '12px', marginTop: '12px' }}>
-                <button type="submit" disabled={isSubmitting} className={styles.primaryCta} style={{ flex: 1 }}>{isSubmitting ? 'Registering...' : 'Complete Registration'}</button>
-                <button type="button" onClick={() => setShowAddModal(false)} className={styles.secondaryBtn} style={{ padding: '0 24px' }}>Cancel</button>
+              <input type="text" placeholder="Affiliate Code" required className={styles.modalInput} value={newPartner.affiliate_code} onChange={(e) => setNewPartner({...newPartner, affiliate_code: e.target.value})} />
+              <div style={{ display: 'flex', gap: '16px', marginTop: '16px' }}>
+                <button type="submit" disabled={isSubmitting} className={styles.primaryCta} style={{ flex: 1, padding: '16px', borderRadius: '14px' }}>Complete Registration</button>
+                <button type="button" onClick={() => setShowAddModal(false)} className={styles.secondaryBtn} style={{ padding: '0 24px', borderRadius: '14px' }}>Cancel</button>
               </div>
             </form>
           </div>
@@ -428,16 +503,17 @@ export default function AffiliatesManager() {
       )}
 
       {showEditModal && editingPartner && (
-        <div className={styles.modalOverlay} style={{ zIndex: 100 }}>
-          <div className={styles.modalContent} style={{ maxWidth: '500px' }}>
-            <h2 className={styles.modalTitle}>Edit Partner</h2>
+        <div className={styles.modalOverlay} style={{ zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div className={styles.modalContent} style={{ maxWidth: '500px', width: '90%', padding: '40px', background: '#111', borderRadius: '32px' }}>
+            <h2 className={styles.modalTitle} style={{ fontSize: '24px', marginBottom: '32px' }}>Edit Partner</h2>
             <form onSubmit={handleEditSubmit} className={styles.modalForm}>
+              <label style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '1px' }}>Full Name</label>
               <input type="text" required className={styles.modalInput} value={editingPartner.full_name} onChange={(e) => setEditingPartner({...editingPartner, full_name: e.target.value})} />
-              <input type="email" required className={styles.modalInput} value={editingPartner.email} onChange={(e) => setEditingPartner({...editingPartner, email: e.target.value})} />
-              <textarea className={styles.modalInput} style={{ minHeight: '100px', fontFamily: 'monospace' }} value={editingPartner.rotator_pool} onChange={(e) => setEditingPartner({...editingPartner, rotator_pool: e.target.value})} />
-              <div style={{ display: 'flex', gap: '12px' }}>
-                <button type="submit" disabled={isSubmitting} className={styles.primaryCta} style={{ flex: 1 }}>{isSubmitting ? 'Saving...' : 'Save Changes'}</button>
-                <button type="button" onClick={() => setShowEditModal(false)} className={styles.secondaryBtn}>Cancel</button>
+              <label style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '1px' }}>Rotator Pool (JSON/List)</label>
+              <textarea className={styles.modalInput} style={{ minHeight: '120px', fontFamily: 'monospace' }} value={editingPartner.rotator_pool} onChange={(e) => setEditingPartner({...editingPartner, rotator_pool: e.target.value})} />
+              <div style={{ display: 'flex', gap: '16px', marginTop: '16px' }}>
+                <button type="submit" disabled={isSubmitting} className={styles.primaryCta} style={{ flex: 1, padding: '16px', borderRadius: '14px' }}>Save Changes</button>
+                <button type="button" onClick={() => setShowEditModal(false)} className={styles.secondaryBtn} style={{ borderRadius: '14px' }}>Cancel</button>
               </div>
             </form>
           </div>
@@ -445,31 +521,21 @@ export default function AffiliatesManager() {
       )}
 
       {showDeleteModal && deletingPartner && (
-        <div className={styles.modalOverlay} style={{ zIndex: 120 }}>
-          <div className={styles.modalContent} style={{ maxWidth: '400px', textAlign: 'center' }}>
-            <AlertTriangle size={48} color="#ff4444" style={{ margin: '0 auto 20px' }} />
-            <h2 className={styles.modalTitle}>Confirm Deletion</h2>
-            <p style={{ color: 'rgba(255,255,255,0.6)', marginBottom: '30px' }}>Remove <strong>{deletingPartner.full_name}</strong> permanently?</p>
-            <div style={{ display: 'flex', gap: '12px' }}>
-              <button onClick={performDelete} className={styles.primaryCta} style={{ flex: 1, background: '#ff4444' }}>Delete</button>
-              <button onClick={() => setShowDeleteModal(false)} className={styles.secondaryBtn} style={{ flex: 1 }}>Cancel</button>
+        <div className={styles.modalOverlay} style={{ zIndex: 1100, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div className={styles.modalContent} style={{ maxWidth: '420px', width: '90%', textAlign: 'center', padding: '40px', background: '#111', borderRadius: '32px', border: '1px solid rgba(255,68,68,0.2)' }}>
+            <AlertTriangle size={56} color="#ff4444" style={{ margin: '0 auto 24px' }} />
+            <h2 className={styles.modalTitle} style={{ fontSize: '22px', marginBottom: '12px' }}>Confirm Deletion</h2>
+            <p style={{ color: 'rgba(255,255,255,0.6)', lineHeight: '1.6', marginBottom: '40px' }}>
+              Remove <strong>{deletingPartner.full_name}</strong> permanently? This cannot be undone.
+            </p>
+            <div style={{ display: 'flex', gap: '16px' }}>
+              <button onClick={performDelete} className={styles.primaryCta} style={{ flex: 1, background: '#ff4444', padding: '16px', borderRadius: '14px' }}>Delete</button>
+              <button onClick={() => { setShowDeleteModal(false); setDeletingPartner(null); }} className={styles.secondaryBtn} style={{ flex: 1, borderRadius: '14px' }}>Cancel</button>
             </div>
           </div>
         </div>
       )}
 
-      {showQrModal && (
-        <div className={styles.modalOverlay} style={{ zIndex: 110 }}>
-          <div className={styles.modalContent} style={{ maxWidth: '380px', textAlign: 'center' }}>
-            <h2 className={styles.modalTitle}>{qrData.title}</h2>
-            <div style={{ background: '#fff', padding: '16px', borderRadius: '16px', display: 'inline-block', marginBottom: '24px' }}>
-              <img src={qrImageUrl(qrData.url)} alt="QR" style={{ display: 'block', width: '250px' }} />
-            </div>
-            <p style={{ color: '#2d8cf0', fontSize: '11px', wordBreak: 'break-all' }}>{qrData.url}</p>
-            <a href={qrImageUrl(qrData.url)} download={`QR_${qrData.title}.png`} className={styles.primaryCta} style={{ textDecoration: 'none' }}><Download size={18} /> Save Image</a>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
