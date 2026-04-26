@@ -67,7 +67,7 @@ const OptInBadge = ({ onOptIn, isProcessing, status, wide = false, angle = 'pitc
           }
           .submit-btn {
             height: 60px !important;
-            font-size: 15px !important;
+            font-size: 13px !important;
           }
           .footer-badges {
             flex-direction: column !important;
