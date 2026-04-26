@@ -120,7 +120,22 @@ const PayItForwardAngleV2 = ({ project, handleOptIn, isProcessing, status }) => 
 
             {!isProcessing ? (
               <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '24px' }}>
+                  
+                  <div style={{ width: '100%', maxWidth: '420px' }}>
+                    <label style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '11px', color: 'rgba(255,255,255,0.4)', marginBottom: '12px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px' }}>
+                      First Name
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="John"
+                      required
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      style={{ width: '100%', height: '56px', padding: '0 20px', borderRadius: '16px', fontSize: '15px', background: 'rgba(255,255,255,0.04)', border: `1px solid rgba(192,38,211,0.2)`, color: '#fff', textAlign: 'center', outline: 'none', boxSizing: 'border-box' }}
+                    />
+                  </div>
+
                   <div style={{ width: '100%', maxWidth: '420px' }}>
                     <label style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '11px', color: 'rgba(255,255,255,0.4)', marginBottom: '12px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px' }}>
                       <Globe size={12} /> Your Email Address
