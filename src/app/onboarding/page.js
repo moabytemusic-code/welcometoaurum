@@ -48,7 +48,7 @@ export default function OnboardingPage() {
           Welcome to the <span style={{ color: '#d4af37' }}>Aurum Inner Circle.</span>
         </h1>
         <p className={styles.pitchSub} style={{ fontSize: '18px', color: 'rgba(255,255,255,0.6)', marginBottom: '60px' }}>
-          Your briefing is ready. Complete these 3 critical steps to activate your EX-AI automated account and claim your liquidity voucher.
+          Your briefing is ready. Complete these 3 critical steps to activate your automated account and claim your voucher.
         </p>
 
         {/* Steps Grid */}
