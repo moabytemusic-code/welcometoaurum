@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import styles from '@/app/finance.module.css';
 import { Gift, ShieldCheck, Zap, Lock, Shield, Globe } from 'lucide-react';
+import OptInBadge from '@/components/OptInBadge';
 
 // ─── VIBRANT THEME PALETTE ────────────────────────────────────────────────────
 // Primary:  #ff6b35  (hot coral / electric orange)
@@ -102,98 +103,14 @@ const PayItForwardAngleV2 = ({ project, handleOptIn, isProcessing, status }) => 
           </div>
 
           {/* ── Opt-In Form ───────────────────────────────────────────────── */}
-          <div style={{ background: THEME.bgCard, backdropFilter: 'blur(40px)', border: `1px solid ${THEME.border}`, borderRadius: '32px', padding: '48px', position: 'relative', overflow: 'hidden' }}>
-            {/* Accent stripe */}
-            <div style={{ position: 'absolute', top: 0, left: 0, width: '4px', height: '100%', background: THEME.highlight }} />
-
-            {/* Header */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '40px' }}>
-              <div>
-                <div style={{ fontSize: '12px', fontWeight: '900', letterSpacing: '4px', color: THEME.primary, marginBottom: '8px' }}>AURUM</div>
-                <div style={{ fontSize: '24px', fontWeight: '800', color: '#fff' }}>Secure Claim Portal</div>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: 'rgba(255,255,255,0.03)', padding: '6px 12px', borderRadius: '100px', border: '1px solid rgba(255,255,255,0.06)' }}>
-                <span style={{ width: '6px', height: '6px', background: THEME.primary, borderRadius: '50%', boxShadow: `0 0 10px ${THEME.primary}` }} />
-                <span style={{ fontSize: '10px', fontWeight: '700', color: 'rgba(255,255,255,0.5)', letterSpacing: '1px' }}>SECURE NODE: {dateStr}</span>
-              </div>
-            </div>
-
-            {!isProcessing ? (
-              <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '24px' }}>
-                  
-                  <div style={{ width: '100%', maxWidth: '420px' }}>
-                    <label style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '11px', color: 'rgba(255,255,255,0.4)', marginBottom: '12px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px' }}>
-                      First Name
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="John"
-                      required
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      style={{ width: '100%', height: '56px', padding: '0 20px', borderRadius: '16px', fontSize: '15px', background: 'rgba(255,255,255,0.04)', border: `1px solid rgba(192,38,211,0.2)`, color: '#fff', textAlign: 'center', outline: 'none', boxSizing: 'border-box' }}
-                    />
-                  </div>
-
-                  <div style={{ width: '100%', maxWidth: '420px' }}>
-                    <label style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '11px', color: 'rgba(255,255,255,0.4)', marginBottom: '12px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px' }}>
-                      <Globe size={12} /> Your Email Address
-                    </label>
-                    <input
-                      type="email"
-                      placeholder="name@email.com"
-                      required
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      style={{ width: '100%', height: '56px', padding: '0 20px', borderRadius: '16px', fontSize: '15px', background: 'rgba(255,255,255,0.04)', border: `1px solid rgba(192,38,211,0.2)`, color: '#fff', textAlign: 'center', outline: 'none', boxSizing: 'border-box' }}
-                    />
-                  </div>
-                </div>
-
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
-                  <button
-                    type="submit"
-                    style={{
-                      width: '100%',
-                      maxWidth: '420px',
-                      height: '64px',
-                      fontSize: '16px',
-                      fontWeight: '900',
-                      letterSpacing: '2px',
-                      textTransform: 'uppercase',
-                      borderRadius: '20px',
-                      border: 'none',
-                      cursor: 'pointer',
-                      background: THEME.highlight,
-                      color: '#fff',
-                      boxShadow: `0 15px 45px rgba(255, 107, 53, 0.35)`,
-                      transition: 'all 0.2s',
-                    }}
-                    onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = `0 20px 60px rgba(255,107,53,0.5)`; }}
-                    onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = `0 15px 45px rgba(255,107,53,0.35)`; }}
-                  >
-                    Claim My Free $100 →
-                  </button>
-
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '24px', flexWrap: 'wrap', justifyContent: 'center' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '11px', fontWeight: '600', color: 'rgba(255,255,255,0.3)' }}>
-                      <Lock size={12} /> 256-BIT ENCRYPTION
-                    </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '11px', fontWeight: '600', color: THEME.primary }}>
-                      <Shield size={12} /> NO CREDIT CARD REQUIRED
-                    </div>
-                  </div>
-                </div>
-              </form>
-            ) : (
-              <div style={{ padding: '40px 0', textAlign: 'center' }}>
-                <div style={{ width: '56px', height: '56px', border: `3px solid rgba(255,255,255,0.1)`, borderTop: `3px solid ${THEME.primary}`, borderRadius: '50%', animation: 'spin 1s linear infinite', margin: '0 auto 32px' }} />
-                <span style={{ fontSize: '14px', color: '#fff', fontWeight: '900', letterSpacing: '3px', textTransform: 'uppercase' }}>{status || 'PROCESSING CLAIM...'}</span>
-                <br />
-                <span style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)' }}>AUTHORIZED SESSION IN PROGRESS</span>
-              </div>
-            )}
+          <div style={{ maxWidth: '800px', margin: '0 auto', display: 'flex', justifyContent: 'center' }}>
+            <OptInBadge 
+              onOptIn={handleOptIn} 
+              isProcessing={isProcessing} 
+              status={status}
+              wide={true}
+              angle="pay-it-forward"
+            />
           </div>
 
           {/* Proof line */}
