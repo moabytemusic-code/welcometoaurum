@@ -17,9 +17,18 @@ export default function AdminOverview() {
     const fetchQuickStats = async () => {
       try {
         const res = await fetch('/api/admin/affiliates?quick=true');
-        if (res.ok) {
-          const data = await res.json();
-          setStats(s => ({ ...s, totalAffiliates: data.count }));
+        const projectRes = await fetch('/api/admin/projects/list');
+        
+        if (res.ok && projectRes.ok) {
+          const affiliateData = await res.json();
+          const projectData = await projectRes.json();
+          const activeCount = projectData.filter(p => p.isActive).length;
+          
+          setStats(s => ({ 
+            ...s, 
+            totalAffiliates: affiliateData.count,
+            activeVariants: activeCount
+          }));
         }
       } catch (e) {
         console.error('Stats fetch error:', e);

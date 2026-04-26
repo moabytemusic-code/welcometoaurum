@@ -14,6 +14,15 @@ export async function GET() {
     const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
     const supabase = createClient(supabaseUrl, supabaseKey);
 
+    // Fetch latest leads
+    const { data: leads, error: leadError } = await supabase
+      .from('aurum_leads')
+      .select('id, email, first_name, landing_variant, created_at')
+      .order('created_at', { ascending: false })
+      .limit(10);
+
+    if (leadError) throw leadError;
+
     // Fetch partners with recent activity
     const { data: partners, error } = await supabase
       .from('aurum_affiliates')
@@ -23,12 +32,10 @@ export async function GET() {
 
     if (error) throw error;
 
-    const events = partners.map(p => {
+    const partnerEvents = partners.map(p => {
       const created = new Date(p.created_at);
       const served = p.last_served_at ? new Date(p.last_served_at) : null;
       
-      // Calculate "Relative" time for the logic (we'll format it properly in the UI)
-      // If it has never been served, it's a "joined" event
       if (!served) {
         return {
           id: `${p.id}-joined`,
@@ -37,7 +44,6 @@ export async function GET() {
         };
       }
 
-      // If it was served recently (within 5 seconds of creation), it's likely a sync
       const diff = Math.abs(served.getTime() - created.getTime());
       if (diff < 5000) {
         return {
@@ -47,16 +53,26 @@ export async function GET() {
         };
       }
 
-      // Otherwise, it's a rotation event
       return {
         id: `${p.id}-rotation`,
         text: `Traffic redirected to '${p.full_name}' via Rotator.`,
         timestamp: served.toISOString()
       };
-    }).sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+    });
 
-    return NextResponse.json(events);
+    const leadEvents = (leads || []).map(l => ({
+      id: `${l.id}-lead`,
+      text: `New Lead: ${l.first_name || 'Prospect'} (via /${l.landing_variant || 'pitch'})`,
+      timestamp: l.created_at
+    }));
+
+    const allEvents = [...partnerEvents, ...leadEvents]
+      .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
+      .slice(0, 15);
+
+    return NextResponse.json(allEvents);
   } catch (err) {
+    console.error('Activity feed error:', err);
     return NextResponse.json({ error: err.message }, { status: 500 });
   }
 }
