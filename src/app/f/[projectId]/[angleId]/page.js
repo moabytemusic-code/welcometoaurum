@@ -1,17 +1,27 @@
 import FunnelEngineClient from '@/components/funnel/FunnelEngineClient';
+import { createClient } from '@supabase/supabase-js';
 
 async function getProject(projectId) {
   try {
-    // For Server Components, we use an absolute URL or fetch from the filesystem directly
-    // Since we are in a local dev environment, we use the internal API URL
-    const baseUrl = process.env.SITE_URL || 'http://localhost:3001';
-    const res = await fetch(`${baseUrl}/api/admin/projects/load?slug=${projectId}`, { 
-      cache: 'no-store' 
-    });
-    if (!res.ok) return null;
-    return res.json();
-  } catch (e) {
-    console.error('Server-side project fetch failed:', e);
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+    );
+
+    const { data: project, error } = await supabase
+      .from('aurum_projects')
+      .select('*')
+      .eq('slug', projectId)
+      .maybeSingle();
+
+    if (error || !project) return null;
+
+    return {
+      ...project,
+      isActive: project.is_active
+    };
+  } catch (err) {
+    console.error('Error fetching project directly from Supabase:', err);
     return null;
   }
 }
@@ -28,8 +38,8 @@ export async function generateMetadata({ params }) {
   }
 
   return {
-    title: `${project.name} | ${project.content.subtitle || 'Official Page'}`,
-    description: project.content.description || 'Welcome to our platform.'
+    title: project.name || 'Aurum Funnel',
+    description: project.content?.description || 'Official Page'
   };
 }
 
