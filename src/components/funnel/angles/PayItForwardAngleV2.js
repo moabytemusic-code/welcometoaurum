@@ -85,18 +85,18 @@ const PayItForwardAngleV2 = ({ project, handleOptIn, isProcessing, status }) => 
           </p>
 
           {/* "Why" Section */}
-          <div style={{ background: THEME.bgCard, backdropFilter: 'blur(20px)', border: `1px solid ${THEME.border}`, borderRadius: '24px', padding: '40px', marginBottom: '48px', textAlign: 'left' }}>
+          <div style={{ background: THEME.bgCard, backdropFilter: 'blur(20px)', border: `1px solid ${THEME.border}`, borderRadius: '24px', padding: '40px', marginBottom: '48px', textAlign: 'center' }}>
             <h2 style={{ fontSize: '20px', fontWeight: '800', marginBottom: '28px', textAlign: 'center', color: '#fff' }}>Why are we giving away $100?</h2>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '24px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '32px' }}>
               {[
-                { icon: <Gift size={28} />, title: 'Zero Risk', desc: "The hardest part of getting started is the first step. We've removed that completely by giving you the money to start." },
-                { icon: <ShieldCheck size={28} />, title: 'See It To Believe It', desc: "We want you to watch the AI actually make money with our capital before you ever risk a single penny of your own." },
-                { icon: <Zap size={28} />, title: 'Win-Win Partnership', desc: "Our community grows when people win. Instead of paying for ads, we put that money directly into your account." },
+                { icon: <Gift size={32} />, title: 'Zero Risk', desc: "The hardest part of getting started is the first step. We've removed that completely by giving you the money to start." },
+                { icon: <ShieldCheck size={32} />, title: 'See It To Believe It', desc: "We want you to watch the AI actually make money with our capital before you ever risk a single penny of your own." },
+                { icon: <Zap size={32} />, title: 'Win-Win Partnership', desc: "Our community grows when people win. Instead of paying for ads, we put that money directly into your account." },
               ].map(item => (
-                <div key={item.title}>
-                  <div style={{ color: THEME.primary, marginBottom: '12px' }}>{item.icon}</div>
-                  <h4 style={{ fontSize: '16px', fontWeight: '700', marginBottom: '8px', color: '#fff' }}>{item.title}</h4>
-                  <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.65)', lineHeight: '1.6' }}>{item.desc}</p>
+                <div key={item.title} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                  <div style={{ color: THEME.primary, marginBottom: '16px' }}>{item.icon}</div>
+                  <h4 style={{ fontSize: '18px', fontWeight: '700', marginBottom: '12px', color: '#fff' }}>{item.title}</h4>
+                  <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.65)', lineHeight: '1.7' }}>{item.desc}</p>
                 </div>
               ))}
             </div>

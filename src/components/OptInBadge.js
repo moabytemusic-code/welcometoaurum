@@ -43,12 +43,13 @@ const OptInBadge = ({ onOptIn, isProcessing, status, wide = false, angle = 'pitc
         }
         .window-header {
           display: flex;
-          justify-content: space-between;
-          align-items: flex-start;
+          flex-direction: column;
+          align-items: center;
+          gap: 16px;
           margin-bottom: 40px;
         }
         .header-content {
-          text-align: left;
+          text-align: center;
         }
         .header-top {
           font-size: 12px;
