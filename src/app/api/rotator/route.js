@@ -73,22 +73,30 @@ export async function GET(request) {
 
     const selected = partners[0];
 
-    // 3. Update the 'last_served_at' timestamp to move them to the back of the line
-    await supabase
-      .from('aurum_affiliates')
-      .update({ last_served_at: new Date().toISOString() })
-      .eq('id', selected.id);
-
-    // 4. Handle Sub-Rotation (within the partner's own pool if they have one)
+    // 4. Handle Sub-Rotation (Fair Sequential Cycling within the pool)
     let activeCode = selected.affiliate_code;
+    let nextIndex = (selected.rotator_index || 0);
+
     if (selected.rotator_pool && selected.rotator_pool.trim().length > 0) {
       const poolItems = selected.rotator_pool.split(/[,\s\n]+/).filter(c => c.trim().length > 0);
       if (poolItems.length > 0) {
-        // Deterministic pool rotation? No, random within pool is fine since the partner entry itself is sequential.
-        const poolIndex = Math.floor(Math.random() * poolItems.length);
-        activeCode = poolItems[poolIndex].trim();
+        // Pick the code at the current index
+        const currentIndex = nextIndex % poolItems.length;
+        activeCode = poolItems[currentIndex].trim();
+        
+        // Move to the next index for next time
+        nextIndex = (currentIndex + 1) % poolItems.length;
       }
     }
+
+    // 5. Update BOTH the global 'last_served_at' and the partner's 'rotator_index'
+    await supabase
+      .from('aurum_affiliates')
+      .update({ 
+        last_served_at: new Date().toISOString(),
+        rotator_index: nextIndex 
+      })
+      .eq('id', selected.id);
 
     return NextResponse.json({
       code: activeCode,
