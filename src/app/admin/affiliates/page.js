@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { QrCode, Download, X } from 'lucide-react';
+import { QrCode, Download, X, Edit2, Save } from 'lucide-react';
 import styles from '@/app/finance.module.css';
 import Link from 'next/link';
 
@@ -9,13 +9,17 @@ export default function AffiliatesManager() {
   const [partners, setPartners] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
+  
+  // Modals
   const [showAddModal, setShowAddModal] = useState(false);
-  const [newPartner, setNewPartner] = useState({ full_name: '', email: '', affiliate_code: '', phone: '' });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [showSyncModal, setShowSyncModal] = useState(false);
-  const [syncData, setSyncData] = useState('');
-  const [isSyncing, setIsSyncing] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
   const [showQrModal, setShowQrModal] = useState(false);
+
+  // Form States
+  const [newPartner, setNewPartner] = useState({ full_name: '', email: '', affiliate_code: '', phone: '' });
+  const [editingPartner, setEditingPartner] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  
   const [qrData, setQrData] = useState({ title: '', url: '' });
   const [isSessionAlive, setIsSessionAlive] = useState(null);
   const [availableFunnels, setAvailableFunnels] = useState([]);
@@ -85,6 +89,32 @@ export default function AffiliatesManager() {
     
     if (res.ok) {
       setPartners(partners.map(p => p.id === partner.id ? { ...p, is_rotator: updated } : p));
+    }
+  };
+
+  const handleEditSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    try {
+      const { id, created_at, last_served_at, ...updates } = editingPartner;
+      const res = await fetch('/api/admin/affiliates', {
+        method: 'PATCH',
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer authenticated'
+        },
+        credentials: 'include',
+        cache: 'no-store',
+        body: JSON.stringify({ id, ...updates }),
+      });
+      if (res.ok) {
+        setShowEditModal(false);
+        fetchPartners();
+      }
+    } catch (e) {
+      console.error('Update error:', e);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -212,6 +242,7 @@ export default function AffiliatesManager() {
               <th style={{ padding: '20px 24px', fontSize: '12px', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase' }}>Code</th>
               <th style={{ padding: '20px 24px', fontSize: '12px', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase' }}>Unlocked Funnels</th>
               <th style={{ padding: '20px 24px', fontSize: '12px', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase' }}>Rotator Status</th>
+              <th style={{ padding: '20px 24px', textAlign: 'right' }}>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -270,19 +301,91 @@ export default function AffiliatesManager() {
                     {p.is_rotator ? 'LIVE' : 'OFF'}
                   </button>
                 </td>
+                <td style={{ padding: '20px 24px', textAlign: 'right' }}>
+                  <button 
+                    onClick={() => { setEditingPartner(p); setShowEditModal(true); }}
+                    style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.3)', cursor: 'pointer' }}
+                  >
+                    <Edit2 size={16} />
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
 
-      {/* Modals and footer info (simplified for summary) */}
+      {/* --- MODALS --- */}
+
+      {/* Add Modal */}
+      {showAddModal && (
+        <div className={styles.modalOverlay} style={{ zIndex: 100 }}>
+          <div className={styles.modalContent} style={{ maxWidth: '500px' }}>
+            <h2 className={styles.modalTitle}>Register New Partner</h2>
+            <form onSubmit={handleRegister} className={styles.modalForm}>
+              <input type="text" placeholder="Full Name" required className={styles.modalInput} value={newPartner.full_name} onChange={(e) => setNewPartner({...newPartner, full_name: e.target.value})} />
+              <input type="email" placeholder="Email Address" required className={styles.modalInput} value={newPartner.email} onChange={(e) => setNewPartner({...newPartner, email: e.target.value})} />
+              <input type="text" placeholder="Affiliate Reference Code" required className={styles.modalInput} value={newPartner.affiliate_code} onChange={(e) => setNewPartner({...newPartner, affiliate_code: e.target.value})} />
+              <input type="tel" placeholder="Phone (Optional)" className={styles.modalInput} value={newPartner.phone} onChange={(e) => setNewPartner({...newPartner, phone: e.target.value})} />
+              <div style={{ display: 'flex', gap: '12px', marginTop: '12px' }}>
+                <button type="submit" disabled={isSubmitting} className={styles.primaryCta} style={{ flex: 1 }}>{isSubmitting ? 'Registering...' : 'Complete Registration'}</button>
+                <button type="button" onClick={() => setShowAddModal(false)} className={styles.secondaryBtn} style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', padding: '0 24px' }}>Cancel</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Edit Modal */}
+      {showEditModal && editingPartner && (
+        <div className={styles.modalOverlay} style={{ zIndex: 100 }}>
+          <div className={styles.modalContent} style={{ maxWidth: '500px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+              <h2 className={styles.modalTitle} style={{ margin: 0 }}>Edit Partner</h2>
+              <button onClick={() => setShowEditModal(false)} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.4)', cursor: 'pointer' }}><X size={20} /></button>
+            </div>
+            <form onSubmit={handleEditSubmit} className={styles.modalForm}>
+              <label style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '1px' }}>Full Name</label>
+              <input type="text" required className={styles.modalInput} value={editingPartner.full_name} onChange={(e) => setEditingPartner({...editingPartner, full_name: e.target.value})} />
+              
+              <label style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '1px' }}>Email Address</label>
+              <input type="email" required className={styles.modalInput} value={editingPartner.email} onChange={(e) => setEditingPartner({...editingPartner, email: e.target.value})} />
+              
+              <label style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '1px' }}>Affiliate Code (Careful!)</label>
+              <input type="text" required className={styles.modalInput} value={editingPartner.affiliate_code} onChange={(e) => setEditingPartner({...editingPartner, affiliate_code: e.target.value})} />
+              
+              <label style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '1px' }}>Rotator Pool (JSON or Comma List)</label>
+              <textarea 
+                className={styles.modalInput} 
+                style={{ minHeight: '100px', fontFamily: 'monospace', fontSize: '12px' }} 
+                value={editingPartner.rotator_pool} 
+                onChange={(e) => setEditingPartner({...editingPartner, rotator_pool: e.target.value})} 
+              />
+
+              <div style={{ display: 'flex', gap: '12px', marginTop: '12px' }}>
+                <button type="submit" disabled={isSubmitting} className={styles.primaryCta} style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
+                  <Save size={18} /> {isSubmitting ? 'Saving...' : 'Save Changes'}
+                </button>
+                <button type="button" onClick={() => setShowEditModal(false)} className={styles.secondaryBtn} style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', padding: '0 24px' }}>Cancel</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* QR Modal */}
       {showQrModal && (
-        <div className={styles.modalOverlay}>
+        <div className={styles.modalOverlay} style={{ zIndex: 110 }}>
           <div className={styles.modalContent} style={{ maxWidth: '380px', textAlign: 'center' }}>
-            <h2 className={styles.modalTitle}>{qrData.title}</h2>
-            <img src={qrImageUrl(qrData.url)} alt="QR" style={{ margin: '20px auto', display: 'block', width: '250px' }} />
-            <button onClick={() => setShowQrModal(false)} className={styles.primaryCta}>Close</button>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+              <h2 className={styles.modalTitle} style={{ margin: 0 }}>QR Resolution</h2>
+              <button onClick={() => setShowQrModal(false)} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.4)', cursor: 'pointer' }}><X size={20} /></button>
+            </div>
+            <div style={{ background: '#fff', padding: '16px', borderRadius: '16px', display: 'inline-block', marginBottom: '24px' }}>
+              <img src={qrImageUrl(qrData.url)} alt="QR" style={{ display: 'block', width: '250px', height: '250px' }} />
+            </div>
+            <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '13px', marginBottom: '24px' }}>Pointing to:<br/><code style={{ color: '#2d8cf0', fontSize: '11px', wordBreak: 'break-all' }}>{qrData.url}</code></p>
+            <a href={qrImageUrl(qrData.url)} download={`QR_${qrData.title.replace(/\s+/g, '_')}.png`} className={styles.primaryCta} style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}><Download size={18} /> Save Image</a>
           </div>
         </div>
       )}
