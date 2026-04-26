@@ -16,19 +16,22 @@ export default function AdminOverview() {
   useEffect(() => {
     const fetchQuickStats = async () => {
       try {
-        const res = await fetch('/api/admin/affiliates?quick=true');
+        // Try to get funnels first (usually public)
         const projectRes = await fetch('/api/admin/projects/list');
-        
-        if (res.ok && projectRes.ok) {
-          const affiliateData = await res.json();
+        if (projectRes.ok) {
           const projectData = await projectRes.json();
           const activeCount = projectData.filter(p => p.isActive).length;
-          
-          setStats(s => ({ 
-            ...s, 
-            totalAffiliates: affiliateData.count,
-            activeVariants: activeCount
-          }));
+          setStats(s => ({ ...s, activeVariants: activeCount }));
+        }
+
+        // Try to get affiliates (requires auth)
+        const res = await fetch('/api/admin/affiliates?quick=true');
+        if (res.ok) {
+          const affiliateData = await res.json();
+          setStats(s => ({ ...s, totalAffiliates: affiliateData.count }));
+        } else if (res.status === 401) {
+          console.warn('Session invalid, stats restricted.');
+          setStats(s => ({ ...s, rotatorStatus: 'Auth Required' }));
         }
       } catch (e) {
         console.error('Stats fetch error:', e);
