@@ -30,8 +30,8 @@ export default function AdminOverview() {
           const affiliateData = await res.json();
           setStats(s => ({ ...s, totalAffiliates: affiliateData.count }));
         } else if (res.status === 401) {
-          console.warn('Session invalid, stats restricted.');
-          setStats(s => ({ ...s, rotatorStatus: 'Auth Required' }));
+          console.warn('Session invalid, redirecting to login.');
+          router.push('/admin/login');
         }
       } catch (e) {
         console.error('Stats fetch error:', e);

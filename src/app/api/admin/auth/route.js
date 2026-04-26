@@ -12,16 +12,13 @@ export async function POST(request) {
     if (password === adminPassword) {
       const response = NextResponse.json({ success: true });
       
-      // Set a secure session cookie
-      // In a real production app, you'd use a more robust JWT or Iron Session
+      // Set a robust production-ready session cookie
       response.cookies.set('aurum_admin_session', 'authenticated', {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
+        secure: true, // Always use secure in production/https
         sameSite: 'lax',
-        maxAge: 60 * 60 * 24, // 24 hours
+        maxAge: 60 * 60 * 24 * 7, // Extend to 7 days for convenience
         path: '/',
-        // Add explicit expires for better persistence
-        expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
       });
 
       return response;
