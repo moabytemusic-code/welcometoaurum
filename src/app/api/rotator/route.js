@@ -36,7 +36,7 @@ export async function GET(request) {
     // Fetch all active rotator partners ordered by join date
     const { data: allPartners, error: partnersError } = await supabase
       .from('aurum_affiliates')
-      .select('id, affiliate_code, full_name, email, phone, rotator_pool, rotator_index, created_at')
+      .select('id, affiliate_code, full_name, email, phone, rotator_pool, rotator_index, created_at, unlocked_funnels')
       .eq('is_rotator', true)
       .order('created_at', { ascending: true });
 
@@ -46,9 +46,14 @@ export async function GET(request) {
       return fallbackCorporate();
     }
 
-    // Find the first partner who hasn't filled their 3 slots yet
+    // Find the first partner who hasn't filled their 3 slots yet AND has the funnel unlocked
     let selected = null;
     for (const p of allPartners) {
+      // PERMISSION CHECK: Must have the funnel unlocked
+      const unlocked = (p.unlocked_funnels || 'pitch').split(',').map(s => s.trim());
+      if (!unlocked.includes(funnelId)) continue;
+
+      // CAPACITY CHECK: Must have < 3 leads
       const { count, error: countError } = await supabase
         .from('aurum_leads')
         .select('*', { count: 'exact', head: true })
