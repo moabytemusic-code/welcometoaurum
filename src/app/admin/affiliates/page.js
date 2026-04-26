@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { QrCode, Download, X, Edit2, Save, Trash2 } from 'lucide-react';
+import { QrCode, Download, X, Edit2, Save, Trash2, AlertTriangle } from 'lucide-react';
 import styles from '@/app/finance.module.css';
 import Link from 'next/link';
 
@@ -13,11 +13,13 @@ export default function AffiliatesManager() {
   // Modals
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showQrModal, setShowQrModal] = useState(false);
 
   // Form States
   const [newPartner, setNewPartner] = useState({ full_name: '', email: '', affiliate_code: '', phone: '' });
   const [editingPartner, setEditingPartner] = useState(null);
+  const [deletingPartner, setDeletingPartner] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   
   const [qrData, setQrData] = useState({ title: '', url: '' });
@@ -118,13 +120,11 @@ export default function AffiliatesManager() {
     }
   };
 
-  const handleDeletePartner = async (id, name) => {
-    if (!confirm(`⚠️ ARE YOU SURE?\n\nDeleting ${name} will permanently remove them from the database and traffic rotator.\n\nThis cannot be undone.`)) {
-      return;
-    }
-
+  const performDelete = async () => {
+    if (!deletingPartner) return;
+    setIsSubmitting(true);
     try {
-      const res = await fetch(`/api/admin/affiliates?id=${id}`, {
+      const res = await fetch(`/api/admin/affiliates?id=${deletingPartner.id}`, {
         method: 'DELETE',
         headers: { 'Authorization': 'Bearer authenticated' },
         credentials: 'include',
@@ -132,12 +132,14 @@ export default function AffiliatesManager() {
       });
       
       if (res.ok) {
-        setPartners(partners.filter(p => p.id !== id));
-      } else {
-        alert('Failed to delete partner. Check server logs.');
+        setPartners(partners.filter(p => p.id !== deletingPartner.id));
+        setShowDeleteModal(false);
+        setDeletingPartner(null);
       }
     } catch (err) {
       console.error('Delete error:', err);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -334,7 +336,7 @@ export default function AffiliatesManager() {
                       <Edit2 size={16} />
                     </button>
                     <button 
-                      onClick={() => handleDeletePartner(p.id, p.full_name)}
+                      onClick={() => { setDeletingPartner(p); setShowDeleteModal(true); }}
                       style={{ background: 'none', border: 'none', color: 'rgba(255, 68, 68, 0.3)', cursor: 'pointer' }}
                       title="Delete Partner"
                     >
@@ -402,6 +404,39 @@ export default function AffiliatesManager() {
                 <button type="button" onClick={() => setShowEditModal(false)} className={styles.secondaryBtn} style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', padding: '0 24px' }}>Cancel</button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* Delete Confirmation Modal */}
+      {showDeleteModal && deletingPartner && (
+        <div className={styles.modalOverlay} style={{ zIndex: 120 }}>
+          <div className={styles.modalContent} style={{ maxWidth: '400px', textAlign: 'center', border: '1px solid rgba(255, 68, 68, 0.2)' }}>
+            <div style={{ color: '#ff4444', marginBottom: '20px' }}>
+              <AlertTriangle size={48} style={{ margin: '0 auto' }} />
+            </div>
+            <h2 className={styles.modalTitle} style={{ color: '#fff', marginBottom: '12px' }}>Confirm Deletion</h2>
+            <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '14px', lineHeight: '1.6', marginBottom: '30px' }}>
+              Are you sure you want to remove <strong>{deletingPartner.full_name}</strong>?<br/>
+              This will permanently delete their record from the rotator pool.
+            </p>
+            <div style={{ display: 'flex', gap: '12px' }}>
+              <button 
+                onClick={performDelete} 
+                disabled={isSubmitting}
+                className={styles.primaryCta} 
+                style={{ flex: 1, background: '#ff4444' }}
+              >
+                {isSubmitting ? 'Deleting...' : 'Delete Permanently'}
+              </button>
+              <button 
+                onClick={() => { setShowDeleteModal(false); setDeletingPartner(null); }} 
+                className={styles.secondaryBtn} 
+                style={{ flex: 1 }}
+              >
+                Cancel
+              </button>
+            </div>
           </div>
         </div>
       )}
