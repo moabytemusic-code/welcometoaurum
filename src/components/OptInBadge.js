@@ -45,15 +45,34 @@ const OptInBadge = ({ onOptIn, isProcessing, status, wide = false, angle = 'pitc
           div {
             --badge-padding: 24px !important;
           }
+          .window-header {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            gap: 16px !important;
+            text-align: center !important;
+          }
           .header-title {
-            font-size: 18px !important;
+            font-size: 20px !important;
+            text-align: center !important;
+          }
+          .secure-node-badge {
+            order: -1;
+            margin-bottom: 8px;
+            text-align: center;
           }
           .field-label {
             font-size: 13px !important;
+            justify-content: center !important;
+            text-align: center !important;
           }
           .submit-btn {
-            height: 56px !important;
-            font-size: 14px !important;
+            height: 60px !important;
+            font-size: 15px !important;
+          }
+          .footer-badges {
+            flex-direction: column !important;
+            gap: 12px !important;
           }
         }
       `}</style>
@@ -62,12 +81,12 @@ const OptInBadge = ({ onOptIn, isProcessing, status, wide = false, angle = 'pitc
       <div className={styles.scanline} style={{ opacity: 0.1 }} />
       
       {/* Header */}
-      <div className={styles.windowHeader} style={{ marginBottom: '40px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+      <div className={`${styles.windowHeader} window-header`} style={{ marginBottom: '40px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
         <div style={{ textAlign: 'left' }}>
           <div style={{ fontSize: '12px', fontWeight: '900', letterSpacing: '4px', color: '#d4af37', marginBottom: '8px' }}>AURUM</div>
           <div className="header-title" style={{ fontSize: wide ? '24px' : '18px', fontWeight: '800', color: '#fff', letterSpacing: '-0.5px' }}>{portalSubtitle}</div>
         </div>
-        <div style={{ textAlign: 'right' }}>
+        <div className="secure-node-badge">
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: 'rgba(255,255,255,0.03)', padding: '6px 12px', borderRadius: '100px', border: '1px solid rgba(255,255,255,0.05)' }}>
             <span style={{ width: '6px', height: '6px', background: '#00ff88', borderRadius: '50%', boxShadow: '0 0 10px #00ff88' }} />
             <span style={{ fontSize: '10px', fontWeight: '700', color: 'rgba(255,255,255,0.6)', letterSpacing: '1px' }}>SECURE NODE: {dateStr}</span>
@@ -101,7 +120,7 @@ const OptInBadge = ({ onOptIn, isProcessing, status, wide = false, angle = 'pitc
                 </label>
                 <input
                   type="email"
-                  placeholder="name@company.com"
+                  placeholder="name@email.com"
                   required
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -135,7 +154,7 @@ const OptInBadge = ({ onOptIn, isProcessing, status, wide = false, angle = 'pitc
                 {buttonText}
               </button>
               
-              <div style={{ display: 'flex', alignItems: 'center', gap: '24px', color: 'rgba(255,255,255,0.3)', flexWrap: 'wrap', justifyContent: 'center' }}>
+              <div className="footer-badges" style={{ display: 'flex', alignItems: 'center', gap: '24px', color: 'rgba(255,255,255,0.3)', flexWrap: 'wrap', justifyContent: 'center' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '11px', fontWeight: '600' }}>
                   <Lock size={12} /> 256-BIT ENCRYPTION
                 </div>
