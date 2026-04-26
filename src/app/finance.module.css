@@ -21,9 +21,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 80px 24px 40px;
+  padding: 60px 20px 40px;
   text-align: center;
   overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 40px 16px 24px;
+  }
 }
 
 .videoBg {
@@ -159,9 +165,9 @@
 }
 
 .title {
-  font-size: 48px;
+  font-size: clamp(32px, 10vw, 48px);
   font-weight: 900;
-  line-height: 1.1;
+  line-height: 1.05;
   letter-spacing: -1.5px;
   margin-bottom: 8px;
 }
@@ -186,7 +192,16 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
+  width: 100%;
+}
+
+@media (max-width: 480px) {
+  .primaryCta {
+    width: 100%;
+    padding: 16px 24px;
+    font-size: 16px;
+  }
 }
 
 .primaryCta {
@@ -1236,11 +1251,28 @@
   z-index: 100;
 }
 
+@media (max-width: 900px) {
+  .sidebar {
+    position: relative;
+    width: 100%;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+}
+
 .content {
   flex-grow: 1;
   margin-left: 280px;
   padding: 60px;
   min-height: 100vh;
+}
+
+@media (max-width: 900px) {
+  .content {
+    margin-left: 0;
+    padding: 32px 20px;
+  }
 }
 
 .logo {
@@ -1341,4 +1373,22 @@
 .userRole {
   font-size: 11px;
   color: rgba(255, 255, 255, 0.4);
+}
+
+.campaignRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 32px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  transition: background 0.2s;
+}
+
+@media (max-width: 768px) {
+  .campaignRow {
+    flex-direction: column;
+    align-items: flex-start !important;
+    gap: 20px;
+    padding: 20px;
+  }
 }

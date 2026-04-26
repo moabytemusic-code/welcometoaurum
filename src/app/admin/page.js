@@ -79,15 +79,24 @@ export default function AdminOverview() {
       <p className={styles.sectionSub} style={{ textAlign: 'left', marginBottom: '40px' }}>Ecosystem oversight and traffic distribution dashboard.</p>
 
       {/* Stats Grid */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '24px', marginBottom: '60px' }}>
+      <div style={{ 
+        display: 'grid', 
+        gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', 
+        gap: '24px', 
+        marginBottom: '40px' 
+      }}>
         <StatCard label="Total Partners" value={stats.totalAffiliates} icon="🤝" />
         <StatCard label="Live Funnels" value={stats.activeVariants} icon="🚀" />
         <StatCard label="System Status" value="Online" icon="🔒" color="#00ff88" />
-        <StatCard label="A/B Weighting" value="50/50" icon="⚖️" />
+        <StatCard label="Rotator" value={stats.rotatorStatus} icon="⚖️" />
       </div>
 
       {/* Main Board */}
-      <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '32px' }}>
+      <div style={{ 
+        display: 'grid', 
+        gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', 
+        gap: '32px' 
+      }}>
         <div style={{ 
           background: 'rgba(255,255,255,0.02)', 
           border: '1px solid rgba(255,255,255,0.05)', 

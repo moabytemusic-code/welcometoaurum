@@ -106,14 +106,13 @@ export default function FaaSManager() {
           ) : (
             <div style={{ display: 'flex', flexDirection: 'column' }}>
               {projects.map((project, idx) => (
-                <div key={project.slug} style={{ 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  justifyContent: 'space-between', 
-                  padding: '24px 32px',
-                  borderBottom: idx !== projects.length - 1 ? '1px solid rgba(255,255,255,0.05)' : 'none',
-                  background: project.isActive ? 'transparent' : 'rgba(255,0,0,0.02)'
-                }}>
+                <div key={project.slug} 
+                  className={styles.campaignRow}
+                  style={{ 
+                    borderBottom: idx !== projects.length - 1 ? '1px solid rgba(255,255,255,0.05)' : 'none',
+                    background: project.isActive ? 'transparent' : 'rgba(255,0,0,0.02)'
+                  }}
+                >
                   <div>
                     <h3 style={{ fontSize: '18px', fontWeight: '700', marginBottom: '8px', color: '#fff', display: 'flex', alignItems: 'center', gap: '12px' }}>
                       {project.name}

@@ -192,7 +192,11 @@ const HeroPitch = ({ project, content = {}, handleOptIn, isProcessing, status, p
                     />
                   </div>
                   <div className={styles.resultsGroup} style={{ textAlign: 'center' }}>
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                    <div style={{ 
+                      display: 'grid', 
+                      gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', 
+                      gap: '16px' 
+                    }}>
                       <div className={styles.resultItem}>
                         <span className={styles.resultLabel}>Est. Monthly Yield</span>
                         <span className={styles.resultValue}>+${Math.round(yieldValue).toLocaleString()}</span>
