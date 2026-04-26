@@ -16,6 +16,7 @@
     .highlight { color: #d4af37; font-weight: 700; }
     .cta-button { display: inline-block; background-color: #d4af37; color: #000000; padding: 18px 36px; border-radius: 12px; text-decoration: none; font-weight: 900; font-size: 14px; text-transform: uppercase; letter-spacing: 2px; margin: 20px 0; transition: all 0.2s; }
     .footer { background-color: #fcfcfc; padding: 32px; border-top: 1px solid #eeeeee; text-align: center; font-size: 12px; color: #888888; }
+    .spam-alert { background-color: #fff5f5; border: 1px solid #feb2b2; padding: 16px; border-radius: 12px; margin-top: 24px; color: #c53030; font-size: 14px; }
     .sponsor-card { background-color: #f8f9fa; border: 1px solid #eeeeee; border-radius: 12px; padding: 16px; margin-top: 32px; display: flex; align-items: center; gap: 12px; }
     .avatar { width: 40px; height: 40px; background-color: #d4af37; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #000; font-weight: 900; font-size: 14px; }
   </style>
@@ -28,24 +29,22 @@
       </div>
       
       <div class="content">
-        <h1>Welcome to the Inner Circle, {{ contact.FIRSTNAME | default: "Friend" }}.</h1>
+        <h1>Briefing Received, {{ contact.FIRSTNAME | default: "Friend" }}.</h1>
         
-        <p>Your request to join the Aurum AI Finance ecosystem has been accepted.</p>
+        <p>Your request to join the <strong>Aurum Rise</strong> ecosystem has been processed. You've been allocated a <span class="highlight">$100 starting capital voucher</span> to initialize your account.</p>
         
-        <p>You are now part of a global network of <span class="highlight">118,000+ members</span> leveraging autonomous AI to capture market yield on autopilot.</p>
-        
-        <p>To finalize your institutional access and activate your NeoBank bridge, please complete the onboarding process below:</p>
+        <p>To claim your voucher and activate your automated yield bridge, please complete your onboarding briefing:</p>
         
         <div style="text-align: center;">
-          <a href="https://yourdomain.com/onboarding" class="cta-button">Complete Activation →</a>
+          <a href="https://www.welcometoaurum.com/onboarding" class="cta-button">Claim Your $100 & Start Onboarding →</a>
         </div>
         
-        <p>Once activated, you will receive access to your private dashboard, including:</p>
-        <ul style="padding-left: 20px; color: #4a4a4a;">
-          <li style="margin-bottom: 8px;"><strong>Neural-X Bot Access:</strong> Deploy the core AI trader.</li>
-          <li style="margin-bottom: 8px;"><strong>Institutional Wallet:</strong> Your private fiat + crypto bridge.</li>
-          <li style="margin-bottom: 8px;"><strong>The Neobank Card:</strong> Spend your yield globally, online or offline.</li>
-        </ul>
+        <p><strong>CRITICAL NEXT STEP:</strong></p>
+        <p>Check your inbox for a <strong>Zoom Registration</strong> link. You must register for your onboarding call to ensure your Aurum Account is configured for maximum yield.</p>
+
+        <div class="spam-alert">
+          <strong>TIP:</strong> If you don't see the Zoom invite, please check your <strong>Spam or Promotions</strong> folder for an email from the <strong>"Aurum Rise Onboarding Team"</strong>.
+        </div>
 
         <div class="sponsor-card">
           <div class="avatar">A</div>
@@ -54,6 +53,10 @@
             <div style="font-size: 14px; color: #1a1a1a; font-weight: 700;">{{ contact.SPONSOR_NAME | default: "Aurum Corporate" }}</div>
           </div>
         </div>
+      </div>
+
+      <div style="padding: 20px 48px; background: #050505; color: #fff; font-size: 12px; text-align: center;">
+        Aurum Rise Onboarding Team | v2.0
       </div>
 
       <div class="footer">
