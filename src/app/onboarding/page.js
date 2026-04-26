@@ -77,7 +77,7 @@ export default function OnboardingPage() {
               <div style={{ textAlign: 'center' }}>
                 <h3 style={{ fontSize: '22px', color: '#fff', marginBottom: '12px', fontWeight: '800' }}>Check Your Email: Zoom Call</h3>
                 <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '15px', lineHeight: '1.6', marginBottom: '20px', maxWidth: '600px', margin: '0 auto 20px' }}>
-                  Our team has sent your invitation for the <strong>Live Zoom Onboarding Call</strong>. We will ensure your AI is configured for maximum yield.
+                  Our team has sent your invitation for the <strong>Live Zoom Onboarding Call</strong>. We will ensure your Aurum Account is configured for maximum yield.
                 </p>
                 
                 {/* Spam Alert */}
