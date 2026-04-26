@@ -78,7 +78,21 @@ export async function GET(request) {
     let nextIndex = (selected.rotator_index || 0);
 
     if (selected.rotator_pool && selected.rotator_pool.trim().length > 0) {
-      const poolItems = selected.rotator_pool.split(/[,\s\n]+/).filter(c => c.trim().length > 0);
+      let poolItems = [];
+      
+      try {
+        // Try parsing as JSON first (for structured pools like Justin's)
+        const parsed = JSON.parse(selected.rotator_pool);
+        if (Array.isArray(parsed)) {
+          poolItems = parsed;
+        } else if (parsed.default && Array.isArray(parsed.default)) {
+          poolItems = parsed.default;
+        }
+      } catch (e) {
+        // Fallback to plain text splitting if JSON fails
+        poolItems = selected.rotator_pool.split(/[,\s\n]+/).filter(c => c.trim().length > 0);
+      }
+
       if (poolItems.length > 0) {
         // Pick the code at the current index
         const currentIndex = nextIndex % poolItems.length;
