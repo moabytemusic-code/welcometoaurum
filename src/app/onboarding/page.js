@@ -60,17 +60,12 @@ export default function OnboardingPage() {
               <div style={{ color: '#00ff88', background: 'rgba(0,255,136,0.1)', padding: '16px', borderRadius: '50%' }}><Gift size={32} /></div>
               <div style={{ textAlign: 'center' }}>
                 <h3 style={{ fontSize: '22px', color: '#fff', marginBottom: '12px', fontWeight: '800' }}>Redeem Your $100 Voucher</h3>
-                <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '15px', lineHeight: '1.6', marginBottom: '24px', maxWidth: '600px', margin: '0 auto 24px' }}>
-                  We've reserved a $100 liquidity voucher for your account. Initialize your Aurum NeoBank vault now to claim it and start your first bot cycle.
+                <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '15px', lineHeight: '1.6', marginBottom: '24px', maxWidth: '600px', margin: '0 auto 12px' }}>
+                  We've reserved a $100 liquidity voucher for your account. We have sent the redemption instructions to your inbox.
                 </p>
-                <Link 
-                  href={process.env.NEXT_PUBLIC_AURUM_REGISTER_URL || '#'} 
-                  target="_blank"
-                  className={styles.primaryCta} 
-                  style={{ display: 'inline-block', width: 'auto', padding: '16px 40px', background: '#00ff88', color: '#000', boxShadow: '0 8px 32px rgba(0, 255, 136, 0.3)', borderRadius: '100px' }}
-                >
-                  Claim $100 Voucher Now →
-                </Link>
+                <div style={{ color: '#00ff88', fontWeight: '900', fontSize: '18px', textTransform: 'uppercase', letterSpacing: '2px' }}>
+                  Check your Email →
+                </div>
               </div>
             </div>
           </div>
