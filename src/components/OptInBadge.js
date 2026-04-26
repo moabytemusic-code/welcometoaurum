@@ -26,7 +26,7 @@ const OptInBadge = ({ onOptIn, isProcessing, status, wide = false, angle = 'pitc
   return (
     <div style={{
       width: '100%',
-      padding: wide ? '48px' : '32px',
+      padding: wide ? 'var(--badge-padding, 48px)' : 'var(--badge-padding, 32px)',
       background: 'rgba(5, 5, 5, 0.7)',
       backdropFilter: 'blur(40px) saturate(150%)',
       border: '1px solid rgba(255, 255, 255, 0.08)',
@@ -37,6 +37,26 @@ const OptInBadge = ({ onOptIn, isProcessing, status, wide = false, angle = 'pitc
       display: 'flex',
       flexDirection: 'column'
     }}>
+      <style jsx>{`
+        div {
+          --badge-padding: 48px;
+        }
+        @media (max-width: 600px) {
+          div {
+            --badge-padding: 24px !important;
+          }
+          .header-title {
+            font-size: 18px !important;
+          }
+          .field-label {
+            font-size: 13px !important;
+          }
+          .submit-btn {
+            height: 56px !important;
+            font-size: 14px !important;
+          }
+        }
+      `}</style>
       {/* Decorative Elements */}
       <div style={{ position: 'absolute', top: 0, left: 0, width: '4px', height: '100%', background: 'linear-gradient(to bottom, #d4af37, transparent)' }} />
       <div className={styles.scanline} style={{ opacity: 0.1 }} />
@@ -45,7 +65,7 @@ const OptInBadge = ({ onOptIn, isProcessing, status, wide = false, angle = 'pitc
       <div className={styles.windowHeader} style={{ marginBottom: '40px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
         <div style={{ textAlign: 'left' }}>
           <div style={{ fontSize: '12px', fontWeight: '900', letterSpacing: '4px', color: '#d4af37', marginBottom: '8px' }}>AURUM</div>
-          <div style={{ fontSize: wide ? '24px' : '18px', fontWeight: '800', color: '#fff', letterSpacing: '-0.5px' }}>{portalSubtitle}</div>
+          <div className="header-title" style={{ fontSize: wide ? '24px' : '18px', fontWeight: '800', color: '#fff', letterSpacing: '-0.5px' }}>{portalSubtitle}</div>
         </div>
         <div style={{ textAlign: 'right' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: 'rgba(255,255,255,0.03)', padding: '6px 12px', borderRadius: '100px', border: '1px solid rgba(255,255,255,0.05)' }}>
@@ -61,7 +81,7 @@ const OptInBadge = ({ onOptIn, isProcessing, status, wide = false, angle = 'pitc
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '24px' }}>
               <div style={{ width: '100%', maxWidth: '420px' }}>
-                <label style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '11px', color: 'rgba(255,255,255,0.4)', marginBottom: '12px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px' }}>
+                <label className="field-label" style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '11px', color: 'rgba(255,255,255,0.4)', marginBottom: '12px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px' }}>
                   First Name
                 </label>
                 <input
@@ -76,7 +96,7 @@ const OptInBadge = ({ onOptIn, isProcessing, status, wide = false, angle = 'pitc
               </div>
 
               <div style={{ width: '100%', maxWidth: '420px' }}>
-                <label style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '11px', color: 'rgba(255,255,255,0.4)', marginBottom: '12px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px' }}>
+                <label className="field-label" style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '11px', color: 'rgba(255,255,255,0.4)', marginBottom: '12px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px' }}>
                   <Globe size={12} /> Institutional Email
                 </label>
                 <input
@@ -94,7 +114,7 @@ const OptInBadge = ({ onOptIn, isProcessing, status, wide = false, angle = 'pitc
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
               <button
                 type="submit"
-                className={styles.primaryCta}
+                className={`${styles.primaryCta} submit-btn`}
                 style={{
                   width: '100%',
                   maxWidth: '420px',

@@ -158,7 +158,7 @@ const HeroPitch = ({ project, content = {}, handleOptIn, isProcessing, status, p
 
         {preOptInSlot}
 
-          <div style={{ maxWidth: '800px', margin: '40px auto 0' }}>
+          <div style={{ maxWidth: '800px', margin: '40px auto 0', display: 'flex', justifyContent: 'center', width: '100%' }}>
             <OptInBadge 
               onOptIn={handleOptIn} 
               isProcessing={isProcessing} 
@@ -173,9 +173,9 @@ const HeroPitch = ({ project, content = {}, handleOptIn, isProcessing, status, p
       {/* Calculator & Bot Window (Moved Down) */}
       {(activeConfig.showCalculator || activeConfig.showBotBadge) && (
         <section style={{ padding: '80px 24px', background: 'linear-gradient(to bottom, #050505, rgba(255,255,255,0.02))' }}>
-          <div className={styles.heroRow}>
+          <div className={styles.heroRow} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '40px', width: '100%' }}>
             {activeConfig.showCalculator && (
-              <div className={styles.calculatorCard} style={{ margin: '0', textAlign: 'left' }}>
+              <div className={styles.calculatorCard} style={{ margin: '0 auto', textAlign: 'left' }}>
                 <h2 className={styles.calculatorTitle} style={{ textAlign: 'center' }}>{content.calcTitle || "Project Your Potential Results"}</h2>
                 <div className={styles.calcGrid}>
                   <div className={styles.inputGroup}>
@@ -217,7 +217,7 @@ const HeroPitch = ({ project, content = {}, handleOptIn, isProcessing, status, p
             )}
 
             {activeConfig.showBotBadge && (
-              <div className={styles.badgeWrapper}>
+              <div className={styles.badgeWrapper} style={{ margin: '0 auto' }}>
                 <BotEarningsBadge imageUrl={content.botImageUrl} fallbackValue={content.botValue} />
               </div>
             )}
