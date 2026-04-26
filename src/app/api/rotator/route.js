@@ -30,38 +30,43 @@ export async function GET(request) {
       }
     }
 
-    // 2. Sequential Rotator Logic (Fair Round-Robin)
-    // We look for partners who:
-    // - Are promoted (LIVE)
-    // - Have permission for the SPECIFIC funnel requested (defaults to 'pitch')
-    // - Order by 'last_served_at' ASC to pick the person who hasn't had a lead in the longest time.
+    // 2. 1-to-3 Spillover Logic (Fill the oldest slots first)
     const funnelId = searchParams.get('funnel') || 'pitch';
     
-    let { data: partners, error } = await supabase
+    // Fetch all active rotator partners ordered by join date
+    const { data: allPartners, error: partnersError } = await supabase
       .from('aurum_affiliates')
-      .select('id, affiliate_code, full_name, email, phone, rotator_pool')
+      .select('id, affiliate_code, full_name, email, phone, rotator_pool, rotator_index, created_at')
       .eq('is_rotator', true)
-      .ilike('unlocked_funnels', `%${funnelId}%`)
-      .order('last_served_at', { ascending: true })
-      .limit(1);
+      .order('created_at', { ascending: true });
 
-    // TIERED SEARCH: If no one found for specific funnel, fallback to ANY promoted partner
-    if (!partners || partners.length === 0) {
-      const fallbackSearch = await supabase
-        .from('aurum_affiliates')
-        .select('id, affiliate_code, full_name, email, phone, rotator_pool')
-        .eq('is_rotator', true)
-        .order('last_served_at', { ascending: true })
-        .limit(1);
-      
-      partners = fallbackSearch.data;
-      if (fallbackSearch.error) error = fallbackSearch.error;
+    if (partnersError) throw partnersError;
+
+    if (!allPartners || allPartners.length === 0) {
+      return fallbackCorporate();
     }
 
-    if (error) throw error;
+    // Find the first partner who hasn't filled their 3 slots yet
+    let selected = null;
+    for (const p of allPartners) {
+      const { count, error: countError } = await supabase
+        .from('aurum_leads')
+        .select('*', { count: 'exact', head: true })
+        .eq('sponsor_code', p.affiliate_code);
+      
+      if (!countError && (count || 0) < 3) {
+        selected = p;
+        break;
+      }
+    }
 
-    if (!partners || partners.length === 0) {
-      console.log('No promoted partners found even with fallback, using Corporate.');
+    // If everyone is full, fallback to the most recently served person (or Corporate)
+    if (!selected) {
+      console.log('All partners have 3+ leads, falling back to corporate for now.');
+      return fallbackCorporate();
+    }
+
+    function fallbackCorporate() {
       return NextResponse.json({
         code: "1W145K",
         name: "Aurum Corporate",
@@ -70,8 +75,6 @@ export async function GET(request) {
         url: "https://backoffice.aurum.foundation/auth/sign-up?ref=1W145K"
       });
     }
-
-    const selected = partners[0];
 
     // 4. Handle Sub-Rotation (Fair Sequential Cycling within the pool)
     let activeCode = selected.affiliate_code;
