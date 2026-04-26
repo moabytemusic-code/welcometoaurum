@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { QrCode, Download, X, Edit2, Save } from 'lucide-react';
+import { QrCode, Download, X, Edit2, Save, Trash2 } from 'lucide-react';
 import styles from '@/app/finance.module.css';
 import Link from 'next/link';
 
@@ -115,6 +115,29 @@ export default function AffiliatesManager() {
       console.error('Update error:', e);
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  const handleDeletePartner = async (id, name) => {
+    if (!confirm(`⚠️ ARE YOU SURE?\n\nDeleting ${name} will permanently remove them from the database and traffic rotator.\n\nThis cannot be undone.`)) {
+      return;
+    }
+
+    try {
+      const res = await fetch(`/api/admin/affiliates?id=${id}`, {
+        method: 'DELETE',
+        headers: { 'Authorization': 'Bearer authenticated' },
+        credentials: 'include',
+        cache: 'no-store'
+      });
+      
+      if (res.ok) {
+        setPartners(partners.filter(p => p.id !== id));
+      } else {
+        alert('Failed to delete partner. Check server logs.');
+      }
+    } catch (err) {
+      console.error('Delete error:', err);
     }
   };
 
@@ -302,12 +325,22 @@ export default function AffiliatesManager() {
                   </button>
                 </td>
                 <td style={{ padding: '20px 24px', textAlign: 'right' }}>
-                  <button 
-                    onClick={() => { setEditingPartner(p); setShowEditModal(true); }}
-                    style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.3)', cursor: 'pointer' }}
-                  >
-                    <Edit2 size={16} />
-                  </button>
+                  <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '16px' }}>
+                    <button 
+                      onClick={() => { setEditingPartner(p); setShowEditModal(true); }}
+                      style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.3)', cursor: 'pointer' }}
+                      title="Edit Partner"
+                    >
+                      <Edit2 size={16} />
+                    </button>
+                    <button 
+                      onClick={() => handleDeletePartner(p.id, p.full_name)}
+                      style={{ background: 'none', border: 'none', color: 'rgba(255, 68, 68, 0.3)', cursor: 'pointer' }}
+                      title="Delete Partner"
+                    >
+                      <Trash2 size={16} />
+                    </button>
+                  </div>
                 </td>
               </tr>
             ))}
