@@ -56,7 +56,9 @@ export default function AffiliatesManager() {
     try {
       const res = await fetch('/api/admin/projects/list');
       const data = await res.json();
-      setAvailableFunnels(data.map(p => ({ id: p.slug, label: p.name })));
+      // Only show funnels that are globally ACTIVE
+      const activeOnly = data.filter(p => p.isActive === true);
+      setAvailableFunnels(activeOnly.map(p => ({ id: p.slug, label: p.name })));
     } catch (e) {
       console.error('Fetch projects error:', e);
     }
