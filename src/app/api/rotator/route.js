@@ -40,7 +40,7 @@ export async function GET(request) {
     let { data: partners, error } = await supabase
       .from('aurum_affiliates')
       .select('id, affiliate_code, full_name, email, phone, rotator_pool')
-      .eq('is_promoted', true)
+      .eq('is_rotator', true)
       .ilike('unlocked_funnels', `%${funnelId}%`)
       .order('last_served_at', { ascending: true })
       .limit(1);
@@ -50,7 +50,7 @@ export async function GET(request) {
       const fallbackSearch = await supabase
         .from('aurum_affiliates')
         .select('id, affiliate_code, full_name, email, phone, rotator_pool')
-        .eq('is_promoted', true)
+        .eq('is_rotator', true)
         .order('last_served_at', { ascending: true })
         .limit(1);
       
