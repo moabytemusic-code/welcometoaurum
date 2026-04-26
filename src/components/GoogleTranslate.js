@@ -40,7 +40,8 @@ export default function GoogleTranslate() {
     };
 
     const runAutoTranslate = () => {
-      fetch('https://ipapi.co/json/')
+      // Use our internal secure proxy to avoid CORS and rate limits
+      fetch('/api/location')
         .then(response => response.json())
         .then(data => {
           const country = data.country_code;
