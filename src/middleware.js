@@ -30,69 +30,59 @@ export async function middleware(request) {
   // 2. Ignore other sub-pages, internal assets, and APIs
   if (pathname !== '/') return NextResponse.next();
 
-  // 3. Dynamic Variant Selection (Selective Rotator)
-  const urlVariant = request.nextUrl.searchParams.get('v');
-  const ref = request.nextUrl.searchParams.get('ref');
-  let variant = '';
-  
-  // Default funnels to rotate through (only include existing local folders)
-  let allowedFunnels = ['pitch', 'consultative']; 
-
-  const isDev = process.env.NODE_ENV === 'development';
-
-  // If we have an affiliate reference, lookup their specific permissions
-  if (ref) {
-    try {
-      const { data } = await supabase
-        .from('aurum_affiliates')
-        .select('unlocked_funnels')
-        .eq('affiliate_code', ref)
-        .single();
-
-      if (data?.unlocked_funnels) {
-        const customList = data.unlocked_funnels.split(',').map(s => s.trim()).filter(Boolean);
-        if (customList.length > 0) {
-          allowedFunnels = customList;
-        }
-      }
-    } catch (e) {
-      console.error('Affiliate lookup failed:', e);
-    }
+  // 3. Dynamic FaaS Selection (Fetch active projects from Supabase)
+  let activeProjects = [];
+  try {
+    const { data } = await supabase
+      .from('aurum_projects')
+      .select('slug, angle')
+      .eq('is_active', true);
+    activeProjects = data || [];
+  } catch (e) {
+    console.error('Failed to fetch active projects for middleware:', e);
   }
 
-  // Decision Phase
+  // Fallback if no projects are active
+  if (activeProjects.length === 0) {
+    return NextResponse.next(); // Let it fall through to a 404 or default page
+  }
+
+  // 4. Decision Phase
+  const ref = request.nextUrl.searchParams.get('ref');
+  const urlVariant = request.nextUrl.searchParams.get('v');
   const cookieVariant = request.cookies.get('landing_variant')?.value;
 
-  // Rule 1: Forced URL variant (only if allowed)
-  if (urlVariant && allowedFunnels.includes(urlVariant)) {
-    variant = urlVariant;
+  let selected = activeProjects[0]; // Default to the first active project
+
+  // Rule 1: Forced URL variant (only if active)
+  if (urlVariant) {
+    const forced = activeProjects.find(p => p.slug === urlVariant);
+    if (forced) selected = forced;
   } 
-  // Rule 2: Sticky Cookie (only if still allowed)
-  else if (cookieVariant && allowedFunnels.includes(cookieVariant)) {
-    variant = cookieVariant;
+  // Rule 2: Sticky Cookie (only if still active)
+  else if (cookieVariant) {
+    const sticky = activeProjects.find(p => p.slug === cookieVariant);
+    if (sticky) selected = sticky;
   }
-  // Rule 3: Selective Rotation (pick random from allowed list)
-  else {
-    variant = allowedFunnels[Math.floor(Math.random() * allowedFunnels.length)];
-  }
-
-  // Handle external redirect for the breakdown variant (Skip in Dev to allow local testing)
-  if (variant === 'breakdown' && !isDev) {
-    const offerUrl = process.env.NEXT_PUBLIC_OFFER_URL || 'https://www.theaifinancebreakdown.com';
-    const redirectUrl = new URL(offerUrl);
-    if (ref) redirectUrl.searchParams.set('ref', ref);
-    
-    const response = NextResponse.redirect(redirectUrl);
-    response.cookies.set('landing_variant', variant, { maxAge: 60 * 60 * 24 * 30, path: '/' });
-    return response;
+  // Rule 3: Rotation (pick random from active projects)
+  else if (activeProjects.length > 1) {
+    selected = activeProjects[Math.floor(Math.random() * activeProjects.length)];
   }
 
-  // Rewrite the request to the chosen variant's page folder
-  const url = request.nextUrl.clone();
-  url.pathname = `/${variant}`;
+  // Rewrite the request to the chosen FaaS URL
+  // We use REDIRECT here instead of rewrite to ensure the sponsor logic in FunnelEngineClient.js 
+  // picks up the slug and angle correctly from the URL.
+  const redirectUrl = request.nextUrl.clone();
+  redirectUrl.pathname = `/f/${selected.slug}/${selected.angle}`;
+  if (ref) redirectUrl.searchParams.set('ref', ref);
 
-  const response = NextResponse.rewrite(url);
-  response.cookies.set('landing_variant', variant, { maxAge: 60 * 60 * 24 * 30, path: '/' });
+  const response = NextResponse.redirect(redirectUrl);
+  
+  // Set sticky cookie
+  response.cookies.set('landing_variant', selected.slug, { 
+    maxAge: 60 * 60 * 24 * 30, 
+    path: '/' 
+  });
 
   return response;
 }
