@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aurum Rise คืออะไร? | ระบบ AI ที่ทำงานแทนคุณ</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .content-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 32px;
+            padding: 3rem;
+            width: 100%;
+            max-width: 800px;
+            box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.7);
+            text-align: left;
+            margin-bottom: 2rem;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2.5rem 0;
+        }
+        
+        .feature-box {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 24px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--accent-gradient);
+            opacity: 0.7;
+        }
+        
+        .feature-icon {
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+        }
+        
+        .feature-box h3 {
+            font-size: 1.3rem;
+            color: white;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        .feature-box p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .highlight-text {
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.3), transparent);
+            margin: 3rem 0;
+        }
+
+        .cta-section {
+            text-align: center;
+            background: rgba(212, 175, 55, 0.05);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 24px;
+            padding: 3rem 2rem;
+            margin-top: 2rem;
+        }
+
+        .cta-section h2 {
+            font-size: 2rem;
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .content-card { padding: 2rem; }
+            .feature-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" style="max-width: 1000px;">
+        <header>
+            <div class="logo">Aurum Rise</div>
+        </header>
+
+        <span class="hero-tag">ภาพรวมของระบบ</span>
+        <h1 style="font-size: 3rem;">Aurum Rise คืออะไร?</h1>
+        <p class="subtitle" style="max-width: 700px; margin: 0 auto 3rem auto;">
+            ค้นพบระบบ AI ที่ออกแบบมาเพื่อคนธรรมดา ให้คุณเข้าถึง <strong>"Private Wealth Node"</strong> ได้โดยไม่ต้องมีประสบการณ์
+        </p>
+        
+        <div class="content-card">
+            
+            <p style="font-size: 1.2rem; color: var(--text-secondary); line-height: 1.8; text-align: center; margin-bottom: 2rem;">
+                Aurum Rise ไม่ใช่แค่ซอฟต์แวร์ธรรมดา แต่เป็น <strong>ระบบนิเวศน์ทางเทคโนโลยี</strong> ที่ใช้ AI ขั้นสูงเข้ามาช่วยบริหารจัดการข้อมูลและสร้างโอกาสในการทำกำไรแบบอัตโนมัติ ซึ่งแต่ก่อนมีเพียงสถาบันการเงินขนาดใหญ่เท่านั้นที่เข้าถึงได้
+            </p>
+
+            <div class="divider"></div>
+
+            <h2 style="text-align: center; margin-bottom: 1rem; color: white;">ทำไมผู้คนถึงเลือกใช้ Aurum Rise?</h2>
+            
+            <div class="feature-grid">
+                <div class="feature-box">
+                    <i data-lucide="cpu" class="feature-icon" size="36"></i>
+                    <h3>AI ทำงานแทนคุณ</h3>
+                    <p>ระบบของเราใช้ <span class="highlight-text">ปัญญาประดิษฐ์ (AI)</span> ในการวิเคราะห์และตัดสินใจแทนคุณ 100% คุณไม่ต้องนั่งเฝ้าหน้าจอหรือวิเคราะห์กราฟด้วยตัวเองอีกต่อไป</p>
+                </div>
+                
+                <div class="feature-box">
+                    <i data-lucide="shield-check" class="feature-icon" size="36"></i>
+                    <h3>ไม่ต้องมีประสบการณ์</h3>
+                    <p>ออกแบบมาสำหรับ "ผู้เริ่มต้น" โดยเฉพาะ อินเทอร์เฟซใช้งานง่าย เพียงแค่เปิดระบบ (Activate Node) แล้วปล่อยให้ AI ทำงานส่วนที่ยากที่สุดแทนคุณ</p>
+                </div>
+                
+                <div class="feature-box">
+                    <i data-lucide="coins" class="feature-icon" size="36"></i>
+                    <h3>สิทธิพิเศษ: ทุนเริ่มต้น</h3>
+                    <p>คุณมีสิทธิ์ได้รับ <span class="highlight-text">Seed Capital</span> หรือทุนเริ่มต้นในการทดสอบระบบของเรา ทำให้คุณสามารถเริ่มต้นได้โดยไม่มีความเสี่ยง</p>
+                </div>
+
+                <div class="feature-box">
+                    <i data-lucide="zap" class="feature-icon" size="36"></i>
+                    <h3>ประหยัดเวลา</h3>
+                    <p>ทำงานแบบเบื้องหลัง (Background Process) ตลอด 24 ชั่วโมง คุณสามารถใช้ชีวิตประจำวันได้อย่างเต็มที่ในขณะที่ระบบยังคงทำงาน</p>
+                </div>
+            </div>
+
+            <div class="cta-section">
+                <h2>พร้อมที่จะสัมผัสประสบการณ์แล้วหรือยัง?</h2>
+                <p style="color: var(--text-secondary); margin-bottom: 2.5rem; font-size: 1.1rem;">
+                    เริ่มต้นเปิดใช้งาน Private Wealth Node ของคุณวันนี้ และดูว่า AI สามารถช่วยคุณได้อย่างไร
+                </p>
+                <a href="https://welcometoaurum.com" class="btn" style="text-decoration: none; display: inline-block; padding: 1.25rem 3rem;">เข้าสู่ระบบ Aurum ตอนนี้ →</a>
+                <p style="margin-top: 1.5rem; font-size: 0.85rem; color: rgba(255,255,255,0.4);">
+                    คลิกเพื่อไปยังหน้าเว็บไซต์หลักของเรา
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

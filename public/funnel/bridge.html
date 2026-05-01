@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entry Confirmed | Aurum Rise</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .video-container {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 24px;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+        .video-overlay {
+            position: absolute;
+            background: rgba(0,0,0,0.6);
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .video-overlay:hover {
+            background: rgba(0,0,0,0.4);
+        }
+        .play-btn {
+            width: 80px;
+            height: 80px;
+            background: var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            color: black;
+            box-shadow: 0 0 30px var(--gold-glow);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">Aurum Rise</div>
+        </header>
+
+        <h1>🎉 You’re In! Your Entry Has Been Confirmed</h1>
+        
+        <div class="form-card" style="margin-top: 2rem; max-width: 600px;">
+            <p class="subtitle" style="margin-bottom: 1rem; font-size: 1.1rem;">While we process your entry…</p>
+            <p style="color: var(--gold); font-weight: 600; margin-bottom: 2rem; font-size: 1.25rem;">Here’s something you’ll want to see.</p>
+            
+            <p class="bridge-text" style="text-align: center; margin-bottom: 2rem;">
+                This is the exact system people are using to start generating income online using simple AI tools.
+            </p>
+
+            <div class="video-container" onclick="window.location.href='https://welcometoaurum.com'">
+                <div class="video-overlay">
+                    <div class="play-btn">
+                        <i data-lucide="play" fill="black" size="32"></i>
+                    </div>
+                    <span style="font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">Watch Now</span>
+                </div>
+                <!-- Embed your Aurum video here -->
+                <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=1000" alt="Video Placeholder" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.3;">
+            </div>
+
+            <a href="https://welcometoaurum.com" class="btn" style="text-decoration: none; display: block; text-align: center;">Watch Now & See How It Works →</a>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
