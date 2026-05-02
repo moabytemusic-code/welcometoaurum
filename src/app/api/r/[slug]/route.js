@@ -11,8 +11,12 @@ const supabase = createClient(supabaseUrl || '', supabaseServiceKey || '');
 export async function GET(request, { params }) {
   const resolvedParams = await params;
   const slug = resolvedParams.slug;
+  
+  // Use searchParams from the request object directly
   const { searchParams } = new URL(request.url);
   const redirectTo = searchParams.get('to');
+  
+  console.log(`[ROTATOR] Slug: ${slug}, RedirectTo: ${redirectTo}`);
 
   if (!supabaseUrl) {
     return NextResponse.json({ error: 'Supabase URL is missing.' }, { status: 500 });
