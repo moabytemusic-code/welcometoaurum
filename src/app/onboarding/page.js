@@ -1,13 +1,11 @@
 'use client';
-
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import styles from '@/app/finance.module.css';
 import { Mail, Gift, Video, AlertCircle, ArrowRight } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
 
-export default function OnboardingPage() {
+function OnboardingContent() {
   const [mounted, setMounted] = useState(false);
-
   const searchParams = useSearchParams();
   const ref = searchParams.get('ref') || '1W145K'; // Default to admin code if missing
 
@@ -167,5 +165,13 @@ export default function OnboardingPage() {
         }
       `}</style>
     </main>
+  );
+}
+
+export default function OnboardingPage() {
+  return (
+    <Suspense fallback={<div style={{ minHeight: '100vh', background: '#050505', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#d4af37' }}>Loading Protocol...</div>}>
+      <OnboardingContent />
+    </Suspense>
   );
 }
