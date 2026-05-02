@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 export const dynamic = 'force-dynamic';
 import styles from '@/app/admin/admin.module.css';
-import { Network, CheckCircle2, XCircle, Users, ExternalLink, Settings2, Trash2, Plus, Loader2 } from 'lucide-react';
+import { Network, CheckCircle2, XCircle, Users, ExternalLink, Settings2, Trash2, Plus, Loader2, QrCode, Download, Copy } from 'lucide-react';
 
 export default function RotatorManager() {
   const [rotators, setRotators] = useState([]);
@@ -11,6 +11,7 @@ export default function RotatorManager() {
   
   // Modal State
   const [activeRotator, setActiveRotator] = useState(null);
+  const [qrRotator, setQrRotator] = useState(null);
   const [entries, setEntries] = useState([]);
   const [isEntriesLoading, setIsEntriesLoading] = useState(false);
   
@@ -240,6 +241,27 @@ export default function RotatorManager() {
                       <span style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', marginBottom: '4px', display: 'flex', alignItems: 'center', gap: '4px' }}><Users size={12} /> Members</span>
                       <span style={{ fontSize: '20px', fontWeight: '800', color: '#fff' }}>{rotator.total_members || 0}</span>
                     </div>
+
+                    <button 
+                      onClick={() => setQrRotator(rotator)}
+                      style={{
+                        background: 'rgba(255,255,255,0.05)',
+                        color: '#fff',
+                        border: '1px solid rgba(255,255,255,0.1)',
+                        padding: '10px',
+                        borderRadius: '8px',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        transition: 'all 0.2s',
+                      }}
+                      title="Get QR Code"
+                      onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.1)'}
+                      onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.05)'}
+                    >
+                      <QrCode size={18} />
+                    </button>
 
                     <button 
                       onClick={() => openManager(rotator)}
@@ -501,6 +523,80 @@ export default function RotatorManager() {
                 </form>
               </div>
 
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* --- QR CODE MODAL --- */}
+      {qrRotator && (
+        <div style={{
+          position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
+          background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(8px)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 9999,
+          padding: '20px'
+        }}>
+          <div style={{
+            background: '#0a0a0c', border: '1px solid rgba(255,255,255,0.1)',
+            borderRadius: '24px', width: '100%', maxWidth: '450px',
+            boxShadow: '0 40px 100px -20px rgba(0,0,0,0.8)',
+            padding: '40px', textAlign: 'center'
+          }}>
+            <div style={{ marginBottom: '32px' }}>
+              <div style={{ display: 'inline-flex', padding: '16px', background: 'rgba(212,175,55,0.1)', borderRadius: '16px', color: '#d4af37', marginBottom: '16px' }}>
+                <QrCode size={32} />
+              </div>
+              <h2 style={{ fontSize: '24px', fontWeight: '800', color: '#fff', marginBottom: '8px' }}>Funnel QR Code</h2>
+              <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.4)' }}>Scan to enter the <strong>{qrRotator.name}</strong> rotator.</p>
+            </div>
+
+            <div style={{ 
+              background: '#fff', padding: '24px', borderRadius: '24px', 
+              display: 'inline-block', marginBottom: '32px',
+              boxShadow: '0 20px 40px rgba(0,0,0,0.4)'
+            }}>
+              <img 
+                src={`https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(`${window.location.origin}${qrRotator.funnel_url}`)}`} 
+                alt="QR Code"
+                style={{ width: '250px', height: '250px' }}
+              />
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              <div style={{ 
+                background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)', 
+                borderRadius: '12px', padding: '12px 16px', fontSize: '12px', color: '#fff',
+                wordBreak: 'break-all', display: 'flex', alignItems: 'center', gap: '8px'
+              }}>
+                <ExternalLink size={14} style={{ color: 'rgba(255,255,255,0.3)' }} />
+                {window.location.origin}{qrRotator.funnel_url}
+              </div>
+              
+              <div style={{ display: 'flex', gap: '12px' }}>
+                <button 
+                  onClick={() => {
+                    window.open(`https://api.qrserver.com/v1/create-qr-code/?size=1000x1000&data=${encodeURIComponent(`${window.location.origin}${qrRotator.funnel_url}`)}`, '_blank');
+                  }}
+                  style={{ 
+                    flex: 1, background: 'rgba(212,175,55,0.1)', color: '#d4af37', 
+                    border: '1px solid rgba(212,175,55,0.3)', borderRadius: '12px', padding: '14px',
+                    fontSize: '13px', fontWeight: '700', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px'
+                  }}
+                >
+                  <Download size={16} /> Download
+                </button>
+                <button 
+                  onClick={closeManager}
+                  style={{ 
+                    flex: 1, background: 'rgba(255,255,255,0.05)', color: '#fff', 
+                    border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px', padding: '14px',
+                    fontSize: '13px', fontWeight: '700', cursor: 'pointer'
+                  }}
+                  onClick={() => setQrRotator(null)}
+                >
+                  Close
+                </button>
+              </div>
             </div>
           </div>
         </div>
