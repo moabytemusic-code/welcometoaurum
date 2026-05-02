@@ -39,8 +39,8 @@ export async function GET(request) {
       .select('*');
 
     if (search) {
-      // Search by full_name or affiliate_code (case-insensitive)
-      query = query.or(`full_name.ilike.%${search}%,affiliate_code.ilike.%${search}%`);
+      // Search by full_name, affiliate_code, or email (case-insensitive)
+      query = query.or(`full_name.ilike.%${search}%,affiliate_code.ilike.%${search}%,email.ilike.%${search}%`);
     }
 
     const { data, error } = await query.order('last_served_at', { ascending: false, nullsFirst: false });

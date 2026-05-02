@@ -388,22 +388,42 @@ export default function RotatorManager() {
                     
                     {/* Search Results Dropdown */}
                     {searchResults.length > 0 && (
-                      <div style={{ position: 'absolute', top: '100%', left: 0, right: 0, background: '#111', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', marginTop: '4px', zIndex: 10, maxHeight: '200px', overflowY: 'auto', boxShadow: '0 10px 30px rgba(0,0,0,0.8)' }}>
+                      <div style={{ 
+                        position: 'absolute', top: '100%', left: 0, right: 0, 
+                        background: '#0c0c0e', border: '1px solid rgba(255,255,255,0.15)', 
+                        borderRadius: '12px', marginTop: '8px', zIndex: 1000, 
+                        maxHeight: '300px', overflowY: 'auto', 
+                        boxShadow: '0 20px 50px rgba(0,0,0,0.9)',
+                        padding: '4px'
+                      }}>
                         {searchResults.map(user => (
                           <div 
                             key={user.id} 
-                            onClick={() => selectUser(user.affiliate_code)}
-                            style={{ padding: '12px', cursor: 'pointer', borderBottom: '1px solid rgba(255,255,255,0.05)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
-                            onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.05)'}
+                            onClick={() => selectUser(user.affiliate_code || user.affiliate_id || user.email)}
+                            style={{ 
+                              padding: '12px 16px', cursor: 'pointer', 
+                              borderRadius: '8px',
+                              marginBottom: '2px',
+                              display: 'flex', flexDirection: 'column', gap: '2px',
+                              transition: 'all 0.2s'
+                            }}
+                            onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.08)'}
                             onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
                           >
-                            <span style={{ color: '#fff', fontSize: '14px' }}>{user.full_name}</span>
-                            <span style={{ color: '#d4af37', fontSize: '12px', fontWeight: 'bold' }}>{user.affiliate_code}</span>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                              <span style={{ color: '#fff', fontSize: '14px', fontWeight: '600' }}>{user.full_name || 'No Name'}</span>
+                              <span style={{ color: '#d4af37', fontSize: '12px', fontWeight: 'bold', background: 'rgba(212,175,55,0.1)', padding: '2px 8px', borderRadius: '4px' }}>
+                                {user.affiliate_code || user.affiliate_id || 'No Code'}
+                              </span>
+                            </div>
+                            <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '12px' }}>{user.email}</span>
                           </div>
                         ))}
                       </div>
                     )}
-                    {isSearching && <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)', marginTop: '4px' }}>Searching...</div>}
+                    {isSearching && <div style={{ fontSize: '11px', color: '#d4af37', marginTop: '6px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <Loader2 size={12} className="animate-spin" /> Searching database...
+                    </div>}
                   </div>
                   
                   <div style={{ display: 'flex', gap: '12px' }}>
