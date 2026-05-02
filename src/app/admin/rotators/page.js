@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+export const dynamic = 'force-dynamic';
 import styles from '@/app/admin/admin.module.css';
 import { Network, CheckCircle2, XCircle, Users, ExternalLink, Settings2, Trash2, Plus, Loader2 } from 'lucide-react';
 

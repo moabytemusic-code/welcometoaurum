@@ -8,7 +8,7 @@ const supabase = createClient(
 );
 
 export const config = {
-  matcher: '/',
+  matcher: ['/', '/admin/:path*', '/api/admin/:path*'],
 };
 
 export async function middleware(request) {
