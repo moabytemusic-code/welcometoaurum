@@ -3,7 +3,7 @@ import { createClient } from '@supabase/supabase-js';
 
 export async function POST(req) {
   try {
-    const { email, first_name, phone, sponsor_code, sponsor_name, landing_variant } = await req.json();
+    const { email, first_name, phone, sponsor_code, sponsor_name, landing_variant, team_slug } = await req.json();
 
     // 1. LOCAL LEAD TRACKING (Supabase Shadow Copy)
     try {
@@ -15,7 +15,8 @@ export async function POST(req) {
         email,
         first_name,
         sponsor_code: sponsor_code || '1W145K',
-        landing_variant: landing_variant || 'pitch'
+        landing_variant: landing_variant || 'pitch',
+        team_slug: team_slug || null
       }]);
     } catch (dbErr) {
       console.warn('Local lead tracking failed:', dbErr.message);
