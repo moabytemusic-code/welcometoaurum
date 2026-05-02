@@ -55,7 +55,7 @@ export default function AllUNeedBridge() {
           </p>
           
           <a 
-            href="/api/r/all-u-need"
+            href="/api/r/all-u-need?to=onboarding"
             className="inline-flex items-center justify-center w-full sm:w-auto bg-gradient-to-r from-[#d4af37] to-[#f9e29c] text-black font-extrabold uppercase tracking-widest rounded-xl px-10 py-5 hover:translate-y-[-2px] hover:shadow-[0_15px_40px_-5px_rgba(212,175,55,0.4)] transition-all gap-3 text-lg"
           >
             Activate My Wealth Node <ArrowRight className="w-6 h-6" />

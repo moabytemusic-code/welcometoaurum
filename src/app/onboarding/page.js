@@ -2,11 +2,14 @@
 
 import { useState, useEffect } from 'react';
 import styles from '@/app/finance.module.css';
-import Link from 'next/link';
-import { Mail, Gift, Video, AlertCircle } from 'lucide-react';
+import { Mail, Gift, Video, AlertCircle, ArrowRight } from 'lucide-react';
+import { useSearchParams } from 'next/navigation';
 
 export default function OnboardingPage() {
   const [mounted, setMounted] = useState(false);
+
+  const searchParams = useSearchParams();
+  const ref = searchParams.get('ref') || '1W145K'; // Default to admin code if missing
 
   useEffect(() => {
     setMounted(true);
@@ -118,6 +121,35 @@ export default function OnboardingPage() {
             </div>
           </div>
 
+        </div>
+
+        {/* Final Registration Action */}
+        <div style={{ marginTop: '60px', textAlign: 'center' }}>
+          <h2 style={{ fontSize: '24px', fontWeight: '800', marginBottom: '24px' }}>Ready to Activate?</h2>
+          <a 
+            href={`https://backoffice.aurum.foundation/register?ref=${ref}`}
+            style={{ 
+              display: 'inline-flex', 
+              alignItems: 'center', 
+              gap: '12px',
+              background: 'linear-gradient(135deg, #d4af37, #f1c40f)', 
+              color: '#000', 
+              padding: '20px 48px', 
+              borderRadius: '16px',
+              fontSize: '18px',
+              fontWeight: '900',
+              textDecoration: 'none',
+              textTransform: 'uppercase',
+              letterSpacing: '1px',
+              boxShadow: '0 10px 30px rgba(212,175,55,0.3)',
+              transition: 'all 0.3s ease'
+            }}
+          >
+            Create My Aurum Account <ArrowRight size={20} />
+          </a>
+          <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '13px', marginTop: '16px' }}>
+            Assigned Sponsor Code: <strong style={{ color: '#d4af37' }}>{ref}</strong>
+          </p>
         </div>
 
         {/* Footer */}
