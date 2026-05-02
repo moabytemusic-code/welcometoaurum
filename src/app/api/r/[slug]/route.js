@@ -9,7 +9,8 @@ const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.
 const supabase = createClient(supabaseUrl || '', supabaseServiceKey || '');
 
 export async function GET(request, { params }) {
-  const { slug } = params;
+  const resolvedParams = await params;
+  const slug = resolvedParams.slug;
   const { searchParams } = new URL(request.url);
   const redirectTo = searchParams.get('to');
 
