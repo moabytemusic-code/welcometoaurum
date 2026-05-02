@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+export const dynamic = 'force-dynamic';
 import { createClient } from '@supabase/supabase-js';
 
 // Initialize Supabase client
@@ -12,9 +13,8 @@ export async function GET(request, { params }) {
   const resolvedParams = await params;
   const slug = resolvedParams.slug;
   
-  // Use searchParams from the request object directly
-  const { searchParams } = new URL(request.url);
-  const redirectTo = searchParams.get('to');
+  // Use the built-in nextUrl for more reliable param extraction
+  const redirectTo = request.nextUrl.searchParams.get('to');
   
   console.log(`[ROTATOR] Slug: ${slug}, RedirectTo: ${redirectTo}`);
 
@@ -42,7 +42,7 @@ export async function GET(request, { params }) {
     // Determine the final destination
     let finalUrl;
     if (redirectTo === 'onboarding') {
-      const origin = new URL(request.url).origin;
+      const origin = request.nextUrl.origin;
       finalUrl = `${origin}/onboarding?ref=${assignedMemberId}`;
     } else {
       finalUrl = `https://backoffice.aurum.foundation/register?ref=${assignedMemberId}`;
