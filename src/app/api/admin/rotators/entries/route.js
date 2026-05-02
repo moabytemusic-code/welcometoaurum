@@ -1,11 +1,15 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { isValidAdminSession } from '@/lib/auth';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
 const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 export async function GET(req) {
+  if (!(await isValidAdminSession())) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
   const { searchParams } = new URL(req.url);
   const rotator_id = searchParams.get('rotator_id');
 
@@ -30,6 +34,9 @@ export async function GET(req) {
 }
 
 export async function POST(req) {
+  if (!(await isValidAdminSession())) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
   try {
     const { rotator_id, member_id, queue_position, target_conversions } = await req.json();
 
@@ -60,6 +67,9 @@ export async function POST(req) {
 }
 
 export async function DELETE(req) {
+  if (!(await isValidAdminSession())) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
   try {
     const { id } = await req.json();
 
