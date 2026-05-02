@@ -19,6 +19,7 @@ export default function RotatorManager() {
   const [searchResults, setSearchResults] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
   const [searchAbortController, setSearchAbortController] = useState(null);
+  const [searchError, setSearchError] = useState(null);
 
   useEffect(() => {
     fetchRotators();
@@ -85,8 +86,11 @@ export default function RotatorManager() {
     if (!query || query.length < 1) {
       setSearchResults([]);
       setIsSearching(false);
+      setSearchError(null);
       return;
     }
+
+    setSearchError(null);
 
     const controller = new AbortController();
     setSearchAbortController(controller);
@@ -103,6 +107,7 @@ export default function RotatorManager() {
         setSearchResults(data);
       } else {
         console.error('[SEARCH] API Error:', res.status);
+        setSearchError(`API Error: ${res.status}`);
       }
     } catch (err) {
       if (err.name !== 'AbortError') {
@@ -427,7 +432,7 @@ export default function RotatorManager() {
                     )}
                     
                     {/* No Results Indicator */}
-                    {!isSearching && newEntry.member_id.length >= 1 && searchResults.length === 0 && (
+                    {!isSearching && !searchError && newEntry.member_id.length >= 1 && searchResults.length === 0 && (
                       <div style={{ 
                         position: 'absolute', top: '100%', left: 0, right: 0, 
                         background: '#0c0c0e', border: '2px solid #ff3232', 
@@ -436,6 +441,18 @@ export default function RotatorManager() {
                         boxShadow: '0 10px 30px rgba(255,0,0,0.2)'
                       }}>
                         No matching users found in database.
+                      </div>
+                    )}
+
+                    {/* API Error Indicator */}
+                    {searchError && (
+                      <div style={{ 
+                        position: 'absolute', top: '100%', left: 0, right: 0, 
+                        background: '#0c0c0e', border: '2px solid #ff3232', 
+                        borderRadius: '12px', marginTop: '8px', zIndex: 1000, 
+                        padding: '12px 16px', color: '#ff3232', fontSize: '13px'
+                      }}>
+                        {searchError} - Possible Auth Issue.
                       </div>
                     )}
 
