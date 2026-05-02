@@ -101,17 +101,14 @@ export default function RotatorManager() {
     setIsSearching(true);
     
     try {
-      console.log(`[SEARCH] Querying for: ${query}`);
       const res = await fetch(`/api/admin/affiliates?search=${encodeURIComponent(query)}`, {
         signal: controller.signal
       });
       if (res.ok) {
         const data = await res.json();
-        console.log(`[SEARCH] Results found:`, data.length);
         setSearchResults(data);
       } else {
-        console.error('[SEARCH] API Error:', res.status);
-        setSearchError(`API Error: ${res.status}`);
+        setSearchError(`Error: ${res.status}`);
       }
     } catch (err) {
       if (err.name !== 'AbortError') {
@@ -453,16 +450,16 @@ export default function RotatorManager() {
                     {searchError && (
                       <div style={{ 
                         position: 'absolute', top: '100%', left: 0, right: 0, 
-                        background: '#0c0c0e', border: '2px solid #ff3232', 
+                        background: '#0c0c0e', border: '1px solid #ff3232', 
                         borderRadius: '12px', marginTop: '8px', zIndex: 1000, 
                         padding: '12px 16px', color: '#ff3232', fontSize: '13px'
                       }}>
-                        {searchError} - Possible Auth Issue.
+                        {searchError}
                       </div>
                     )}
 
-                    {isSearching && <div style={{ fontSize: '12px', color: '#00ff88', marginTop: '8px', display: 'flex', alignItems: 'center', gap: '8px', background: 'rgba(0,255,136,0.1)', padding: '8px 12px', borderRadius: '8px', border: '1px solid rgba(0,255,136,0.3)' }}>
-                      <Loader2 size={14} className="animate-spin" /> DATABASE SEARCH ACTIVE...
+                    {isSearching && <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)', marginTop: '8px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <Loader2 size={12} className="animate-spin" /> Searching...
                     </div>}
                   </div>
                   

@@ -14,11 +14,9 @@ function getMasterClient() {
 }
 
 export async function GET(request) {
-  /*
   if (!(await isValidAdminSession())) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
-  */
 
   const supabase = getMasterClient();
 
@@ -44,7 +42,6 @@ export async function GET(request) {
       // Search by full_name, affiliate_code, or email (case-insensitive)
       // We wrap values in double quotes to handle spaces correctly in .or()
       const s = `"%${search}%"`;
-      console.log(`[BACKEND SEARCH] Query: full_name.ilike.${s},affiliate_code.ilike.${s},email.ilike.${s}`);
       query = query.or(`full_name.ilike.${s},affiliate_code.ilike.${s},email.ilike.${s}`);
     }
 
