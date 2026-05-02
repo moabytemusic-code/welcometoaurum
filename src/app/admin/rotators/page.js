@@ -18,6 +18,7 @@ export default function RotatorManager() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
+  const [searchAbortController, setSearchAbortController] = useState(null);
 
   useEffect(() => {
     fetchRotators();
@@ -77,21 +78,37 @@ export default function RotatorManager() {
   };
 
   const handleSearchUsers = async (query) => {
+    if (searchAbortController) {
+      searchAbortController.abort();
+    }
+
     if (!query || query.length < 2) {
       setSearchResults([]);
+      setIsSearching(false);
       return;
     }
+
+    const controller = new AbortController();
+    setSearchAbortController(controller);
     setIsSearching(true);
+    
     try {
-      const res = await fetch(`/api/admin/affiliates?search=${encodeURIComponent(query)}`);
+      const res = await fetch(`/api/admin/affiliates?search=${encodeURIComponent(query)}`, {
+        signal: controller.signal
+      });
       if (res.ok) {
         const data = await res.json();
         setSearchResults(data);
       }
     } catch (err) {
-      console.error('Search failed', err);
+      if (err.name !== 'AbortError') {
+        console.error('Search failed', err);
+      }
     } finally {
-      setIsSearching(false);
+      // Only set isSearching to false if this is still the active request
+      if (!controller.signal.aborted) {
+        setIsSearching(false);
+      }
     }
   };
 
