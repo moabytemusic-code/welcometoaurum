@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import styles from '@/app/finance.module.css';
-import { Layout, Users, Zap, Sparkles, Settings } from 'lucide-react';
+import { Layout, Users, Zap, Sparkles, Settings, Network } from 'lucide-react';
 
 export default function AdminLayout({ children }) {
   const pathname = usePathname();
@@ -39,7 +39,11 @@ export default function AdminLayout({ children }) {
           </Link>
           <Link href="/admin/manage" className={styles.navItem}>
             <Zap className={styles.navIcon} />
-            <span>Campaigns & Rotator</span>
+            <span>FaaS Campaigns</span>
+          </Link>
+          <Link href="/admin/rotators" className={styles.navItem}>
+            <Network className={styles.navIcon} />
+            <span>Downline Rotators</span>
           </Link>
           <Link href="/admin/builder" className={styles.navItem}>
             <Sparkles className={styles.navIcon} style={{ color: '#d4af37' }} />
