@@ -93,12 +93,16 @@ export default function RotatorManager() {
     setIsSearching(true);
     
     try {
+      console.log(`[SEARCH] Querying for: ${query}`);
       const res = await fetch(`/api/admin/affiliates?search=${encodeURIComponent(query)}`, {
         signal: controller.signal
       });
       if (res.ok) {
         const data = await res.json();
+        console.log(`[SEARCH] Results found:`, data.length);
         setSearchResults(data);
+      } else {
+        console.error('[SEARCH] API Error:', res.status);
       }
     } catch (err) {
       if (err.name !== 'AbortError') {
@@ -421,6 +425,19 @@ export default function RotatorManager() {
                         ))}
                       </div>
                     )}
+                    
+                    {/* No Results Indicator */}
+                    {!isSearching && newEntry.member_id.length >= 2 && searchResults.length === 0 && (
+                      <div style={{ 
+                        position: 'absolute', top: '100%', left: 0, right: 0, 
+                        background: '#0c0c0e', border: '1px solid rgba(255,50,50,0.1)', 
+                        borderRadius: '12px', marginTop: '8px', zIndex: 1000, 
+                        padding: '12px 16px', color: '#ff3232', fontSize: '13px'
+                      }}>
+                        No matching users found in database.
+                      </div>
+                    )}
+
                     {isSearching && <div style={{ fontSize: '11px', color: '#d4af37', marginTop: '6px', display: 'flex', alignItems: 'center', gap: '6px' }}>
                       <Loader2 size={12} className="animate-spin" /> Searching database...
                     </div>}
