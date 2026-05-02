@@ -20,6 +20,7 @@ export default function RotatorManager() {
   const [isSearching, setIsSearching] = useState(false);
   const [searchAbortController, setSearchAbortController] = useState(null);
   const [searchError, setSearchError] = useState(null);
+  const [hasSearched, setHasSearched] = useState(false);
 
   useEffect(() => {
     fetchRotators();
@@ -87,9 +88,11 @@ export default function RotatorManager() {
       setSearchResults([]);
       setIsSearching(false);
       setSearchError(null);
+      setHasSearched(false);
       return;
     }
 
+    setHasSearched(true);
     setSearchError(null);
 
     const controller = new AbortController();
@@ -124,6 +127,7 @@ export default function RotatorManager() {
   const selectUser = (affiliate_code) => {
     setNewEntry({...newEntry, member_id: affiliate_code});
     setSearchResults([]);
+    setHasSearched(false);
   };
 
   const handleAddEntry = async (e) => {
@@ -432,7 +436,7 @@ export default function RotatorManager() {
                     )}
                     
                     {/* No Results Indicator */}
-                    {!isSearching && !searchError && newEntry.member_id.length >= 1 && searchResults.length === 0 && (
+                    {!isSearching && !searchError && hasSearched && newEntry.member_id.length >= 1 && searchResults.length === 0 && (
                       <div style={{ 
                         position: 'absolute', top: '100%', left: 0, right: 0, 
                         background: '#0c0c0e', border: '2px solid #ff3232', 
