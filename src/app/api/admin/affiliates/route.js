@@ -40,7 +40,10 @@ export async function GET(request) {
 
     if (search) {
       // Search by full_name, affiliate_code, or email (case-insensitive)
-      query = query.or(`full_name.ilike.%${search}%,affiliate_code.ilike.%${search}%,email.ilike.%${search}%`);
+      // We wrap values in double quotes to handle spaces correctly in .or()
+      const s = `"%${search}%"`;
+      console.log(`[BACKEND SEARCH] Query: full_name.ilike.${s},affiliate_code.ilike.${s},email.ilike.${s}`);
+      query = query.or(`full_name.ilike.${s},affiliate_code.ilike.${s},email.ilike.${s}`);
     }
 
     const { data, error } = await query.order('last_served_at', { ascending: false, nullsFirst: false });
