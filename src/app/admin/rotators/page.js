@@ -16,6 +16,8 @@ export default function RotatorManager() {
   // New Entry Form State
   const [newEntry, setNewEntry] = useState({ member_id: '', target_conversions: 9, queue_position: 1 });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [searchResults, setSearchResults] = useState([]);
+  const [isSearching, setIsSearching] = useState(false);
 
   useEffect(() => {
     fetchRotators();
@@ -74,6 +76,30 @@ export default function RotatorManager() {
     fetchRotators();
   };
 
+  const handleSearchUsers = async (query) => {
+    if (!query || query.length < 2) {
+      setSearchResults([]);
+      return;
+    }
+    setIsSearching(true);
+    try {
+      const res = await fetch(`/api/admin/affiliates?search=${encodeURIComponent(query)}`);
+      if (res.ok) {
+        const data = await res.json();
+        setSearchResults(data);
+      }
+    } catch (err) {
+      console.error('Search failed', err);
+    } finally {
+      setIsSearching(false);
+    }
+  };
+
+  const selectUser = (affiliate_code) => {
+    setNewEntry({...newEntry, member_id: affiliate_code});
+    setSearchResults([]);
+  };
+
   const handleAddEntry = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -92,6 +118,7 @@ export default function RotatorManager() {
         const { entry } = await res.json();
         setEntries([...entries, entry].sort((a, b) => a.queue_position - b.queue_position));
         setNewEntry({ member_id: '', target_conversions: 9, queue_position: newEntry.queue_position + 1 });
+        setSearchResults([]);
       } else {
         const errorData = await res.json();
         alert(`Error: ${errorData.error}`);
@@ -328,16 +355,38 @@ export default function RotatorManager() {
                 <h3 style={{ fontSize: '14px', textTransform: 'uppercase', letterSpacing: '1px', color: 'rgba(255,255,255,0.4)', marginBottom: '16px', fontWeight: 'bold' }}>Add Member</h3>
                 
                 <form onSubmit={handleAddEntry} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                  <div>
-                    <label style={{ display: 'block', fontSize: '12px', color: 'rgba(255,255,255,0.6)', marginBottom: '6px' }}>Affiliate ID</label>
+                  <div style={{ position: 'relative' }}>
+                    <label style={{ display: 'block', fontSize: '12px', color: 'rgba(255,255,255,0.6)', marginBottom: '6px' }}>Affiliate ID or Search by Name</label>
                     <input 
                       type="text" 
                       required
-                      placeholder="e.g., 1W145K"
+                      placeholder="e.g., John Doe or 1W145K"
                       value={newEntry.member_id}
-                      onChange={e => setNewEntry({...newEntry, member_id: e.target.value})}
+                      onChange={e => {
+                        setNewEntry({...newEntry, member_id: e.target.value});
+                        handleSearchUsers(e.target.value);
+                      }}
                       style={{ width: '100%', background: 'rgba(0,0,0,0.5)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', padding: '12px', color: '#fff', fontSize: '14px', outline: 'none' }}
                     />
+                    
+                    {/* Search Results Dropdown */}
+                    {searchResults.length > 0 && (
+                      <div style={{ position: 'absolute', top: '100%', left: 0, right: 0, background: '#111', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', marginTop: '4px', zIndex: 10, maxHeight: '200px', overflowY: 'auto', boxShadow: '0 10px 30px rgba(0,0,0,0.8)' }}>
+                        {searchResults.map(user => (
+                          <div 
+                            key={user.id} 
+                            onClick={() => selectUser(user.affiliate_code)}
+                            style={{ padding: '12px', cursor: 'pointer', borderBottom: '1px solid rgba(255,255,255,0.05)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
+                            onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.05)'}
+                            onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
+                          >
+                            <span style={{ color: '#fff', fontSize: '14px' }}>{user.full_name}</span>
+                            <span style={{ color: '#d4af37', fontSize: '12px', fontWeight: 'bold' }}>{user.affiliate_code}</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    {isSearching && <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)', marginTop: '4px' }}>Searching...</div>}
                   </div>
                   
                   <div style={{ display: 'flex', gap: '12px' }}>

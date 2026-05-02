@@ -22,6 +22,7 @@ export async function GET(request) {
 
   const { searchParams } = new URL(request.url);
   const quick = searchParams.get('quick');
+  const search = searchParams.get('search');
 
   try {
     if (quick) {
@@ -33,10 +34,16 @@ export async function GET(request) {
       return NextResponse.json({ count });
     }
 
-    const { data, error } = await supabase
+    let query = supabase
       .from('aurum_affiliates')
-      .select('*')
-      .order('last_served_at', { ascending: false, nullsFirst: false });
+      .select('*');
+
+    if (search) {
+      // Search by full_name or affiliate_code (case-insensitive)
+      query = query.or(`full_name.ilike.%${search}%,affiliate_code.ilike.%${search}%`);
+    }
+
+    const { data, error } = await query.order('last_served_at', { ascending: false, nullsFirst: false });
 
     if (error) throw error;
     return NextResponse.json(data);
