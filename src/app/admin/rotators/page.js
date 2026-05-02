@@ -82,7 +82,7 @@ export default function RotatorManager() {
       searchAbortController.abort();
     }
 
-    if (!query || query.length < 2) {
+    if (!query || query.length < 1) {
       setSearchResults([]);
       setIsSearching(false);
       return;
@@ -427,19 +427,20 @@ export default function RotatorManager() {
                     )}
                     
                     {/* No Results Indicator */}
-                    {!isSearching && newEntry.member_id.length >= 2 && searchResults.length === 0 && (
+                    {!isSearching && newEntry.member_id.length >= 1 && searchResults.length === 0 && (
                       <div style={{ 
                         position: 'absolute', top: '100%', left: 0, right: 0, 
-                        background: '#0c0c0e', border: '1px solid rgba(255,50,50,0.1)', 
+                        background: '#0c0c0e', border: '2px solid #ff3232', 
                         borderRadius: '12px', marginTop: '8px', zIndex: 1000, 
-                        padding: '12px 16px', color: '#ff3232', fontSize: '13px'
+                        padding: '12px 16px', color: '#ff3232', fontSize: '13px',
+                        boxShadow: '0 10px 30px rgba(255,0,0,0.2)'
                       }}>
                         No matching users found in database.
                       </div>
                     )}
 
-                    {isSearching && <div style={{ fontSize: '11px', color: '#d4af37', marginTop: '6px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                      <Loader2 size={12} className="animate-spin" /> Searching database...
+                    {isSearching && <div style={{ fontSize: '12px', color: '#00ff88', marginTop: '8px', display: 'flex', alignItems: 'center', gap: '8px', background: 'rgba(0,255,136,0.1)', padding: '8px 12px', borderRadius: '8px', border: '1px solid rgba(0,255,136,0.3)' }}>
+                      <Loader2 size={14} className="animate-spin" /> DATABASE SEARCH ACTIVE...
                     </div>}
                   </div>
                   
