@@ -136,8 +136,8 @@ const ConsultativeAngle = ({ project, handleOptIn, isProcessing, status }) => {
                   <label>Initial Liquidity Bridge (Deposit)</label>
                   <input
                     type="number"
-                    value={deposit}
-                    onChange={(e) => setDeposit(Number(e.target.value))}
+                  value={deposit}
+                  onChange={(e) => setDeposit(e.target.value)}
                     className={styles.manualInput}
                     placeholder="Enter amount..."
                   />
@@ -146,10 +146,10 @@ const ConsultativeAngle = ({ project, handleOptIn, isProcessing, status }) => {
                     min="100"
                     max="99999"
                     step="100"
-                    value={deposit > 99999 ? 99999 : deposit}
-                    onChange={(e) => setDeposit(Number(e.target.value))}
+                    value={deposit > 99999 ? 99999 : (deposit || 0)}
+                    onChange={(e) => setDeposit(e.target.value)}
                     className={styles.rangeInput}
-                    style={{ background: `linear-gradient(to right, #2d8cf0 ${((Math.min(deposit, 99999) - 100) / 99899) * 100}%, #333 ${((Math.min(deposit, 99999) - 100) / 99899) * 100}%)` }}
+                    style={{ background: `linear-gradient(to right, #2d8cf0 ${((Math.min(Number(deposit || 0), 99999) - 100) / 99899) * 100}%, #333 ${((Math.min(Number(deposit || 0), 99999) - 100) / 99899) * 100}%)` }}
                   />
                 </div>
                 <div className={styles.resultsGroup} style={{ textAlign: 'center' }}>
