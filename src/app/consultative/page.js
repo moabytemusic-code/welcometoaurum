@@ -158,7 +158,7 @@ const BotEarningsBadge = () => {
 }
 
 export default function Home() {
-  const [deposit, setDeposit] = useState(5000);
+  const [deposit, setDeposit] = useState(1500);
   const [yieldValue, setYieldValue] = useState(0);
 
   const [isProcessing, setIsProcessing] = useState(false);
@@ -296,19 +296,26 @@ export default function Home() {
             <div className={styles.calculatorCard} style={{ margin: '0', textAlign: 'left' }}>
               <h2 className={styles.calculatorTitle} style={{ textAlign: 'center' }}>See Your Aurum Wealth Projection</h2>
             <div className={styles.calcGrid}>
-              <div className={styles.inputGroup}>
-                <label>Initial Liquidity Bridge (Deposit) <span style={{float: 'right', color: '#2d8cf0', fontWeight: 'bold'}}>${parseInt(deposit).toLocaleString()}</span></label>
-                <input 
-                  type="range" 
-                  min="100" 
-                  max="99999" 
-                  step="100" 
-                  value={deposit}
-                  onChange={(e) => setDeposit(Number(e.target.value))}
-                  className={styles.rangeInput}
-                  style={{ background: `linear-gradient(to right, #2d8cf0 ${((deposit - 100) / 99899) * 100}%, #333 ${((deposit - 100) / 99899) * 100}%)` }}
-                />
-              </div>
+                <div className={styles.inputGroup}>
+                  <label>Initial Liquidity Bridge (Deposit)</label>
+                  <input
+                    type="number"
+                    value={deposit}
+                    onChange={(e) => setDeposit(Number(e.target.value))}
+                    className={styles.manualInput}
+                    placeholder="Enter amount..."
+                  />
+                  <input
+                    type="range"
+                    min="100"
+                    max="99999"
+                    step="100"
+                    value={deposit > 99999 ? 99999 : deposit}
+                    onChange={(e) => setDeposit(Number(e.target.value))}
+                    className={styles.rangeInput}
+                    style={{ background: `linear-gradient(to right, #2d8cf0 ${((Math.min(deposit, 99999) - 100) / 99899) * 100}%, #333 ${((Math.min(deposit, 99999) - 100) / 99899) * 100}%)` }}
+                  />
+                </div>
               <div className={styles.resultsGroup} style={{ textAlign: 'center' }}>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                   <div className={styles.resultItem}>

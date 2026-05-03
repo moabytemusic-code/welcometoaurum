@@ -93,7 +93,7 @@ const BotEarningsBadge = ({ fallbackValue }) => {
 
 const PitchAngle = ({ project, handleOptIn, isProcessing, status }) => {
   const { content = {} } = project;
-  const [deposit, setDeposit] = useState(5000);
+  const [deposit, setDeposit] = useState(1500);
   const [yieldValue, setYieldValue] = useState(0);
 
   useEffect(() => {
@@ -133,16 +133,23 @@ const PitchAngle = ({ project, handleOptIn, isProcessing, status }) => {
               <h2 className={styles.calculatorTitle} style={{ textAlign: 'center' }}>See Your Aurum Wealth Projection</h2>
               <div className={styles.calcGrid}>
                 <div className={styles.inputGroup}>
-                  <label>Initial Liquidity Bridge (Deposit) <span style={{ float: 'right', color: '#2d8cf0', fontWeight: 'bold' }}>${parseInt(deposit).toLocaleString()}</span></label>
+                  <label>Initial Liquidity Bridge (Deposit)</label>
+                  <input
+                    type="number"
+                    value={deposit}
+                    onChange={(e) => setDeposit(Number(e.target.value))}
+                    className={styles.manualInput}
+                    placeholder="Enter amount..."
+                  />
                   <input
                     type="range"
                     min="100"
                     max="99999"
                     step="100"
-                    value={deposit}
+                    value={deposit > 99999 ? 99999 : deposit}
                     onChange={(e) => setDeposit(Number(e.target.value))}
                     className={styles.rangeInput}
-                    style={{ background: `linear-gradient(to right, #2d8cf0 ${((deposit - 100) / 99899) * 100}%, #333 ${((deposit - 100) / 99899) * 100}%)` }}
+                    style={{ background: `linear-gradient(to right, #2d8cf0 ${((Math.min(deposit, 99999) - 100) / 99899) * 100}%, #333 ${((Math.min(deposit, 99999) - 100) / 99899) * 100}%)` }}
                   />
                 </div>
                 <div className={styles.resultsGroup} style={{ textAlign: 'center' }}>
