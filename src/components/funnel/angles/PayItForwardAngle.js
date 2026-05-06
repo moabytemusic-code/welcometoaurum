@@ -45,7 +45,7 @@ const PayItForwardAngle = ({ project, handleOptIn, isProcessing, status }) => {
     <main className={styles.main}>
       {/* Funding Status Bar */}
       <div style={{ background: '#00ff88', color: '#000', padding: '12px', textAlign: 'center', fontWeight: '900', letterSpacing: '1px', textTransform: 'uppercase', fontSize: '14px' }}>
-        Live Funding Pool: ${fundingPool.toLocaleString()} Available for Distribution
+        Today's Starting Fund: ${fundingPool.toLocaleString()} Available for Distribution
       </div>
 
       <HeroPitch 
@@ -56,11 +56,11 @@ const PayItForwardAngle = ({ project, handleOptIn, isProcessing, status }) => {
         preOptInSlot={whyGiveawaySection}
         content={{
           ...content,
-          title: content.title || 'Claim Your <span class="highlight">$100 Starting Capital.</span>',
-          subtitle: content.subtitle || 'We are funding the first 1,000 accounts to prove the power of AI Finance.',
+          title: content.title || 'Claim Your <span class="highlight">$100 Starting Fund.</span>',
+          subtitle: content.subtitle || 'We are funding the first 1,000 accounts to prove the power of simple AI technology.',
           botImageUrl: "/images/aurum_funding_voucher.png",
           botLabel: "VOUCHER ACTIVE",
-          botStatus: "ALLOCATION STATUS",
+          botStatus: "FUNDING STATUS",
           botValue: "$100.00"
         }} 
       />

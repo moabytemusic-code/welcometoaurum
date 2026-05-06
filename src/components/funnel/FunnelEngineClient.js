@@ -66,16 +66,16 @@ export default function FunnelEngineClient({ initialProject, angleId }) {
       if (res.ok) {
         setStatus('ACCESS GRANTED. REDIRECTING...');
         setTimeout(() => {
-          window.location.href = '/onboarding';
+          window.location.href = `/thank-you?ref=${sponsorData.code}`;
         }, 1000);
       } else {
         throw new Error('Capture failed');
       }
     } catch (err) {
       console.error('Opt-in error:', err);
-      setStatus('ERROR: REDIRECTING TO ONBOARDING...');
+      setStatus('ERROR: REDIRECTING...');
       setTimeout(() => {
-        window.location.href = '/onboarding';
+        window.location.href = `/thank-you?ref=${sponsorData.code}`;
       }, 1500);
     }
   };

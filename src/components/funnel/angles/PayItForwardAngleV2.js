@@ -48,7 +48,7 @@ const PayItForwardAngleV2 = ({ project, handleOptIn, isProcessing, status }) => 
 
       {/* ── Announcement Bar ─────────────────────────────────────────────── */}
       <div style={{ background: THEME.barBg, padding: '12px', textAlign: 'center', fontWeight: '900', letterSpacing: '1px', textTransform: 'uppercase', fontSize: '14px', color: '#fff' }}>
-        🔥 Live Funding Pool: ${fundingPool.toLocaleString()} Remaining — Claim Yours Now
+        🔥 Today's Starting Fund: ${fundingPool.toLocaleString()} Remaining — Claim Yours Now
       </div>
 
       {/* ── Hero Section ─────────────────────────────────────────────────── */}
@@ -76,12 +76,12 @@ const PayItForwardAngleV2 = ({ project, handleOptIn, isProcessing, status }) => 
           <h1 style={{ fontSize: 'clamp(36px, 6vw, 72px)', fontWeight: '900', lineHeight: '1.1', marginBottom: '24px', letterSpacing: '-1px' }}>
             Claim Your Free{' '}
             <span style={{ background: THEME.highlight, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-              $100 Starting Capital.
+              $100 Starting Fund.
             </span>
           </h1>
 
           <p style={{ fontSize: '20px', color: 'rgba(255,255,255,0.7)', lineHeight: '1.6', maxWidth: '640px', margin: '0 auto 40px' }}>
-            {content.subtitle || "We're funding 1,000 accounts with $100 to prove our AI generates at least $1/day on autopilot. No risk. No strings."}
+            {content.subtitle || "We're funding 1,000 accounts with $100 to prove our software works for you on autopilot. No risk. No strings."}
           </p>
 
           {/* "Why" Section */}
@@ -115,7 +115,7 @@ const PayItForwardAngleV2 = ({ project, handleOptIn, isProcessing, status }) => 
 
           {/* Proof line */}
           <p style={{ marginTop: '20px', fontSize: '13px', color: 'rgba(255,255,255,0.4)', textAlign: 'center' }}>
-            {content.ctaProof || '✓ Verified: $8,400 remaining in today\'s funding pool'}
+            {content.ctaProof || '✓ Verified: $8,400 remaining in today\'s starting fund'}
           </p>
         </div>
       </section>

@@ -8,13 +8,13 @@ const BREVO_API_KEY = envFile.match(/BREVO_API_KEY=(.*)/)[1].trim();
 const templates = [
   {
     templateName: "AURUM_WELCOME_CORE",
-    subject: "Briefing Received: Claim Your $100 Voucher, {{ contact.FIRSTNAME }}",
+    subject: "Wait, {{ contact.FIRSTNAME }}—don't let the AI wave pass you by",
     htmlContent: fs.readFileSync(path.join(__dirname, '../src/templates/emails/welcome.html'), 'utf8'),
     sender: { name: "Aurum Rise Onboarding Team", email: "onboarding@smarthustlermarketing.com" }
   },
   {
     templateName: "AURUM_WELCOME_VOUCHER",
-    subject: "Your $100 Starting Capital Is Active, {{ contact.FIRSTNAME }}",
+    subject: "I've reserved $100 for you to start with AI (No tech skills needed), {{ contact.FIRSTNAME }}",
     htmlContent: fs.readFileSync(path.join(__dirname, '../src/templates/emails/welcome.html'), 'utf8'), // Reusing the high-quality template
     sender: { name: "Aurum Rise Onboarding Team", email: "onboarding@smarthustlermarketing.com" }
   }

@@ -7,12 +7,15 @@ export default function AllUNeedLanding() {
   const [formData, setFormData] = useState({ name: '', email: '' });
   const [isProcessing, setIsProcessing] = useState(false);
 
+  const [status, setStatus] = useState('');
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsProcessing(true);
+    setStatus('PREPARING ACCESS...');
 
     try {
-      await fetch('/api/optin', {
+      const response = await fetch('/api/optin', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -22,11 +25,18 @@ export default function AllUNeedLanding() {
           team_slug: 'all-u-need' // Unique tag for the All U Need rotator
         })
       });
-      // Redirect after successful capture
-      window.location.href = '/f/all-u-need/bridge';
+      if (response.ok) {
+        const sponsorData = await response.json();
+        setStatus('ACCESS GRANTED. REDIRECTING...');
+        setTimeout(() => {
+          window.location.href = `/thank-you?ref=${sponsorData.code}`;
+        }, 1000);
+      } else {
+        throw new Error('Capture failed');
+      }
     } catch (err) {
       console.error('Failed to capture lead:', err);
-      window.location.href = '/f/all-u-need/bridge'; // Fallback
+      window.location.href = `/thank-you?ref=1W145K`; // Fallback
     }
   };
 
@@ -46,7 +56,7 @@ export default function AllUNeedLanding() {
               <Sprout className="w-8 h-8 text-[#22c55e]" /> ALL U NEED
             </span>
             <span className="text-xs font-semibold tracking-[0.3em] uppercase text-gray-400">
-              Garden Supply & Wealth Protocols
+              Garden Supply & Simple Wealth Systems
             </span>
           </div>
         </header>
@@ -57,12 +67,12 @@ export default function AllUNeedLanding() {
         </div>
         
         <h1 className="text-5xl md:text-6xl font-extrabold leading-tight mb-6 bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-300">
-          We’ve helped you grow the perfect garden. <br />
-          <span className="text-[#d4af37]">Now, let's grow your wealth.</span>
+          You've grown a beautiful garden. <br />
+          <span className="text-[#d4af37]">Now, let's make your money work just as hard as you do.</span>
         </h1>
         
         <p className="text-xl text-gray-400 mb-12 max-w-2xl leading-relaxed">
-          As a loyal <strong>All U Need</strong> customer, you understand that the right environment and automation create the biggest yields. We're inviting you to apply that exact same science to your finances using our Private Wealth Node.
+          As a loyal <strong>All U Need</strong> customer, you know that the right tools and automation create the biggest yields. We're inviting you to apply that exact same science to your finances using our simple Private Wealth System.
         </p>
 
         {/* Optin Form Card */}
@@ -73,11 +83,11 @@ export default function AllUNeedLanding() {
           <div className="flex flex-col gap-5 text-left mb-8">
             <div className="flex items-start gap-3">
               <TrendingUp className="w-6 h-6 text-[#22c55e] mt-0.5 shrink-0" />
-              <p className="text-gray-300 text-sm"><strong>Automated Yields:</strong> Just like a timed doser, this system operates automatically to grow your portfolio.</p>
+              <p className="text-gray-300 text-sm"><strong>Automatic Growth:</strong> Just like a timed waterer, this system works automatically to grow your savings.</p>
             </div>
             <div className="flex items-start gap-3">
               <ShieldCheck className="w-6 h-6 text-[#22c55e] mt-0.5 shrink-0" />
-              <p className="text-gray-300 text-sm"><strong>Private Team Build:</strong> Enter the "All U Need" queue and let our internal rotator fill your downline sequentially.</p>
+              <p className="text-gray-300 text-sm"><strong>Community Growth Plan:</strong> Join the "All U Need" team and let our group system help you build your future.</p>
             </div>
           </div>
 
@@ -104,9 +114,9 @@ export default function AllUNeedLanding() {
               className="w-full bg-[#22c55e] hover:bg-[#1ea851] text-black font-extrabold uppercase tracking-widest rounded-xl px-5 py-4 mt-2 transition-all flex items-center justify-center gap-2 disabled:opacity-70 shadow-[0_0_20px_rgba(34,197,94,0.2)] hover:shadow-[0_0_30px_rgba(34,197,94,0.4)]"
             >
               {isProcessing ? (
-                <><Loader2 className="w-5 h-5 animate-spin" /> Preparing Access...</>
+                <><Loader2 className="w-5 h-5 animate-spin" /> {status || 'Preparing Access...'}</>
               ) : (
-                <>Unlock The Protocol <ArrowRight className="w-5 h-5" /></>
+                <>Get The Free Breakdown <ArrowRight className="w-5 h-5" /></>
               )}
             </button>
           </form>

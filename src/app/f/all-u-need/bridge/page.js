@@ -23,12 +23,12 @@ export default function AllUNeedBridge() {
         </header>
 
         <h1 className="text-4xl md:text-5xl font-extrabold text-center leading-tight mb-4">
-          Welcome to the Inner Circle. <br />
-          <span className="text-[#d4af37]">Here is how the protocol works.</span>
+          Welcome to the Orientation. <br />
+          <span className="text-[#d4af37]">Here is how the system works.</span>
         </h1>
         
         <p className="text-lg text-gray-400 mb-10 text-center max-w-2xl leading-relaxed">
-          Watch the brief orientation video below to understand how the Aurum ecosystem automates your wealth generation, exactly like a perfectly tuned hydro system.
+          Watch the brief orientation video below to understand how the Aurum ecosystem works for you, exactly like a perfectly tuned irrigation system.
         </p>
 
         {/* Video Placeholder */}
@@ -49,20 +49,20 @@ export default function AllUNeedBridge() {
         <div className="w-full max-w-2xl bg-white/[0.02] border border-white/5 rounded-3xl p-8 backdrop-blur-md text-center relative overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#d4af37] to-transparent opacity-50"></div>
           
-          <h3 className="text-2xl font-bold mb-4 text-white">Enter the AllUNeed Build Rotator</h3>
+          <h3 className="text-2xl font-bold mb-4 text-white">Enter the AllUNeed Team Growth System</h3>
           <p className="text-gray-400 mb-8 leading-relaxed">
-            By clicking below, you will be securely redirected to the Aurum registration portal. You will be automatically assigned to the next available position in our private customer downline.
+            By clicking below, you will be securely redirected to the Aurum registration portal. You will be automatically assigned to the next available position in our private community group.
           </p>
           
           <a 
             href="/api/r/all-u-need?to=onboarding"
             className="inline-flex items-center justify-center w-full sm:w-auto bg-gradient-to-r from-[#d4af37] to-[#f9e29c] text-black font-extrabold uppercase tracking-widest rounded-xl px-10 py-5 hover:translate-y-[-2px] hover:shadow-[0_15px_40px_-5px_rgba(212,175,55,0.4)] transition-all gap-3 text-lg"
           >
-            Activate My Wealth Node <ArrowRight className="w-6 h-6" />
+            Start Growing My Savings <ArrowRight className="w-6 h-6" />
           </a>
 
           <p className="text-sm text-gray-500 mt-6">
-            Make sure you have your $19.99 membership fee and $100 starting capital ready to seed your node.
+            Make sure you have your $19.99 membership fee and $100 starting fund ready to set up your account.
           </p>
         </div>
 

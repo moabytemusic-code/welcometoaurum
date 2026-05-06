@@ -108,12 +108,12 @@ const BotEarningsBadge = () => {
 
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
             <div style={{ width: '8px', height: '8px', background: '#00ff88', borderRadius: '50%', boxShadow: '0 0 8px #00ff88', animation: 'aurumPulseDot 2s infinite' }}></div>
-            <span style={{ fontSize: '12px', color: '#00ff88', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '2px' }}>EX-AI BOT ACTIVE</span>
+            <span style={{ fontSize: '12px', color: '#00ff88', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '2px' }}>SMART SYSTEM ACTIVE</span>
           </div>
         </div>
         
         <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-          <span style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '1px' }}>Daily Performance</span>
+          <span style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '1px' }}>Daily Results</span>
           <span style={{ fontSize: '42px', color: '#00ff88', fontWeight: '900', textShadow: '0 0 20px rgba(0,255,136,0.4)', lineHeight: '1' }}>{earnings}</span>
         </div>
 
@@ -128,12 +128,12 @@ const BotEarningsBadge = () => {
           border: '1px solid rgba(255,255,255,0.05)'
         }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px' }}>
-            <span style={{ color: 'rgba(255,255,255,0.4)' }}>Algorithm</span>
-            <span style={{ color: '#fff', fontWeight: '600' }}>Neural-X v4.2</span>
+            <span style={{ color: 'rgba(255,255,255,0.4)' }}>System</span>
+            <span style={{ color: '#fff', fontWeight: '600' }}>Smart AI v4.2</span>
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px' }}>
-            <span style={{ color: 'rgba(255,255,255,0.4)' }}>Execution</span>
-            <span style={{ color: '#fff', fontWeight: '600' }}>Arbitrage High-Freq</span>
+            <span style={{ color: 'rgba(255,255,255,0.4)' }}>Strategy</span>
+            <span style={{ color: '#fff', fontWeight: '600' }}>Automated Gap-Capture</span>
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px' }}>
             <span style={{ color: 'rgba(255,255,255,0.4)' }}>Last Update</span>
@@ -240,7 +240,7 @@ export default function Home() {
       if (res.ok) {
         setStatus('ACCESS GRANTED. REDIRECTING...');
         setTimeout(() => {
-          window.location.href = '/onboarding';
+          window.location.href = `/thank-you?ref=${sponsorData.code}`;
         }, 1000);
       } else {
         throw new Error('Capture failed');
@@ -248,7 +248,7 @@ export default function Home() {
     } catch (err) {
       console.error(err);
       setStatus('ERROR: RETRYING REDIRECT...');
-      window.location.href = '/onboarding';
+      window.location.href = `/thank-you?ref=${sponsorData.code}`;
     }
   };
 
@@ -284,11 +284,11 @@ export default function Home() {
           </h1>
           
           <h2 className={styles.heroSubtitle}>
-            What if smart technology could generate daily profits for you, while you keep 100% control of your funds?
+            What if simple technology could help you grow your savings every day, while you keep 100% control?
           </h2>
           
           <p className={styles.subtitle}>
-            Over 118,000 everyday people have stopped guessing and started letting automation do the heavy lifting. Are you ready to see what a 24/7 passive income system looks like? No KYC Required.
+            Over 118,000 regular people have stopped guessing and started letting automation do the heavy lifting. Are you ready to see how a simple passive income system works? No ID Required.
           </p>
 
           <div className={styles.heroRow}>
@@ -297,7 +297,7 @@ export default function Home() {
               <h2 className={styles.calculatorTitle} style={{ textAlign: 'center' }}>See Your Aurum Wealth Projection</h2>
             <div className={styles.calcGrid}>
                 <div className={styles.inputGroup}>
-                  <label>Initial Liquidity Bridge (Deposit)</label>
+                  <label>Starting Balance (Deposit)</label>
                   <input
                     type="number"
                     value={deposit}
@@ -402,8 +402,8 @@ export default function Home() {
       {/* Product Ecosystem Section */}
       <section className={styles.ecosystemSection}>
         <div className={styles.sectionHeader}>
-          <h2 className={styles.sectionTitle}>Everything You Need to Earn Passive Income in One AI-Powered Ecosystem</h2>
-          <p className={styles.sectionSub}>Global Infrastructure. Institutional Security. Individual Freedom.</p>
+          <h2 className={styles.sectionTitle}>Everything You Need to Grow Your Savings in One Simple System</h2>
+          <p className={styles.sectionSub}>Global Network. Real Security. Your Control.</p>
         </div>
         <div className={styles.ecosystemGrid}>
 
@@ -504,7 +504,7 @@ export default function Home() {
           </div>
           <div className={styles.statItem}>
             <div className={styles.statValue}>$115M+</div>
-            <div className={styles.statLabel}>Assets Orchestrated</div>
+            <div className={styles.statLabel}>Total Funds Managed</div>
           </div>
           <div className={styles.statItem}>
             <div className={styles.statValue}>178.4%</div>

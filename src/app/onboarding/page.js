@@ -46,10 +46,10 @@ function OnboardingContent() {
         </div>
 
         <h1 className={styles.title} style={{ fontSize: 'clamp(28px, 8vw, 48px)', marginBottom: '16px' }}>
-          Welcome to the <span style={{ color: '#d4af37' }}>Inner Circle.</span>
+          Welcome to the <span style={{ color: '#d4af37' }}>Orientation.</span>
         </h1>
         <p className={styles.subtitle} style={{ marginBottom: '60px', opacity: 0.8 }}>
-          Your briefing is ready. Complete these 3 critical steps to activate your automated account and claim your voucher.
+          Your guide is ready. Complete these 3 simple steps to activate your automated account and claim your voucher.
         </p>
 
         {/* Steps Grid */}
@@ -60,9 +60,9 @@ function OnboardingContent() {
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
               <div style={{ color: '#00ff88', background: 'rgba(0,255,136,0.1)', padding: '16px', borderRadius: '50%' }}><Gift size={32} /></div>
               <div style={{ textAlign: 'center' }}>
-                <h3 style={{ fontSize: '22px', color: '#fff', marginBottom: '12px', fontWeight: '800' }}>Redeem Your $100 Voucher</h3>
+                <h3 style={{ fontSize: '22px', color: '#fff', marginBottom: '12px', fontWeight: '800' }}>Redeem Your $100 Starting Fund</h3>
                 <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '15px', lineHeight: '1.6', marginBottom: '24px', maxWidth: '600px', margin: '0 auto 12px' }}>
-                  We've reserved a $100 liquidity voucher for your account. We have sent the redemption instructions to your inbox.
+                  We've reserved a $100 starting fund voucher for your account. We have sent the redemption instructions to your inbox.
                 </p>
                 <div style={{ color: '#00ff88', fontWeight: '900', fontSize: '18px', textTransform: 'uppercase', letterSpacing: '2px' }}>
                   Check your Email →
@@ -76,9 +76,9 @@ function OnboardingContent() {
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
               <div style={{ color: '#d4af37', background: 'rgba(212, 175, 55, 0.1)', padding: '16px', borderRadius: '50%' }}><Mail size={32} /></div>
               <div style={{ textAlign: 'center' }}>
-                <h3 style={{ fontSize: '22px', color: '#fff', marginBottom: '12px', fontWeight: '800' }}>Check Your Email: Zoom Call</h3>
+                <h3 style={{ fontSize: '22px', color: '#fff', marginBottom: '12px', fontWeight: '800' }}>Step 2: Join the Live Orientation</h3>
                 <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '15px', lineHeight: '1.6', marginBottom: '20px', maxWidth: '600px', margin: '0 auto 20px' }}>
-                  Our team has sent your invitation for the <strong>Live Zoom Onboarding Call</strong>. We will ensure your Aurum Account is configured for maximum yield.
+                  We don't want you to guess. Join our next <strong>Live Zoom Call</strong> to see exactly how we set up the 24/7 system in under 5 minutes. No tech skills required — just watch and follow along.
                 </p>
                 
                 {/* Spam Alert */}
@@ -111,9 +111,9 @@ function OnboardingContent() {
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
               <div style={{ color: 'rgba(255,255,255,0.2)', background: 'rgba(255,255,255,0.05)', padding: '16px', borderRadius: '50%' }}><Video size={32} /></div>
               <div style={{ textAlign: 'center' }}>
-                <h3 style={{ fontSize: '22px', color: '#fff', marginBottom: '12px', fontWeight: '800' }}>Private Briefing Access</h3>
+                <h3 style={{ fontSize: '22px', color: '#fff', marginBottom: '12px', fontWeight: '800' }}>Private Updates & Support</h3>
                 <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '15px', lineHeight: '1.6', maxWidth: '600px', margin: '0 auto' }}>
-                  Real-time institutional alerts and yield reports. Access is granted automatically after your Zoom Orientation.
+                  Real-time account updates and community yield reports. Access is granted automatically after your Zoom Orientation.
                 </p>
               </div>
             </div>
@@ -170,7 +170,7 @@ function OnboardingContent() {
 
 export default function OnboardingPage() {
   return (
-    <Suspense fallback={<div style={{ minHeight: '100vh', background: '#050505', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#d4af37' }}>Loading Protocol...</div>}>
+    <Suspense fallback={<div style={{ minHeight: '100vh', background: '#050505', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#d4af37' }}>Setting things up...</div>}>
       <OnboardingContent />
     </Suspense>
   );

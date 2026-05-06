@@ -27,7 +27,7 @@ export default function BoutiqueAlphaBridge() {
         </h1>
         
         <p className="text-lg text-gray-400 mb-10 text-center max-w-2xl">
-          Watch the brief orientation video below to understand how the Alpha Group's downline rotator ensures your success, then activate your position.
+          Watch the brief orientation video below to understand how the Alpha Group's team growth system ensures your success, then activate your position.
         </p>
 
         {/* Video Placeholder */}
@@ -44,20 +44,20 @@ export default function BoutiqueAlphaBridge() {
 
         {/* Action Card */}
         <div className="w-full max-w-2xl bg-gradient-to-b from-white/5 to-transparent border border-white/10 rounded-3xl p-8 backdrop-blur-md text-center">
-          <h3 className="text-2xl font-bold mb-4">Claim Your Position in the Rotator</h3>
+          <h3 className="text-2xl font-bold mb-4">Claim Your Position in the Growth System</h3>
           <p className="text-gray-400 mb-8 leading-relaxed">
-            By clicking below, you will be securely redirected to the Aurum registration system. You will be assigned to the next available sponsor in the Alpha Group queue.
+            By clicking below, you will be securely redirected to the Aurum registration system. You will be assigned to the next available sponsor in our community queue.
           </p>
           
           <a 
             href="/api/r/downline-builder"
             className="inline-flex items-center justify-center w-full sm:w-auto bg-gradient-to-r from-[#d4af37] to-[#f9e29c] text-black font-extrabold uppercase tracking-wide rounded-2xl px-10 py-5 hover:translate-y-[-2px] hover:shadow-[0_15px_40px_-5px_rgba(212,175,55,0.4)] transition-all gap-3 text-lg"
           >
-            Activate My Node <ArrowRight className="w-6 h-6" />
+            Start My Account <ArrowRight className="w-6 h-6" />
           </a>
 
           <p className="text-sm text-gray-500 mt-6">
-            Make sure you have your $19.99 membership fee and $100 starting capital ready.
+            Make sure you have your $19.99 membership fee and $100 starting fund ready.
           </p>
         </div>
 
