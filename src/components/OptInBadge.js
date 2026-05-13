@@ -4,7 +4,7 @@ import { useState } from 'react';
 import styles from '../app/finance.module.css';
 import { Shield, Lock, Globe, ArrowRight } from 'lucide-react';
 
-const OptInBadge = ({ onOptIn, isProcessing, status, wide = false, angle = 'pitch' }) => {
+const OptInBadge = ({ onOptIn, isProcessing, status, wide = false, minimal = false, angle = 'pitch' }) => {
   const [formData, setFormData] = useState({ name: '', email: '' });
 
   const handleSubmit = (e) => {
@@ -16,8 +16,8 @@ const OptInBadge = ({ onOptIn, isProcessing, status, wide = false, angle = 'pitc
   const dateStr = now.toLocaleDateString('en-GB').split('/').join('.');
 
   const buttonText = angle === 'pay-it-forward' 
-    ? 'Claim My Free $100 →' 
-    : 'Activate Wealth Generator →';
+    ? 'Claim My Free $100' 
+    : (minimal ? 'Get Access' : 'Activate Wealth Generator');
 
   const portalSubtitle = angle === 'pay-it-forward'
     ? 'Secure Claim Portal'
@@ -26,12 +26,12 @@ const OptInBadge = ({ onOptIn, isProcessing, status, wide = false, angle = 'pitc
   return (
     <div style={{
       width: '100%',
-      padding: wide ? 'var(--badge-padding, 48px)' : 'var(--badge-padding, 32px)',
-      background: 'rgba(5, 5, 5, 0.7)',
+      padding: minimal ? '24px var(--badge-padding, 32px)' : (wide ? 'var(--badge-padding, 48px)' : 'var(--badge-padding, 32px)'),
+      background: 'linear-gradient(145deg, rgba(20,20,20,0.8) 0%, rgba(5,5,5,0.95) 100%)',
       backdropFilter: 'blur(40px) saturate(150%)',
-      border: '1px solid rgba(255, 255, 255, 0.08)',
-      borderRadius: '32px',
-      boxShadow: '0 24px 80px rgba(0, 0, 0, 0.6), inset 0 0 0 1px rgba(255, 255, 255, 0.05)',
+      border: '2px solid rgba(212, 175, 55, 0.5)',
+      borderRadius: minimal ? '20px' : '32px',
+      boxShadow: '0 24px 80px rgba(0, 0, 0, 0.8), 0 0 40px rgba(212, 175, 55, 0.15), inset 0 0 0 1px rgba(255, 255, 255, 0.1)',
       position: 'relative',
       overflow: 'hidden',
       display: 'flex',
@@ -112,95 +112,140 @@ const OptInBadge = ({ onOptIn, isProcessing, status, wide = false, angle = 'pitc
             flex-direction: column !important;
             gap: 12px !important;
           }
+          .fields-container {
+            flex-direction: column !important;
+          }
+          .minimal-btn-wrapper {
+            max-width: 100% !important;
+          }
         }
       `}</style>
       {/* Decorative Elements */}
       <div style={{ position: 'absolute', top: 0, left: 0, width: '4px', height: '100%', background: 'linear-gradient(to bottom, #d4af37, transparent)' }} />
       <div className={styles.scanline} style={{ opacity: 0.1 }} />
       
-      {/* Header */}
-      <div className="window-header">
-        <div className="header-content">
-          <div className="header-top">AURUM</div>
-          <div className="header-title">{portalSubtitle}</div>
-        </div>
-        <div className="secure-node-badge">
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: 'rgba(255,255,255,0.03)', padding: '6px 12px', borderRadius: '100px', border: '1px solid rgba(255,255,255,0.05)' }}>
-            <span style={{ width: '6px', height: '6px', background: '#00ff88', borderRadius: '50%', boxShadow: '0 0 10px #00ff88' }} />
-            <span style={{ fontSize: '10px', fontWeight: '700', color: 'rgba(255,255,255,0.6)', letterSpacing: '1px' }}>SECURE NODE: {dateStr}</span>
+      {/* Header (Hidden in minimal mode) */}
+      {!minimal && (
+        <div className="window-header">
+          <div className="header-content">
+            <div className="header-top">AURUM</div>
+            <div className="header-title">{portalSubtitle}</div>
+          </div>
+          <div className="secure-node-badge">
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: 'rgba(255,255,255,0.03)', padding: '6px 12px', borderRadius: '100px', border: '1px solid rgba(255,255,255,0.05)' }}>
+              <span style={{ width: '6px', height: '6px', background: '#00ff88', borderRadius: '50%', boxShadow: '0 0 10px #00ff88' }} />
+              <span style={{ fontSize: '10px', fontWeight: '700', color: 'rgba(255,255,255,0.6)', letterSpacing: '1px' }}>SECURE NODE: {dateStr}</span>
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
       {/* Form Section */}
       <div style={{ width: '100%', zIndex: 2 }}>
         {!isProcessing ? (
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '24px' }}>
-              <div style={{ width: '100%', maxWidth: '420px' }}>
-                <label className="field-label">
-                  First Name
-                </label>
+            <div className="fields-container" style={{ display: 'flex', flexDirection: wide ? 'row' : 'column', justifyContent: 'center', alignItems: 'center', gap: minimal ? '16px' : '24px', width: '100%' }}>
+              <div style={{ flex: wide ? 1 : 'none', width: '100%', maxWidth: wide ? '100%' : '420px' }}>
+                {!minimal && (
+                  <label className="field-label" style={{ justifyContent: wide ? 'flex-start' : 'center' }}>
+                    First Name
+                  </label>
+                )}
                 <input
                   type="text"
-                  placeholder="John"
+                  placeholder="First Name"
                   required
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   className={styles.modalInput}
-                  style={{ width: '100%', height: '56px', padding: '0 20px', borderRadius: '16px', fontSize: '15px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', color: '#fff', textAlign: 'center' }}
+                  style={{ width: '100%', height: minimal ? '48px' : '56px', padding: '0 20px', borderRadius: minimal ? '12px' : '16px', fontSize: '16px', fontWeight: '600', background: 'rgba(255, 255, 255, 0.06)', border: '2px solid rgba(255, 255, 255, 0.6)', color: '#fff', textAlign: wide ? 'left' : 'center', transition: 'border-color 0.2s' }}
                 />
               </div>
 
-              <div style={{ width: '100%', maxWidth: '420px' }}>
-                <label className="field-label">
-                  <Globe size={12} /> Institutional Email
-                </label>
+              <div style={{ flex: wide ? 1 : 'none', width: '100%', maxWidth: wide ? '100%' : '420px' }}>
+                {!minimal && (
+                  <label className="field-label" style={{ justifyContent: wide ? 'flex-start' : 'center' }}>
+                    <Globe size={12} /> Institutional Email
+                  </label>
+                )}
                 <input
                   type="email"
-                  placeholder="name@email.com"
+                  placeholder="Secure Email Address"
                   required
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   className={styles.modalInput}
-                  style={{ width: '100%', height: '56px', padding: '0 20px', borderRadius: '16px', fontSize: '15px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', color: '#fff', textAlign: 'center' }}
+                  style={{ width: '100%', height: minimal ? '48px' : '56px', padding: '0 20px', borderRadius: minimal ? '12px' : '16px', fontSize: '15px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', color: '#fff', textAlign: wide ? 'left' : 'center' }}
                 />
               </div>
+              
+              {/* If minimal AND wide, put button inline */}
+              {(minimal && wide) && (
+                <div className="minimal-btn-wrapper" style={{ flex: '0 0 auto', width: '100%', maxWidth: '220px' }}>
+                  <button
+                    type="submit"
+                    className={`${styles.primaryCta} submit-btn`}
+                    style={{
+                      width: '100%',
+                      height: '48px',
+                      padding: '0 20px',
+                      fontSize: '14px',
+                      fontWeight: '900',
+                      letterSpacing: '1px',
+                      textTransform: 'uppercase',
+                      borderRadius: '12px',
+                      boxShadow: '0 0 20px rgba(212, 175, 55, 0.4), inset 0 2px 0 rgba(255,255,255,0.3)',
+                      background: 'linear-gradient(135deg, #f9df9f 0%, #d4af37 50%, #b8860b 100%)',
+                      color: '#000',
+                      textShadow: '0 1px 0 rgba(255,255,255,0.4)',
+                      border: 'none',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    {buttonText}
+                  </button>
+                </div>
+              )}
             </div>
             
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
-              <button
-                type="submit"
-                className={`${styles.primaryCta} submit-btn`}
-                style={{
-                  width: '100%',
-                  maxWidth: '420px',
-                  height: '64px',
-                  padding: '0 32px',
-                  fontSize: '16px',
-                  fontWeight: '900',
-                  letterSpacing: '2px',
-                  textTransform: 'uppercase',
-                  borderRadius: '20px',
-                  boxShadow: '0 15px 45px rgba(212, 175, 55, 0.25)',
-                  background: 'linear-gradient(135deg, #d4af37 0%, #b8860b 100%)',
-                  color: '#000',
-                  border: 'none',
-                  cursor: 'pointer'
-                }}
-              >
-                {buttonText}
-              </button>
-              
-              <div className="footer-badges" style={{ display: 'flex', alignItems: 'center', gap: '24px', color: 'rgba(255,255,255,0.3)', flexWrap: 'wrap', justifyContent: 'center' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '11px', fontWeight: '600' }}>
-                  <Lock size={12} /> 256-BIT ENCRYPTION
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '11px', fontWeight: '600', color: '#00ff88' }}>
-                  <Shield size={12} /> NO CREDIT CARD REQUIRED
-                </div>
+            {/* Standard stacked button & badges if NOT minimal inline */}
+            {!(minimal && wide) && (
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
+                <button
+                  type="submit"
+                  className={`${styles.primaryCta} submit-btn`}
+                  style={{
+                    width: '100%',
+                    maxWidth: '420px',
+                    height: minimal ? '56px' : '64px',
+                    padding: '0 32px',
+                    fontSize: '16px',
+                    fontWeight: '900',
+                    letterSpacing: '2px',
+                    textTransform: 'uppercase',
+                    borderRadius: minimal ? '12px' : '20px',
+                    boxShadow: '0 15px 45px rgba(212, 175, 55, 0.25)',
+                    background: 'linear-gradient(135deg, #d4af37 0%, #b8860b 100%)',
+                    color: '#000',
+                    border: 'none',
+                    cursor: 'pointer'
+                  }}
+                >
+                  {buttonText}
+                </button>
+                
+                {!minimal && (
+                  <div className="footer-badges" style={{ display: 'flex', alignItems: 'center', gap: '24px', color: 'rgba(255,255,255,0.3)', flexWrap: 'wrap', justifyContent: 'center' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '11px', fontWeight: '600' }}>
+                      <Lock size={12} /> 256-BIT ENCRYPTION
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '11px', fontWeight: '600', color: '#00ff88' }}>
+                      <Shield size={12} /> NO CREDIT CARD REQUIRED
+                    </div>
+                  </div>
+                )}
               </div>
-            </div>
+            )}
           </form>
         ) : (
           <div style={{ padding: '40px 0', textAlign: 'center' }}>
@@ -214,8 +259,8 @@ const OptInBadge = ({ onOptIn, isProcessing, status, wide = false, angle = 'pitc
       </div>
 
       <style jsx>{`
-        input::placeholder { color: rgba(255,255,255,0.15); }
-        .primaryCta:hover { transform: translateY(-2px); filter: brightness(1.1); transition: all 0.2s; }
+        input::placeholder { color: rgba(255,255,255,0.5); font-weight: 500; }
+        .primaryCta:hover { transform: translateY(-2px); filter: brightness(1.1); box-shadow: 0 0 30px rgba(212, 175, 55, 0.6), inset 0 2px 0 rgba(255,255,255,0.5); transition: all 0.2s; }
       `}</style>
     </div>
   );

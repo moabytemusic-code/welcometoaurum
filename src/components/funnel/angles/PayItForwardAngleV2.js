@@ -84,6 +84,18 @@ const PayItForwardAngleV2 = ({ project, handleOptIn, isProcessing, status }) => 
             {content.subtitle || "We're funding 1,000 accounts with $100 to prove our software works for you on autopilot. No risk. No strings."}
           </p>
 
+          {/* ── Opt-In Form (Moved Up) ────────────────────────────────────────────── */}
+          <div style={{ maxWidth: '900px', width: '90%', margin: '0 auto 48px', display: 'flex', justifyContent: 'center' }}>
+            <OptInBadge 
+              onOptIn={handleOptIn} 
+              isProcessing={isProcessing} 
+              status={status}
+              wide={true}
+              minimal={true}
+              angle="pay-it-forward"
+            />
+          </div>
+
           {/* "Why" Section */}
           <div style={{ background: THEME.bgCard, backdropFilter: 'blur(20px)', border: `1px solid ${THEME.border}`, borderRadius: '24px', padding: '40px', marginBottom: '48px', textAlign: 'center' }}>
             <h2 style={{ fontSize: '20px', fontWeight: '800', marginBottom: '28px', textAlign: 'center', color: '#fff' }}>Why are we giving away $100?</h2>
@@ -100,17 +112,6 @@ const PayItForwardAngleV2 = ({ project, handleOptIn, isProcessing, status }) => 
                 </div>
               ))}
             </div>
-          </div>
-
-          {/* ── Opt-In Form ───────────────────────────────────────────────── */}
-          <div style={{ maxWidth: '800px', margin: '0 auto', display: 'flex', justifyContent: 'center' }}>
-            <OptInBadge 
-              onOptIn={handleOptIn} 
-              isProcessing={isProcessing} 
-              status={status}
-              wide={true}
-              angle="pay-it-forward"
-            />
           </div>
 
           {/* Proof line */}

@@ -172,20 +172,20 @@ const ConsultativeAngle = ({ project, handleOptIn, isProcessing, status }) => {
               <p className={styles.calcNote}>Projections based on historical 2025 performance. Past results do not guarantee future returns. Yield is generated through automated market activities and involves risk.</p>
             </div>
 
-            <div className={styles.badgeWrapper}>
-              <BotEarningsBadge fallbackValue={content.botValue} />
+            <div className={styles.badgeWrapper} style={{ width: '100%', maxWidth: '350px' }}>
+              <div style={{ background: 'rgba(10, 10, 10, 0.6)', backdropFilter: 'blur(20px)', border: '1px solid rgba(45, 140, 240, 0.3)', borderRadius: '24px', padding: '24px', boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4)' }}>
+                <h3 style={{ fontSize: '1.2rem', fontWeight: '800', marginBottom: '8px', textAlign: 'center' }}>Secure Your Spot</h3>
+                <p style={{ fontSize: '0.85rem', color: 'var(--text-dim)', marginBottom: '20px', textAlign: 'center' }}>Join 118,000+ members earning daily.</p>
+                <OptInBadge onOptIn={handleOptIn} isProcessing={isProcessing} status={status} wide={false} angle={project?.angle} />
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Opt-In + Trust Section */}
+      {/* Trust Section */}
       <section className={styles.trustSection}>
         <div className={styles.trustContent}>
-          <div id="activation-portal" style={{ marginBottom: '64px', width: '100%', maxWidth: '800px', marginLeft: 'auto', marginRight: 'auto' }}>
-            <div className={styles.ctaMicroProof} style={{ marginBottom: '16px' }}>✓ Only 15 slots remaining for this cohort</div>
-            <OptInBadge onOptIn={handleOptIn} isProcessing={isProcessing} status={status} wide={true} angle={project?.angle} />
-          </div>
           <div className={styles.forbesBadge}>AS SEEN IN FORBES</div>
           <blockquote className={styles.trustQuote}>
             "Making digital assets as spendable as cash — without friction."

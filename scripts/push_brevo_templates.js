@@ -17,6 +17,24 @@ const templates = [
     subject: "I've reserved $100 for you to start with AI (No tech skills needed), {{ contact.FIRSTNAME }}",
     htmlContent: fs.readFileSync(path.join(__dirname, '../src/templates/emails/welcome.html'), 'utf8'), // Reusing the high-quality template
     sender: { name: "Aurum Rise Onboarding Team", email: "onboarding@smarthustlermarketing.com" }
+  },
+  {
+    templateName: "AURUM_FOLLOWUP_1",
+    subject: "Checking in... did you see the orientation link?",
+    htmlContent: fs.readFileSync(path.join(__dirname, '../src/templates/emails/followup.html'), 'utf8'),
+    sender: { name: "Aurum Rise Onboarding Team", email: "onboarding@smarthustlermarketing.com" }
+  },
+  {
+    templateName: "AURUM_FOLLOWUP_2",
+    subject: "Is the tech holding you back? (It's easier than you think)",
+    htmlContent: fs.readFileSync(path.join(__dirname, '../src/templates/emails/followup.html'), 'utf8'),
+    sender: { name: "Aurum Rise Onboarding Team", email: "onboarding@smarthustlermarketing.com" }
+  },
+  {
+    templateName: "AURUM_FOLLOWUP_3",
+    subject: "One last invitation (Starting fund pool is limited)",
+    htmlContent: fs.readFileSync(path.join(__dirname, '../src/templates/emails/followup.html'), 'utf8'),
+    sender: { name: "Aurum Rise Onboarding Team", email: "onboarding@smarthustlermarketing.com" }
   }
 ];
 

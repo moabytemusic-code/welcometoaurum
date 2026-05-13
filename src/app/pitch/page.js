@@ -293,6 +293,12 @@ export default function Home() {
             No complicated tech skills needed. No ID required. Just a simple way to participate in the AI shift — 24/7, completely on autopilot.
           </p>
 
+          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '40px', width: '100%' }}>
+            <div className={styles.badgeWrapper} style={{ width: '90%', maxWidth: '900px' }}>
+              <OptInBadge onOptIn={handleOptInSubmit} isProcessing={isProcessing} status={status} wide={true} minimal={true} />
+            </div>
+          </div>
+
           <div className={styles.heroRow}>
             
             <div className={styles.calculatorCard} style={{ margin: '0', textAlign: 'left' }}>
@@ -338,10 +344,6 @@ export default function Home() {
             <p className={styles.calcNote}>Projections based on historical 2025 performance. Past results do not guarantee future returns. Yield is generated through automated market activities and involves risk.</p>
           </div>
 
-          <div className={styles.badgeWrapper}>
-            <BotEarningsBadge />
-          </div>
-
           </div>
 
 
@@ -351,10 +353,6 @@ export default function Home() {
       {/* Trust Proof Section (Forbes) */}
       <section className={styles.trustSection}>
         <div className={styles.trustContent}>
-          <div id="activation-portal" style={{ marginBottom: '64px', width: '100%', maxWidth: '800px', marginLeft: 'auto', marginRight: 'auto' }}>
-            <div className={styles.ctaMicroProof} style={{ marginBottom: '16px' }}>✓ Only 15 slots remaining for this cohort</div>
-            <OptInBadge onOptIn={handleOptInSubmit} isProcessing={isProcessing} status={status} wide={true} />
-          </div>
           <div className={styles.forbesBadge}>AS SEEN IN FORBES</div>
           <blockquote className={styles.trustQuote}>
             “Making digital assets as spendable as cash — without friction.”

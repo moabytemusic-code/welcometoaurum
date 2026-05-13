@@ -158,12 +158,13 @@ const HeroPitch = ({ project, content = {}, handleOptIn, isProcessing, status, p
 
         {preOptInSlot}
 
-          <div style={{ maxWidth: '800px', margin: '40px auto 0', display: 'flex', justifyContent: 'center', width: '100%' }}>
+          <div style={{ maxWidth: '900px', margin: '40px auto 0', display: 'flex', justifyContent: 'center', width: '90%' }}>
             <OptInBadge 
               onOptIn={handleOptIn} 
               isProcessing={isProcessing} 
               status={status} 
               wide={true} 
+              minimal={true}
               angle={project?.angle} 
             />
           </div>
