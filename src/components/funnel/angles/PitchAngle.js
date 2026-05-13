@@ -130,7 +130,7 @@ const PitchAngle = ({ project, handleOptIn, isProcessing, status }) => {
 
           <div className={styles.heroRow}>
             <div className={styles.calculatorCard} style={{ margin: '0', textAlign: 'left' }}>
-              <h2 className={styles.calculatorTitle} style={{ textAlign: 'center' }}>See Your Aurum Wealth Projection</h2>
+              <h2 className={styles.calculatorTitle} style={{ textAlign: 'center' }}>See Your Aurum Rise Wealth Projection</h2>
               <div className={styles.calcGrid}>
                 <div className={styles.inputGroup}>
                   <label>Initial Liquidity Bridge (Deposit)</label>
@@ -169,7 +169,7 @@ const PitchAngle = ({ project, handleOptIn, isProcessing, status }) => {
                   </div>
                 </div>
               </div>
-              <p className={styles.calcNote}>Projections based on historical 2025 performance. Past results do not guarantee future returns. Yield is generated through automated market activities and involves risk.</p>
+              <p className={styles.calcNote}>Projections based on historical 2026 performance. Past results do not guarantee future returns. Yield is generated through automated market activities and involves risk.</p>
             </div>
 
             <div className={styles.badgeWrapper}>
@@ -199,7 +199,7 @@ const PitchAngle = ({ project, handleOptIn, isProcessing, status }) => {
         <div className={styles.sectionHeader}>
           <div className={styles.liveBadge} style={{ margin: '0 auto 16px', width: 'fit-content' }}>
             <div className={styles.liveDot}></div>
-            VERIFIED INSTITUTIONAL YIELD (2025)
+            VERIFIED INSTITUTIONAL YIELD (2026)
           </div>
           <h2 className={styles.sectionTitle}>Institutional Performance, Individual Control</h2>
           <p className={styles.sectionSub}>Visualize the compounding power of the Aurum AI algorithms through verified historical returns.</p>
@@ -209,7 +209,7 @@ const PitchAngle = ({ project, handleOptIn, isProcessing, status }) => {
             <PerformanceChart />
           </div>
           <div className={styles.statsGrid} style={{ marginTop: '40px', borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '40px' }}>
-            <div className={styles.statItem}><div className={styles.statValue} style={{ fontSize: '24px' }}>{stats.totalAnnualYield}</div><div className={styles.statLabel}>2025 Net Yield</div></div>
+            <div className={styles.statItem}><div className={styles.statValue} style={{ fontSize: '24px' }}>{stats.totalAnnualYield}</div><div className={styles.statLabel}>2026 Net Yield</div></div>
             <div className={styles.statItem}><div className={styles.statValue} style={{ fontSize: '24px' }}>{stats.averageMonthly}</div><div className={styles.statLabel}>Avg. Monthly</div></div>
             <div className={styles.statItem}><div className={styles.statValue} style={{ fontSize: '24px' }}>{stats.bestMonth}</div><div className={styles.statLabel}>Peak Momentum</div></div>
             <div className={styles.statItem}><div className={styles.statValue} style={{ fontSize: '24px' }}>{stats.winningDays}</div><div className={styles.statLabel}>Winning Days</div></div>
@@ -301,7 +301,7 @@ const PitchAngle = ({ project, handleOptIn, isProcessing, status }) => {
         <div className={styles.statsGrid}>
           <div className={styles.statItem}><div className={styles.statValue}>118K+</div><div className={styles.statLabel}>Global Partners</div></div>
           <div className={styles.statItem}><div className={styles.statValue}>$115M+</div><div className={styles.statLabel}>Assets Orchestrated</div></div>
-          <div className={styles.statItem}><div className={styles.statValue}>178.4%</div><div className={styles.statLabel}>2025 Avg. Yield</div></div>
+          <div className={styles.statItem}><div className={styles.statValue}>178.4%</div><div className={styles.statLabel}>2026 Avg. Yield</div></div>
           <div className={styles.statItem}><div className={styles.statValue}>0</div><div className={styles.statLabel}>Security Breaches</div></div>
         </div>
       </section>
@@ -378,7 +378,7 @@ const PitchAngle = ({ project, handleOptIn, isProcessing, status }) => {
         <div className={styles.disclaimer}>
           Past performance does not guarantee future results. Yield is generated through automated market activities and involves risk.
         </div>
-        <p className={styles.copyright}>© 2026 AURUM Ecosystem. All rights reserved.</p>
+        <p className={styles.copyright}>© 2026 AURUMRISE. All rights reserved.</p>
         <div className={styles.footerLinks}>
           <a href="#">Privacy Policy</a>
           <a href="#">Terms of Service</a>

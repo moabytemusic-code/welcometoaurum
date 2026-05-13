@@ -130,7 +130,7 @@ const ConsultativeAngle = ({ project, handleOptIn, isProcessing, status }) => {
 
           <div className={styles.heroRow}>
             <div className={styles.calculatorCard} style={{ margin: '0', textAlign: 'left' }}>
-              <h2 className={styles.calculatorTitle} style={{ textAlign: 'center' }}>See Your Aurum Wealth Projection</h2>
+              <h2 className={styles.calculatorTitle} style={{ textAlign: 'center' }}>See Your Aurum Rise Projection</h2>
               <div className={styles.calcGrid}>
                 <div className={styles.inputGroup}>
                   <label>Initial Liquidity Bridge (Deposit)</label>
@@ -169,12 +169,12 @@ const ConsultativeAngle = ({ project, handleOptIn, isProcessing, status }) => {
                   </div>
                 </div>
               </div>
-              <p className={styles.calcNote}>Projections based on historical 2025 performance. Past results do not guarantee future returns. Yield is generated through automated market activities and involves risk.</p>
+              <p className={styles.calcNote}>Projections based on historical 2026 performance. Past results do not guarantee future returns. Yield is generated through automated market activities and involves risk.</p>
             </div>
 
             <div className={styles.badgeWrapper} style={{ width: '100%', maxWidth: '350px' }}>
               <div style={{ background: 'rgba(10, 10, 10, 0.6)', backdropFilter: 'blur(20px)', border: '1px solid rgba(45, 140, 240, 0.3)', borderRadius: '24px', padding: '24px', boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4)' }}>
-                <h3 style={{ fontSize: '1.2rem', fontWeight: '800', marginBottom: '8px', textAlign: 'center' }}>Secure Your Spot</h3>
+                <h3 style={{ fontSize: '1.2rem', fontWeight: '800', marginBottom: '8px', textAlign: 'center' }}>Secure Your Seat</h3>
                 <p style={{ fontSize: '0.85rem', color: 'var(--text-dim)', marginBottom: '20px', textAlign: 'center' }}>Join 118,000+ members earning daily.</p>
                 <OptInBadge onOptIn={handleOptIn} isProcessing={isProcessing} status={status} wide={false} angle={project?.angle} />
               </div>
@@ -190,7 +190,7 @@ const ConsultativeAngle = ({ project, handleOptIn, isProcessing, status }) => {
           <blockquote className={styles.trustQuote}>
             "Making digital assets as spendable as cash — without friction."
           </blockquote>
-          <div className={styles.trustAuthor}>— Institutional Review, 2026</div>
+          <div className="trustAuthor">— Institutional Review, 2026</div>
         </div>
       </section>
 
@@ -199,7 +199,7 @@ const ConsultativeAngle = ({ project, handleOptIn, isProcessing, status }) => {
         <div className={styles.sectionHeader}>
           <div className={styles.liveBadge} style={{ margin: '0 auto 16px', width: 'fit-content' }}>
             <div className={styles.liveDot}></div>
-            VERIFIED INSTITUTIONAL YIELD (2025)
+            VERIFIED INSTITUTIONAL YIELD (2026)
           </div>
           <h2 className={styles.sectionTitle}>Have You Ever Watched Your Balance Grow While You Sleep?</h2>
           <p className={styles.sectionSub}>Instead of trying to convince you this works, we prefer to just show you the exact numbers from previous years.</p>
@@ -211,7 +211,7 @@ const ConsultativeAngle = ({ project, handleOptIn, isProcessing, status }) => {
           <div className={styles.statsGrid} style={{ marginTop: '40px', borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '40px' }}>
             <div className={styles.statItem}>
               <div className={styles.statValue} style={{ fontSize: '24px' }}>{stats.totalAnnualYield}</div>
-              <div className={styles.statLabel}>2025 Net Yield</div>
+              <div className={styles.statLabel}>2026 Net Yield</div>
             </div>
             <div className={styles.statItem}>
               <div className={styles.statValue} style={{ fontSize: '24px' }}>{stats.averageMonthly}</div>
@@ -313,7 +313,7 @@ const ConsultativeAngle = ({ project, handleOptIn, isProcessing, status }) => {
         <div className={styles.statsGrid}>
           <div className={styles.statItem}><div className={styles.statValue}>118K+</div><div className={styles.statLabel}>Global Partners</div></div>
           <div className={styles.statItem}><div className={styles.statValue}>$115M+</div><div className={styles.statLabel}>Assets Orchestrated</div></div>
-          <div className={styles.statItem}><div className={styles.statValue}>178.4%</div><div className={styles.statLabel}>2025 Avg. Yield</div></div>
+          <div className={styles.statItem}><div className={styles.statValue}>178.4%</div><div className={styles.statLabel}>2026 Avg. Yield</div></div>
           <div className={styles.statItem}><div className={styles.statValue}>0</div><div className={styles.statLabel}>Security Breaches</div></div>
         </div>
       </section>
@@ -389,7 +389,7 @@ const ConsultativeAngle = ({ project, handleOptIn, isProcessing, status }) => {
         <div className={styles.disclaimer}>
           Past performance does not guarantee future results. Yield is generated through automated market activities and involves risk.
         </div>
-        <p className={styles.copyright}>© 2026 AURUM Ecosystem. All rights reserved.</p>
+        <p className={styles.copyright}>© 2026 AURUM RISE. All rights reserved.</p>
         <div className={styles.footerLinks}>
           <a href="#">Privacy Policy</a>
           <a href="#">Terms of Service</a>

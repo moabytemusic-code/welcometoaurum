@@ -128,7 +128,7 @@ const OptInBadge = ({ onOptIn, isProcessing, status, wide = false, minimal = fal
       {!minimal && (
         <div className="window-header">
           <div className="header-content">
-            <div className="header-top">AURUM</div>
+            <div className="header-top">AURUMRISE</div>
             <div className="header-title">{portalSubtitle}</div>
           </div>
           <div className="secure-node-badge">
@@ -165,7 +165,7 @@ const OptInBadge = ({ onOptIn, isProcessing, status, wide = false, minimal = fal
               <div style={{ flex: wide ? 1 : 'none', width: '100%', maxWidth: wide ? '100%' : '420px' }}>
                 {!minimal && (
                   <label className="field-label" style={{ justifyContent: wide ? 'flex-start' : 'center' }}>
-                    <Globe size={12} /> Institutional Email
+                    <Globe size={12} /> Secure Email Address
                   </label>
                 )}
                 <input
