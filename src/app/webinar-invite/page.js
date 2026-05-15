@@ -13,6 +13,33 @@ const WebinarInvite = () => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [status, setStatus] = useState('');
   const [sponsorData, setSponsorData] = useState({ code: 'AURUM', name: 'Aurum Rise' });
+  const [seatsRemaining, setSeatsRemaining] = useState(12);
+  const [showNotification, setShowNotification] = useState(false);
+  const [recentName, setRecentName] = useState('Someone');
+
+  useEffect(() => {
+    // Scarcity simulation
+    const interval = setInterval(() => {
+      setSeatsRemaining(prev => prev > 3 ? prev - 1 : prev);
+    }, 45000);
+    
+    // Social Proof simulation
+    const names = ['Marcus', 'Sarah', 'David', 'James', 'Elena', 'Michael', 'Robert', 'Linda'];
+    const showNotice = () => {
+      setRecentName(names[Math.floor(Math.random() * names.length)]);
+      setShowNotification(true);
+      setTimeout(() => setShowNotification(false), 5000);
+    };
+    
+    const noticeTimeout = setTimeout(showNotice, 3000);
+    const noticeInterval = setInterval(showNotice, 25000);
+
+    return () => {
+      clearInterval(interval);
+      clearInterval(noticeInterval);
+      clearTimeout(noticeTimeout);
+    };
+  }, []);
 
   useEffect(() => {
     // Resolve sponsor (simplified for build)
@@ -189,10 +216,39 @@ const WebinarInvite = () => {
                   
                   {!isProcessing ? (
                     <>
-                      <div className="text-center mb-10">
-                        <div className="text-indigo-400 font-black text-[10px] uppercase tracking-[0.3em] mb-3">Live Seat Reservation</div>
+                      <div className="text-center mb-8">
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/10 border border-red-500/20 text-red-500 text-[10px] font-black uppercase tracking-widest mb-4">
+                          <div className="w-1.5 h-1.5 bg-red-500 rounded-full animate-ping" />
+                          {seatsRemaining} Seats Remaining
+                        </div>
                         <h3 className="text-3xl font-black mb-3">Secure Your Seat</h3>
-                        <p className="text-white/40 text-sm font-medium">Register now to see the exact software in action.</p>
+                        <div className="space-y-2 mb-6">
+                           {[
+                             "The exact 'Gap-Capture' algorithm revealed.",
+                             "Step-by-step guide to daily withdrawals.",
+                             "Live qualification for the $100 Giveaway."
+                           ].map((item, i) => (
+                             <div key={i} className="flex items-center gap-3 text-left">
+                               <CheckCircle2 size={14} className="text-indigo-400 shrink-0" />
+                               <span className="text-white/60 text-xs font-bold leading-tight">{item}</span>
+                             </div>
+                           ))}
+                        </div>
+                      </div>
+
+                      <div className="bg-white/5 border border-white/10 rounded-2xl p-5 mb-8">
+                        <label className="text-[10px] font-black uppercase tracking-widest text-white/30 block mb-3">Check Your Orientation Potential</label>
+                        <div className="flex items-center gap-4">
+                           <div className="flex-1">
+                             <div className="text-[10px] text-white/40 mb-1 font-bold uppercase">Initial Capital</div>
+                             <div className="text-xl font-black text-white">$1,500</div>
+                           </div>
+                           <ArrowRight size={20} className="text-white/20" />
+                           <div className="flex-1 text-right">
+                             <div className="text-[10px] text-indigo-400 mb-1 font-bold uppercase">Est. Monthly</div>
+                             <div className="text-xl font-black text-indigo-400">+$223.00</div>
+                           </div>
+                        </div>
                       </div>
 
                       <form onSubmit={handleSubmit} className="space-y-5">
@@ -231,9 +287,12 @@ const WebinarInvite = () => {
 
                         <button 
                           type="submit"
-                          className="w-full h-14 md:h-16 bg-indigo-500 hover:bg-indigo-400 text-white font-black rounded-2xl transition-all shadow-xl shadow-indigo-500/20 flex items-center justify-center gap-3 mt-6 active:scale-95"
+                          className="w-full h-14 md:h-16 bg-gradient-to-r from-indigo-500 to-blue-600 hover:from-indigo-400 hover:to-blue-500 text-white font-black rounded-2xl transition-all shadow-xl shadow-indigo-500/30 flex flex-col items-center justify-center mt-6 active:scale-95 group"
                         >
-                          SECURE MY SEAT <ArrowRight size={20} />
+                          <div className="flex items-center gap-3">
+                            GRANT MY ACCESS NOW <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                          </div>
+                          <span className="text-[10px] text-white/50 font-bold uppercase tracking-widest mt-1">Orientation Link Sent via Email</span>
                         </button>
 
                         <div className="flex items-center justify-center gap-6 pt-6 text-[10px] font-bold text-white/30 tracking-widest">
@@ -374,6 +433,22 @@ const WebinarInvite = () => {
                <a href="#" className="hover:text-white transition-colors">Risk Disclosure</a>
             </div>
           </footer>
+
+
+          {/* Social Proof Notification */}
+          <motion.div 
+            initial={{ opacity: 0, x: -100 }}
+            animate={{ opacity: showNotification ? 1 : 0, x: showNotification ? 0 : -100 }}
+            className="fixed bottom-8 left-8 z-[100] hidden md:flex items-center gap-4 bg-black/80 backdrop-blur-xl border border-white/10 p-4 rounded-2xl shadow-2xl"
+          >
+            <div className="w-10 h-10 bg-indigo-500/20 rounded-full flex items-center justify-center">
+              <Users size={18} className="text-indigo-400" />
+            </div>
+            <div>
+              <div className="text-white font-bold text-sm">{recentName} from USA</div>
+              <div className="text-white/40 text-[10px] font-bold uppercase tracking-wider">Just Reserved their orientation seat</div>
+            </div>
+          </motion.div>
 
         </div>
       </main>
