@@ -101,7 +101,7 @@ export default function NeyroWrapper() {
               <h3 style={{ color: '#00ff88', fontSize: '14px', fontWeight: '800' }}>1. Prepare Funds & Wallet</h3>
             </div>
             <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '13px', lineHeight: '1.5' }}>
-              Free to explore. To activate AI: <strong>$19.99/yr fee</strong> + min <strong>$250 USD</strong> starting fund. Keep crypto in a Web3 wallet (like Trust Wallet) for gas fees.
+              Free to explore. To activate AI: <strong>$19.99/yr fee</strong> + min <strong>$250 USD</strong> starting fund (USDT Bep20 recommended). Keep crypto in a Web3 wallet (like Trust Wallet) for gas fees.
             </p>
           </div>
 
@@ -125,6 +125,19 @@ export default function NeyroWrapper() {
               <li>Under Profile, set phone and country to <strong>"CRYPTONATION"</strong>.</li>
               <li>Verify your email to finalize.</li>
             </ul>
+          </div>
+
+          <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)', padding: '16px', borderRadius: '16px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+              <div style={{ width: '18px', height: '18px', borderRadius: '50%', background: 'rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '10px', fontWeight: 'bold' }}>4</div>
+              <h3 style={{ color: '#fff', fontSize: '14px', fontWeight: '800' }}>Join Telegram Group</h3>
+            </div>
+            <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '12px', lineHeight: '1.5', margin: '0 0 12px 0' }}>
+              Join the community after creating your account. Provide your sponsor's name (<strong>{sponsorData.name}</strong>) for verification.
+            </p>
+            <a href="https://t.me/+x-rcT82qdWkzYTUx" target="_blank" rel="noopener noreferrer" style={{ color: '#2d8cf0', textDecoration: 'none', fontWeight: 'bold', fontSize: '13px' }}>
+              👉 Join Telegram Here
+            </a>
           </div>
 
         </div>

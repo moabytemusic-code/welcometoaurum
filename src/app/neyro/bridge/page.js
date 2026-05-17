@@ -91,7 +91,7 @@ export default function NeyroBridge() {
           <div style={{ padding: '24px', background: 'rgba(255,255,255,0.02)', borderRadius: '20px', border: '1px solid rgba(255,255,255,0.05)' }}>
             <h3 style={{ color: '#00ff88', fontSize: '18px', fontWeight: '800', marginBottom: '12px' }}>1. Prepare Your Funds & Wallet</h3>
             <p style={{ color: 'rgba(255,255,255,0.6)', lineHeight: '1.6', marginBottom: '12px' }}>
-              It is completely free to join and explore the platform. However, to start generating returns, you will need a <strong>$19.99 annual membership fee</strong>, and a minimum of <strong>$250 USD</strong> for your AI trading agent.
+              Neyro is free to explore, but to activate the AI system you need the <strong>$19.99 annual subscription fee</strong> plus a minimum of <strong>$250 USD</strong> to fund your initial starting balance (USDT Bep20 recommended). Keep some crypto in a Web3 wallet (like Trust Wallet) to cover gas fees.
             </p>
             <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '13px', borderLeft: '3px solid #d4af37', paddingLeft: '12px' }}>
               💡 PRO TIP: Ensure you have your funds ready in a compatible Web 3 wallet (like Trust Wallet) and have matching crypto for gas fees.
@@ -119,6 +119,16 @@ export default function NeyroBridge() {
               <li><strong>Profile:</strong> Set your birthday and set phone and country to <strong>"CRYPTONATION"</strong> at the bottom of the dropdown.</li>
               <li><strong>Activation:</strong> Verify your email to finalize activation!</li>
             </ul>
+          </div>
+
+          <div style={{ padding: '24px', background: 'rgba(255,255,255,0.02)', borderRadius: '20px', border: '1px solid rgba(255,255,255,0.05)' }}>
+            <h3 style={{ color: '#00ff88', fontSize: '18px', fontWeight: '800', marginBottom: '12px' }}>4. Join Telegram Group</h3>
+            <p style={{ color: 'rgba(255,255,255,0.6)', lineHeight: '1.6', marginBottom: '12px' }}>
+              After creating your account, join the private Telegram group. You will be asked for your sponsor's name (<strong>{sponsorData.name}</strong>) for verification before being admitted.
+            </p>
+            <a href="https://t.me/+x-rcT82qdWkzYTUx" target="_blank" rel="noopener noreferrer" style={{ color: '#2d8cf0', textDecoration: 'none', fontWeight: 'bold', fontSize: '15px' }}>
+              👉 Join Telegram Group
+            </a>
           </div>
 
         </div>
