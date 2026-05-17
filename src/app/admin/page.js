@@ -123,11 +123,27 @@ export default function AdminOverview() {
           </div>
         </div>
 
-        <div style={{ padding: '32px', background: 'rgba(45, 140, 240, 0.05)', border: '1px solid rgba(45, 140, 240, 0.2)', borderRadius: '24px' }}>
-          <h3 style={{ fontSize: '18px', fontWeight: '800', marginBottom: '8px' }}>Commander Pro-Tip</h3>
-          <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '14px', lineHeight: '1.6' }}>
-            To force a specific variant for a partner, instruct them to use the `?v=` parameter. For example: `?v=consultative` will bypass the coin-flip for their traffic.
-          </p>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+          <div style={{ padding: '32px', background: 'rgba(212, 175, 55, 0.05)', border: '1px solid rgba(212, 175, 55, 0.2)', borderRadius: '24px' }}>
+            <h3 style={{ fontSize: '18px', fontWeight: '800', marginBottom: '16px', color: '#d4af37' }}>Standalone Custom Funnels</h3>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              <div style={{ padding: '16px', background: 'rgba(255,255,255,0.02)', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.05)' }}>
+                <strong style={{ display: 'block', marginBottom: '4px' }}>Neyro Premium Landing</strong>
+                <a href="/neyro" target="_blank" style={{ color: '#00ff88', fontSize: '12px', textDecoration: 'none' }}>/neyro ↗</a>
+              </div>
+              <div style={{ padding: '16px', background: 'rgba(255,255,255,0.02)', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.05)' }}>
+                <strong style={{ display: 'block', marginBottom: '4px' }}>Neyro Overlay Wrapper</strong>
+                <a href="/neyro/wrapper" target="_blank" style={{ color: '#00ff88', fontSize: '12px', textDecoration: 'none' }}>/neyro/wrapper ↗</a>
+              </div>
+            </div>
+          </div>
+
+          <div style={{ padding: '32px', background: 'rgba(45, 140, 240, 0.05)', border: '1px solid rgba(45, 140, 240, 0.2)', borderRadius: '24px' }}>
+            <h3 style={{ fontSize: '18px', fontWeight: '800', marginBottom: '8px' }}>Commander Pro-Tip</h3>
+            <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '14px', lineHeight: '1.6' }}>
+              To force a specific variant for a partner, instruct them to use the `?v=` parameter. For example: `?v=consultative` will bypass the coin-flip for their traffic.
+            </p>
+          </div>
         </div>
       </div>
     </div>

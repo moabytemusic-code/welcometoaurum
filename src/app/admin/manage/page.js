@@ -82,6 +82,13 @@ export default function FaaSManager() {
     }
   };
 
+  const getLiveUrl = (project) => {
+    if (!project) return '';
+    if (project.slug === 'neyro') return '/neyro';
+    if (project.slug === 'neyro-wrapper') return '/neyro/wrapper';
+    return `/f/${project.slug}/${project.angle}`;
+  };
+
   return (
     <main className={styles.builderMain}>
       <div className={styles.builderGlow} />
@@ -137,7 +144,7 @@ export default function FaaSManager() {
                   </div>
 
                   <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-                    <a href={`/f/${project.slug}/${project.angle}`} target="_blank" rel="noreferrer" style={{ color: 'rgba(255,255,255,0.5)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '6px', fontSize: '13px', transition: 'color 0.2s' }}>
+                    <a href={getLiveUrl(project)} target="_blank" rel="noreferrer" style={{ color: 'rgba(255,255,255,0.5)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '6px', fontSize: '13px', transition: 'color 0.2s' }}>
                       View Live <ExternalLink size={14} />
                     </a>
                     
@@ -215,7 +222,7 @@ export default function FaaSManager() {
             
             <div style={{ background: '#fff', padding: '20px', borderRadius: '16px', display: 'inline-block', marginBottom: '24px' }}>
               <img 
-                src={`https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(`${baseUrl}/f/${showQR.slug}/${showQR.angle}`)}`}
+                src={`https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(`${baseUrl}${getLiveUrl(showQR)}`)}`}
                 alt="Funnel QR Code"
                 style={{ display: 'block' }}
               />
@@ -225,7 +232,7 @@ export default function FaaSManager() {
               <button 
                 onClick={() => {
                   const link = document.createElement('a');
-                  link.href = `https://api.qrserver.com/v1/create-qr-code/?size=1000x1000&data=${encodeURIComponent(`${baseUrl}/f/${showQR.slug}/${showQR.angle}`)}`;
+                  link.href = `https://api.qrserver.com/v1/create-qr-code/?size=1000x1000&data=${encodeURIComponent(`${baseUrl}${getLiveUrl(showQR)}`)}`;
                   link.download = `QR_${showQR.slug}.png`;
                   link.target = "_blank";
                   link.click();

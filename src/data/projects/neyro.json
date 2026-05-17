@@ -1,0 +1,10 @@
+{
+  "name": "Neyro Protocol",
+  "slug": "neyro",
+  "angle": "capture",
+  "isActive": true,
+  "content": {
+    "title": "Neyro AI Integration"
+  },
+  "config": {}
+}
