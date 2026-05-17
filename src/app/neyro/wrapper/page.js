@@ -105,7 +105,7 @@ export default function NeyroWrapper() {
               <h3 style={{ color: '#00ff88', fontSize: '14px', fontWeight: '800' }}>1. Prepare Funds & Wallet</h3>
             </div>
             <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '13px', lineHeight: '1.5' }}>
-              Free to explore. To activate AI: <strong>$19.99/yr fee</strong> + min <strong>$250 USD</strong> starting fund. Keep crypto in a Web3 wallet (like Exodus) for gas fees.
+              Free to explore. To activate AI: <strong>$19.99/yr fee</strong> + min <strong>$250 USD</strong> starting fund. Keep crypto in a Web3 wallet (like Trust Wallet) for gas fees.
             </p>
           </div>
 
@@ -126,7 +126,7 @@ export default function NeyroWrapper() {
             </div>
             <ul style={{ color: 'rgba(255,255,255,0.6)', fontSize: '12px', lineHeight: '1.6', margin: 0, paddingLeft: '16px' }}>
               <li>Your sponsor code is pre-filled.</li>
-              <li>Under Profile, set country to <strong>"CRYPTONATION"</strong>.</li>
+              <li>Under Profile, set phone and country to <strong>"CRYPTONATION"</strong>.</li>
               <li>Verify your email to finalize.</li>
             </ul>
           </div>

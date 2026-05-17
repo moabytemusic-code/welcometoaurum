@@ -94,7 +94,7 @@ export default function NeyroBridge() {
               It is completely free to join and explore the platform. However, to start generating returns, you will need a <strong>$19.99 annual membership fee</strong>, and a minimum of <strong>$250 USD</strong> for your AI trading agent.
             </p>
             <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '13px', borderLeft: '3px solid #d4af37', paddingLeft: '12px' }}>
-              💡 PRO TIP: Ensure you have your funds ready in a compatible Web 3 wallet (like Exodus) and have matching crypto for gas fees.
+              💡 PRO TIP: Ensure you have your funds ready in a compatible Web 3 wallet (like Trust Wallet) and have matching crypto for gas fees.
             </p>
           </div>
 
@@ -116,7 +116,7 @@ export default function NeyroBridge() {
             <ul style={{ color: 'rgba(255,255,255,0.6)', fontSize: '14px', lineHeight: '1.8', marginLeft: '20px' }}>
               <li><strong>Contact:</strong> Enter your working email.</li>
               <li><strong>Invite Code:</strong> Your sponsor's code will be pre-filled automatically.</li>
-              <li><strong>Profile:</strong> Set your birthday and select <strong>"CRYPTONATION"</strong> at the bottom of the country dropdown.</li>
+              <li><strong>Profile:</strong> Set your birthday and set phone and country to <strong>"CRYPTONATION"</strong> at the bottom of the dropdown.</li>
               <li><strong>Activation:</strong> Verify your email to finalize activation!</li>
             </ul>
           </div>
