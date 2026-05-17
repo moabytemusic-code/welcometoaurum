@@ -12,10 +12,6 @@ export default function NeyroWrapper() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   useEffect(() => {
-    // If on mobile, start with the sidebar closed so they can see the site
-    if (window.innerWidth <= 768) {
-      setIsSidebarOpen(false);
-    }
 
     const resolveSponsor = async () => {
       try {
@@ -141,7 +137,7 @@ export default function NeyroWrapper() {
             rel="noopener noreferrer"
             className="registerBtn"
           >
-            Register via Sponsor
+            Activate My AI Agent
           </a>
           <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.3)', textAlign: 'center', marginTop: '12px' }}>
             Opens Aurum secure portal in a new tab
