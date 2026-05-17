@@ -19,7 +19,7 @@ export default function NeyroWrapper() {
 
     const resolveSponsor = async () => {
       try {
-        const res = await fetch('/api/rotator?funnel=neyro-wrapper');
+        const res = await fetch('/api/rotator?funnel=neyro-gateway');
         if (res.ok) {
           const data = await res.json();
           setSponsorData(data);

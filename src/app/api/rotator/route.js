@@ -102,12 +102,47 @@ export async function GET(request) {
       }
 
       if (poolItems.length > 0) {
-        // Pick the code at the current index
-        const currentIndex = nextIndex % poolItems.length;
-        activeCode = poolItems[currentIndex].trim();
-        
-        // Move to the next index for next time
-        nextIndex = (currentIndex + 1) % poolItems.length;
+        let foundValidDownline = false;
+        let attempts = 0;
+        let currentIndex = nextIndex % poolItems.length;
+
+        // Fetch all pool members at once to enforce permissions
+        const { data: poolMembersData } = await supabase
+          .from('aurum_affiliates')
+          .select('affiliate_code, unlocked_funnels')
+          .in('affiliate_code', poolItems);
+
+        const poolMembersMap = {};
+        if (poolMembersData) {
+          poolMembersData.forEach(m => {
+            poolMembersMap[m.affiliate_code] = m;
+          });
+        }
+
+        while (attempts < poolItems.length && !foundValidDownline) {
+          const candidateCode = poolItems[currentIndex].trim();
+          const memberData = poolMembersMap[candidateCode];
+          
+          if (memberData) {
+            const unlocked = (memberData.unlocked_funnels || 'pitch').split(',').map(s => s.trim());
+            // Strict Pool Enforcement: Downline member must also have this funnel unlocked
+            if (unlocked.includes(funnelId)) {
+              foundValidDownline = true;
+              activeCode = candidateCode;
+              break;
+            }
+          }
+          
+          currentIndex = (currentIndex + 1) % poolItems.length;
+          attempts++;
+        }
+
+        if (foundValidDownline) {
+          nextIndex = (currentIndex + 1) % poolItems.length;
+        } else {
+          // If NO ONE in the pool qualifies, fallback to the leader's own code
+          activeCode = selected.affiliate_code;
+        }
       }
     }
 
