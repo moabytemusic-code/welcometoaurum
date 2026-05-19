@@ -42,11 +42,12 @@ export async function GET(request) {
       });
     }
 
-    // Fetch all active rotator partners ordered by join date
+    // Fetch all active rotator partners ordered by join date who have runs remaining or are the owner
     const { data: allPartners, error: partnersError } = await supabase
       .from('aurum_affiliates')
-      .select('id, affiliate_code, full_name, email, phone, rotator_pool, rotator_index, created_at, unlocked_funnels')
+      .select('id, affiliate_code, full_name, email, phone, rotator_pool, rotator_index, created_at, unlocked_funnels, rotator_runs')
       .eq('is_rotator', true)
+      .or('rotator_runs.gt.0,affiliate_code.eq.1W145K')
       .order('created_at', { ascending: true });
 
     if (partnersError) throw partnersError;

@@ -45,6 +45,10 @@ export default function AdminLayout({ children }) {
             <Network className={styles.navIcon} />
             <span>Downline Rotators</span>
           </Link>
+          <Link href="/admin/payments" className={styles.navItem}>
+            <span style={{ fontSize: '18px', marginRight: '12px' }}>🪙</span>
+            <span>Verify Payments</span>
+          </Link>
           <Link href="/admin/builder" className={styles.navItem}>
             <Sparkles className={styles.navIcon} style={{ color: '#d4af37' }} />
             <span style={{ color: '#d4af37', fontWeight: 'bold' }}>Project Architect</span>

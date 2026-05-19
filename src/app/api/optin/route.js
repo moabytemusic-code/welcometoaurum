@@ -11,15 +11,34 @@ export async function POST(req) {
       const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
       const supabase = createClient(supabaseUrl, supabaseKey);
 
+      const cleanSponsor = (sponsor_code || '1W145K').trim();
+
       await supabase.from('aurum_leads').insert([{
         email,
         first_name,
-        sponsor_code: sponsor_code || '1W145K',
+        sponsor_code: cleanSponsor,
         landing_variant: landing_variant || 'pitch',
         team_slug: team_slug || null
       }]);
+
+      // Decrement rotator run if sponsor is in rotator and has runs left
+      if (cleanSponsor && cleanSponsor !== '1W145K') {
+        const { data: partner } = await supabase
+          .from('aurum_affiliates')
+          .select('id, rotator_runs, is_rotator')
+          .eq('affiliate_code', cleanSponsor)
+          .maybeSingle();
+
+        if (partner && partner.is_rotator && (partner.rotator_runs || 0) > 0) {
+          await supabase
+            .from('aurum_affiliates')
+            .update({ rotator_runs: partner.rotator_runs - 1 })
+            .eq('id', partner.id);
+          console.log(`Successfully decremented rotator_runs for partner ${cleanSponsor}. Remaining: ${partner.rotator_runs - 1}`);
+        }
+      }
     } catch (dbErr) {
-      console.warn('Local lead tracking failed:', dbErr.message);
+      console.warn('Local lead tracking/decrement failed:', dbErr.message);
     }
 
 
