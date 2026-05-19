@@ -28,6 +28,7 @@ const WALLETS = {
 
 export default function PartnerDashboard() {
   const [partner, setPartner] = useState(null);
+  const [activeFunnels, setActiveFunnels] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   
@@ -53,6 +54,7 @@ export default function PartnerDashboard() {
       }
       const data = await res.json();
       setPartner(data.partner);
+      setActiveFunnels(data.activeFunnels || []);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -299,83 +301,58 @@ export default function PartnerDashboard() {
               </p>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                <label style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  background: partner?.unlocked_funnels === 'neyro' ? 'rgba(0, 255, 136, 0.03)' : 'rgba(255,255,255,0.01)',
-                  border: partner?.unlocked_funnels === 'neyro' ? '1px solid rgba(0, 255, 136, 0.2)' : '1px solid rgba(255,255,255,0.05)',
-                  padding: '16px 20px',
-                  borderRadius: '16px',
-                  cursor: 'pointer'
-                }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                    <input
-                      type="radio"
-                      name="activeFunnel"
-                      checked={partner?.unlocked_funnels === 'neyro'}
-                      onChange={() => handleFunnelChange('neyro')}
-                      style={{ accentColor: '#00ff88', width: '18px', height: '18px' }}
-                    />
-                    <div>
-                      <strong style={{ display: 'block', fontSize: '15px' }}>Neyro Protocol</strong>
-                      <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.3)' }}>AI-driven wealth acceleration</span>
-                    </div>
-                  </div>
-                  <a href={`/neyro?ref=${partner?.affiliate_code}`} target="_blank" style={{ color: '#00ff88', fontSize: '12px', textDecoration: 'none', fontWeight: 'bold' }}>View Page ↗</a>
-                </label>
+                {activeFunnels.map(funnel => {
+                  const isSelected = partner?.unlocked_funnels === funnel.slug;
+                  // Handle vanity routes vs dynamic routes
+                  let viewUrl = `/f/${funnel.slug}/${funnel.angle}?ref=${partner?.affiliate_code}`;
+                  if (funnel.slug === 'neyro') viewUrl = `/neyro?ref=${partner?.affiliate_code}`;
+                  else if (funnel.slug === 'neyro-gateway') viewUrl = `/gateway?ref=${partner?.affiliate_code}`;
+                  else if (funnel.slug === 'aurum-pitch') viewUrl = `/pitch?ref=${partner?.affiliate_code}`;
+                  else if (funnel.slug === 'aurum-consultative') viewUrl = `/consultative?ref=${partner?.affiliate_code}`;
 
-                <label style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  background: partner?.unlocked_funnels === 'neyro-gateway' ? 'rgba(0, 255, 136, 0.03)' : 'rgba(255,255,255,0.01)',
-                  border: partner?.unlocked_funnels === 'neyro-gateway' ? '1px solid rgba(0, 255, 136, 0.2)' : '1px solid rgba(255,255,255,0.05)',
-                  padding: '16px 20px',
-                  borderRadius: '16px',
-                  cursor: 'pointer'
-                }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                    <input
-                      type="radio"
-                      name="activeFunnel"
-                      checked={partner?.unlocked_funnels === 'neyro-gateway'}
-                      onChange={() => handleFunnelChange('neyro-gateway')}
-                      style={{ accentColor: '#00ff88', width: '18px', height: '18px' }}
-                    />
-                    <div>
-                      <strong style={{ display: 'block', fontSize: '15px' }}>Neyro Gateway</strong>
-                      <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.3)' }}>Immediate opt-in gate</span>
-                    </div>
-                  </div>
-                  <a href={`/gateway?ref=${partner?.affiliate_code}`} target="_blank" style={{ color: '#00ff88', fontSize: '12px', textDecoration: 'none', fontWeight: 'bold' }}>View Page ↗</a>
-                </label>
+                  // Descriptions
+                  let desc = 'AI-driven wealth acceleration';
+                  if (funnel.angle === 'gateway') desc = 'Immediate opt-in gate';
+                  else if (funnel.angle === 'consultative') desc = 'Direct video orientation capture';
+                  else if (funnel.angle === 'pitch') desc = 'Direct sales pitch opt-in';
+                  else if (funnel.angle.includes('pay-it-forward')) desc = 'Special promotional entry';
 
-                <label style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  background: partner?.unlocked_funnels === 'consultative' ? 'rgba(0, 255, 136, 0.03)' : 'rgba(255,255,255,0.01)',
-                  border: partner?.unlocked_funnels === 'consultative' ? '1px solid rgba(0, 255, 136, 0.2)' : '1px solid rgba(255,255,255,0.05)',
-                  padding: '16px 20px',
-                  borderRadius: '16px',
-                  cursor: 'pointer'
-                }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                    <input
-                      type="radio"
-                      name="activeFunnel"
-                      checked={partner?.unlocked_funnels === 'consultative'}
-                      onChange={() => handleFunnelChange('consultative')}
-                      style={{ accentColor: '#00ff88', width: '18px', height: '18px' }}
-                    />
-                    <div>
-                      <strong style={{ display: 'block', fontSize: '15px' }}>Consultative Webinar</strong>
-                      <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.3)' }}>Direct video orientation capture</span>
-                    </div>
+                  return (
+                    <label 
+                      key={funnel.id}
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        background: isSelected ? 'rgba(0, 255, 136, 0.03)' : 'rgba(255,255,255,0.01)',
+                        border: isSelected ? '1px solid rgba(0, 255, 136, 0.2)' : '1px solid rgba(255,255,255,0.05)',
+                        padding: '16px 20px',
+                        borderRadius: '16px',
+                        cursor: 'pointer'
+                      }}
+                    >
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                        <input
+                          type="radio"
+                          name="activeFunnel"
+                          checked={isSelected}
+                          onChange={() => handleFunnelChange(funnel.slug)}
+                          style={{ accentColor: '#00ff88', width: '18px', height: '18px' }}
+                        />
+                        <div>
+                          <strong style={{ display: 'block', fontSize: '15px' }}>{funnel.name}</strong>
+                          <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.3)' }}>{desc}</span>
+                        </div>
+                      </div>
+                      <a href={viewUrl} target="_blank" style={{ color: '#00ff88', fontSize: '12px', textDecoration: 'none', fontWeight: 'bold' }}>View Page ↗</a>
+                    </label>
+                  );
+                })}
+                {activeFunnels.length === 0 && (
+                  <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: '14px', textAlign: 'center', padding: '20px' }}>
+                    No active funnels configured.
                   </div>
-                  <a href={`/pitch?ref=${partner?.affiliate_code}`} target="_blank" style={{ color: '#00ff88', fontSize: '12px', textDecoration: 'none', fontWeight: 'bold' }}>View Page ↗</a>
-                </label>
+                )}
               </div>
             </div>
 

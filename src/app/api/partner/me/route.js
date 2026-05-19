@@ -39,13 +39,21 @@ export async function GET() {
       .eq('affiliate_id', partner.id)
       .order('created_at', { ascending: false });
 
+    // 4. Fetch all active projects (funnels)
+    const { data: activeFunnels, error: funnelErr } = await supabase
+      .from('aurum_projects')
+      .select('id, name, slug, angle')
+      .eq('is_active', true)
+      .order('name', { ascending: true });
+
     return NextResponse.json({
       success: true,
       partner: {
         ...partner,
         totalLeads: leadCount || 0,
         payments: payments || []
-      }
+      },
+      activeFunnels: activeFunnels || []
     });
 
   } catch (err) {
