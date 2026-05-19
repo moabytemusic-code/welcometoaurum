@@ -16,7 +16,9 @@ export default function NeyroCapture() {
   useEffect(() => {
     const resolveSponsor = async () => {
       try {
-        const res = await fetch('/api/rotator?funnel=neyro');
+        const params = new URLSearchParams(window.location.search);
+        const ref = params.get('ref') || '';
+        const res = await fetch(`/api/rotator?funnel=neyro${ref ? `&code=${ref}` : ''}`);
         if (res.ok) {
           const data = await res.json();
           setSponsorData(data);

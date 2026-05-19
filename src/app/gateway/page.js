@@ -16,7 +16,9 @@ export default function GatewayCapture() {
   useEffect(() => {
     const resolveSponsor = async () => {
       try {
-        const res = await fetch('/api/rotator?funnel=neyro-gateway');
+        const params = new URLSearchParams(window.location.search);
+        const ref = params.get('ref') || '';
+        const res = await fetch(`/api/rotator?funnel=neyro-gateway${ref ? `&code=${ref}` : ''}`);
         if (res.ok) {
           const data = await res.json();
           setSponsorData(data);
