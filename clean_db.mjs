@@ -14,30 +14,10 @@ const supabaseKey = envVars.SUPABASE_SERVICE_ROLE_KEY || envVars.NEXT_PUBLIC_SUP
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 async function clean() {
-  const { data: affiliates, error } = await supabase
-    .from('aurum_affiliates')
-    .select('id, unlocked_funnels, full_name, affiliate_code');
-
-  for (const aff of affiliates) {
-    if (!aff.unlocked_funnels) continue;
-    
-    let funnels = aff.unlocked_funnels.split(',').map(s => s.trim()).filter(Boolean);
-    
-    let changed = false;
-    // Remove old ghost wrapper
-    if (funnels.includes('neyro-wrapper')) {
-      funnels = funnels.filter(f => f !== 'neyro-wrapper');
-      changed = true;
-    }
-    
-    // Remove neyro from everyone EXCEPT Justin Bordessa (U1Y410)
-    // Wait, let's let the admin do this via the UI, I'll just fix the ghost wrapper.
-    
-    if (changed) {
-      await supabase.from('aurum_affiliates').update({ unlocked_funnels: funnels.join(',') }).eq('id', aff.id);
-      console.log(`Cleaned ${aff.full_name}`);
-    }
-  }
-  console.log('Cleanup complete.');
+  const { data, error } = await supabase
+    .from('aurum_projects')
+    .update({ is_active: true })
+    .eq('slug', 'neyro-gateway');
+  console.log("Update result:", { data, error });
 }
 clean();

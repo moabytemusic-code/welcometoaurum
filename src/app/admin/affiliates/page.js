@@ -24,6 +24,12 @@ export default function AffiliatesManager() {
   
   const [qrData, setQrData] = useState({ title: '', url: '' });
   const [isSessionAlive, setIsSessionAlive] = useState(null);
+  const getFunnelUrl = (funnel, code) => {
+    if (funnel.id === 'neyro') return `/neyro?ref=${code}`;
+    if (funnel.id === 'neyro-gateway') return `/gateway?ref=${code}`;
+    return `/f/${funnel.id}/${funnel.angle || 'pitch'}?ref=${code}`;
+  };
+
   const [availableFunnels, setAvailableFunnels] = useState([]);
 
   // Validation
@@ -343,7 +349,7 @@ export default function AffiliatesManager() {
                             </button>
                             {isUnlocked && (
                               <button 
-                                onClick={() => openQr(`${f.label}: ${p.full_name}`, `/f/${f.id}/${f.angle || 'pitch'}?ref=${p.affiliate_code}`)}
+                                onClick={() => openQr(`${f.label}: ${p.full_name}`, getFunnelUrl(f, p.affiliate_code))}
                                 style={{ 
                                   padding: '0 12px', 
                                   borderRadius: '0 6px 6px 0', 

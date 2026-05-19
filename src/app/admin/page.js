@@ -132,6 +132,10 @@ export default function AdminOverview() {
                 <a href="/neyro" target="_blank" style={{ color: '#00ff88', fontSize: '12px', textDecoration: 'none' }}>/neyro ↗</a>
               </div>
               <div style={{ padding: '16px', background: 'rgba(255,255,255,0.02)', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.05)' }}>
+                <strong style={{ display: 'block', marginBottom: '4px' }}>Neyro Gateway</strong>
+                <a href="/gateway" target="_blank" style={{ color: '#00ff88', fontSize: '12px', textDecoration: 'none' }}>/gateway ↗</a>
+              </div>
+              <div style={{ padding: '16px', background: 'rgba(255,255,255,0.02)', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.05)' }}>
                 <strong style={{ display: 'block', marginBottom: '4px' }}>Neyro Overlay Wrapper</strong>
                 <a href="/neyro/wrapper" target="_blank" style={{ color: '#00ff88', fontSize: '12px', textDecoration: 'none' }}>/neyro/wrapper ↗</a>
               </div>

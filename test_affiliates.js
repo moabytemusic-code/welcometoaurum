@@ -7,10 +7,9 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 
 async function test() {
   const { data, error } = await supabase
-    .from('aurum_affiliates')
-    .select('id, full_name, unlocked_funnels')
-    .limit(5);
-  console.log("Current DB State:");
+    .from('aurum_projects')
+    .select('*');
+  console.log("Current aurum_projects:");
   console.log(data);
 }
 test();
