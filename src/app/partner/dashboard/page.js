@@ -31,6 +31,7 @@ export default function PartnerDashboard() {
   const [activeFunnels, setActiveFunnels] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [copiedId, setCopiedId] = useState(null);
   
   // Payment Form State
   const [coinType, setCoinType] = useState('BTC');
@@ -344,7 +345,33 @@ export default function PartnerDashboard() {
                           <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.3)' }}>{desc}</span>
                         </div>
                       </div>
-                      <a href={viewUrl} target="_blank" style={{ color: '#00ff88', fontSize: '12px', textDecoration: 'none', fontWeight: 'bold' }}>View Page ↗</a>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                        <button
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            const fullUrl = `${window.location.origin}${viewUrl}`;
+                            navigator.clipboard.writeText(fullUrl);
+                            setCopiedId(funnel.id);
+                            setTimeout(() => setCopiedId(null), 2000);
+                          }}
+                          style={{
+                            background: copiedId === funnel.id ? 'rgba(0, 255, 136, 0.08)' : 'rgba(255,255,255,0.02)',
+                            border: copiedId === funnel.id ? '1px solid rgba(0, 255, 136, 0.3)' : '1px solid rgba(255,255,255,0.08)',
+                            color: copiedId === funnel.id ? '#00ff88' : 'rgba(255,255,255,0.6)',
+                            fontSize: '11px',
+                            fontWeight: '600',
+                            cursor: 'pointer',
+                            padding: '6px 12px',
+                            borderRadius: '8px',
+                            transition: 'all 0.2s',
+                            outline: 'none'
+                          }}
+                        >
+                          {copiedId === funnel.id ? 'Copied ✓' : 'Copy Link'}
+                        </button>
+                        <a href={viewUrl} target="_blank" style={{ color: '#00ff88', fontSize: '12px', textDecoration: 'none', fontWeight: 'bold' }}>View Page ↗</a>
+                      </div>
                     </label>
                   );
                 })}
