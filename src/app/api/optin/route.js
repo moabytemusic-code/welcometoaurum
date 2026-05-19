@@ -80,6 +80,33 @@ export async function POST(req) {
       throw new Error(data.message || 'Error from Brevo');
     }
 
+    // Direct SMTP Welcome Email Fallback Send
+    try {
+      const templateId = (landing_variant === 'pay-it-forward' || landing_variant === 'pay-it-forward-v2')
+        ? 744  // Voucher Welcome Email
+        : 743; // Core Welcome Email
+
+      await fetch('https://api.brevo.com/v3/smtp/email', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'api-key': process.env.BREVO_API_KEY
+        },
+        body: JSON.stringify({
+          to: [{ email, name: first_name || '' }],
+          templateId,
+          params: {
+            FIRSTNAME: first_name || '',
+            SPONSOR_NAME: sponsor_name || 'Aurum Corporate'
+          }
+        })
+      });
+      console.log(`Direct SMTP welcome email triggered successfully for ${email} (Template ID: ${templateId})`);
+    } catch (smtpErr) {
+      console.error('Direct SMTP welcome email send failed:', smtpErr.message);
+    }
+
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error('Brevo Opt-in Error:', error);
