@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import styles from '../finance.module.css';
-import { ChevronRight, ChevronLeft, ChevronDown, ChevronUp, Lock } from 'lucide-react';
+import { Lock } from 'lucide-react';
 
 export default function GatewayCapture() {
   const [email, setEmail] = useState('');
@@ -12,7 +12,6 @@ export default function GatewayCapture() {
     code: '1W145K', 
     name: 'Aurum Corporate'
   });
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   useEffect(() => {
     const resolveSponsor = async () => {
@@ -55,100 +54,118 @@ export default function GatewayCapture() {
   };
 
   return (
-    <main style={{ width: '100vw', height: '100vh', overflow: 'hidden', position: 'relative', background: '#000' }}>
+    <main style={{ width: '100vw', height: '100vh', overflow: 'hidden', position: 'relative', background: '#000', fontFamily: 'sans-serif' }}>
       
-      {/* Full Screen Iframe */}
-      <iframe 
-        src="https://neyro.network/" 
+      {/* Native Neyro Video Background */}
+      <video 
+        autoPlay 
+        loop 
+        muted 
+        playsInline 
         style={{
           position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          border: 'none',
-          zIndex: 1
+          top: '50%',
+          left: '50%',
+          minWidth: '100%',
+          minHeight: '100%',
+          width: 'auto',
+          height: 'auto',
+          transform: 'translate(-50%, -50%)',
+          zIndex: 0,
+          objectFit: 'cover',
+          opacity: 0.6
         }}
-        title="Neyro Live Platform"
-      />
+      >
+        <source src="https://neyro.network/assets/video/firstscreen.mp4" type="video/mp4" />
+      </video>
 
-      {/* Custom Overlay Header to mask the original Neyro menu */}
-      <header className="overlayHeader">
+      {/* Dark Overlay Gradient for Readability */}
+      <div style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        background: 'radial-gradient(circle at center, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.8) 100%)',
+        zIndex: 1,
+        pointerEvents: 'none'
+      }}></div>
+
+      {/* Top Navigation */}
+      <header style={{
+        position: 'relative',
+        zIndex: 10,
+        padding: '24px 40px',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        width: '100%'
+      }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-          <img src="https://neyro.network/img/logo.svg" alt="Neyro" style={{ height: '28px', filter: 'brightness(0) invert(1)' }} />
-          <div style={{ width: '1px', height: '24px', background: 'rgba(255,255,255,0.2)', display: 'block' }}></div>
-          <span style={{ fontSize: '13px', fontWeight: '800', color: 'rgba(255,255,255,0.6)', letterSpacing: '1px', textTransform: 'uppercase' }}>Secure Gateway</span>
+          <img src="https://neyro.network/img/logo.svg" alt="Neyro" style={{ height: '32px', filter: 'brightness(0) invert(1)' }} />
+          <div style={{ width: '1px', height: '24px', background: 'rgba(255,255,255,0.2)', display: 'none' }}></div>
         </div>
-
-        {/* Toggle Button in Header (Desktop) */}
-        {!isSidebarOpen && (
-          <button 
-            className="toggleBtn desktop-toggle"
-            onClick={() => setIsSidebarOpen(true)}
-          >
-            <ChevronLeft size={20} /> Request Access
-          </button>
-        )}
+        <div style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', padding: '6px 16px', borderRadius: '100px', fontSize: '12px', fontWeight: '600', color: 'rgba(255,255,255,0.6)', backdropFilter: 'blur(10px)' }}>
+          Invited by: <span style={{ color: '#00ff88' }}>{sponsorData.name}</span>
+        </div>
       </header>
 
-      {/* Mobile Toggle Button (Bottom Center) */}
-      {!isSidebarOpen && (
-        <button 
-          className="toggleBtn mobile-toggle"
-          onClick={() => setIsSidebarOpen(true)}
-        >
-          <ChevronUp size={20} /> Request Access
-        </button>
-      )}
-
-      {/* Floating Glassmorphism Sidebar */}
-      <div className={`sidebar ${isSidebarOpen ? 'open' : 'closed'}`}>
+      {/* Centered Content Container */}
+      <div style={{
+        position: 'relative',
+        zIndex: 10,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: 'calc(100vh - 80px)',
+        padding: '20px'
+      }}>
         
-        {/* Sidebar Header */}
-        <div style={{ padding: '24px', borderBottom: '1px solid rgba(255,255,255,0.05)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <div>
-            <h2 style={{ fontSize: '20px', fontWeight: '900', color: '#fff', marginBottom: '4px' }}>Gateway Access</h2>
-            <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.5)' }}>Invited by: <span style={{ color: '#00ff88', fontWeight: 'bold' }}>{sponsorData.name}</span></p>
-          </div>
-          <button 
-            className="closeBtn"
-            onClick={() => setIsSidebarOpen(false)}
-          >
-            <ChevronRight className="desktop-icon" size={20} />
-            <ChevronDown className="mobile-icon" size={20} />
-          </button>
-        </div>
-
-        {/* Scrollable Content */}
-        <div style={{ flex: 1, overflowY: 'auto', padding: '32px 24px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+        {/* Glassmorphic Capture Form */}
+        <div style={{
+          background: 'rgba(10, 10, 15, 0.4)',
+          backdropFilter: 'blur(20px) saturate(150%)',
+          border: '1px solid rgba(255, 255, 255, 0.1)',
+          borderRadius: '32px',
+          padding: '48px',
+          maxWidth: '540px',
+          width: '100%',
+          textAlign: 'center',
+          boxShadow: '0 20px 80px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1)'
+        }}>
           
-          <div style={{ textAlign: 'center', marginBottom: '16px' }}>
-            <div style={{ width: '64px', height: '64px', background: 'rgba(212,175,55,0.1)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px auto', border: '1px solid rgba(212,175,55,0.3)' }}>
-              <Lock size={32} color="#d4af37" />
-            </div>
-            <h3 style={{ color: '#fff', fontSize: '24px', fontWeight: '900', marginBottom: '12px' }}>Request Secure Link</h3>
-            <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '14px', lineHeight: '1.6' }}>
-              The live trading environment is currently locked. To protect our network, you must request a personalized access link to proceed.
-            </p>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(212,175,55,0.1)', border: '1px solid rgba(212,175,55,0.2)', padding: '6px 16px', borderRadius: '100px', marginBottom: '32px' }}>
+            <Lock size={14} color="#d4af37" />
+            <span style={{ fontSize: '12px', color: '#d4af37', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '1px' }}>Restricted Access</span>
           </div>
+
+          <h1 style={{ color: '#fff', fontSize: 'clamp(32px, 4vw, 40px)', fontWeight: '900', lineHeight: '1.2', marginBottom: '16px', letterSpacing: '-0.5px' }}>
+            The Next Era of Agentic Trading
+          </h1>
+          
+          <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '16px', lineHeight: '1.6', marginBottom: '40px', padding: '0 10px' }}>
+            Neyro is the first non‑custodial AI agent layer for trading. Enter your best email to request a secure link to the live gateway.
+          </p>
 
           <form onSubmit={handleOptIn} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             <input 
               type="email" 
-              placeholder="Enter your best email..." 
+              placeholder="Enter your email address..." 
               required 
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               style={{ 
-                background: 'rgba(0,0,0,0.5)', 
+                background: 'rgba(0,0,0,0.6)', 
                 border: '1px solid rgba(255,255,255,0.1)', 
                 color: '#fff',
-                height: '56px',
-                borderRadius: '12px',
-                padding: '0 20px',
-                fontSize: '15px',
+                height: '60px',
+                borderRadius: '16px',
+                padding: '0 24px',
+                fontSize: '16px',
                 outline: 'none',
-                transition: 'border-color 0.3s'
+                transition: 'border-color 0.3s',
+                textAlign: 'center'
               }}
               onFocus={(e) => e.target.style.borderColor = '#d4af37'}
               onBlur={(e) => e.target.style.borderColor = 'rgba(255,255,255,0.1)'}
@@ -159,22 +176,23 @@ export default function GatewayCapture() {
               style={{ 
                 background: 'linear-gradient(135deg, #d4af37, #f1c40f)', 
                 color: '#000', 
-                height: '56px',
-                borderRadius: '12px',
+                height: '60px',
+                borderRadius: '16px',
                 fontSize: '16px', 
                 fontWeight: '900', 
                 border: 'none', 
                 cursor: 'pointer',
-                boxShadow: '0 8px 24px rgba(212,175,55,0.3)',
+                boxShadow: '0 10px 30px rgba(212,175,55,0.3)',
                 transition: 'transform 0.2s',
-                textTransform: 'uppercase'
+                textTransform: 'uppercase',
+                letterSpacing: '1px'
               }}
               onMouseOver={(e) => e.target.style.transform = 'translateY(-2px)'}
               onMouseOut={(e) => e.target.style.transform = 'translateY(0)'}
             >
-              {isProcessing ? status : 'Send Me The Link'}
+              {isProcessing ? status : 'Generate Secure Link'}
             </button>
-            <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)', textAlign: 'center', marginTop: '8px' }}>
+            <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.4)', textAlign: 'center', marginTop: '12px' }}>
               Your secure access link will be emailed immediately.
             </p>
           </form>
@@ -183,133 +201,6 @@ export default function GatewayCapture() {
 
       </div>
 
-      <style jsx>{`
-        .overlayHeader {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 80px;
-          background: rgba(10, 10, 15, 0.85);
-          backdrop-filter: blur(20px) saturate(150%);
-          border-bottom: 1px solid rgba(255,255,255,0.05);
-          z-index: 40;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          padding: 0 40px;
-          box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-
-        /* Desktop Defaults */
-        .sidebar {
-          position: absolute;
-          top: 0;
-          right: -450px;
-          width: 100%;
-          max-width: 420px;
-          height: 100%;
-          background: rgba(10, 10, 15, 0.6);
-          backdrop-filter: blur(20px) saturate(150%);
-          border-left: 1px solid rgba(255,255,255,0.1);
-          z-index: 100;
-          transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-          display: flex;
-          flex-direction: column;
-          box-shadow: -20px 0 60px rgba(0,0,0,0.5);
-        }
-
-        .sidebar.open {
-          right: 0;
-        }
-
-        .toggleBtn {
-          background: linear-gradient(135deg, #d4af37, #f1c40f);
-          border: none;
-          padding: 10px 20px;
-          border-radius: 100px;
-          color: #000;
-          font-weight: 900;
-          cursor: pointer;
-          box-shadow: 0 10px 30px rgba(212,175,55,0.3);
-          display: flex;
-          align-items: center;
-          gap: 8px;
-        }
-
-        .mobile-toggle {
-          display: none;
-        }
-
-        .closeBtn {
-          background: rgba(255,255,255,0.05);
-          border: none;
-          width: 36px;
-          height: 36px;
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: #fff;
-          cursor: pointer;
-          transition: background 0.2s;
-        }
-        .closeBtn:hover {
-          background: rgba(255,255,255,0.1);
-        }
-
-        .mobile-icon {
-          display: none;
-        }
-
-        /* Mobile Adjustments */
-        @media (max-width: 768px) {
-          .overlayHeader {
-            padding: 0 20px;
-          }
-          
-          .desktop-toggle {
-            display: none;
-          }
-
-          .mobile-toggle {
-            display: flex;
-            position: absolute;
-            bottom: 24px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 50;
-            white-space: nowrap;
-          }
-
-          .sidebar {
-            max-width: 100%;
-            height: auto;
-            max-height: 85vh;
-            top: auto;
-            bottom: 0;
-            right: 0;
-            border-left: none;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            border-top-left-radius: 24px;
-            border-top-right-radius: 24px;
-            transform: translateY(100%);
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0 -20px 60px rgba(0,0,0,0.5);
-          }
-          
-          .sidebar.open {
-            transform: translateY(0);
-          }
-
-          .desktop-icon {
-            display: none;
-          }
-          .mobile-icon {
-            display: block;
-          }
-        }
-      `}</style>
     </main>
   );
 }
