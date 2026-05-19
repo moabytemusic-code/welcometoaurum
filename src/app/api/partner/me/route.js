@@ -4,7 +4,7 @@ import { createClient } from '@supabase/supabase-js';
 
 export async function GET() {
   try {
-    const cookieStore = cookies();
+    const cookieStore = await cookies();
     const partnerCode = cookieStore.get('aurum_partner_session')?.value;
 
     if (!partnerCode) {

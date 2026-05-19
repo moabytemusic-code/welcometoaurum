@@ -4,7 +4,7 @@ import { createClient } from '@supabase/supabase-js';
 
 export async function GET() {
   try {
-    const cookieStore = cookies();
+    const cookieStore = await cookies();
     const adminSession = cookieStore.get('aurum_admin_session')?.value;
 
     if (adminSession !== 'authenticated') {
@@ -38,7 +38,7 @@ export async function GET() {
 
 export async function PATCH(request) {
   try {
-    const cookieStore = cookies();
+    const cookieStore = await cookies();
     const adminSession = cookieStore.get('aurum_admin_session')?.value;
 
     if (adminSession !== 'authenticated') {
