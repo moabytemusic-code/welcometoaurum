@@ -322,7 +322,7 @@ export default function PartnerDashboard() {
                       <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.3)' }}>AI-driven wealth acceleration</span>
                     </div>
                   </div>
-                  <a href="/neyro" target="_blank" style={{ color: '#00ff88', fontSize: '12px', textDecoration: 'none', fontWeight: 'bold' }}>View Page ↗</a>
+                  <a href={`/neyro?ref=${partner?.affiliate_code}`} target="_blank" style={{ color: '#00ff88', fontSize: '12px', textDecoration: 'none', fontWeight: 'bold' }}>View Page ↗</a>
                 </label>
 
                 <label style={{
@@ -348,7 +348,7 @@ export default function PartnerDashboard() {
                       <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.3)' }}>Immediate opt-in gate</span>
                     </div>
                   </div>
-                  <a href="/gateway" target="_blank" style={{ color: '#00ff88', fontSize: '12px', textDecoration: 'none', fontWeight: 'bold' }}>View Page ↗</a>
+                  <a href={`/gateway?ref=${partner?.affiliate_code}`} target="_blank" style={{ color: '#00ff88', fontSize: '12px', textDecoration: 'none', fontWeight: 'bold' }}>View Page ↗</a>
                 </label>
 
                 <label style={{
@@ -374,7 +374,7 @@ export default function PartnerDashboard() {
                       <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.3)' }}>Direct video orientation capture</span>
                     </div>
                   </div>
-                  <a href="/pitch" target="_blank" style={{ color: '#00ff88', fontSize: '12px', textDecoration: 'none', fontWeight: 'bold' }}>View Page ↗</a>
+                  <a href={`/pitch?ref=${partner?.affiliate_code}`} target="_blank" style={{ color: '#00ff88', fontSize: '12px', textDecoration: 'none', fontWeight: 'bold' }}>View Page ↗</a>
                 </label>
               </div>
             </div>
