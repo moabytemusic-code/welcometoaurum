@@ -36,8 +36,6 @@ export async function POST(request) {
     // Set HTTP-only session cookie for the partner
     response.cookies.set('aurum_partner_session', partner.affiliate_code, {
       httpOnly: true,
-      secure: true,
-      sameSite: 'lax',
       maxAge: 60 * 60 * 24 * 7, // 7 days
       path: '/',
     });

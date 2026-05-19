@@ -27,7 +27,7 @@ export async function POST(request) {
 
     if (error) {
       console.error('Failed to update active funnel selection:', error);
-      return NextResponse.json({ error: 'Database update failed' }, { status: 500 });
+      return NextResponse.json({ error: error.message || 'Database update failed' }, { status: 500 });
     }
 
     return NextResponse.json({ success: true });

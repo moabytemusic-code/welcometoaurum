@@ -76,7 +76,8 @@ export default function PartnerDashboard() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ funnelId })
       });
-      if (!res.ok) throw new Error('Failed to update funnel selection');
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed to update funnel selection');
       
       // Update local state
       setPartner(prev => ({ ...prev, unlocked_funnels: funnelId }));
