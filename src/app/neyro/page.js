@@ -42,7 +42,7 @@ export default function NeyroCapture() {
           email,
           sponsor_code: sponsorData.code,
           sponsor_name: sponsorData.name,
-          landing_variant: 'neyro_premium'
+          landing_variant: 'neyro_protocol'
         })
       });
     } catch (error) {

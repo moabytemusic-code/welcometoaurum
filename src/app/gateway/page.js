@@ -41,7 +41,7 @@ export default function GatewayCapture() {
           email,
           sponsor_code: sponsorData.code,
           sponsor_name: sponsorData.name,
-          landing_variant: 'gateway_capture'
+          landing_variant: 'neyro_gateway'
         })
       });
     } catch (error) {
