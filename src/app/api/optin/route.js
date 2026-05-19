@@ -74,7 +74,14 @@ export async function POST(req) {
       }
     }
 
-    const data = await response.json();
+    let data = {};
+    if (response.status !== 204) {
+      try {
+        data = await response.json();
+      } catch (jsonErr) {
+        console.warn('Failed to parse response JSON:', jsonErr.message);
+      }
+    }
 
     if (!response.ok) {
       throw new Error(data.message || 'Error from Brevo');
@@ -86,7 +93,7 @@ export async function POST(req) {
         ? 744  // Voucher Welcome Email
         : 743; // Core Welcome Email
 
-      await fetch('https://api.brevo.com/v3/smtp/email', {
+      const smtpRes = await fetch('https://api.brevo.com/v3/smtp/email', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -102,7 +109,13 @@ export async function POST(req) {
           }
         })
       });
-      console.log(`Direct SMTP welcome email triggered successfully for ${email} (Template ID: ${templateId})`);
+
+      if (!smtpRes.ok) {
+        const errData = await smtpRes.json();
+        console.error('Direct SMTP welcome email send failed response:', errData);
+      } else {
+        console.log(`Direct SMTP welcome email triggered successfully for ${email} (Template ID: ${templateId})`);
+      }
     } catch (smtpErr) {
       console.error('Direct SMTP welcome email send failed:', smtpErr.message);
     }
