@@ -30,9 +30,18 @@ export async function GET(request) {
       }
     }
 
-    // 2. 1-to-3 Spillover Logic (Fill the oldest slots first)
     const funnelId = searchParams.get('funnel') || 'pitch';
-    
+
+    function fallbackCorporate() {
+      return NextResponse.json({
+        code: "1W145K",
+        name: "Aurum Corporate",
+        email: "support@aurum.foundation",
+        phone: "N/A",
+        url: "https://backoffice.aurum.foundation/auth/sign-up?ref=1W145K"
+      });
+    }
+
     // Fetch all active rotator partners ordered by join date
     const { data: allPartners, error: partnersError } = await supabase
       .from('aurum_affiliates')
@@ -46,39 +55,146 @@ export async function GET(request) {
       return fallbackCorporate();
     }
 
-    // Find the first partner who hasn't filled their 3 slots yet AND has the funnel unlocked
-    let selected = null;
-    for (const p of allPartners) {
-      // PERMISSION CHECK: Must have the funnel unlocked
-      const unlocked = (p.unlocked_funnels || 'pitch').split(',').map(s => s.trim());
-      if (!unlocked.includes(funnelId)) continue;
+    // Fetch the most recent 100 leads to determine rotation sequence
+    const { data: recentLeads } = await supabase
+      .from('aurum_leads')
+      .select('id, sponsor_code, created_at')
+      .order('created_at', { ascending: false })
+      .limit(100);
 
-      // CAPACITY CHECK: Must have < 3 leads
-      const { count, error: countError } = await supabase
-        .from('aurum_leads')
-        .select('*', { count: 'exact', head: true })
-        .eq('sponsor_code', p.affiliate_code);
-      
-      if (!countError && (count || 0) < 3) {
-        selected = p;
-        break;
+    // Map of affiliate_code -> partner (including downline pools)
+    const codeToPartnerMap = {};
+    for (const p of allPartners) {
+      codeToPartnerMap[p.affiliate_code.trim()] = p;
+      if (p.rotator_pool && p.rotator_pool.trim().length > 0) {
+        let poolItems = [];
+        try {
+          const parsed = JSON.parse(p.rotator_pool);
+          if (Array.isArray(parsed)) {
+            poolItems = parsed;
+          } else if (parsed.default && Array.isArray(parsed.default)) {
+            poolItems = parsed.default;
+          }
+        } catch (e) {
+          poolItems = p.rotator_pool.split(/[,\s\n]+/).filter(c => c.trim().length > 0);
+        }
+        for (const item of poolItems) {
+          codeToPartnerMap[item.trim()] = p;
+        }
       }
     }
 
-    // If everyone is full, fallback to the most recently served person (or Corporate)
-    if (!selected) {
-      console.log('All partners have 3+ leads, falling back to corporate for now.');
-      return fallbackCorporate();
+    // Filter and map recent leads to active rotator partners or Corporate
+    const recentRotatorLeads = [];
+    if (recentLeads) {
+      for (const lead of recentLeads) {
+        const cleanSponsor = (lead.sponsor_code || '').trim();
+        const parentPartner = codeToPartnerMap[cleanSponsor];
+        if (parentPartner) {
+          recentRotatorLeads.push({
+            sponsor_code: cleanSponsor,
+            partner: parentPartner,
+            is_corporate: false
+          });
+        } else if (cleanSponsor === '1W145K') {
+          recentRotatorLeads.push({
+            sponsor_code: '1W145K',
+            partner: null,
+            is_corporate: true
+          });
+        }
+      }
     }
 
-    function fallbackCorporate() {
-      return NextResponse.json({
-        code: "1W145K",
-        name: "Aurum Corporate",
-        email: "support@aurum.foundation",
-        phone: "N/A",
-        url: "https://backoffice.aurum.foundation/auth/sign-up?ref=1W145K"
-      });
+    let selected = null;
+
+    if (recentRotatorLeads.length === 0) {
+      // Find the first partner who has the funnel unlocked
+      for (const p of allPartners) {
+        const unlocked = (p.unlocked_funnels || 'pitch').split(',').map(s => s.trim());
+        if (unlocked.includes(funnelId)) {
+          selected = p;
+          break;
+        }
+      }
+      if (!selected) {
+        return fallbackCorporate();
+      }
+    } else {
+      const latest = recentRotatorLeads[0];
+      if (latest.is_corporate) {
+        // Find last served partner before corporate
+        let lastServedPartner = null;
+        for (let i = 1; i < recentRotatorLeads.length; i++) {
+          if (!recentRotatorLeads[i].is_corporate) {
+            lastServedPartner = recentRotatorLeads[i].partner;
+            break;
+          }
+        }
+
+        if (!lastServedPartner) {
+          // Select first partner who has the funnel unlocked
+          for (const p of allPartners) {
+            const unlocked = (p.unlocked_funnels || 'pitch').split(',').map(s => s.trim());
+            if (unlocked.includes(funnelId)) {
+              selected = p;
+              break;
+            }
+          }
+          if (!selected) return fallbackCorporate();
+        } else {
+          let startIndex = allPartners.findIndex(p => p.affiliate_code === lastServedPartner.affiliate_code);
+          if (startIndex === -1) startIndex = 0;
+
+          for (let i = 1; i <= allPartners.length; i++) {
+            const idx = (startIndex + i) % allPartners.length;
+            const candidate = allPartners[idx];
+            const unlocked = (candidate.unlocked_funnels || 'pitch').split(',').map(s => s.trim());
+            if (unlocked.includes(funnelId)) {
+              selected = candidate;
+              break;
+            }
+          }
+          if (!selected) return fallbackCorporate();
+        }
+      } else {
+        // Count consecutive assignments for this partner
+        const P = latest.partner;
+        
+        // Safety check: verify P is still active and has this funnel unlocked
+        const unlocked = (P.unlocked_funnels || 'pitch').split(',').map(s => s.trim());
+        if (!unlocked.includes(funnelId)) {
+          // If the partner who was active no longer has access, choose the next one
+          let startIndex = allPartners.findIndex(p => p.affiliate_code === P.affiliate_code);
+          if (startIndex === -1) startIndex = 0;
+
+          for (let i = 1; i <= allPartners.length; i++) {
+            const idx = (startIndex + i) % allPartners.length;
+            const candidate = allPartners[idx];
+            const candUnlocked = (candidate.unlocked_funnels || 'pitch').split(',').map(s => s.trim());
+            if (candUnlocked.includes(funnelId)) {
+              selected = candidate;
+              break;
+            }
+          }
+          if (!selected) return fallbackCorporate();
+        } else {
+          let count = 0;
+          for (const item of recentRotatorLeads) {
+            if (!item.is_corporate && item.partner.affiliate_code === P.affiliate_code) {
+              count++;
+            } else {
+              break;
+            }
+          }
+
+          if (count >= 3) {
+            return fallbackCorporate(); // 4th lead goes to Corporate
+          } else {
+            selected = P;
+          }
+        }
+      }
     }
 
     // 4. Handle Sub-Rotation (Fair Sequential Cycling within the pool)
