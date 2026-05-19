@@ -62,7 +62,7 @@ export default function NeyroBridge() {
             </div>
             <div>
               <h2 style={{ fontSize: '22px', fontWeight: '800', margin: 0 }}>Check Your Email Now</h2>
-              <p style={{ color: 'rgba(255,255,255,0.5)', margin: '4px 0 0 0', fontSize: '14px' }}>From: Support @ Aurum Foundation</p>
+              <p style={{ color: 'rgba(255,255,255,0.5)', margin: '4px 0 0 0', fontSize: '14px' }}>From: Aurum Rise Onboarding Team</p>
             </div>
           </div>
 
