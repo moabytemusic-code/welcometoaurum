@@ -106,6 +106,20 @@ export async function GET(request) {
       }
     }
 
+    // Helper to find the next partner in sequence after a given partner
+    function getNextPartnerAfter(partner) {
+      let startIndex = allPartners.findIndex(p => p.affiliate_code === partner.affiliate_code);
+      if (startIndex === -1) startIndex = 0;
+
+      for (let i = 1; i <= allPartners.length; i++) {
+        const idx = (startIndex + i) % allPartners.length;
+        const candidate = allPartners[idx];
+        const unlocked = (candidate.unlocked_funnels || 'pitch').split(',').map(s => s.trim());
+        if (unlocked.includes(funnelId)) return candidate;
+      }
+      return null;
+    }
+
     let selected = null;
 
     if (recentRotatorLeads.length === 0) {
@@ -121,67 +135,33 @@ export async function GET(request) {
         return fallbackCorporate();
       }
     } else {
-      const latest = recentRotatorLeads[0];
-      if (latest.is_corporate) {
-        // Find last served partner before corporate
-        let lastServedPartner = null;
-        for (let i = 1; i < recentRotatorLeads.length; i++) {
-          if (!recentRotatorLeads[i].is_corporate) {
-            lastServedPartner = recentRotatorLeads[i].partner;
-            break;
-          }
-        }
+      // Count consecutive 1W145K leads at the top of history
+      let lastNonOwnerPartner = null;
+      let countOwnerLeads = 0;
 
-        if (!lastServedPartner) {
-          // Select first partner who has the funnel unlocked
-          for (const p of allPartners) {
-            const unlocked = (p.unlocked_funnels || 'pitch').split(',').map(s => s.trim());
-            if (unlocked.includes(funnelId)) {
-              selected = p;
-              break;
-            }
-          }
-          if (!selected) return fallbackCorporate();
+      for (const item of recentRotatorLeads) {
+        if (item.sponsor_code === '1W145K') {
+          countOwnerLeads++;
         } else {
-          let startIndex = allPartners.findIndex(p => p.affiliate_code === lastServedPartner.affiliate_code);
-          if (startIndex === -1) startIndex = 0;
-
-          for (let i = 1; i <= allPartners.length; i++) {
-            const idx = (startIndex + i) % allPartners.length;
-            const candidate = allPartners[idx];
-            const unlocked = (candidate.unlocked_funnels || 'pitch').split(',').map(s => s.trim());
-            if (unlocked.includes(funnelId)) {
-              selected = candidate;
-              break;
-            }
-          }
-          if (!selected) return fallbackCorporate();
+          lastNonOwnerPartner = item.partner;
+          break;
         }
-      } else {
-        // Count consecutive assignments for this partner
+      }
+
+      if (countOwnerLeads === 0) {
+        // The most recent lead went to a regular non-1W145K partner
+        const latest = recentRotatorLeads[0];
         const P = latest.partner;
-        
+
         // Safety check: verify P is still active and has this funnel unlocked
         const unlocked = (P.unlocked_funnels || 'pitch').split(',').map(s => s.trim());
         if (!unlocked.includes(funnelId)) {
-          // If the partner who was active no longer has access, choose the next one
-          let startIndex = allPartners.findIndex(p => p.affiliate_code === P.affiliate_code);
-          if (startIndex === -1) startIndex = 0;
-
-          for (let i = 1; i <= allPartners.length; i++) {
-            const idx = (startIndex + i) % allPartners.length;
-            const candidate = allPartners[idx];
-            const candUnlocked = (candidate.unlocked_funnels || 'pitch').split(',').map(s => s.trim());
-            if (candUnlocked.includes(funnelId)) {
-              selected = candidate;
-              break;
-            }
-          }
+          selected = getNextPartnerAfter(P);
           if (!selected) return fallbackCorporate();
         } else {
           let count = 0;
           for (const item of recentRotatorLeads) {
-            if (!item.is_corporate && item.partner.affiliate_code === P.affiliate_code) {
+            if (item.sponsor_code === P.affiliate_code) {
               count++;
             } else {
               break;
@@ -189,10 +169,46 @@ export async function GET(request) {
           }
 
           if (count >= 3) {
-            return fallbackCorporate(); // 4th lead goes to Corporate
+            return fallbackCorporate(); // Next lead is Corporate tax
           } else {
             selected = P;
           }
+        }
+      } else {
+        // We have consecutive 1W145K leads at the top of history
+        if (!lastNonOwnerPartner) {
+          // If we only have 1W145K leads in history
+          if (countOwnerLeads === 1 || countOwnerLeads === 2) {
+            selected = codeToPartnerMap['1W145K'];
+          } else if (countOwnerLeads === 3) {
+            return fallbackCorporate(); // Corporate tax
+          } else {
+            const ownerPartner = codeToPartnerMap['1W145K'];
+            selected = ownerPartner ? getNextPartnerAfter(ownerPartner) : allPartners[0];
+          }
+          if (!selected) return fallbackCorporate();
+        } else {
+          const nextPartner = getNextPartnerAfter(lastNonOwnerPartner);
+
+          if (nextPartner && nextPartner.affiliate_code !== '1W145K') {
+            // Next partner is a regular partner, serve them on lead 1 after corporate tax
+            if (countOwnerLeads === 1) {
+              selected = nextPartner;
+            } else {
+              return fallbackCorporate();
+            }
+          } else {
+            // Next partner is 1W145K, so 1W145K gets its own turn:
+            if (countOwnerLeads === 1 || countOwnerLeads === 2 || countOwnerLeads === 3) {
+              selected = codeToPartnerMap['1W145K'];
+            } else if (countOwnerLeads === 4) {
+              return fallbackCorporate(); // Corporate tax
+            } else {
+              const ownerPartner = codeToPartnerMap['1W145K'];
+              selected = ownerPartner ? getNextPartnerAfter(ownerPartner) : allPartners[0];
+            }
+          }
+          if (!selected) return fallbackCorporate();
         }
       }
     }
