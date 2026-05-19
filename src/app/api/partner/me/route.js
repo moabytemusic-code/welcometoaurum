@@ -46,6 +46,21 @@ export async function GET() {
       .eq('is_active', true)
       .order('name', { ascending: true });
 
+    // 5. Default funnel for first-time login
+    if (activeFunnels && activeFunnels.length > 0 && (!partner.unlocked_funnels || partner.unlocked_funnels.trim() === '')) {
+      const defaultSlug = activeFunnels[0].slug;
+      const { error: updateErr } = await supabase
+        .from('aurum_affiliates')
+        .update({ unlocked_funnels: defaultSlug })
+        .eq('id', partner.id);
+      
+      if (!updateErr) {
+        partner.unlocked_funnels = defaultSlug;
+      } else {
+        console.error('Failed to set default funnel for partner:', updateErr);
+      }
+    }
+
     return NextResponse.json({
       success: true,
       partner: {
