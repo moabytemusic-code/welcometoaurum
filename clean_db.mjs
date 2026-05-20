@@ -15,9 +15,10 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 
 async function clean() {
   const { data, error } = await supabase
-    .from('aurum_projects')
-    .update({ is_active: true })
-    .eq('slug', 'neyro-gateway');
-  console.log("Update result:", { data, error });
+    .from('aurum_leads')
+    .select('*')
+    .order('created_at', { ascending: false })
+    .limit(10);
+  console.log("Latest leads:", data, error);
 }
 clean();

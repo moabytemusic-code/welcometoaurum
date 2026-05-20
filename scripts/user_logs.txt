@@ -1,0 +1,23 @@
+=== CHECKING CONTACT FOR: kentjigga@gmail.com ===
+Contact status: 200
+Attributes: {
+  "FIRSTNAME": "Ken",
+  "LANDING_VARIANT": "neyro_gateway",
+  "SPONSOR_CODE": "1W145K",
+  "SPONSOR_NAME": "Aurum Corporate"
+}
+Lists: [ 68, 66 ]
+
+=== CHECKING TRANSACTONAL EMAIL LOGS FOR: kentjigga@gmail.com ===
+SMTP logs status: 200
+Recent transactional sends:
+- Template 743 | Subject: "Wait, Ken—don't let the AI wave pass you by" | Status: Sent | Date: 2026-05-19T13:16:47.564-04:00
+- Template 743 | Subject: "Wait, Ken—don't let the AI wave pass you by" | Status: Sent | Date: 2026-05-19T13:16:26.661-04:00
+- Template 743 | Subject: "Wait, Ken—don't let the AI wave pass you by" | Status: Sent | Date: 2026-05-19T10:31:07.929-04:00
+- Template 743 | Subject: "Wait, Ken—don't let the AI wave pass you by" | Status: Sent | Date: 2026-05-19T10:17:22.456-04:00
+- Template 638 | Subject: "If you’re ready, this is the next stepThis might help you go deeper" | Status: Sent | Date: 2026-05-09T06:48:06.236-04:00
+- Template 637 | Subject: "A simple AI investing workflowHere’s how beginners are setting this up" | Status: Sent | Date: 2026-05-08T06:48:04.950-04:00
+- Template 636 | Subject: "AI is changing how beginners investThis is the new way to approach it" | Status: Sent | Date: 2026-05-07T06:48:03.798-04:00
+- Template 635 | Subject: "Why most beginners fail at investingThis is what keeps people stuck" | Status: Sent | Date: 2026-05-06T06:48:01.892-04:00
+- Template 634 | Subject: "Your AI Blueprint is inside 📘Here’s your beginner AI investing guide" | Status: Sent | Date: 2026-05-05T06:48:01.586-04:00
+- Template 709 | Subject: "Briefing Received: Claim Your $100 Voucher, Friend" | Status: Sent | Date: 2026-04-25T22:42:21.509-04:00

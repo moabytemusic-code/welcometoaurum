@@ -130,7 +130,7 @@ const PitchAngle = ({ project, handleOptIn, isProcessing, status }) => {
                 </div>
                 <div className={styles.resultItem} style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '16px' }}>
                   <span className={styles.resultLabel}>Total Projected Balance (1 Year)</span>
-                  <span className={styles.resultValueTotal}>${Math.round(deposit + (yieldValue * 12)).toLocaleString()}</span>
+                  <span className={styles.resultValueTotal}>${Math.round(Number(deposit) + (yieldValue * 12)).toLocaleString()}</span>
                 </div>
               </div>
             </div>
