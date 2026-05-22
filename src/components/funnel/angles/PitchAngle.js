@@ -50,12 +50,8 @@ const CustomTicker = () => {
 
 const PitchAngle = ({ project, handleOptIn, isProcessing, status }) => {
   const [deposit, setDeposit] = useState(1500);
-  const [yieldValue, setYieldValue] = useState(0);
-
-  useEffect(() => {
-    const monthlyRate = 1.784 / 12;
-    setYieldValue(deposit * monthlyRate);
-  }, [deposit]);
+  const parsedDeposit = Number(deposit) || 0;
+  const yieldValue = parsedDeposit * (1.784 / 12);
 
   return (
     <main className={styles.main}>
@@ -114,7 +110,7 @@ const PitchAngle = ({ project, handleOptIn, isProcessing, status }) => {
                     value={deposit > 99999 ? 99999 : (deposit || 0)}
                     onChange={(e) => setDeposit(e.target.value)}
                     className={styles.rangeInput}
-                    style={{ background: `linear-gradient(to right, #2d8cf0 ${((Math.min(Number(deposit || 0), 99999) - 100) / 99899) * 100}%, #333 ${((Math.min(Number(deposit || 0), 99999) - 100) / 99899) * 100}%)` }}
+                    style={{ background: `linear-gradient(to right, #2d8cf0 ${((Math.max(100, Math.min(parsedDeposit, 99999)) - 100) / 99899) * 100}%, #333 ${((Math.max(100, Math.min(parsedDeposit, 99999)) - 100) / 99899) * 100}%)` }}
                   />
                 </div>
               <div className={styles.resultsGroup} style={{ textAlign: 'center' }}>
@@ -130,7 +126,7 @@ const PitchAngle = ({ project, handleOptIn, isProcessing, status }) => {
                 </div>
                 <div className={styles.resultItem} style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '16px' }}>
                   <span className={styles.resultLabel}>Total Projected Balance (1 Year)</span>
-                  <span className={styles.resultValueTotal}>${Math.round(Number(deposit) + (yieldValue * 12)).toLocaleString()}</span>
+                  <span className={styles.resultValueTotal}>${Math.round(parsedDeposit + (yieldValue * 12)).toLocaleString()}</span>
                 </div>
               </div>
             </div>
