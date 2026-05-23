@@ -11,36 +11,39 @@ export default function FunnelEngineClient({ initialProject, angleId }) {
 
   useEffect(() => {
     const resolveSponsor = async () => {
-      // 1. Check for existing session in localStorage
-      const stored = localStorage.getItem('aurum_affiliate');
-      if (stored) {
-        try {
-          const parsed = JSON.parse(stored);
-          setSponsorData(parsed);
-          // We still ping the API if a NEW ref is in the URL to override
-        } catch (e) {
-          localStorage.removeItem('aurum_affiliate');
-        }
-      }
+      const params = new URLSearchParams(window.location.search);
+      const refCode = params.get('ref');
 
-      // 2. Resolve Sponsor (Individual ref or Rotator)
-      try {
-        const params = new URLSearchParams(window.location.search);
-        const refCode = params.get('ref');
-        
-        // IMPORTANT: We pass the angleId as the 'funnel' param so the rotator knows which permission to check
-        const url = refCode 
-          ? `/api/rotator?code=${refCode}&funnel=${angleId}` 
-          : `/api/rotator?funnel=${angleId}`;
-        
-        const res = await fetch(url);
-        if (res.ok) {
-          const data = await res.json();
-          setSponsorData(data);
-          localStorage.setItem('aurum_affiliate', JSON.stringify(data));
+      if (refCode) {
+        // 1. Direct link overrides everything
+        try {
+          const res = await fetch(`/api/rotator?code=${refCode}&funnel=${angleId}`);
+          if (res.ok) {
+            const data = await res.json();
+            setSponsorData(data);
+            localStorage.setItem('aurum_affiliate', JSON.stringify(data));
+          }
+        } catch (err) { console.error('Sponsor error:', err); }
+      } else {
+        // 2. No ref code in URL. Check local storage.
+        const stored = localStorage.getItem('aurum_affiliate');
+        if (stored) {
+          try {
+            setSponsorData(JSON.parse(stored));
+          } catch (e) {
+            localStorage.removeItem('aurum_affiliate');
+          }
+        } else {
+          // 3. No ref, no local storage -> ROTATOR
+          try {
+            const res = await fetch(`/api/rotator?funnel=${angleId}`);
+            if (res.ok) {
+              const data = await res.json();
+              setSponsorData(data);
+              localStorage.setItem('aurum_affiliate', JSON.stringify(data));
+            }
+          } catch (err) { console.error('Sponsor error:', err); }
         }
-      } catch (err) {
-        console.error('Sponsor resolution error:', err);
       }
     };
     resolveSponsor();

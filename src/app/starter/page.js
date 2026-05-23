@@ -16,26 +16,39 @@ export default function StarterFunnel() {
 
   useEffect(() => {
     const resolveSponsor = async () => {
-      const stored = localStorage.getItem('aurum_affiliate');
-      if (stored) {
-        try {
-          const parsed = JSON.parse(stored);
-          setSponsorData(parsed);
-          return;
-        } catch (e) {
-          localStorage.removeItem('aurum_affiliate');
-        }
-      }
+      const params = new URLSearchParams(window.location.search);
+      const refCode = params.get('ref');
 
-      try {
-        const res = await fetch('/api/rotator?funnel=starter');
-        if (res.ok) {
-          const data = await res.json();
-          setSponsorData(data);
-          localStorage.setItem('aurum_affiliate', JSON.stringify(data));
+      if (refCode) {
+        // 1. Direct link overrides everything
+        try {
+          const res = await fetch(`/api/rotator?code=${refCode}&funnel=starter`);
+          if (res.ok) {
+            const data = await res.json();
+            setSponsorData(data);
+            localStorage.setItem('aurum_affiliate', JSON.stringify(data));
+          }
+        } catch (err) { console.error('Sponsor error:', err); }
+      } else {
+        // 2. No ref code in URL. Check local storage.
+        const stored = localStorage.getItem('aurum_affiliate');
+        if (stored) {
+          try {
+            setSponsorData(JSON.parse(stored));
+          } catch (e) {
+            localStorage.removeItem('aurum_affiliate');
+          }
+        } else {
+          // 3. No ref, no local storage -> ROTATOR
+          try {
+            const res = await fetch('/api/rotator?funnel=starter');
+            if (res.ok) {
+              const data = await res.json();
+              setSponsorData(data);
+              localStorage.setItem('aurum_affiliate', JSON.stringify(data));
+            }
+          } catch (err) { console.error('Sponsor error:', err); }
         }
-      } catch (err) {
-        console.error('Sponsor error:', err);
       }
     };
     resolveSponsor();

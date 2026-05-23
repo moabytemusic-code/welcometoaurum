@@ -15,16 +15,39 @@ export default function NeyroCapture() {
   // Fetch Sponsor via Rotator
   useEffect(() => {
     const resolveSponsor = async () => {
-      try {
-        const params = new URLSearchParams(window.location.search);
-        const ref = params.get('ref') || '';
-        const res = await fetch(`/api/rotator?funnel=neyro${ref ? `&code=${ref}` : ''}`);
-        if (res.ok) {
-          const data = await res.json();
-          setSponsorData(data);
+      const params = new URLSearchParams(window.location.search);
+      const refCode = params.get('ref');
+
+      if (refCode) {
+        // 1. Direct link overrides everything
+        try {
+          const res = await fetch(`/api/rotator?code=${refCode}&funnel=neyro`);
+          if (res.ok) {
+            const data = await res.json();
+            setSponsorData(data);
+            localStorage.setItem('aurum_affiliate', JSON.stringify(data));
+          }
+        } catch (err) { console.error('Sponsor error:', err); }
+      } else {
+        // 2. No ref code in URL. Check local storage.
+        const stored = localStorage.getItem('aurum_affiliate');
+        if (stored) {
+          try {
+            setSponsorData(JSON.parse(stored));
+          } catch (e) {
+            localStorage.removeItem('aurum_affiliate');
+          }
+        } else {
+          // 3. No ref, no local storage -> ROTATOR
+          try {
+            const res = await fetch('/api/rotator?funnel=neyro');
+            if (res.ok) {
+              const data = await res.json();
+              setSponsorData(data);
+              localStorage.setItem('aurum_affiliate', JSON.stringify(data));
+            }
+          } catch (err) { console.error('Sponsor error:', err); }
         }
-      } catch (err) {
-        console.error('Sponsor error:', err);
       }
     };
     resolveSponsor();
