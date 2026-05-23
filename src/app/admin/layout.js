@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import styles from '@/app/finance.module.css';
-import { Layout, Users, Zap, Sparkles, Settings, Network } from 'lucide-react';
+import { Layout, Users, Zap, Sparkles, Settings, Network, MessageSquare } from 'lucide-react';
 
 export default function AdminLayout({ children }) {
   const pathname = usePathname();
@@ -44,6 +44,10 @@ export default function AdminLayout({ children }) {
           <Link href="/admin/rotators" className={styles.navItem}>
             <Network className={styles.navIcon} />
             <span>Downline Rotators</span>
+          </Link>
+          <Link href="/chat/admin" className={styles.navItem}>
+            <MessageSquare className={styles.navIcon} />
+            <span>AI Chatbot Admin</span>
           </Link>
           <Link href="/admin/payments" className={styles.navItem}>
             <span style={{ fontSize: '18px', marginRight: '12px' }}>🪙</span>
