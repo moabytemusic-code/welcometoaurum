@@ -70,30 +70,27 @@ const PayItForwardAngleV2 = ({ project, handleOptIn, isProcessing, status }) => 
 
           {/* Badge */}
           <div style={{ display: 'inline-block', background: 'rgba(192,38,211,0.15)', border: '1px solid rgba(192,38,211,0.4)', borderRadius: '100px', padding: '8px 20px', fontSize: '12px', fontWeight: '800', letterSpacing: '2px', textTransform: 'uppercase', color: '#ff3cac', marginBottom: '32px' }}>
-            🎁 Limited to 1,000 accounts this week
+            🎁 Limited to the next 1,000 accounts only
           </div>
 
           <h1 style={{ fontSize: 'clamp(36px, 6vw, 72px)', fontWeight: '900', lineHeight: '1.1', marginBottom: '24px', letterSpacing: '-1px' }}>
             The First $100 On Us – <br/>
             <span style={{ background: THEME.highlight, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-              Start Trading with Zero Risk
+              Start Risk-Free
             </span>
           </h1>
 
           <div style={{ fontSize: '18px', color: 'rgba(255,255,255,0.85)', lineHeight: '1.6', maxWidth: '640px', margin: '0 auto 40px', textAlign: 'left' }}>
-            <p style={{ marginBottom: '16px' }}>
-              We&apos;re giving you <strong>$100 in real trading capital</strong> so you can test our <strong>non-custodial AI trading agent (Quantum Alpha)</strong> completely risk-free.
-            </p>
             <p style={{ marginBottom: '24px' }}>
-              Watch the AI trade 24/7 on-chain while you keep full control of the funds.
+              We&apos;re giving you <strong>$100 in real trading capital</strong> to test <strong>Quantum Alpha</strong> — our non-custodial AI trading agent.
             </p>
             
             <div style={{ background: 'rgba(0,0,0,0.4)', padding: '20px', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.1)', marginBottom: '24px' }}>
               <h3 style={{ fontWeight: '800', color: THEME.primary, marginBottom: '12px', fontSize: '16px' }}>Recent Performance (May 2026):</h3>
               <ul style={{ listStyleType: 'none', padding: 0, margin: 0, fontSize: '15px' }}>
-                <li style={{ marginBottom: '8px' }}>• Quantum Alpha: <strong>+1.03%</strong> in one day | <strong>+18.12%</strong> since start of month</li>
-                <li style={{ marginBottom: '8px' }}>• 16,579 total deals executed</li>
-                <li>• 55% win rate</li>
+                <li style={{ marginBottom: '8px' }}>• <strong>+1.03%</strong> in a single day</li>
+                <li style={{ marginBottom: '8px' }}>• <strong>+18.12%</strong> since the start of the month</li>
+                <li>• 16,579 deals executed with 55% win rate</li>
               </ul>
             </div>
             
@@ -116,37 +113,16 @@ const PayItForwardAngleV2 = ({ project, handleOptIn, isProcessing, status }) => 
               />
             </div>
             
-            <h3 style={{ fontWeight: '800', marginBottom: '16px', fontSize: '20px', color: '#fff', textAlign: 'center' }}>What You Get:</h3>
-            <ul style={{ listStyleType: 'none', padding: 0, margin: '0 auto 32px', fontSize: '16px', maxWidth: '400px' }}>
-              <li style={{ marginBottom: '12px', display: 'flex', alignItems: 'center' }}><Gift size={18} style={{ color: THEME.primary, marginRight: '12px' }}/> $100 starting capital (non-custodial – stays in your wallet)</li>
-              <li style={{ marginBottom: '12px', display: 'flex', alignItems: 'center' }}><Zap size={18} style={{ color: THEME.primary, marginRight: '12px' }}/> Access to <strong>Quantum Alpha</strong> AI trading agent</li>
-              <li style={{ marginBottom: '12px', display: 'flex', alignItems: 'center' }}><Globe size={18} style={{ color: THEME.primary, marginRight: '12px' }}/> Live performance tracking</li>
-              <li style={{ display: 'flex', alignItems: 'center' }}><Shield size={18} style={{ color: THEME.primary, marginRight: '12px' }}/> Full transparency on-chain</li>
-            </ul>
-
-            <h3 style={{ fontWeight: '800', fontSize: '20px', color: '#fff', textAlign: 'center', marginBottom: '24px' }}>Ready to see the AI work?</h3>
-          </div>
-
-          {/* ── Opt-In Form (Moved Up) ────────────────────────────────────────────── */}
-          <div style={{ maxWidth: '900px', width: '90%', margin: '0 auto 48px', display: 'flex', justifyContent: 'center' }}>
-            <OptInBadge 
-              onOptIn={handleOptIn} 
-              isProcessing={isProcessing} 
-              status={status}
-              wide={true}
-              minimal={true}
-              angle="pay-it-forward"
-            />
           </div>
 
           {/* "Why" Section */}
-          <div style={{ background: THEME.bgCard, backdropFilter: 'blur(20px)', border: `1px solid ${THEME.border}`, borderRadius: '24px', padding: '40px', marginBottom: '48px', textAlign: 'center' }}>
-            <h2 style={{ fontSize: '24px', fontWeight: '900', marginBottom: '32px', textAlign: 'center', color: '#fff' }}>Why We&apos;re Giving Away $100</h2>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '32px' }}>
+          <div style={{ background: THEME.bgCard, backdropFilter: 'blur(20px)', border: `1px solid ${THEME.border}`, borderRadius: '24px', padding: '56px 48px', marginBottom: '64px', textAlign: 'center' }}>
+            <h2 style={{ fontSize: '28px', fontWeight: '900', marginBottom: '48px', textAlign: 'center', color: '#fff' }}>Why We&apos;re Doing This</h2>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '48px' }}>
               {[
-                { icon: <ShieldCheck size={32} />, title: 'Zero Risk for You', desc: "We put up the starting capital. You don’t risk any of your own money to test it." },
-                { icon: <Zap size={32} />, title: 'See Real Results First', desc: "Experience how the AI finds opportunities in the market before you ever add your own funds." },
-                { icon: <Gift size={32} />, title: 'True Pay-It-Forward', desc: "We’d rather invest in new users succeeding than spend money on ads." },
+                { icon: <ShieldCheck size={32} />, title: 'Zero Risk for You', desc: "We fund the account. You don’t risk any of your own money to test it." },
+                { icon: <Zap size={32} />, title: 'See Real Results First', desc: "Watch the AI trade 24/7 on-chain before adding your own capital." },
+                { icon: <Gift size={32} />, title: 'True Pay-It-Forward', desc: "We’d rather help new users succeed than spend money on advertising." },
               ].map(item => (
                 <div key={item.title} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
                   <div style={{ color: THEME.primary, marginBottom: '16px' }}>{item.icon}</div>
@@ -157,11 +133,38 @@ const PayItForwardAngleV2 = ({ project, handleOptIn, isProcessing, status }) => 
             </div>
           </div>
 
+          {/* "What You Get Immediately" Section */}
+          <div style={{ maxWidth: '640px', margin: '0 auto 48px', textAlign: 'left', background: 'rgba(0,0,0,0.4)', padding: '32px', borderRadius: '24px', border: '1px solid rgba(255,255,255,0.1)' }}>
+            <h3 style={{ fontWeight: '900', marginBottom: '24px', fontSize: '24px', color: '#fff', textAlign: 'center' }}>What You Get Immediately:</h3>
+            <ul style={{ listStyleType: 'none', padding: 0, margin: '0 auto', fontSize: '16px', maxWidth: '420px' }}>
+              <li style={{ marginBottom: '16px', display: 'flex', alignItems: 'center' }}><Gift size={20} style={{ color: THEME.primary, marginRight: '16px', flexShrink: 0 }}/> $100 starting capital (fully non-custodial)</li>
+              <li style={{ marginBottom: '16px', display: 'flex', alignItems: 'center' }}><Zap size={20} style={{ color: THEME.primary, marginRight: '16px', flexShrink: 0 }}/> Access to <strong>Quantum Alpha</strong> AI Agent</li>
+              <li style={{ marginBottom: '16px', display: 'flex', alignItems: 'center' }}><Globe size={20} style={{ color: THEME.primary, marginRight: '16px', flexShrink: 0 }}/> Live performance dashboard</li>
+              <li style={{ display: 'flex', alignItems: 'center' }}><Shield size={20} style={{ color: THEME.primary, marginRight: '16px', flexShrink: 0 }}/> Full transparency (on-chain)</li>
+            </ul>
+          </div>
+
+          {/* CTA & OptInBadge */}
+          <div style={{ textAlign: 'center', marginBottom: '64px' }}>
+            <h3 style={{ fontWeight: '900', fontSize: '28px', color: '#fff', marginBottom: '32px' }}>Ready to see the AI work?</h3>
+            <div style={{ maxWidth: '900px', width: '90%', margin: '0 auto', display: 'flex', justifyContent: 'center' }}>
+              <OptInBadge 
+                onOptIn={handleOptIn} 
+                isProcessing={isProcessing} 
+                status={status}
+                wide={true}
+                minimal={true}
+                angle="pay-it-forward"
+              />
+            </div>
+          </div>
+
           {/* Scarcity & Trust Signals */}
           <div style={{ maxWidth: '600px', margin: '0 auto', textAlign: 'center' }}>
             <p style={{ fontSize: '16px', fontWeight: '700', color: '#fff', marginBottom: '32px', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '32px' }}>
-              <span style={{ color: THEME.primary }}>Limited Offer</span> – Once today&apos;s pool is gone, it&apos;s gone.<br/>
-              Only 1,000 accounts this round.
+              <span style={{ color: THEME.primary }}>Limited Offer</span> — Funding pool resets daily. Once it&apos;s gone, it&apos;s gone.<br/>
+              <br/>
+              <span style={{ color: '#fff' }}><strong>Next Step:</strong> After claiming, we recommend joining our next live webinar to see exactly how the AI works.</span>
             </p>
             
             <div style={{ display: 'flex', justifyContent: 'center', gap: '24px', flexWrap: 'wrap', color: 'rgba(255,255,255,0.6)', fontSize: '13px' }}>
