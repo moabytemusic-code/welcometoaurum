@@ -13,6 +13,7 @@ export const metadata = {
 };
 
 import GoogleTranslate from "@/components/GoogleTranslate";
+import ChatWidgetEmbed from "@/components/ChatWidgetEmbed";
 
 export default function RootLayout({ children }) {
   return (
@@ -24,6 +25,7 @@ export default function RootLayout({ children }) {
       <body suppressHydrationWarning className="min-h-full flex flex-col font-sans bg-[#050505] text-white">
         <GoogleTranslate />
         {children}
+        <ChatWidgetEmbed />
       </body>
     </html>
   );
