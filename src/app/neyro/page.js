@@ -37,7 +37,7 @@ export default function NeyroCapture() {
     
     try {
       // Use existing optin endpoint
-      await fetch('/api/optin', {
+      const res = await fetch('/api/optin', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -47,13 +47,21 @@ export default function NeyroCapture() {
           landing_variant: 'neyro_protocol'
         })
       });
+      
+      if (res.ok) {
+        setTimeout(() => {
+          window.location.href = '/neyro/bridge';
+        }, 1000);
+      } else {
+        const errorData = await res.json();
+        throw new Error(errorData.error || 'System error. Please try again.');
+      }
     } catch (error) {
       console.error(error);
+      alert(error.message);
+      setIsProcessing(false);
+      setStatus('');
     }
-    
-    setTimeout(() => {
-      window.location.href = '/neyro/bridge';
-    }, 1000);
   };
 
   return (

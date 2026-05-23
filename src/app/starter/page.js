@@ -65,12 +65,14 @@ export default function StarterFunnel() {
           window.location.href = '/onboarding';
         }, 1000);
       } else {
-        throw new Error('Capture failed');
+        const errorData = await res.json();
+        throw new Error(errorData.error || 'System error. Please try again.');
       }
     } catch (err) {
       console.error(err);
-      setStatus('ERROR: REDIRECTING...');
-      window.location.href = '/onboarding';
+      alert(err.message);
+      setIsProcessing(false);
+      setStatus('');
     }
   };
 

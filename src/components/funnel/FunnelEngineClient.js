@@ -69,14 +69,14 @@ export default function FunnelEngineClient({ initialProject, angleId }) {
           window.location.href = `/thank-you?ref=${sponsorData.code}`;
         }, 1000);
       } else {
-        throw new Error('Capture failed');
+        const errorData = await res.json();
+        throw new Error(errorData.error || 'System error. Please try again.');
       }
     } catch (err) {
       console.error('Opt-in error:', err);
-      setStatus('ERROR: REDIRECTING...');
-      setTimeout(() => {
-        window.location.href = `/thank-you?ref=${sponsorData.code}`;
-      }, 1500);
+      alert(err.message);
+      setIsProcessing(false);
+      setStatus('');
     }
   };
 

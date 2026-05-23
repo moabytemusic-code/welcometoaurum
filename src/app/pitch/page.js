@@ -243,12 +243,14 @@ export default function Home() {
           window.location.href = `/thank-you?ref=${sponsorData.code}`;
         }, 1000);
       } else {
-        throw new Error('Capture failed');
+        const errorData = await res.json();
+        throw new Error(errorData.error || 'System error. Please try again.');
       }
     } catch (err) {
       console.error(err);
-      setStatus('ERROR: RETRYING REDIRECT...');
-      window.location.href = `/thank-you?ref=${sponsorData.code}`;
+      alert(err.message);
+      setIsProcessing(false);
+      setStatus('');
     }
   };
 
