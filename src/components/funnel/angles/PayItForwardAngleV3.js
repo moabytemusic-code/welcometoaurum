@@ -211,7 +211,7 @@ const PayItForwardAngleV3 = ({ project, handleOptIn, isProcessing, status }) => 
                 required
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                className="w-full sm:w-1/3 bg-slate-900 border border-slate-700 focus:border-emerald-500 rounded-2xl px-6 py-5 text-white placeholder-slate-500 outline-none transition text-lg"
+                className="w-full sm:w-1/3 bg-slate-900 border border-slate-700 focus:border-emerald-500 rounded-2xl p-4 md:px-6 md:py-5 text-white placeholder-slate-500 outline-none transition text-base md:text-lg"
               />
               <input 
                 type="email" 
@@ -219,11 +219,11 @@ const PayItForwardAngleV3 = ({ project, handleOptIn, isProcessing, status }) => 
                 required
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                className="w-full sm:w-1/3 bg-slate-900 border border-slate-700 focus:border-emerald-500 rounded-2xl px-6 py-5 text-white placeholder-slate-500 outline-none transition text-lg"
+                className="w-full sm:w-1/3 bg-slate-900 border border-slate-700 focus:border-emerald-500 rounded-2xl p-4 md:px-6 md:py-5 text-white placeholder-slate-500 outline-none transition text-base md:text-lg"
               />
               <button 
                 type="submit" 
-                className="w-full sm:w-auto shrink-0 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black px-10 py-5 rounded-2xl flex items-center justify-center gap-3 transition-transform hover:-translate-y-1 shadow-[0_0_40px_rgba(16,185,129,0.4)] text-lg"
+                className="w-full sm:w-auto shrink-0 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black p-4 md:px-10 md:py-5 rounded-2xl flex items-center justify-center gap-3 transition-transform hover:-translate-y-1 shadow-[0_0_40px_rgba(16,185,129,0.4)] text-base md:text-lg"
               >
                 Claim My Free $100 Before It&apos;s Gone
               </button>
