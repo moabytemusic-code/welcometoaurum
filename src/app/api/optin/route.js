@@ -82,11 +82,8 @@ export async function POST(req) {
       return NextResponse.json({ success: true, message: 'Simulated success (API Key missing)' });
     }
 
-    // Determine which list to add the contact to
-    const defaultList = parseInt(process.env.BREVO_LIST_ID || '1');
-    const variantList = landing_variant === 'pay-it-forward' || landing_variant === 'pay-it-forward-v2' 
-      ? parseInt(process.env.BREVO_LIST_ID_VOUCHER || process.env.BREVO_LIST_ID || '1')
-      : defaultList;
+    // Route all leads to Brevo List ID 68 regardless of the funnel variant
+    const variantList = 68;
 
     const payload = {
       email,
