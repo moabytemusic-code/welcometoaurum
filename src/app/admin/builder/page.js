@@ -152,13 +152,24 @@ export default function FaaSBuilder() {
                   onClick={() => setProjectData({...projectData, angle: 'pay-it-forward'})}
                 >
                   <Gift className={styles.angleIcon} />
-                  <h3>Pay It Forward</h3>
-                  <p>Fund the user's first $100. Highest reciprocity & trust.</p>
+                  <h3>Pay It Forward (V1)</h3>
+                  <p>Original layout for the $100 offer.</p>
                 </div>
-                <div className={styles.angleCardDisabled}>
-                  <Zap className={styles.angleIcon} />
-                  <h3>Fear/Urgency</h3>
-                  <p>Coming Soon: Scarcity-driven layout.</p>
+                <div 
+                  className={`${styles.angleCard} ${projectData.angle === 'pay-it-forward-v2' ? styles.angleActive : ''}`}
+                  onClick={() => setProjectData({...projectData, angle: 'pay-it-forward-v2'})}
+                >
+                  <Gift className={styles.angleIcon} />
+                  <h3>Pay It Forward (V2)</h3>
+                  <p>Updated layout with aligned trust signals.</p>
+                </div>
+                <div 
+                  className={`${styles.angleCard} ${projectData.angle === 'pay-it-forward-v3' ? styles.angleActive : ''}`}
+                  onClick={() => setProjectData({...projectData, angle: 'pay-it-forward-v3'})}
+                >
+                  <Sparkles className={styles.angleIcon} />
+                  <h3>Pay It Forward (V3)</h3>
+                  <p>Modern Tailwind UI with neon crypto accents.</p>
                 </div>
               </div>
 

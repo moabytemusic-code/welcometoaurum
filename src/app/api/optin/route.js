@@ -108,7 +108,7 @@ export async function POST(req) {
 
     // Direct SMTP Welcome Email Fallback Send
     try {
-      const templateId = (landing_variant === 'pay-it-forward' || landing_variant === 'pay-it-forward-v2')
+      const templateId = (landing_variant === 'pay-it-forward' || landing_variant === 'pay-it-forward-v2' || landing_variant === 'pay-it-forward-v3')
         ? 744  // Voucher Welcome Email
         : 743; // Core Welcome Email
 
