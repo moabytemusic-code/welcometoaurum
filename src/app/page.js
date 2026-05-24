@@ -44,7 +44,7 @@ export default function HomePage() {
             </h1>
             
             <p className="text-lg lg:text-xl text-white/60 leading-relaxed max-w-xl">
-              Unlock the official Aurum Rise Syllabus—your comprehensive blueprint to leveraging autonomous algorithms and scalable neobanking ecosystems, completely free.
+              Unlock the official Aurum Rise Syllabus—your comprehensive blueprint to leveraging autonomous algorithms, AI Finance, and scalable neobanking ecosystems to master the future of money, completely free.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 mt-4">
