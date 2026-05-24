@@ -82,8 +82,8 @@ export async function POST(req) {
       return NextResponse.json({ success: true, message: 'Simulated success (API Key missing)' });
     }
 
-    // Route all leads to Brevo List ID 68 regardless of the funnel variant
-    const variantList = 68;
+    // Route syllabus leads to List 71, otherwise default to 68
+    const variantList = landing_variant === 'syllabus-freemium' ? 71 : 68;
 
     const payload = {
       email,
@@ -140,32 +140,41 @@ export async function POST(req) {
 
     // Direct SMTP Welcome Email Fallback Send
     try {
-      const templateId = (landing_variant === 'pay-it-forward' || landing_variant === 'pay-it-forward-v2' || landing_variant === 'pay-it-forward-v3')
-        ? 829  // Voucher Welcome Email ($100 AI Access)
-        : 743; // Core Welcome Email
+      let templateId = 743; // Core Welcome Email
+      let skipSmtp = false;
 
-      const smtpRes = await fetch('https://api.brevo.com/v3/smtp/email', {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'api-key': process.env.BREVO_API_KEY
-        },
-        body: JSON.stringify({
-          to: [{ email, name: first_name || '' }],
-          templateId,
-          params: {
-            FIRSTNAME: first_name || '',
-            SPONSOR_NAME: sponsor_name || 'Aurum Corporate'
-          }
-        })
-      });
+      if (landing_variant === 'pay-it-forward' || landing_variant === 'pay-it-forward-v2' || landing_variant === 'pay-it-forward-v3') {
+        templateId = 829; // Voucher Welcome Email ($100 AI Access)
+      } else if (landing_variant === 'syllabus-freemium') {
+        // For the syllabus, we wait for the user to provide the exact template ID, 
+        // or let Brevo Automations handle it via List 71.
+        skipSmtp = true; 
+      }
 
-      if (!smtpRes.ok) {
-        const errData = await smtpRes.json();
-        console.error('Direct SMTP welcome email send failed response:', errData);
-      } else {
-        console.log(`Direct SMTP welcome email triggered successfully for ${email} (Template ID: ${templateId})`);
+      if (!skipSmtp) {
+        const smtpRes = await fetch('https://api.brevo.com/v3/smtp/email', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'api-key': process.env.BREVO_API_KEY
+          },
+          body: JSON.stringify({
+            to: [{ email, name: first_name || '' }],
+            templateId,
+            params: {
+              FIRSTNAME: first_name || '',
+              SPONSOR_NAME: sponsor_name || 'Aurum Corporate'
+            }
+          })
+        });
+
+        if (!smtpRes.ok) {
+          const errData = await smtpRes.json();
+          console.error('Direct SMTP welcome email send failed response:', errData);
+        } else {
+          console.log(`Direct SMTP welcome email triggered successfully for ${email} (Template ID: ${templateId})`);
+        }
       }
     } catch (smtpErr) {
       console.error('Direct SMTP welcome email send failed:', smtpErr.message);
