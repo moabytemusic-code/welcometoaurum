@@ -7,9 +7,9 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: "AURUM | The AI Finance Breakdown",
+  title: "AURUM RISE | The AI Finance Breakdown",
   description: "Join 18,000+ partners leveraging the world’s first AI-driven Neobanking ecosystem designed to squeeze maximum yield from global markets.",
-  keywords: ["AURUM", "AI Finance", "Neobanking", "Yield", "Passive Income"],
+  keywords: ["Aurum Rise", "AI Finance", "Neobanking", "Yield", "Passive Income"],
 };
 import GoogleTranslate from "@/components/GoogleTranslate";
 

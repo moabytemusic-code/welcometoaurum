@@ -16,7 +16,7 @@ export default function HomePage() {
           <div className="w-10 h-10 bg-gradient-to-br from-[#00ff88] to-[#00cc6a] rounded-xl flex items-center justify-center font-black text-black text-xl">
             A
           </div>
-          <span className="text-xl font-black tracking-wider">AURUM</span>
+          <span className="text-xl font-black tracking-wider">AURUM RISE</span>
         </div>
         <div className="flex gap-6 items-center">
           <a href="/partner/login" className="text-sm font-semibold text-white/60 hover:text-white transition-colors">
@@ -46,7 +46,7 @@ export default function HomePage() {
             </h1>
             
             <p className="text-lg lg:text-xl text-white/60 leading-relaxed max-w-xl">
-              Unlock the official AURUM Syllabus—your comprehensive blueprint to leveraging autonomous algorithms and scalable neobanking ecosystems, completely free.
+              Unlock the official Aurum Rise Syllabus—your comprehensive blueprint to leveraging autonomous algorithms and scalable neobanking ecosystems, completely free.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 mt-4">
@@ -115,7 +115,7 @@ export default function HomePage() {
               />
               
               <p className="text-center text-xs text-white/40 mt-4">
-                By entering your email, you agree to receive updates from AURUM. We respect your privacy.
+                By entering your email, you agree to receive updates from Aurum Rise. We respect your privacy.
               </p>
             </div>
           </div>

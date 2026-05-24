@@ -10,7 +10,7 @@ export default function SyllabusPage() {
           <div className="w-10 h-10 bg-gradient-to-br from-[#00ff88] to-[#00cc6a] rounded-xl flex items-center justify-center font-black text-black text-xl">
             A
           </div>
-          <span className="text-xl font-black tracking-wider">AURUM</span>
+          <span className="text-xl font-black tracking-wider">AURUM RISE</span>
         </div>
         <div className="flex gap-4">
           <span className="bg-[#00ff88]/10 text-[#00ff88] px-4 py-2 rounded-full text-sm font-bold flex items-center gap-2">
@@ -25,7 +25,7 @@ export default function SyllabusPage() {
           The Official <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00ff88] to-[#2d8cf0]">Syllabus</span>
         </h1>
         <p className="text-lg text-white/60 mb-12 max-w-2xl mx-auto">
-          You've successfully unlocked access to the AURUM masterclass. Below is the curriculum covering our proprietary AI trading algorithms and neobanking ecosystem.
+          You've successfully unlocked access to the Aurum Rise masterclass. Below is the curriculum covering our proprietary AI trading algorithms and neobanking ecosystem.
         </p>
 
         {/* Video Placeholder (Optional) */}
@@ -52,7 +52,7 @@ export default function SyllabusPage() {
               <ul className="space-y-2 text-sm text-white/40 font-medium">
                 <li className="flex items-center gap-2"><CheckCircle size={14} className="text-[#00ff88]" /> Introduction to Algorithmic Yield</li>
                 <li className="flex items-center gap-2"><CheckCircle size={14} className="text-[#00ff88]" /> Mitigating Market Volatility</li>
-                <li className="flex items-center gap-2"><CheckCircle size={14} className="text-[#00ff88]" /> Deep Dive into AURUM Core</li>
+                <li className="flex items-center gap-2"><CheckCircle size={14} className="text-[#00ff88]" /> Deep Dive into Aurum Rise Core</li>
               </ul>
             </div>
           </div>
