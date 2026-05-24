@@ -155,23 +155,41 @@ export default function PartnerDashboard() {
           alignItems: 'center',
           paddingBottom: '32px',
           borderBottom: '1px solid rgba(255,255,255,0.05)',
-          marginBottom: '40px'
+          marginBottom: '40px',
+          position: 'relative',
+          zIndex: 50
         }}>
           <div>
             <h1 style={{ fontSize: '28px', fontWeight: '900', margin: 0, letterSpacing: '-0.5px' }}>Partner Dashboard</h1>
             <p style={{ color: 'rgba(255,255,255,0.4)', margin: '4px 0 0 0', fontSize: '14px' }}>Welcome back, <strong style={{ color: '#00ff88' }}>{partner?.full_name}</strong></p>
           </div>
-          <button onClick={handleLogout} style={{
-            background: 'rgba(255,255,255,0.03)',
-            border: '1px solid rgba(255,255,255,0.08)',
-            padding: '10px 20px',
-            borderRadius: '12px',
-            color: '#ff4b4b',
-            fontWeight: '700',
-            cursor: 'pointer',
-            fontSize: '14px',
-            transition: 'all 0.2s'
-          }}>Log Out</button>
+          <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+            <a href="/syllabus" style={{
+              background: 'rgba(0, 255, 136, 0.05)',
+              border: '1px solid rgba(0, 255, 136, 0.2)',
+              padding: '10px 20px',
+              borderRadius: '12px',
+              color: '#00ff88',
+              fontWeight: '700',
+              cursor: 'pointer',
+              fontSize: '14px',
+              textDecoration: 'none',
+              display: 'inline-flex',
+              alignItems: 'center',
+              transition: 'all 0.2s'
+            }}>Course Syllabus 📚</a>
+            <button onClick={handleLogout} style={{
+              background: 'rgba(255,255,255,0.03)',
+              border: '1px solid rgba(255,255,255,0.08)',
+              padding: '10px 20px',
+              borderRadius: '12px',
+              color: '#ff4b4b',
+              fontWeight: '700',
+              cursor: 'pointer',
+              fontSize: '14px',
+              transition: 'all 0.2s'
+            }}>Log Out</button>
+          </div>
         </header>
 
         {/* Stats Grid */}
@@ -211,6 +229,55 @@ export default function PartnerDashboard() {
           {/* LEFT COLUMN: Links, QR Code, Funnels */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
             
+            {/* Syllabus Access Card */}
+            <div style={{
+              background: 'linear-gradient(135deg, rgba(0, 255, 136, 0.02) 0%, rgba(45, 140, 240, 0.02) 100%)',
+              border: '1px solid rgba(0, 255, 136, 0.12)',
+              padding: '32px',
+              borderRadius: '24px',
+              position: 'relative',
+              overflow: 'hidden'
+            }}>
+              <div style={{
+                position: 'absolute',
+                top: '-50px',
+                right: '-50px',
+                width: '150px',
+                height: '150px',
+                background: 'radial-gradient(circle, rgba(0, 255, 136, 0.08) 0%, transparent 70%)',
+                zIndex: 0
+              }} />
+              <div style={{ position: 'relative', zIndex: 1 }}>
+                <h3 style={{ margin: '0 0 8px 0', fontSize: '18px', fontWeight: '800', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <span>Education Portal</span>
+                  <span style={{ fontSize: '10px', background: 'rgba(0, 255, 136, 0.1)', color: '#00ff88', padding: '2px 8px', borderRadius: '10px', fontWeight: 'bold', textTransform: 'uppercase' }}>Active</span>
+                </h3>
+                <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '13px', margin: '0 0 20px 0', lineHeight: '1.6' }}>
+                  Access the official course curriculum covering automated trading algorithms, staking models, and ecosystem navigation.
+                </p>
+                <a
+                  href="/syllabus"
+                  style={{
+                    background: '#00ff88',
+                    border: 'none',
+                    color: '#000',
+                    fontWeight: '800',
+                    borderRadius: '12px',
+                    padding: '12px 24px',
+                    cursor: 'pointer',
+                    fontSize: '14px',
+                    textDecoration: 'none',
+                    display: 'inline-block',
+                    textAlign: 'center',
+                    boxShadow: '0 4px 12px rgba(0, 255, 136, 0.15)',
+                    transition: 'all 0.2s'
+                  }}
+                >
+                  Enter Syllabus Portal 📚
+                </a>
+              </div>
+            </div>
+
             {/* Referral Link Card */}
             <div style={{
               background: 'rgba(255,255,255,0.01)',
