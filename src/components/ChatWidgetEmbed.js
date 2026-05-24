@@ -7,7 +7,6 @@ export default function ChatWidgetEmbed() {
 
   useEffect(() => {
     const handleMessage = (event) => {
-      // Safety check: confirm the message structure is what we expect
       if (event.data && event.data.type === "aurum_chat_toggle") {
         setIsOpen(event.data.isOpen);
       }
@@ -23,17 +22,18 @@ export default function ChatWidgetEmbed() {
     <div
       style={{
         position: "fixed",
-        bottom: "16px",
-        right: "16px",
+        bottom: 0,
+        right: 0,
         zIndex: 9999,
-        width: isOpen ? "420px" : "90px",
-        height: isOpen ? "650px" : "90px",
-        maxWidth: "calc(100vw - 32px)",
-        maxHeight: "calc(100vh - 32px)",
-        transition: "width 0.3s cubic-bezier(0.16, 1, 0.3, 1), height 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
+        // When open: full viewport so chat panel + backdrop aren't clipped
+        // When closed: small area for just the floating button
+        width: isOpen ? "100vw" : "96px",
+        height: isOpen ? "100vh" : "96px",
+        transition: isOpen
+          ? "none" // Open instantly so panel isn't clipped during transition
+          : "width 0.3s cubic-bezier(0.16, 1, 0.3, 1), height 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
         overflow: "hidden",
-        borderRadius: isOpen ? "24px" : "50%",
-        pointerEvents: "none" // Let pointer events pass through container
+        pointerEvents: "none", // Let pointer events pass through container
       }}
     >
       <iframe
@@ -45,9 +45,8 @@ export default function ChatWidgetEmbed() {
           border: "none",
           background: "transparent",
           pointerEvents: "auto", // Re-enable pointer events on the iframe itself
-          colorScheme: "dark"
         }}
-        allow="microphone" // Enable voice input/speech recognition in the iframe
+        allow="microphone"
       />
     </div>
   );
