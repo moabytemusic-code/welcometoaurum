@@ -59,7 +59,13 @@ export default function PartnerLogin() {
         boxShadow: '0 20px 40px rgba(0,0,0,0.5)',
         textAlign: 'center'
       }}>
-        <div style={{ fontSize: '40px', marginBottom: '16px' }}>🤝</div>
+        <div style={{ marginBottom: '24px', display: 'flex', justifyContent: 'center' }}>
+          <img 
+            src="/images/aurum_logo.png" 
+            alt="Aurum Rise Logo" 
+            style={{ width: '100%', maxWidth: '240px', height: 'auto' }}
+          />
+        </div>
         <h2 style={{ fontSize: '24px', fontWeight: '800', marginBottom: '8px', letterSpacing: '-0.5px' }}>Partner Command</h2>
         <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '14px', marginBottom: '32px' }}>
           Enter your affiliate credentials to manage your funnels and traffic.

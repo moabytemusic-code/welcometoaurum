@@ -11,9 +11,7 @@ export const metadata = {
   description: "Join 18,000+ partners leveraging the world’s first AI-driven Neobanking ecosystem designed to squeeze maximum yield from global markets.",
   keywords: ["AURUM", "AI Finance", "Neobanking", "Yield", "Passive Income"],
 };
-
 import GoogleTranslate from "@/components/GoogleTranslate";
-import ChatWidgetEmbed from "@/components/ChatWidgetEmbed";
 
 export default function RootLayout({ children }) {
   return (
@@ -25,7 +23,6 @@ export default function RootLayout({ children }) {
       <body suppressHydrationWarning className="min-h-full flex flex-col font-sans bg-[#050505] text-white">
         <GoogleTranslate />
         {children}
-        <ChatWidgetEmbed />
       </body>
     </html>
   );
