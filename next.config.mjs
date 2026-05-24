@@ -7,12 +7,6 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: '/syllabus/:path*',
-        destination: isDev
-          ? 'http://localhost:3002/syllabus/:path*'
-          : 'https://aurum-education-portal.vercel.app/syllabus/:path*',
-      },
-      {
         source: '/chat/:path*',
         destination: isDev
           ? 'http://localhost:3001/chat/:path*'
