@@ -7,9 +7,7 @@ export default function SyllabusPage() {
       {/* Navigation */}
       <nav className="flex items-center justify-between p-6 max-w-7xl mx-auto border-b border-white/5">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-gradient-to-br from-[#00ff88] to-[#00cc6a] rounded-xl flex items-center justify-center font-black text-black text-xl">
-            A
-          </div>
+          <img src="/images/aurum_logo.png" alt="Aurum Rise Logo" className="h-10 w-auto" />
           <span className="text-xl font-black tracking-wider">AURUM RISE</span>
         </div>
         <div className="flex gap-4">
