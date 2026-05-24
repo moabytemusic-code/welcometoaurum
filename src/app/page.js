@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import OptInForm from '@/components/OptInForm';
 import ChatWidgetEmbed from '@/components/ChatWidgetEmbed';
@@ -51,7 +53,10 @@ export default function HomePage() {
               <a href="#freemium" className="bg-[#00ff88] text-black font-black text-lg px-8 py-4 rounded-xl hover:scale-105 hover:shadow-[0_0_30px_rgba(0,255,136,0.3)] transition-all flex items-center justify-center gap-2">
                 Unlock The Syllabus <BookOpen size={20} />
               </a>
-              <button className="bg-white/5 border border-white/10 text-white font-bold text-lg px-8 py-4 rounded-xl hover:bg-white/10 transition-all flex items-center justify-center gap-2">
+              <button 
+                onClick={() => window.postMessage({ type: 'aurum_chat_toggle', isOpen: true }, '*')}
+                className="bg-white/5 border border-white/10 text-white font-bold text-lg px-8 py-4 rounded-xl hover:bg-white/10 transition-all flex items-center justify-center gap-2"
+              >
                 Meet The AI <Bot size={20} />
               </button>
             </div>
