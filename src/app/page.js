@@ -1,11 +1,18 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import OptInForm from '@/components/OptInForm';
 import ChatWidgetEmbed from '@/components/ChatWidgetEmbed';
 import { Sparkles, BookOpen, Bot, Zap, Shield, ChevronRight } from 'lucide-react';
 
 export default function HomePage() {
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      window.postMessage({ type: 'aurum_chat_toggle', isOpen: true }, '*');
+    }, 2500);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <div className="min-h-screen bg-[#050505] text-white overflow-hidden relative">
       {/* Background ambient lighting */}
