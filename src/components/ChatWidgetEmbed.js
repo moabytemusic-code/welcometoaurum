@@ -37,7 +37,7 @@ export default function ChatWidgetEmbed() {
       }}
     >
       <iframe
-        src="/chat?embed=true"
+        src="/chat?embed=true&welcome=Hello!%20Welcome%20to%20Aurum%20Rise.%20Are%20you%20ready%20to%20unlock%20the%20Syllabus%3F"
         title="Aurum AI Chatbot"
         style={{
           width: "100%",
