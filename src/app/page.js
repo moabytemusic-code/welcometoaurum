@@ -61,7 +61,12 @@ export default function HomePage() {
                 Unlock The Syllabus <BookOpen size={20} />
               </a>
               <button 
-                onClick={() => window.postMessage({ type: 'aurum_chat_toggle', isOpen: true }, '*')}
+                type="button"
+                onClick={(e) => {
+                  e.preventDefault();
+                  window.dispatchEvent(new CustomEvent('open_aurum_chatbot'));
+                  window.postMessage({ type: 'aurum_chat_toggle', isOpen: true }, '*');
+                }}
                 className="bg-white/5 border border-white/10 text-white font-bold text-lg px-8 py-4 rounded-xl hover:bg-white/10 transition-all flex items-center justify-center gap-2"
               >
                 Meet The AI <Bot size={20} />

@@ -146,9 +146,8 @@ export async function POST(req) {
       if (landing_variant === 'pay-it-forward' || landing_variant === 'pay-it-forward-v2' || landing_variant === 'pay-it-forward-v3') {
         templateId = 829; // Voucher Welcome Email ($100 AI Access)
       } else if (landing_variant === 'syllabus-freemium') {
-        // For the syllabus, we wait for the user to provide the exact template ID, 
-        // or let Brevo Automations handle it via List 71.
-        skipSmtp = true; 
+        templateId = 831; // Syllabus Welcome & Upsell Email
+        skipSmtp = false; 
       }
 
       if (!skipSmtp) {

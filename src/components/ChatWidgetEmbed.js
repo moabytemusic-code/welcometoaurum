@@ -4,17 +4,32 @@ import React, { useState, useEffect } from "react";
 
 export default function ChatWidgetEmbed() {
   const [isOpen, setIsOpen] = useState(false);
+  const iframeRef = React.useRef(null);
 
   useEffect(() => {
     const handleMessage = (event) => {
       if (event.data && event.data.type === "aurum_chat_toggle") {
         setIsOpen(event.data.isOpen);
+        if (event.data.isOpen && iframeRef.current && iframeRef.current.contentWindow) {
+          // Tell the actual chatbot app inside the iframe to open
+          iframeRef.current.contentWindow.postMessage({ type: 'aurum_chat_open' }, '*');
+        }
+      }
+    };
+
+    const handleCustomOpen = () => {
+      setIsOpen(true);
+      if (iframeRef.current && iframeRef.current.contentWindow) {
+        iframeRef.current.contentWindow.postMessage({ type: 'aurum_chat_open' }, '*');
       }
     };
 
     window.addEventListener("message", handleMessage);
+    window.addEventListener("open_aurum_chatbot", handleCustomOpen);
+    
     return () => {
       window.removeEventListener("message", handleMessage);
+      window.removeEventListener("open_aurum_chatbot", handleCustomOpen);
     };
   }, []);
 
@@ -37,6 +52,7 @@ export default function ChatWidgetEmbed() {
       }}
     >
       <iframe
+        ref={iframeRef}
         src="/chat?embed=true&welcome=Hello!%20Welcome%20to%20Aurum%20Rise.%20Are%20you%20ready%20to%20unlock%20the%20Syllabus%3F"
         title="Aurum AI Chatbot"
         style={{
