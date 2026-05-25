@@ -164,7 +164,7 @@ export default function PartnerDashboard() {
             <p style={{ color: 'rgba(255,255,255,0.4)', margin: '4px 0 0 0', fontSize: '14px' }}>Welcome back, <strong style={{ color: '#00ff88' }}>{partner?.full_name}</strong></p>
           </div>
           <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-            <a href="/syllabus" style={{
+            <a href="https://aurum-education-portal.vercel.app/syllabus" target="_blank" rel="noopener noreferrer" style={{
               background: 'rgba(0, 255, 136, 0.05)',
               border: '1px solid rgba(0, 255, 136, 0.2)',
               padding: '10px 20px',
@@ -256,7 +256,9 @@ export default function PartnerDashboard() {
                   Access the official course curriculum covering automated trading algorithms, staking models, and ecosystem navigation.
                 </p>
                 <a
-                  href="/syllabus"
+                  href="https://aurum-education-portal.vercel.app/syllabus"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   style={{
                     background: '#00ff88',
                     border: 'none',
