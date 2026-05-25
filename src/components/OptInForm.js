@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+
 import { Loader2 } from 'lucide-react';
 
 export default function OptInForm({ buttonText = "Unlock Now", variant = "default", redirectUrl = "/syllabus" }) {
@@ -9,7 +9,7 @@ export default function OptInForm({ buttonText = "Unlock Now", variant = "defaul
   const [firstName, setFirstName] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const router = useRouter();
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -38,7 +38,12 @@ export default function OptInForm({ buttonText = "Unlock Now", variant = "defaul
       localStorage.setItem('aurum_email', email);
 
       // Redirect to the syllabus or desired page
-      router.push(redirectUrl);
+      // Use absolute URL to avoid any routing/basePath ambiguity
+      if (redirectUrl.startsWith('http')) {
+        window.location.href = redirectUrl;
+      } else {
+        window.location.href = window.location.origin + redirectUrl;
+      }
     } catch (err) {
       setError(err.message);
       setLoading(false);
