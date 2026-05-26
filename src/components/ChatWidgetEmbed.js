@@ -41,9 +41,9 @@ export default function ChatWidgetEmbed() {
         right: 0,
         zIndex: 9999,
         // When open: full viewport so chat panel + backdrop aren't clipped
-        // When closed: small area for just the floating button
-        width: isOpen ? "100vw" : "96px",
-        height: isOpen ? "100vh" : "96px",
+        // When closed: area large enough to show the floating button AND the speech bubble above it
+        width: isOpen ? "100vw" : "300px",
+        height: isOpen ? "100vh" : "250px",
         transition: isOpen
           ? "none" // Open instantly so panel isn't clipped during transition
           : "width 0.3s cubic-bezier(0.16, 1, 0.3, 1), height 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
