@@ -16,7 +16,8 @@ export default function ServicesPage() {
     lastName: "",
     email: "",
     phone: "",
-    telegram: ""
+    telegram: "",
+    affiliateCode: ""
   });
 
   const plans = [
@@ -53,14 +54,14 @@ export default function ServicesPage() {
     },
     {
       id: "admin_manager",
-      name: "Admin Manager",
+      name: "Aurum Manager",
       price: "$9.99",
       period: "/mo",
       icon: <Users size={24} className="text-purple-400" />,
       description: "Manage and promote your downline via the Rotator service.",
       features: [
         "Everything in VIP",
-        "Access to Admin Manager",
+        "Access to Aurum Manager",
         "Assign codes to rotator",
         "Build your downline's lists automatically"
       ],
@@ -130,15 +131,30 @@ export default function ServicesPage() {
           <div className="w-20 h-20 bg-[#00ff88]/20 rounded-full flex items-center justify-center mx-auto mb-6 border border-[#00ff88]/30">
             <Check size={40} className="text-[#00ff88]" />
           </div>
-          <h1 className="text-4xl font-black mb-4">Request Received!</h1>
-          <p className="text-lg text-white/70 mb-8 leading-relaxed">
-            Your request for the <strong>{plans.find(p => p.id === selectedPlan)?.name}</strong> has been received. 
-            <br/><br/>
-            We have just sent an email to <strong>{formData.email}</strong> with your manual payment instructions (Crypto: BTC, USDT, BNB). Once your payment is verified, your account will be upgraded immediately.
+          <h1 className="text-4xl font-black mb-4">Order Placed!</h1>
+          <p className="text-md text-white/70 mb-6 leading-relaxed">
+            Your request for <strong>{plans.find(p => p.id === selectedPlan)?.name}</strong> ({plans.find(p => p.id === selectedPlan)?.price}{plans.find(p => p.id === selectedPlan)?.period}) has been recorded.
           </p>
+          
+          <div className="bg-white/5 border border-white/10 p-6 rounded-2xl mb-8 text-center">
+            <h4 className="text-lg font-black text-[#00ff88] uppercase tracking-wider mb-3">Next Step: Crypto Payment</h4>
+            <p className="text-sm text-white/60 mb-6">
+              To finalize your upgrade, please proceed to the secure crypto checkout portal to select your preferred network and verify your transaction.
+            </p>
+            <a 
+              href="https://aurum-education-portal.vercel.app/syllabus/checkout.html"
+              className="inline-flex bg-gradient-to-r from-[#00ff88] to-[#00cc6a] text-black font-black py-4 px-8 rounded-xl transition-all items-center justify-center gap-2 hover:scale-[1.02] hover:shadow-[0_0_25px_rgba(0,255,136,0.3)] text-lg"
+            >
+              Proceed to Crypto Checkout <ArrowRight size={20} />
+            </a>
+            <p className="text-[11px] text-white/40 leading-relaxed mt-6">
+              A copy of your order details has also been sent to <strong>{formData.email}</strong>.
+            </p>
+          </div>
+
           <button 
             onClick={() => window.location.href = '/'}
-            className="bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold py-3 px-8 rounded-xl transition-all"
+            className="w-full bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold py-3 px-8 rounded-xl transition-all"
           >
             Return Home
           </button>
@@ -171,7 +187,7 @@ export default function ServicesPage() {
             Choose Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00ff88] to-[#2d8cf0]">Arsenal</span>
           </h1>
           <p className="text-lg text-white/60 leading-relaxed">
-            Select the tier that fits your growth strategy. You will receive an email with instructions to finalize your setup and payment via Crypto, Zelle, or Wise.
+            Select the tier that fits your growth strategy. You will receive an email with instructions to finalize your setup and payment securely via Crypto.
           </p>
         </div>
 
@@ -305,6 +321,18 @@ export default function ServicesPage() {
                 </div>
               </div>
 
+              <div>
+                <label className="block text-sm font-bold text-white/70 mb-2">Your Aurum Affiliate Code (Optional)</label>
+                <input 
+                  type="text" 
+                  name="affiliateCode"
+                  value={formData.affiliateCode}
+                  onChange={handleInputChange}
+                  className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#00ff88] transition-colors"
+                  placeholder="e.g. 1W145K"
+                />
+              </div>
+
               <button 
                 type="submit" 
                 disabled={isSubmitting}
@@ -318,7 +346,7 @@ export default function ServicesPage() {
               </button>
               
               <div className="text-center mt-4 text-xs text-white/40 flex items-center justify-center gap-2">
-                <DollarSign size={12} /> Instructions for Crypto (BTC, USDT, BNB) will be emailed securely.
+                <DollarSign size={12} /> <strong>Instructions for Crypto Payments (BTC, USDT, BNB, LTC) will be emailed securely.</strong>
               </div>
             </form>
           </div>

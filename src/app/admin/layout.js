@@ -51,7 +51,11 @@ export default function AdminLayout({ children }) {
           </Link>
           <Link href="/admin/payments" className={styles.navItem}>
             <span style={{ fontSize: '18px', marginRight: '12px' }}>🪙</span>
-            <span>Verify Payments</span>
+            <span>Verify Rotators</span>
+          </Link>
+          <Link href="/admin/freemium-payments" className={styles.navItem}>
+            <span style={{ fontSize: '18px', marginRight: '12px' }}>🎓</span>
+            <span>Verify Freemium</span>
           </Link>
           <Link href="/admin/builder" className={styles.navItem}>
             <Sparkles className={styles.navIcon} style={{ color: '#d4af37' }} />
