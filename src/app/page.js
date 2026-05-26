@@ -7,10 +7,7 @@ import { Sparkles, BookOpen, Bot, Zap, Shield, ChevronRight } from 'lucide-react
 
 export default function HomePage() {
   useEffect(() => {
-    const timer = setTimeout(() => {
-      window.postMessage({ type: 'aurum_chat_toggle', isOpen: true }, '*');
-    }, 2500);
-    return () => clearTimeout(timer);
+    // Chatbot widget will remain closed by default, relying on the waving animation to attract attention.
   }, []);
 
   return (
@@ -126,7 +123,7 @@ export default function HomePage() {
               <OptInForm 
                 buttonText="Send Me The Syllabus Now"
                 variant="syllabus-freemium"
-                redirectUrl="/syllabus"
+                redirectUrl="/thank-you-syllabus"
               />
               
               <p className="text-center text-xs text-white/40 mt-4">
