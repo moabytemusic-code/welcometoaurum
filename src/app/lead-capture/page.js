@@ -74,8 +74,8 @@ export default function LeadCapture() {
       if (res.ok) {
         setStatus('ACCESS GRANTED. REDIRECTING...');
         setTimeout(() => {
-          // Redirect to the consultative flow
-          window.location.href = '/consultative';
+          // Redirect to the thank you flow
+          window.location.href = '/thank-you-syllabus';
         }, 1200);
       } else {
         throw new Error('Capture failed');
@@ -84,7 +84,7 @@ export default function LeadCapture() {
       console.error(err);
       setStatus('ERROR ENCOUNTERED. REDIRECTING...');
       setTimeout(() => {
-        window.location.href = '/consultative';
+        window.location.href = '/thank-you-syllabus';
       }, 1500);
     }
   };
