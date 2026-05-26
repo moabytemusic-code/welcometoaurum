@@ -209,10 +209,6 @@ const HeroPitch = ({ project, content = {}, handleOptIn, isProcessing, status, p
                         <span className={styles.resultValueHighlight}>+${Math.round(yieldValue * 12).toLocaleString()}</span>
                       </div>
                     </div>
-                    <div className={styles.resultItem} style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '16px' }}>
-                      <span className={styles.resultLabel}>Total Projected (1 Year)</span>
-                      <span className={styles.resultValueTotal}>${Math.round(parsedDeposit + (yieldValue * 12)).toLocaleString()}</span>
-                    </div>
                   </div>
                 </div>
                 <p className={styles.calcNote}>{content.calcNote || "Projections based on historical performance data. Past results do not guarantee future returns."}</p>

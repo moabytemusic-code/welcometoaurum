@@ -341,10 +341,6 @@ export default function Home() {
                     <span className={styles.resultValueHighlight}>+${Math.round(yieldValue * 12).toLocaleString()}</span>
                   </div>
                 </div>
-                <div className={styles.resultItem} style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '16px' }}>
-                  <span className={styles.resultLabel}>Total Projected Balance (1 Year)</span>
-                  <span className={styles.resultValueTotal}>${Math.round(deposit + (yieldValue * 12)).toLocaleString()}</span>
-                </div>
               </div>
             </div>
             <p className={styles.calcNote}>Projections based on historical 2026 performance. Past results do not guarantee future returns. Yield is generated through automated market activities and involves risk.</p>
