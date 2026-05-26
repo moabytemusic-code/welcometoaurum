@@ -81,6 +81,145 @@ export async function PATCH(request) {
         return NextResponse.json({ error: 'Failed to update payment record status' }, { status: 500 });
       }
 
+      // Fetch prospect details
+      const { data: prospect, error: prospectErr } = await supabase
+        .from('freemium_prospects')
+        .select('*')
+        .eq('id', payment.prospect_id)
+        .maybeSingle();
+
+      if (prospect) {
+        // Fetch order details if exists
+        let fullName = prospect.first_name || '';
+        let affiliateCode = '';
+        let order = null;
+
+        const { data: orderData } = await supabase
+          .from('aurum_orders')
+          .select('*')
+          .eq('email', prospect.email.trim().toLowerCase())
+          .maybeSingle();
+
+        if (orderData) {
+          order = orderData;
+          fullName = `${order.first_name} ${order.last_name}`.trim() || fullName;
+          affiliateCode = order.affiliate_code || '';
+        }
+
+        // Generate affiliate code if not present
+        if (!affiliateCode) {
+          const randomNum = Math.floor(1000 + Math.random() * 9000);
+          const namePart = (prospect.first_name || 'USER').replace(/[^a-zA-Z]/g, '').substring(0, 4).toUpperCase();
+          affiliateCode = `${namePart}${randomNum}`;
+        }
+
+        // Fetch or generate password for affiliate login
+        const { data: existingAffiliate } = await supabase
+          .from('aurum_affiliates')
+          .select('*')
+          .eq('email', prospect.email.trim().toLowerCase())
+          .maybeSingle();
+
+        let password = existingAffiliate?.password || '';
+        if (!password) {
+          password = Math.random().toString(36).substring(2, 8).toUpperCase();
+        }
+
+        // Insert or update aurum_members status to active
+        const { data: existingMember } = await supabase
+          .from('aurum_members')
+          .select('id')
+          .eq('email', prospect.email.trim().toLowerCase())
+          .maybeSingle();
+
+        if (existingMember) {
+          await supabase
+            .from('aurum_members')
+            .update({
+              status: 'active',
+              full_name: fullName,
+              plan_tier: 'Basic User Plan'
+            })
+            .eq('id', existingMember.id);
+        } else {
+          await supabase
+            .from('aurum_members')
+            .insert([{
+              email: prospect.email.trim().toLowerCase(),
+              full_name: fullName,
+              status: 'active',
+              referred_by: prospect.sponsor_code || 'DIRECT',
+              membership_start: new Date().toISOString(),
+              plan_tier: 'Basic User Plan'
+            }]);
+        }
+
+        // Insert or update aurum_affiliates status to active
+        if (existingAffiliate) {
+          await supabase
+            .from('aurum_affiliates')
+            .update({
+              status: 'active',
+              full_name: fullName,
+              affiliate_code: affiliateCode,
+              password: password,
+              plan: 'Basic'
+            })
+            .eq('id', existingAffiliate.id);
+        } else {
+          await supabase
+            .from('aurum_affiliates')
+            .insert([{
+              email: prospect.email.trim().toLowerCase(),
+              full_name: fullName,
+              affiliate_code: affiliateCode,
+              password: password,
+              status: 'active',
+              is_rotator: false,
+              plan: 'Basic'
+            }]);
+        }
+
+        // Complete any pending order in aurum_orders
+        if (order) {
+          await supabase
+            .from('aurum_orders')
+            .update({ status: 'completed' })
+            .eq('id', order.id);
+        }
+
+        // Trigger Brevo Partner Welcome Email (Template ID: 836)
+        if (process.env.BREVO_API_KEY) {
+          try {
+            const smtpRes = await fetch('https://api.brevo.com/v3/smtp/email', {
+              method: 'POST',
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'api-key': process.env.BREVO_API_KEY
+              },
+              body: JSON.stringify({
+                to: [{ email: prospect.email.trim().toLowerCase(), name: fullName }],
+                templateId: 836,
+                params: {
+                  FIRSTNAME: prospect.first_name || '',
+                  AFFILIATE_CODE: affiliateCode,
+                  PASSWORD: password
+                }
+              })
+            });
+
+            if (!smtpRes.ok) {
+              const errData = await smtpRes.json();
+              console.error('Failed to send partner welcome email via Brevo:', errData);
+            } else {
+              console.log(`Partner welcome email successfully sent to ${prospect.email}`);
+            }
+          } catch (emailErr) {
+            console.error('Brevo partner welcome email send failed:', emailErr.message);
+          }
+        }
+      }
     } else {
       // Decline action
       const { error: updatePaymentErr } = await supabase

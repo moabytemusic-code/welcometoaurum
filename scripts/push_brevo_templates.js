@@ -35,6 +35,18 @@ const templates = [
     subject: "One last invitation (Starting fund pool is limited)",
     htmlContent: fs.readFileSync(path.join(__dirname, '../src/templates/emails/followup.html'), 'utf8'),
     sender: { name: "Aurum Rise Onboarding Team", email: "onboarding@smarthustlermarketing.com" }
+  },
+  {
+    templateName: "AURUM_TRIAL_EXPIRING",
+    subject: "Only 2 visits left on your free pass, {{ contact.FIRSTNAME }}",
+    htmlContent: fs.readFileSync(path.join(__dirname, '../src/templates/emails/trial_expiring.html'), 'utf8'),
+    sender: { name: "Aurum Rise Onboarding Team", email: "onboarding@smarthustlermarketing.com" }
+  },
+  {
+    templateName: "AURUM_PARTNER_WELCOME",
+    subject: "Welcome to Aurum Rise: Membership Active!",
+    htmlContent: fs.readFileSync(path.join(__dirname, '../src/templates/emails/partner_welcome.html'), 'utf8'),
+    sender: { name: "Aurum Rise Onboarding Team", email: "onboarding@smarthustlermarketing.com" }
   }
 ];
 
