@@ -1,7 +1,11 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { isValidAdminSession } from '@/lib/auth';
 
 export async function POST(req) {
+  if (!(await isValidAdminSession())) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
   try {
     const { slug, newName } = await req.json();
     if (!slug || !newName) {

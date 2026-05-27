@@ -1,9 +1,13 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { isValidAdminSession } from '@/lib/auth';
 
 export const dynamic = 'force-dynamic';
 
 export async function POST(req) {
+  if (!(await isValidAdminSession())) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
   try {
     const { slug, isActive } = await req.json();
     if (!slug) {
