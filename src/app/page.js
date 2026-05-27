@@ -46,16 +46,16 @@ export default function HomePage() {
             </div>
             
             <h1 className="text-5xl lg:text-7xl font-black leading-tight tracking-tight">
-              Master the Future of <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00ff88] to-[#2d8cf0]">AI Wealth</span> Generation.
+              Discover the Future of <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00ff88] to-[#2d8cf0]">AI-Powered Wealth</span> Education.
             </h1>
             
             <p className="text-lg lg:text-xl text-white/60 leading-relaxed max-w-xl">
-              Unlock the official Aurum Rise Syllabus—your comprehensive blueprint to leveraging autonomous algorithms, AI Finance, and scalable neobanking ecosystems to master the future of money, completely free.
+              Learn how AI finance, algorithmic trading models, neobank infrastructure, and automation are changing the future of money — without needing to be a trader or tech expert.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 mt-4">
               <a href="#freemium" className="bg-[#00ff88] text-black font-black text-lg px-8 py-4 rounded-xl hover:scale-105 hover:shadow-[0_0_30px_rgba(0,255,136,0.3)] transition-all flex items-center justify-center gap-2">
-                Unlock The Syllabus <BookOpen size={20} />
+                Unlock the Masterclass & Official Syllabus <BookOpen size={20} />
               </a>
               <button 
                 type="button"
@@ -100,7 +100,7 @@ export default function HomePage() {
                   <div className="bg-[#2d8cf0]/20 p-2 rounded-lg"><Bot className="text-[#2d8cf0]" size={20} /></div>
                   <div>
                     <h4 className="font-bold text-md">Algorithmic Trading Models</h4>
-                    <p className="text-sm text-white/50 mt-1">Learn how AI analyzes millions of data points to generate consistent yield.</p>
+                    <p className="text-sm text-white/50 mt-1">Learn how AI analyzes market data and identifies potential opportunities.</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4 p-4 rounded-xl bg-white/5 border border-white/5">
@@ -121,7 +121,7 @@ export default function HomePage() {
 
               {/* OptIn Component replaces static form */}
               <OptInForm 
-                buttonText="Send Me The Syllabus Now"
+                buttonText="Unlock the Masterclass & Official Syllabus"
                 variant="syllabus-freemium"
                 redirectUrl="/thank-you-syllabus"
               />
