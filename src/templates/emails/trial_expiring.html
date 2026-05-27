@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Pass Expiring: Choose Your Arsenal</title>
+  <style>
+    body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: #050505; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
+    .wrapper { width: 100%; background-color: #050505; padding: 40px 0; }
+    .container { max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 24px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
+    .header { background-color: #000000; padding: 50px 40px; text-align: center; border-bottom: 1px solid #1a1a1a; }
+    .logo { color: #d4af37; font-size: 26px; font-weight: 900; letter-spacing: 10px; text-transform: uppercase; }
+    .content { padding: 56px; color: #1a1a1a; line-height: 1.8; }
+    h1 { font-size: 32px; font-weight: 900; color: #000000; margin-bottom: 28px; letter-spacing: -1px; line-height: 1.2; }
+    p { font-size: 16px; margin-bottom: 24px; color: #333333; }
+    .highlight-red { color: #e11d48; font-weight: 800; }
+    .tier-box { background-color: #fcfcfc; border: 1px solid #f0f0f0; border-radius: 16px; padding: 20px; margin-bottom: 20px; }
+    .tier-title { font-size: 18px; font-weight: 800; color: #000000; display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+    .tier-price { font-size: 16px; font-weight: 900; color: #d4af37; }
+    .tier-features { margin: 12px 0 0 0; padding-left: 20px; font-size: 14px; color: #555555; }
+    .tier-features li { margin-bottom: 8px; }
+    .cta-container { text-align: center; margin: 40px 0; }
+    .cta-button { display: inline-block; background-color: #d4af37; color: #000000; padding: 22px 44px; border-radius: 14px; text-decoration: none; font-weight: 900; font-size: 15px; text-transform: uppercase; letter-spacing: 2px; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3); transition: all 0.3s ease; }
+    .friction-reducer { font-size: 12px; color: #888888; margin-top: 15px; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
+    .footer { background-color: #fafafa; padding: 40px; border-top: 1px solid #eeeeee; text-align: center; font-size: 13px; color: #999999; }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="container">
+      <div class="header">
+        <div class="logo">AURUM</div>
+      </div>
+      
+      <div class="content">
+        <p style="text-transform: uppercase; letter-spacing: 2px; font-size: 11px; color: #e11d48; font-weight: 700; margin-bottom: 10px;">Trial Pass Expiration Notice</p>
+        <h1>You have exactly <span class="highlight-red">2 sessions left</span>.</h1>
+        
+        <p>Hey {{ contact.FIRSTNAME }},</p>
+        <p>I wanted to drop you a quick reminder that your 10-visit free pass to the **Aurum Education Portal** is running out. Our system shows you have exactly <strong>2 visits remaining</strong> before your session key expires.</p>
+        <p>To avoid losing access to the syllabus, guides, and your setup progress, we want to help you choose the best permanent plan for your goals. Here is a breakdown of your options:</p>
+
+        <!-- Tier 1: Free -->
+        <div class="tier-box">
+          <div class="tier-title">
+            <span>1. Basic Pass</span>
+            <span class="tier-price">Free</span>
+          </div>
+          <p style="font-size: 14px; color: #666; margin: 4px 0 0 0;">Keep studying the basics at no cost.</p>
+          <ul class="tier-features">
+            <li>Syllabus Modules & AI chat assistant.</li>
+            <li>Ready-to-use community funnel systems.</li>
+            <li><em>Note: Standard traffic-sharing rules apply (every 4th lead generated is routed back to the main pool).</em></li>
+          </ul>
+        </div>
+
+        <!-- Tier 2: VIP -->
+        <div class="tier-box" style="border-color: rgba(45, 140, 240, 0.3); background-color: rgba(45, 140, 240, 0.01);">
+          <div class="tier-title" style="color: #2d8cf0;">
+            <span>2. VIP Service</span>
+            <span class="tier-price" style="color: #2d8cf0;">$4.99 / mo</span>
+          </div>
+          <p style="font-size: 14px; color: #666; margin: 4px 0 0 0;">Build your personal network with zero restrictions.</p>
+          <ul class="tier-features">
+            <li>Syllabus Access & AI Assistant.</li>
+            <li>Done-for-you funnel systems & custom QR codes.</li>
+            <li><strong>Keep 100% of your leads</strong> (no traffic-sharing).</li>
+          </ul>
+        </div>
+
+        <!-- Tier 3: Manager -->
+        <div class="tier-box" style="border-color: rgba(212, 175, 55, 0.4); background-color: rgba(212, 175, 55, 0.02);">
+          <div class="tier-title" style="color: #d4af37;">
+            <span>3. Aurum Manager</span>
+            <span class="tier-price" style="color: #d4af37;">$9.99 / mo</span>
+          </div>
+          <p style="font-size: 14px; color: #666; margin: 4px 0 0 0;">Scale and manage your community automatically.</p>
+          <ul class="tier-features">
+            <li>Includes **everything in the VIP tier**.</li>
+            <li>Full access to the Aurum Manager Backoffice.</li>
+            <li><strong>Traffic Rotator Service</strong>: Assign affiliate codes to the rotator and automatically build your team's lists.</li>
+          </ul>
+        </div>
+
+        <p>No matter which option you choose, you can lock in your decision instantly in your trial portal. Paid upgrades are handled securely via Crypto (USDT, BTC, BNB, LTC) with activation in minutes.</p>
+
+        <div class="cta-container">
+          <a href="https://www.welcometoaurum.com/freetrial?email={{ contact.EMAIL }}" class="cta-button">Enter Portal & Secure Access</a>
+          <div class="friction-reducer">Simple 5-minute setup • Bypasses the 10-visit limit</div>
+        </div>
+
+        <p>Make sure to secure your seat before your next session expires so you don't lose your place in the current training group.</p>
+        
+        <p>Talk soon,<br><strong>Aurum Rise Onboarding Team</strong></p>
+      </div>
+
+      <div style="padding: 24px 48px; background: #000000; color: #d4af37; font-size: 12px; text-align: center; letter-spacing: 1px; font-weight: 700;">
+        AURUM RISE ONBOARDING TEAM | VERSION 3.2
+      </div>
+
+      <div class="footer">
+        <p>&copy; 2026 Aurum Rise. All rights reserved.</p>
+        <p style="margin-top: 12px;">Past performance does not guarantee future results. Automated activities involve risk.</p>
+        <p style="margin-top: 15px;"><a href="#" style="color: #d4af37; text-decoration: none;">Unsubscribe</a> | <a href="#" style="color: #d4af37; text-decoration: none;">Security Center</a></p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

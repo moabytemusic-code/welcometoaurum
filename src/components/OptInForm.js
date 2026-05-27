@@ -61,7 +61,7 @@ export default function OptInForm({ buttonText = "Unlock Now", variant = "defaul
       <div>
         <input 
           type="text" 
-          placeholder="First Name (Optional)" 
+          placeholder="First Name" 
           value={firstName}
           onChange={(e) => setFirstName(e.target.value)}
           className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-[#00ff88]/50 focus:ring-1 focus:ring-[#00ff88]/50 transition-all"

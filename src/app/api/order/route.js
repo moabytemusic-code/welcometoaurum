@@ -3,7 +3,7 @@ import { createClient } from '@supabase/supabase-js';
 
 export async function POST(req) {
   try {
-    const { firstName, lastName, email, phone, telegram, plan } = await req.json();
+    const { firstName, lastName, email, phone, telegram, plan, affiliateCode } = await req.json();
 
     if (!email || !firstName || !lastName || !plan) {
       return NextResponse.json({ success: false, error: 'Please fill out all required fields.' }, { status: 400 });
@@ -29,7 +29,8 @@ export async function POST(req) {
           phone: phone || null,
           telegram: telegram || null,
           plan_id: plan,
-          status: 'pending_payment'
+          status: 'pending_payment',
+          affiliate_code: affiliateCode || null
         }]);
 
         if (dbErr) {
@@ -51,7 +52,7 @@ export async function POST(req) {
         const planNames = {
           "basic": "Basic Service",
           "vip": "VIP Service",
-          "admin_manager": "Admin Manager",
+          "admin_manager": "Aurum Manager",
           "paid_rotator": "Paid Traffic Rotator"
         };
         const planPrices = {
