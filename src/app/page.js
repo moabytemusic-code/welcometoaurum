@@ -33,7 +33,7 @@ export default function HomePage() {
       </nav>
 
       {/* Hero Section */}
-      <main className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 pt-8 lg:pt-12 pb-20 sm:pb-32">
+      <main className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 pt-2 lg:pt-6 pb-20 sm:pb-32">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           
           {/* Left: Copy & Value Proposition */}
@@ -53,8 +53,8 @@ export default function HomePage() {
               Learn how AI finance, algorithmic trading models, neobank infrastructure, and automation are changing the future of money — without needing to be a trader or tech expert.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-4">
-              <a href="#freemium" className="bg-[#00ff88] text-black font-black text-base sm:text-lg px-6 sm:px-8 py-4 rounded-xl hover:scale-105 hover:shadow-[0_0_30px_rgba(0,255,136,0.3)] transition-all flex items-center justify-center gap-2">
+            <div className="flex flex-col sm:flex-row flex-wrap lg:flex-nowrap gap-3 sm:gap-4 mt-4">
+              <a href="#freemium" className="bg-[#00ff88] text-black font-black text-sm sm:text-base px-5 sm:px-6 py-4 rounded-xl hover:scale-105 hover:shadow-[0_0_30px_rgba(0,255,136,0.3)] transition-all flex items-center justify-center gap-2 whitespace-nowrap">
                 Unlock the Masterclass & Official Syllabus <BookOpen size={20} />
               </a>
               <button 
@@ -64,7 +64,7 @@ export default function HomePage() {
                   window.dispatchEvent(new CustomEvent('open_aurum_chatbot'));
                   window.postMessage({ type: 'aurum_chat_toggle', isOpen: true }, '*');
                 }}
-                className="bg-white/5 border border-white/10 text-white font-bold text-lg px-8 py-4 rounded-xl hover:bg-white/10 transition-all flex items-center justify-center gap-2"
+                className="bg-white/5 border border-white/10 text-white font-bold text-sm sm:text-base px-6 py-4 rounded-xl hover:bg-white/10 transition-all flex items-center justify-center gap-2 whitespace-nowrap"
               >
                 Meet The AI <Bot size={20} />
               </button>
