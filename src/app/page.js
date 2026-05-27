@@ -136,7 +136,7 @@ export default function HomePage() {
       </main>
 
       {/* Floating Chat Widget Embed */}
-      <ChatWidgetEmbed />
+      <ChatWidgetEmbed delaySeconds={20} />
     </div>
   );
 }

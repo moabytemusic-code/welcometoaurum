@@ -2,9 +2,22 @@
 
 import React, { useState, useEffect } from "react";
 
-export default function ChatWidgetEmbed() {
+export default function ChatWidgetEmbed({ 
+  welcomeMessage = "Hello! Welcome to Aurum Rise. Are you ready to unlock the Syllabus?",
+  delaySeconds = 0
+}) {
   const [isOpen, setIsOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(delaySeconds === 0);
   const iframeRef = React.useRef(null);
+
+  useEffect(() => {
+    if (delaySeconds > 0) {
+      const timer = setTimeout(() => {
+        setIsVisible(true);
+      }, delaySeconds * 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [delaySeconds]);
 
   useEffect(() => {
     const handleMessage = (event) => {
@@ -33,6 +46,10 @@ export default function ChatWidgetEmbed() {
     };
   }, []);
 
+  const encodedWelcome = encodeURIComponent(welcomeMessage);
+
+  if (!isVisible) return null;
+
   return (
     <div
       style={{
@@ -53,7 +70,7 @@ export default function ChatWidgetEmbed() {
     >
       <iframe
         ref={iframeRef}
-        src="/chat?embed=true&welcome=Hello!%20Welcome%20to%20Aurum%20Rise.%20Are%20you%20ready%20to%20unlock%20the%20Syllabus%3F"
+        src={`/chat?embed=true&welcome=${encodedWelcome}`}
         title="Aurum AI Chatbot"
         style={{
           width: "100%",
