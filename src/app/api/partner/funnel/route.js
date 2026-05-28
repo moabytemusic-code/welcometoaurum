@@ -5,7 +5,7 @@ import { createClient } from '@supabase/supabase-js';
 export async function POST(request) {
   try {
     const cookieStore = await cookies();
-    const partnerCode = cookieStore.get('aurum_partner_session')?.value;
+    const partnerCode = cookieStore.get('neo_partner_session')?.value;
 
     if (!partnerCode) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -21,7 +21,7 @@ export async function POST(request) {
     const supabase = createClient(supabaseUrl, supabaseKey);
 
     const { error } = await supabase
-      .from('aurum_affiliates')
+      .from('neo_affiliates')
       .update({ unlocked_funnels: funnelId })
       .eq('affiliate_code', partnerCode);
 

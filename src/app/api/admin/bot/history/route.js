@@ -12,7 +12,7 @@ export async function GET() {
   }
 
   try {
-    const res = await fetch('https://t.me/s/aurum_eng', { 
+    const res = await fetch('https://t.me/s/neo_eng', { 
       cache: 'no-store',
       headers: {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
@@ -27,10 +27,10 @@ export async function GET() {
     
     const history = messages.map(msg => {
       // Filter for result posts
-      if (!msg.includes('AURUM Bot Results')) return null;
+      if (!msg.includes('NEO Bot Results')) return null;
 
-      // Extract Date: specifically looking for the string after "AURUM Bot Results, "
-      const dateMatch = msg.match(/AURUM Bot Results,\s*(?:<b>)?([^<]+)(?:<\/b>)?/i);
+      // Extract Date: specifically looking for the string after "NEO Bot Results, "
+      const dateMatch = msg.match(/NEO Bot Results,\s*(?:<b>)?([^<]+)(?:<\/b>)?/i);
       const dateStr = dateMatch ? dateMatch[1].replace(/<\/?[^>]+(>|$)/g, "").trim() : 'Unknown';
       
       // Extract EX-AI BOT yield

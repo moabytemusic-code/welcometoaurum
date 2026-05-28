@@ -14,7 +14,7 @@ export async function GET() {
     const supabase = createClient(supabaseUrl, supabaseKey);
 
     const { data: projects, error } = await supabase
-      .from('aurum_projects')
+      .from('neo_projects')
       .select('*')
       .order('updated_at', { ascending: false });
 

@@ -260,9 +260,9 @@ const PayItForwardAngleV2 = ({ project, handleOptIn, isProcessing, status }) => 
       {/* Footer */}
       <footer className="border-t border-white/5 py-10 text-center text-white/30 text-xs md:text-sm px-6">
         <p className="mb-4 max-w-2xl mx-auto leading-relaxed">
-          The $100 credit is a starting capital allocation within the Aurum Ecosystem. Terms and conditions apply. Funding is subject to availability of the daily pool.
+          The $100 credit is a starting capital allocation within the Neo Ecosystem. Terms and conditions apply. Funding is subject to availability of the daily pool.
         </p>
-        <p>© 2026 {project.name || 'Aurum'}. All rights reserved.</p>
+        <p>© 2026 {project.name || 'Neo'}. All rights reserved.</p>
       </footer>
 
     </main>

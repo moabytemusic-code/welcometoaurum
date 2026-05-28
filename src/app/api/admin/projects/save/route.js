@@ -21,7 +21,7 @@ export async function POST(request) {
     // 1. Fetch current status to preserve it
     let isActive = true;
     const { data: existing } = await supabase
-      .from('aurum_projects')
+      .from('neo_projects')
       .select('is_active')
       .eq('slug', slug)
       .maybeSingle();
@@ -32,7 +32,7 @@ export async function POST(request) {
 
     // 2. Upsert with preserved status
     const { error } = await supabase
-      .from('aurum_projects')
+      .from('neo_projects')
       .upsert({
         slug,
         name,

@@ -139,12 +139,11 @@ export default function AdminOverview() {
                 <strong style={{ display: 'block', marginBottom: '4px' }}>Neyro Overlay Wrapper</strong>
                 <a href="/neyro/wrapper" target="_blank" style={{ color: '#00ff88', fontSize: '12px', textDecoration: 'none' }}>/neyro/wrapper ↗</a>
               </div>
-              <div style={{ padding: '16px', background: 'rgba(16, 185, 129, 0.05)', borderRadius: '12px', border: '1px solid rgba(16, 185, 129, 0.2)' }}>
-                <strong style={{ display: 'block', marginBottom: '4px', color: '#10b981' }}>AI Chatbot Assistant</strong>
-                <div style={{ display: 'flex', gap: '16px' }}>
-                  <a href="/chat" target="_blank" style={{ color: '#00ff88', fontSize: '12px', textDecoration: 'none' }}>Live Preview ↗</a>
-                  <a href="/chat/admin" target="_blank" style={{ color: '#00ff88', fontSize: '12px', textDecoration: 'none' }}>Admin Console ↗</a>
-                </div>
+              <div className={styles.systemStatusCard} style={{ background: 'rgba(16, 185, 129, 0.05)', border: '1px solid rgba(16, 185, 129, 0.2)' }}>
+                <strong style={{ display: 'block', marginBottom: '4px', color: '#10b981' }}>Neo AI</strong>
+                <span style={{ fontSize: '13px', color: 'rgba(255,255,255,0.7)', display: 'block', marginBottom: '12px' }}>Operational</span>
+                <a href="/chat" target="_blank" style={{ color: '#00ff88', fontSize: '12px', textDecoration: 'none' }}>Live Preview ↗</a>
+                <a href="/chat/admin" target="_blank" style={{ color: '#00ff88', fontSize: '12px', textDecoration: 'none' }}>Admin Console ↗</a>
               </div>
             </div>
           </div>

@@ -11,7 +11,7 @@ const BotEarningsBadge = ({ imageUrl, fallbackValue }) => {
   useEffect(() => {
     const fetchEarnings = async () => {
       try {
-        const res = await fetch('/api/aurum-bot');
+        const res = await fetch('/api/neo-bot');
         if (!res.ok) throw new Error('Bot proxy fail');
         const data = await res.json();
         if (data && data.bot && data.bot !== "N/A") {
@@ -57,14 +57,14 @@ const BotEarningsBadge = ({ imageUrl, fallbackValue }) => {
             boxShadow: '0 4px 20px rgba(0,0,0,0.3)'
           }}>
             <img
-              src={imageUrl || "/images/aurum_exai_bot_promo.png"}
-              alt="Aurum EX-AI Bot"
+              src={imageUrl || "/images/neo_exai_bot_promo.png"}
+              alt="Neo EX-AI Bot"
               style={{ width: '100%', height: '100%', objectFit: 'cover' }}
             />
           </div>
 
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-            <div style={{ width: '8px', height: '8px', background: '#00ff88', borderRadius: '50%', boxShadow: '0 0 8px #00ff88', animation: 'aurumPulseDot 2s infinite' }}></div>
+            <div style={{ width: '8px', height: '8px', background: '#00ff88', borderRadius: '50%', boxShadow: '0 0 8px #00ff88', animation: 'neoPulseDot 2s infinite' }}></div>
             <span style={{ fontSize: '12px', color: '#00ff88', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '2px' }}>EX-AI BOT ACTIVE</span>
           </div>
         </div>
@@ -95,7 +95,7 @@ const BotEarningsBadge = ({ imageUrl, fallbackValue }) => {
         </div>
 
         <style jsx>{`
-          @keyframes aurumPulseDot {
+          @keyframes neoPulseDot {
             0% { opacity: 1; transform: scale(1); }
             50% { opacity: 0.5; transform: scale(1.3); }
             100% { opacity: 1; transform: scale(1); }

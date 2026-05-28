@@ -91,7 +91,7 @@ const ConsultativeAngle = ({ project, handleOptIn, isProcessing, status }) => {
           <div className={styles.heroRow}>
             
             <div className={styles.calculatorCard} style={{ margin: '0', textAlign: 'left' }}>
-              <h2 className={styles.calculatorTitle} style={{ textAlign: 'center' }}>See Your AurumRise Wealth Projection</h2>
+              <h2 className={styles.calculatorTitle} style={{ textAlign: 'center' }}>See Your NeoRise Wealth Projection</h2>
             <div className={styles.calcGrid}>
                 <div className={styles.inputGroup}>
                   <label>Starting Balance (Deposit)</label>
@@ -191,31 +191,31 @@ const ConsultativeAngle = ({ project, handleOptIn, isProcessing, status }) => {
 
           <div className={styles.ecoCard}>
             <div className={styles.ecoImageWrapper}>
-              <img src="/images/aurum_subscription_promo.png" alt="Aurum Subscription" className={styles.ecoImage} />
+              <img src="/images/neo_subscription_promo.png" alt="Neo Subscription" className={styles.ecoImage} />
             </div>
-            <h3>AURUMRISE Subscription</h3>
+            <h3>NEORISE Subscription</h3>
             <p><strong>Unlock the entire money-making machine for just $19.99/year.</strong> Full access to the bots, premium cards, NeoBank, community, and our built-in marketing plan so you can earn even more by inviting others.</p>
           </div>
 
           <div className={styles.ecoCard}>
             <div className={styles.ecoImageWrapper}>
-              <img src="/images/aurum_card_promo.png" alt="Aurum Cards" className={styles.ecoImage} />
+              <img src="/images/neo_card_promo.png" alt="Neo Cards" className={styles.ecoImage} />
             </div>
-            <h3>Aurum Cards</h3>
+            <h3>Neo Cards</h3>
             <p><strong>Spend your AI earnings like normal money — anywhere in the world.</strong> Four premium tiers from instant-use Nova to the elite Infinity Card. Turn your passive yield into everyday spending power, online or offline.</p>
           </div>
 
           <div className={styles.ecoCard}>
             <div className={styles.ecoImageWrapper}>
-              <img src="/images/aurum_neobank_promo.png" alt="Aurum NeoBank" className={styles.ecoImage} />
+              <img src="/images/neo_neobank_promo.png" alt="Neo NeoBank" className={styles.ecoImage} />
             </div>
-            <h3>Aurum NeoBank</h3>
+            <h3>Neo NeoBank</h3>
             <p><strong>Your all-in-one crypto + fiat bank account.</strong> Secure, private Web3 banking in a single app. Manage everything in one place with zero compromise.</p>
           </div>
 
           <div className={styles.ecoCard}>
             <div className={styles.ecoImageWrapper}>
-              <img src="/images/aurum_zeus_bot_promo.png" alt="Aurum Zeus Bot" className={styles.ecoImage} />
+              <img src="/images/neo_zeus_bot_promo.png" alt="Neo Zeus Bot" className={styles.ecoImage} />
             </div>
             <h3>Zeus AI Bot</h3>
             <p><strong>Mid-term yield optimizer that works while you live your life.</strong> Institutional-grade AI that spots opportunities and automatically adjusts strategies — no charts, no stress, just steady passive gains.</p>
@@ -223,7 +223,7 @@ const ConsultativeAngle = ({ project, handleOptIn, isProcessing, status }) => {
 
           <div className={styles.ecoCard}>
             <div className={styles.ecoImageWrapper}>
-              <img src="/images/aurum_exai_bot_promo.png" alt="Aurum EX-AI Bot" className={styles.ecoImage} />
+              <img src="/images/neo_exai_bot_promo.png" alt="Neo EX-AI Bot" className={styles.ecoImage} />
             </div>
             <h3>EX-AI Delta Bot</h3>
             <p><strong>The 24/7 autonomous trader that does all the work for you.</strong> Fully autonomous gap-capturing bot. It scans, executes, and compounds profits 24/7 with zero effort on your end.</p>
@@ -269,7 +269,7 @@ const ConsultativeAngle = ({ project, handleOptIn, isProcessing, status }) => {
         <div className={styles.disclaimer}>
           Past performance does not guarantee future results. Yield is generated through automated market activities and involves risk.
         </div>
-        <p className={styles.copyright}>© 2026 AURUMRISE. All rights reserved.</p>
+        <p className={styles.copyright}>© 2026 NEORISE. All rights reserved.</p>
         <div className={styles.footerLinks}>
           <a href="#">Privacy Policy</a>
           <a href="#">Terms of Service</a>

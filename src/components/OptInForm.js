@@ -34,8 +34,8 @@ export default function OptInForm({ buttonText = "Unlock Now", variant = "defaul
       }
 
       // Track successful conversion in local storage (optional)
-      localStorage.setItem('aurum_optin', 'true');
-      localStorage.setItem('aurum_email', email);
+      localStorage.setItem('neo_optin', 'true');
+      localStorage.setItem('neo_email', email);
 
       // Redirect to the syllabus or desired page
       // Use absolute URL to avoid any routing/basePath ambiguity

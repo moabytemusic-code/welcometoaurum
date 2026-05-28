@@ -27,7 +27,7 @@ export async function GET(request) {
   try {
     if (quick) {
       const { count, error } = await supabase
-        .from('aurum_affiliates')
+        .from('neo_affiliates')
         .select('*', { count: 'exact', head: true });
       
       if (error) throw error;
@@ -35,7 +35,7 @@ export async function GET(request) {
     }
 
     let query = supabase
-      .from('aurum_affiliates')
+      .from('neo_affiliates')
       .select('*');
 
     if (search) {
@@ -65,7 +65,7 @@ export async function PATCH(request) {
     const { id, ...updates } = body;
 
     const { data, error } = await supabase
-      .from('aurum_affiliates')
+      .from('neo_affiliates')
       .update(updates)
       .eq('id', id)
       .select();
@@ -86,7 +86,7 @@ export async function POST(request) {
     const supabase = getMasterClient();
     const body = await request.json();
     const { data, error } = await supabase
-      .from('aurum_affiliates')
+      .from('neo_affiliates')
       .insert([body])
       .select();
 
@@ -108,7 +108,7 @@ export async function DELETE(request) {
     const id = searchParams.get('id');
 
     const { error } = await supabase
-      .from('aurum_affiliates')
+      .from('neo_affiliates')
       .delete()
       .eq('id', id);
 

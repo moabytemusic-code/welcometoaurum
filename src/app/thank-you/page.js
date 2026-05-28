@@ -74,7 +74,7 @@ function ThankYouContent() {
             <div>
               <h3 style={{ fontSize: '20px', color: '#fff', marginBottom: '8px', fontWeight: '800' }}>1. Find the Email</h3>
               <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '15px', lineHeight: '1.6' }}>
-                Look for an email from <strong>"Aurum Orientation Team"</strong>. It contains your unique link to join the next live session.
+                Look for an email from <strong>"Neo Orientation Team"</strong>. It contains your unique link to join the next live session.
               </p>
             </div>
           </div>

@@ -12,11 +12,11 @@ export default function KensTools() {
         <div className={styles.badge}>Precision Marketing Systems</div>
         
         <h1 className={styles.title}>
-          Master the AI Tools to Scale Your <span className={styles.highlight}>Aurum Income.</span>
+          Master the AI Tools to Scale Your <span className={styles.highlight}>Neo Income.</span>
         </h1>
         
         <p className={styles.subtitle}>
-          Stop the manual grind. We teach network marketers how to build automated prospecting engines that funnel high-quality leads directly into the Aurum ecosystem.
+          Stop the manual grind. We teach network marketers how to build automated prospecting engines that funnel high-quality leads directly into the Neo ecosystem.
         </p>
 
         <div className={styles.ctaContainer}>
@@ -46,9 +46,9 @@ export default function KensTools() {
 
         <div className={styles.card}>
           <Zap className={styles.icon} />
-          <h3 className={styles.cardTitle}>Aurum Direct Bridge</h3>
+          <h3 className={styles.cardTitle}>Neo Direct Bridge</h3>
           <p className={styles.cardText}>
-            Our proprietary integration system sends every validated lead straight to your Aurum referral link, ensuring 100% attribution.
+            Our proprietary integration system sends every validated lead straight to your Neo referral link, ensuring 100% attribution.
           </p>
         </div>
 
@@ -72,24 +72,24 @@ export default function KensTools() {
           <TrendingUp className={styles.icon} />
           <h3 className={styles.cardTitle}>Passive Liquidity Training</h3>
           <p className={styles.cardText}>
-            Go beyond tools. Understand the mechanics of Aurum's liquidity pools to maximize your personal and team yields.
+            Go beyond tools. Understand the mechanics of Neo's liquidity pools to maximize your personal and team yields.
           </p>
         </div>
       </section>
 
-      {/* Aurum Call to Action */}
-      <section className={styles.aurumSection}>
-        <h2 className={styles.aurumTitle}>Ready to Bridge Your Tools to the Ecosystem?</h2>
+      {/* Neo Call to Action */}
+      <section className={styles.neoSection}>
+        <h2 className={styles.neoTitle}>Ready to Bridge Your Tools to the Ecosystem?</h2>
         <p className={styles.subtitle} style={{ margin: '0 auto 32px' }}>
           Connect your marketing engine to the core of the AI Finance Breakdown.
         </p>
         <a 
-          href={process.env.NEXT_PUBLIC_AURUM_REGISTER_URL || "https://backoffice.aurum.foundation/auth/sign-up?ref=1W145K"}
-          className={styles.aurumLink}
+          href={process.env.NEXT_PUBLIC_NEO_REGISTER_URL || "https://backoffice.neo.foundation/auth/sign-up?ref=1W145K"}
+          className={styles.neoLink}
           target="_blank"
           rel="noopener noreferrer"
         >
-          Activate Your Aurum Node Now <ArrowRight className="inline-block ml-2" />
+          Activate Your Neo Node Now <ArrowRight className="inline-block ml-2" />
         </a>
       </section>
 

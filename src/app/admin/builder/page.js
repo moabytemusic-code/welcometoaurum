@@ -109,7 +109,7 @@ export default function FaaSBuilder() {
               <div className={styles.inputGroup}>
                 <label>URL Slug</label>
                 <div className={styles.slugInput}>
-                  <span>aurum.app/f/</span>
+                  <span>neo.app/f/</span>
                   <input 
                     type="text" 
                     placeholder="crypto-masters" 

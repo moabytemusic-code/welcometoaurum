@@ -11,7 +11,7 @@ export async function proxy(request) {
   if (pathname.startsWith('/admin') && !pathname.startsWith('/api')) {
     if (pathname === '/admin/login') return NextResponse.next();
 
-    const session = request.cookies.get('aurum_admin_session')?.value;
+    const session = request.cookies.get('neo_admin_session')?.value;
     if (!session || session !== 'authenticated') {
       const loginUrl = request.nextUrl.clone();
       loginUrl.pathname = '/admin/login';

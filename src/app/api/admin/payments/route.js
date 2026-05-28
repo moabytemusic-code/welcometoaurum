@@ -5,7 +5,7 @@ import { createClient } from '@supabase/supabase-js';
 export async function GET() {
   try {
     const cookieStore = await cookies();
-    const adminSession = cookieStore.get('aurum_admin_session')?.value;
+    const adminSession = cookieStore.get('neo_admin_session')?.value;
 
     if (adminSession !== 'authenticated') {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -17,10 +17,10 @@ export async function GET() {
 
     // Fetch payments and join affiliate details
     const { data: payments, error } = await supabase
-      .from('aurum_crypto_payments')
+      .from('neo_crypto_payments')
       .select(`
         *,
-        partner:aurum_affiliates(full_name, email, affiliate_code)
+        partner:neo_affiliates(full_name, email, affiliate_code)
       `)
       .order('created_at', { ascending: false });
 
@@ -39,7 +39,7 @@ export async function GET() {
 export async function PATCH(request) {
   try {
     const cookieStore = await cookies();
-    const adminSession = cookieStore.get('aurum_admin_session')?.value;
+    const adminSession = cookieStore.get('neo_admin_session')?.value;
 
     if (adminSession !== 'authenticated') {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -56,7 +56,7 @@ export async function PATCH(request) {
 
     // Fetch the payment details first
     const { data: payment, error: fetchErr } = await supabase
-      .from('aurum_crypto_payments')
+      .from('neo_crypto_payments')
       .select('*')
       .eq('id', paymentId)
       .maybeSingle();
@@ -72,7 +72,7 @@ export async function PATCH(request) {
     if (action === 'approve') {
       // 1. Fetch current affiliate rotator runs
       const { data: partner, error: partnerErr } = await supabase
-        .from('aurum_affiliates')
+        .from('neo_affiliates')
         .select('id, rotator_runs')
         .eq('id', payment.affiliate_id)
         .maybeSingle();
@@ -85,7 +85,7 @@ export async function PATCH(request) {
       const newRunsCount = (partner.rotator_runs || 0) + payment.runs_requested;
       
       const { error: updatePartnerErr } = await supabase
-        .from('aurum_affiliates')
+        .from('neo_affiliates')
         .update({ rotator_runs: newRunsCount, is_rotator: true })
         .eq('id', partner.id);
 
@@ -95,7 +95,7 @@ export async function PATCH(request) {
       }
 
       const { error: updatePaymentErr } = await supabase
-        .from('aurum_crypto_payments')
+        .from('neo_crypto_payments')
         .update({ status: 'approved', approved_at: new Date().toISOString() })
         .eq('id', payment.id);
 
@@ -103,7 +103,7 @@ export async function PATCH(request) {
         console.error('Failed to update payment status:', updatePaymentErr);
         // Attempt to rollback partner runs if payment status update failed
         await supabase
-          .from('aurum_affiliates')
+          .from('neo_affiliates')
           .update({ rotator_runs: partner.rotator_runs })
           .eq('id', partner.id);
         return NextResponse.json({ error: 'Failed to update payment record status' }, { status: 500 });
@@ -114,7 +114,7 @@ export async function PATCH(request) {
     } else {
       // Decline action
       const { error: updatePaymentErr } = await supabase
-        .from('aurum_crypto_payments')
+        .from('neo_crypto_payments')
         .update({ status: 'declined' })
         .eq('id', payment.id);
 

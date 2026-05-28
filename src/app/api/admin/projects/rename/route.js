@@ -17,7 +17,7 @@ export async function POST(req) {
     const supabase = createClient(supabaseUrl, supabaseKey);
 
     const { error } = await supabase
-      .from('aurum_projects')
+      .from('neo_projects')
       .update({ name: newName, updated_at: new Date().toISOString() })
       .eq('slug', slug);
 

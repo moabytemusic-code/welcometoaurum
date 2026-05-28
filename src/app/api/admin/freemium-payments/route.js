@@ -5,7 +5,7 @@ import { createClient } from '@supabase/supabase-js';
 export async function GET() {
   try {
     const cookieStore = await cookies();
-    const adminSession = cookieStore.get('aurum_admin_session')?.value;
+    const adminSession = cookieStore.get('neo_admin_session')?.value;
 
     if (adminSession !== 'authenticated') {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -39,7 +39,7 @@ export async function GET() {
 export async function PATCH(request) {
   try {
     const cookieStore = await cookies();
-    const adminSession = cookieStore.get('aurum_admin_session')?.value;
+    const adminSession = cookieStore.get('neo_admin_session')?.value;
 
     if (adminSession !== 'authenticated') {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -95,7 +95,7 @@ export async function PATCH(request) {
         let order = null;
 
         const { data: orderData } = await supabase
-          .from('aurum_orders')
+          .from('neo_orders')
           .select('*')
           .eq('email', prospect.email.trim().toLowerCase())
           .maybeSingle();
@@ -115,7 +115,7 @@ export async function PATCH(request) {
 
         // Fetch or generate password for affiliate login
         const { data: existingAffiliate } = await supabase
-          .from('aurum_affiliates')
+          .from('neo_affiliates')
           .select('*')
           .eq('email', prospect.email.trim().toLowerCase())
           .maybeSingle();
@@ -125,16 +125,16 @@ export async function PATCH(request) {
           password = Math.random().toString(36).substring(2, 8).toUpperCase();
         }
 
-        // Insert or update aurum_members status to active
+        // Insert or update neo_members status to active
         const { data: existingMember } = await supabase
-          .from('aurum_members')
+          .from('neo_members')
           .select('id')
           .eq('email', prospect.email.trim().toLowerCase())
           .maybeSingle();
 
         if (existingMember) {
           await supabase
-            .from('aurum_members')
+            .from('neo_members')
             .update({
               status: 'active',
               full_name: fullName,
@@ -143,7 +143,7 @@ export async function PATCH(request) {
             .eq('id', existingMember.id);
         } else {
           await supabase
-            .from('aurum_members')
+            .from('neo_members')
             .insert([{
               email: prospect.email.trim().toLowerCase(),
               full_name: fullName,
@@ -154,10 +154,10 @@ export async function PATCH(request) {
             }]);
         }
 
-        // Insert or update aurum_affiliates status to active
+        // Insert or update neo_affiliates status to active
         if (existingAffiliate) {
           await supabase
-            .from('aurum_affiliates')
+            .from('neo_affiliates')
             .update({
               status: 'active',
               full_name: fullName,
@@ -168,7 +168,7 @@ export async function PATCH(request) {
             .eq('id', existingAffiliate.id);
         } else {
           await supabase
-            .from('aurum_affiliates')
+            .from('neo_affiliates')
             .insert([{
               email: prospect.email.trim().toLowerCase(),
               full_name: fullName,
@@ -180,10 +180,10 @@ export async function PATCH(request) {
             }]);
         }
 
-        // Complete any pending order in aurum_orders
+        // Complete any pending order in neo_orders
         if (order) {
           await supabase
-            .from('aurum_orders')
+            .from('neo_orders')
             .update({ status: 'completed' })
             .eq('id', order.id);
         }

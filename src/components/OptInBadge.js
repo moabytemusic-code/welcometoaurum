@@ -128,7 +128,7 @@ const OptInBadge = ({ onOptIn, isProcessing, status, wide = false, minimal = fal
       {!minimal && (
         <div className="window-header">
           <div className="header-content">
-            <div className="header-top">AURUMRISE</div>
+            <div className="header-top">NEORISE</div>
             <div className="header-title">{portalSubtitle}</div>
           </div>
           <div className="secure-node-badge">

@@ -9,7 +9,7 @@ async function getProject(projectId) {
     );
 
     const { data: project, error } = await supabase
-      .from('aurum_projects')
+      .from('neo_projects')
       .select('*')
       .eq('slug', projectId)
       .maybeSingle();
@@ -38,7 +38,7 @@ export async function generateMetadata({ params }) {
   }
 
   return {
-    title: project.name || 'Aurum Funnel',
+    title: project.name || 'Neo Funnel',
     description: project.content?.description || 'Official Page'
   };
 }

@@ -1,4 +1,4 @@
-// Aurum Performance Data - 2025 Historical Records
+// Neo Performance Data - 2025 Historical Records
 // Total Annual Yield: 178.4%
 
 export const performanceData = [

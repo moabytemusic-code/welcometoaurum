@@ -19,8 +19,8 @@ export default function HomePage() {
       {/* Navigation */}
       <nav className="relative z-10 flex flex-wrap sm:flex-nowrap items-center justify-between gap-4 p-4 sm:p-6 max-w-7xl mx-auto border-b border-white/5">
         <div className="flex items-center gap-2 sm:gap-3">
-          <img src="/images/aurum_logo.png" alt="Aurum Rise Logo" className="h-8 sm:h-10 w-auto" />
-          <span className="text-lg sm:text-xl font-black tracking-wider">AURUM RISE</span>
+          <img src="/images/neo_logo.png" alt="Neo Logo" className="h-8 sm:h-10 w-auto" />
+          <span className="text-lg sm:text-xl font-black tracking-wider">NEO</span>
         </div>
         <div className="flex gap-4 sm:gap-6 items-center w-full sm:w-auto justify-between sm:justify-end">
           <a href="/partner/login" className="text-xs sm:text-sm font-semibold text-white/60 hover:text-white transition-colors">
@@ -61,8 +61,8 @@ export default function HomePage() {
                 type="button"
                 onClick={(e) => {
                   e.preventDefault();
-                  window.dispatchEvent(new CustomEvent('open_aurum_chatbot'));
-                  window.postMessage({ type: 'aurum_chat_toggle', isOpen: true }, '*');
+                  window.dispatchEvent(new CustomEvent('open_neo_chatbot'));
+                  window.postMessage({ type: 'neo_chat_toggle', isOpen: true }, '*');
                 }}
                 className="bg-white/5 border border-white/10 text-white font-bold text-sm sm:text-base px-6 py-4 rounded-xl hover:bg-white/10 transition-all flex items-center justify-center gap-2 whitespace-nowrap"
               >
@@ -127,7 +127,7 @@ export default function HomePage() {
               />
               
               <p className="text-center text-xs text-white/40 mt-4">
-                By entering your email, you agree to receive updates from Aurum Rise. We respect your privacy.
+                By entering your email, you agree to receive updates from Neo. We respect your privacy.
               </p>
             </div>
           </div>

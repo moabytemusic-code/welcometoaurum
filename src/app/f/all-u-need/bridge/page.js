@@ -28,7 +28,7 @@ export default function AllUNeedBridge() {
         </h1>
         
         <p className="text-lg text-gray-400 mb-10 text-center max-w-2xl leading-relaxed">
-          Watch the brief orientation video below to understand how the Aurum ecosystem works for you, exactly like a perfectly tuned irrigation system.
+          Watch the brief orientation video below to understand how the Neo ecosystem works for you, exactly like a perfectly tuned irrigation system.
         </p>
 
         {/* Video Placeholder */}
@@ -51,7 +51,7 @@ export default function AllUNeedBridge() {
           
           <h3 className="text-2xl font-bold mb-4 text-white">Enter the AllUNeed Team Growth System</h3>
           <p className="text-gray-400 mb-8 leading-relaxed">
-            By clicking below, you will be securely redirected to the Aurum registration portal. You will be automatically assigned to the next available position in our private community group.
+            By clicking below, you will be securely redirected to the Neo registration portal. You will be automatically assigned to the next available position in our private community group.
           </p>
           
           <a 

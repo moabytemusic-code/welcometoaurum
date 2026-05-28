@@ -17,14 +17,14 @@ function FreeTrialContent() {
     // 1. Check URL parameters first (high priority for email links)
     const urlEmail = searchParams.get('email');
     if (urlEmail) {
-      localStorage.setItem('aurum_email', urlEmail);
+      localStorage.setItem('neo_email', urlEmail);
       setEmail(urlEmail);
       setHasSavedEmail(true);
       return;
     }
 
     // 2. Check local storage
-    const savedEmail = localStorage.getItem('aurum_email');
+    const savedEmail = localStorage.getItem('neo_email');
     if (savedEmail) {
       setEmail(savedEmail);
       setHasSavedEmail(true);
@@ -37,18 +37,18 @@ function FreeTrialContent() {
 
     setLoading(true);
     // Save to local storage for future returning visits
-    localStorage.setItem('aurum_email', inputEmail);
+    localStorage.setItem('neo_email', inputEmail);
     setEmail(inputEmail);
     setHasSavedEmail(true);
     
     // Redirect instantly to the portal
     setTimeout(() => {
-      window.location.href = `https://aurum-education-portal.vercel.app/syllabus?email=${encodeURIComponent(inputEmail)}`;
+      window.location.href = `https://neo-education-portal.vercel.app/syllabus?email=${encodeURIComponent(inputEmail)}`;
     }, 500);
   };
 
   const handleClearSession = () => {
-    localStorage.removeItem('aurum_email');
+    localStorage.removeItem('neo_email');
     setEmail('');
     setHasSavedEmail(false);
     setInputEmail('');
@@ -64,7 +64,7 @@ function FreeTrialContent() {
       <header className="relative z-10 flex items-center justify-between p-6 max-w-7xl mx-auto w-full border-b border-white/5">
         <Link href="/" className="flex items-center gap-3">
           <div className="w-8 h-8 bg-gradient-to-br from-[#00ff88] to-[#2d8cf0] rounded-lg" />
-          <span className="text-xl font-black tracking-wider uppercase">AURUM RISE</span>
+          <span className="text-xl font-black tracking-wider uppercase">NEO</span>
         </Link>
         <Link href="/services" className="text-sm font-bold bg-white/5 hover:bg-white/10 border border-white/10 px-5 py-2.5 rounded-full transition-all flex items-center gap-2">
           Upgrade to VIP <Star size={14} className="text-[#00ff88]" />
@@ -110,7 +110,7 @@ function FreeTrialContent() {
               </p>
               
               <a 
-                href={`https://aurum-education-portal.vercel.app/syllabus?email=${encodeURIComponent(email)}`}
+                href={`https://neo-education-portal.vercel.app/syllabus?email=${encodeURIComponent(email)}`}
                 className="w-full bg-gradient-to-r from-[#00ff88] to-[#00cc6a] text-black font-black py-4 px-8 rounded-xl transition-all flex items-center justify-center gap-2 hover:scale-[1.02] hover:shadow-[0_0_25px_rgba(0,255,136,0.3)] text-lg mb-4"
               >
                 Enter Education Portal <ArrowRight size={20} />
@@ -166,7 +166,7 @@ function FreeTrialContent() {
             </div>
             <div>
               <h4 className="font-bold text-white text-md">Bypass the 10-Visit Limit</h4>
-              <p className="text-xs text-white/50 mt-1">Upgrade to Aurum VIP for unlimited access to the portal, permanent tools, and custom branding.</p>
+              <p className="text-xs text-white/50 mt-1">Upgrade to Neo VIP for unlimited access to the portal, permanent tools, and custom branding.</p>
             </div>
           </div>
           <Link 

@@ -10,7 +10,7 @@ export async function POST(request) {
     const supabase = createClient(supabaseUrl, supabaseKey);
 
     const { data: partner, error } = await supabase
-      .from('aurum_affiliates')
+      .from('neo_affiliates')
       .select('id, affiliate_code, full_name, email, password')
       .eq('email', email.trim())
       .maybeSingle();
@@ -34,7 +34,7 @@ export async function POST(request) {
     });
 
     // Set HTTP-only session cookie for the partner
-    response.cookies.set('aurum_partner_session', partner.affiliate_code, {
+    response.cookies.set('neo_partner_session', partner.affiliate_code, {
       httpOnly: true,
       maxAge: 60 * 60 * 24 * 7, // 7 days
       path: '/',
@@ -49,6 +49,6 @@ export async function POST(request) {
 
 export async function DELETE() {
   const response = NextResponse.json({ success: true });
-  response.cookies.set('aurum_partner_session', '', { maxAge: 0, path: '/' });
+  response.cookies.set('neo_partner_session', '', { maxAge: 0, path: '/' });
   return response;
 }

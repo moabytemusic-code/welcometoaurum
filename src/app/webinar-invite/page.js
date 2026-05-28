@@ -12,7 +12,7 @@ const WebinarInvite = () => {
   const [formData, setFormData] = useState({ name: '', email: '', phone: '' });
   const [isProcessing, setIsProcessing] = useState(false);
   const [status, setStatus] = useState('');
-  const [sponsorData, setSponsorData] = useState({ code: 'AURUM', name: 'Aurum Rise' });
+  const [sponsorData, setSponsorData] = useState({ code: 'NEO', name: 'Neo' });
   const [seatsRemaining, setSeatsRemaining] = useState(12);
   const [showNotification, setShowNotification] = useState(false);
   const [recentName, setRecentName] = useState('Someone');
@@ -112,7 +112,7 @@ const WebinarInvite = () => {
             <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-500/20">
               <Zap className="text-white fill-white" size={20} />
             </div>
-            <span className="text-xl font-black tracking-tighter text-white">AURUM<span className="text-indigo-400">RISE</span></span>
+            <span className="text-xl font-black tracking-tighter text-white">NEO<span className="text-indigo-400">RISE</span></span>
           </div>
           <div className="hidden md:flex items-center gap-6">
              <div className="flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/20 px-4 py-2 rounded-full">
@@ -426,7 +426,7 @@ const WebinarInvite = () => {
                <Zap className="text-indigo-500 opacity-20" size={24} />
                <Zap className="text-indigo-500 opacity-20" size={24} />
             </div>
-            <p className="text-white/20 text-[10px] font-bold uppercase tracking-[0.3em]">© 2026 AURUM RISE SYSTEMS · ALL RIGHTS RESERVED</p>
+            <p className="text-white/20 text-[10px] font-bold uppercase tracking-[0.3em]">© 2026 NEO SYSTEMS · ALL RIGHTS RESERVED</p>
             <div className="flex justify-center gap-6 text-white/10 text-[10px] font-bold uppercase tracking-widest">
                <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
                <a href="#" className="hover:text-white transition-colors">Terms of Service</a>

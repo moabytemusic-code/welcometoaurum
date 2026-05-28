@@ -5,7 +5,7 @@ import { createClient } from '@supabase/supabase-js';
 export async function GET() {
   try {
     const cookieStore = await cookies();
-    const partnerCode = cookieStore.get('aurum_partner_session')?.value;
+    const partnerCode = cookieStore.get('neo_partner_session')?.value;
 
     if (!partnerCode) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -17,7 +17,7 @@ export async function GET() {
 
     // 1. Fetch partner info
     const { data: partner, error: partnerErr } = await supabase
-      .from('aurum_affiliates')
+      .from('neo_affiliates')
       .select('id, affiliate_code, full_name, email, phone, is_rotator, rotator_runs, unlocked_funnels, plan')
       .eq('affiliate_code', partnerCode)
       .maybeSingle();
@@ -28,20 +28,20 @@ export async function GET() {
 
     // 2. Fetch total lead count
     const { count: leadCount, error: leadErr } = await supabase
-      .from('aurum_leads')
+      .from('neo_leads')
       .select('id', { count: 'exact', head: true })
       .eq('sponsor_code', partner.affiliate_code);
 
     // 3. Fetch payment submission history
     const { data: payments, error: payErr } = await supabase
-      .from('aurum_crypto_payments')
+      .from('neo_crypto_payments')
       .select('*')
       .eq('affiliate_id', partner.id)
       .order('created_at', { ascending: false });
 
     // 4. Fetch all active projects (funnels)
     const { data: activeFunnels, error: funnelErr } = await supabase
-      .from('aurum_projects')
+      .from('neo_projects')
       .select('id, name, slug, angle')
       .eq('is_active', true)
       .order('name', { ascending: true });
@@ -50,7 +50,7 @@ export async function GET() {
     if (activeFunnels && activeFunnels.length > 0 && (!partner.unlocked_funnels || partner.unlocked_funnels.trim() === '')) {
       const defaultSlug = activeFunnels[0].slug;
       const { error: updateErr } = await supabase
-        .from('aurum_affiliates')
+        .from('neo_affiliates')
         .update({ unlocked_funnels: defaultSlug })
         .eq('id', partner.id);
       

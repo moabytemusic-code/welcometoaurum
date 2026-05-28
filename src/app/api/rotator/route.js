@@ -14,7 +14,7 @@ export async function GET(request) {
     // 1. Individual Code Resolution (Specific Sponsor)
     if (code) {
       const { data: partner, error } = await supabase
-        .from('aurum_affiliates')
+        .from('neo_affiliates')
         .select('id, affiliate_code, full_name, email, phone, rotator_pool')
         .eq('affiliate_code', code)
         .maybeSingle();
@@ -25,7 +25,7 @@ export async function GET(request) {
           name: partner.full_name,
           email: partner.email,
           phone: partner.phone || "N/A",
-          url: `https://backoffice.aurum.foundation/auth/sign-up?ref=${partner.affiliate_code}`
+          url: `https://backoffice.neo.foundation/auth/sign-up?ref=${partner.affiliate_code}`
         });
       }
     }
@@ -35,16 +35,16 @@ export async function GET(request) {
     function fallbackCorporate() {
       return NextResponse.json({
         code: "1W145K",
-        name: "Aurum Corporate",
-        email: "support@aurum.foundation",
+        name: "Neo Corporate",
+        email: "support@neo.foundation",
         phone: "N/A",
-        url: "https://backoffice.aurum.foundation/auth/sign-up?ref=1W145K"
+        url: "https://backoffice.neo.foundation/auth/sign-up?ref=1W145K"
       });
     }
 
     // Fetch all active rotator partners ordered by join date who have runs remaining or are the owner
     const { data: allPartners, error: partnersError } = await supabase
-      .from('aurum_affiliates')
+      .from('neo_affiliates')
       .select('id, affiliate_code, full_name, email, phone, rotator_pool, rotator_index, created_at, unlocked_funnels, rotator_runs')
       .eq('is_rotator', true)
       .or('rotator_runs.gt.0,affiliate_code.eq.1W145K')
@@ -58,7 +58,7 @@ export async function GET(request) {
 
     // Fetch the most recent 100 leads to determine rotation sequence
     const { data: recentLeads } = await supabase
-      .from('aurum_leads')
+      .from('neo_leads')
       .select('id, sponsor_code, created_at')
       .order('created_at', { ascending: false })
       .limit(100);
@@ -241,7 +241,7 @@ export async function GET(request) {
 
         // Fetch all pool members at once to enforce permissions
         const { data: poolMembersData } = await supabase
-          .from('aurum_affiliates')
+          .from('neo_affiliates')
           .select('affiliate_code, unlocked_funnels')
           .in('affiliate_code', poolItems);
 
@@ -281,7 +281,7 @@ export async function GET(request) {
 
     // 5. Update BOTH the global 'last_served_at' and the partner's 'rotator_index'
     await supabase
-      .from('aurum_affiliates')
+      .from('neo_affiliates')
       .update({ 
         last_served_at: new Date().toISOString(),
         rotator_index: nextIndex 
@@ -293,17 +293,17 @@ export async function GET(request) {
       name: selected.full_name,
       email: selected.email,
       phone: selected.phone || "N/A",
-      url: `https://backoffice.aurum.foundation/auth/sign-up?ref=${activeCode}`
+      url: `https://backoffice.neo.foundation/auth/sign-up?ref=${activeCode}`
     });
 
   } catch (error) {
     console.error('Sequential Rotator CRITICAL Error:', error);
     return NextResponse.json({
       code: "1W145K",
-      name: "Aurum Corporate",
-      email: "support@aurum.foundation",
+      name: "Neo Corporate",
+      email: "support@neo.foundation",
       phone: "N/A",
-      url: "https://backoffice.aurum.foundation/auth/sign-up?ref=1W145K"
+      url: "https://backoffice.neo.foundation/auth/sign-up?ref=1W145K"
     });
   }
 }

@@ -8,7 +8,7 @@ import { cookies, headers } from 'next/headers';
 export async function isValidAdminSession() {
   // 1. Check Cookie (Primary)
   const cookieStore = await cookies();
-  const session = cookieStore.get('aurum_admin_session')?.value;
+  const session = cookieStore.get('neo_admin_session')?.value;
   
   // 2. Check Authorization Header (Secondary Fallback for POST resilience)
   const headerList = await headers();

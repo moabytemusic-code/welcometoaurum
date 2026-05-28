@@ -93,7 +93,7 @@ export default function BotHistoryTable() {
 
       <div className="p-4 bg-white/[0.02] border-t border-white/5 flex justify-center">
         <p className="text-[9px] text-white/20 uppercase tracking-[0.2em] font-black flex items-center gap-2">
-          <TrendingUp size={10} /> Data Source: Official Aurum Institutional Broadcast
+          <TrendingUp size={10} /> Data Source: Official Neo Institutional Broadcast
         </p>
       </div>
     </div>

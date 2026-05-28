@@ -13,7 +13,7 @@ const inter = Inter({
 
 export const metadata = {
   title: "Ken's Business Tools | The AI Marketing Engine",
-  description: "Master the tools to scale your network marketing business and funnel high-value leads to Aurum.",
+  description: "Master the tools to scale your network marketing business and funnel high-value leads to Neo.",
 };
 
 export default function KensToolsLayout({ children }) {

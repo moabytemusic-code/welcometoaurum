@@ -29,7 +29,7 @@ export async function GET() {
     { 
       id: 'v3', 
       name: 'Institutional Alpha', 
-      desc: 'Focuses on the Neobanking utility and global spending power of the Aurum Card.',
+      desc: 'Focuses on the Neobanking utility and global spending power of the Neo Card.',
       audience: 'Global Travelers',
       previewUrl: '/preview/v3',
       public: false // Private for now

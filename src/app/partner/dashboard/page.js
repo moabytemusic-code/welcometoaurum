@@ -135,7 +135,7 @@ export default function PartnerDashboard() {
     );
   }
 
-  const referralUrl = `https://www.welcometoaurum.com/?ref=${partner?.affiliate_code}`;
+  const referralUrl = `https://www.welcometoneo.com/?ref=${partner?.affiliate_code}`;
   const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&color=00ff88&bgcolor=1a1a1a&data=${encodeURIComponent(referralUrl)}`;
 
   return (
@@ -164,7 +164,7 @@ export default function PartnerDashboard() {
             <p style={{ color: 'rgba(255,255,255,0.4)', margin: '4px 0 0 0', fontSize: '14px' }}>Welcome back, <strong style={{ color: '#00ff88' }}>{partner?.full_name}</strong></p>
           </div>
           <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-            <a href="https://aurum-education-portal.vercel.app/syllabus" target="_blank" rel="noopener noreferrer" style={{
+            <a href="https://neo-education-portal.vercel.app/syllabus" target="_blank" rel="noopener noreferrer" style={{
               background: 'rgba(0, 255, 136, 0.05)',
               border: '1px solid rgba(0, 255, 136, 0.2)',
               padding: '10px 20px',
@@ -256,7 +256,7 @@ export default function PartnerDashboard() {
                   Access the official course curriculum covering automated trading algorithms, staking models, and ecosystem navigation.
                 </p>
                 <a
-                  href="https://aurum-education-portal.vercel.app/syllabus"
+                  href="https://neo-education-portal.vercel.app/syllabus"
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{
@@ -341,7 +341,7 @@ export default function PartnerDashboard() {
                 />
                 <a
                   href={qrCodeUrl}
-                  download="my_aurum_qr.png"
+                  download="my_neo_qr.png"
                   target="_blank"
                   rel="noreferrer"
                   style={{
@@ -377,8 +377,8 @@ export default function PartnerDashboard() {
                   let viewUrl = `/f/${funnel.slug}/${funnel.angle}?ref=${partner?.affiliate_code}`;
                   if (funnel.slug === 'neyro') viewUrl = `/neyro?ref=${partner?.affiliate_code}`;
                   else if (funnel.slug === 'neyro-gateway') viewUrl = `/gateway?ref=${partner?.affiliate_code}`;
-                  else if (funnel.slug === 'aurum-pitch') viewUrl = `/pitch?ref=${partner?.affiliate_code}`;
-                  else if (funnel.slug === 'aurum-consultative') viewUrl = `/consultative?ref=${partner?.affiliate_code}`;
+                  else if (funnel.slug === 'neo-pitch') viewUrl = `/pitch?ref=${partner?.affiliate_code}`;
+                  else if (funnel.slug === 'neo-consultative') viewUrl = `/consultative?ref=${partner?.affiliate_code}`;
 
                   // Descriptions
                   let desc = 'AI-driven wealth acceleration';

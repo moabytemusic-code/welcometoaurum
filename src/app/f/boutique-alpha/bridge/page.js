@@ -14,7 +14,7 @@ export default function BoutiqueAlphaBridge() {
         {/* Header */}
         <header className="mb-10 w-full flex justify-between items-center border-b border-white/10 pb-6">
           <div className="text-xl font-extrabold tracking-widest uppercase bg-clip-text text-transparent bg-gradient-to-r from-[#d4af37] to-[#f9e29c]">
-            Aurum Elite
+            Neo Elite
           </div>
           <div className="flex items-center gap-2 text-sm text-green-400 font-semibold bg-green-400/10 px-3 py-1 rounded-full border border-green-400/20">
             <CheckCircle2 className="w-4 h-4" />
@@ -46,7 +46,7 @@ export default function BoutiqueAlphaBridge() {
         <div className="w-full max-w-2xl bg-gradient-to-b from-white/5 to-transparent border border-white/10 rounded-3xl p-8 backdrop-blur-md text-center">
           <h3 className="text-2xl font-bold mb-4">Claim Your Position in the Growth System</h3>
           <p className="text-gray-400 mb-8 leading-relaxed">
-            By clicking below, you will be securely redirected to the Aurum registration system. You will be assigned to the next available sponsor in our community queue.
+            By clicking below, you will be securely redirected to the Neo registration system. You will be assigned to the next available sponsor in our community queue.
           </p>
           
           <a 

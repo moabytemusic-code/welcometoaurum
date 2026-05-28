@@ -54,7 +54,7 @@ const BotEarningsBadge = () => {
   useEffect(() => {
     const fetchEarnings = async () => {
       try {
-        const res = await fetch('/api/aurum-bot');
+        const res = await fetch('/api/neo-bot');
         if (!res.ok) throw new Error('Bot proxy fail');
         const data = await res.json();
         if (data && data.bot && data.bot !== "N/A") {
@@ -100,14 +100,14 @@ const BotEarningsBadge = () => {
             boxShadow: '0 4px 20px rgba(0,0,0,0.3)'
           }}>
             <img 
-              src="/images/aurum_exai_bot_promo.png" 
-              alt="Aurum EX-AI Bot" 
+              src="/images/neo_exai_bot_promo.png" 
+              alt="Neo EX-AI Bot" 
               style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
             />
           </div>
 
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-            <div style={{ width: '8px', height: '8px', background: '#00ff88', borderRadius: '50%', boxShadow: '0 0 8px #00ff88', animation: 'aurumPulseDot 2s infinite' }}></div>
+            <div style={{ width: '8px', height: '8px', background: '#00ff88', borderRadius: '50%', boxShadow: '0 0 8px #00ff88', animation: 'neoPulseDot 2s infinite' }}></div>
             <span style={{ fontSize: '12px', color: '#00ff88', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '2px' }}>SMART SYSTEM ACTIVE</span>
           </div>
         </div>
@@ -142,7 +142,7 @@ const BotEarningsBadge = () => {
         </div>
         
         <style jsx>{`
-          @keyframes aurumPulseDot {
+          @keyframes neoPulseDot {
             0% { opacity: 1; transform: scale(1); }
             50% { opacity: 0.5; transform: scale(1.3); }
             100% { opacity: 1; transform: scale(1); }
@@ -163,7 +163,7 @@ export default function Home() {
 
   const [isProcessing, setIsProcessing] = useState(false);
   const [status, setStatus] = useState('');
-  const [sponsorData, setSponsorData] = useState({ code: '1W145K', name: 'Aurum Rise' });
+  const [sponsorData, setSponsorData] = useState({ code: '1W145K', name: 'Neo' });
 
   useEffect(() => {
     // Determine Sponsor on Land
@@ -178,17 +178,17 @@ export default function Home() {
           if (res.ok) {
             const data = await res.json();
             setSponsorData(data);
-            localStorage.setItem('aurum_affiliate', JSON.stringify(data));
+            localStorage.setItem('neo_affiliate', JSON.stringify(data));
           }
         } catch (err) { console.error('Sponsor error:', err); }
       } else {
         // 2. No ref code in URL. Check local storage.
-        const stored = localStorage.getItem('aurum_affiliate');
+        const stored = localStorage.getItem('neo_affiliate');
         if (stored) {
           try {
             setSponsorData(JSON.parse(stored));
           } catch (e) {
-            localStorage.removeItem('aurum_affiliate');
+            localStorage.removeItem('neo_affiliate');
           }
         } else {
           // 3. No ref, no local storage -> ROTATOR
@@ -197,7 +197,7 @@ export default function Home() {
             if (res.ok) {
               const data = await res.json();
               setSponsorData(data);
-              localStorage.setItem('aurum_affiliate', JSON.stringify(data));
+              localStorage.setItem('neo_affiliate', JSON.stringify(data));
             }
           } catch (err) { console.error('Sponsor error:', err); }
         }
@@ -306,7 +306,7 @@ export default function Home() {
           <div className={styles.heroRow}>
             
             <div className={styles.calculatorCard} style={{ margin: '0', textAlign: 'left' }}>
-              <h2 className={styles.calculatorTitle} style={{ textAlign: 'center' }}>See Your Aurum Rise Wealth Projection</h2>
+              <h2 className={styles.calculatorTitle} style={{ textAlign: 'center' }}>See Your Neo Wealth Projection</h2>
             <div className={styles.calcGrid}>
                 <div className={styles.inputGroup}>
                   <label>Starting Balance (Deposit)</label>
@@ -409,31 +409,31 @@ export default function Home() {
 
           <div className={styles.ecoCard}>
             <div className={styles.ecoImageWrapper}>
-              <img src="/images/aurum_subscription_promo.png" alt="Aurum Subscription" className={styles.ecoImage} />
+              <img src="/images/neo_subscription_promo.png" alt="Neo Subscription" className={styles.ecoImage} />
             </div>
-            <h3>AURUM Subscription</h3>
+            <h3>NEO Subscription</h3>
             <p><strong>Unlock the entire money-making machine for just $19.99/year.</strong> Full access to the bots, premium cards, NeoBank, community, and our built-in marketing plan so you can earn even more by inviting others.</p>
           </div>
 
           <div className={styles.ecoCard}>
             <div className={styles.ecoImageWrapper}>
-              <img src="/images/aurum_card_promo.png" alt="Aurum Cards" className={styles.ecoImage} />
+              <img src="/images/neo_card_promo.png" alt="Neo Cards" className={styles.ecoImage} />
             </div>
-            <h3>Aurum Cards</h3>
+            <h3>Neo Cards</h3>
             <p><strong>Spend your AI earnings like normal money — anywhere in the world.</strong> Four premium tiers from instant-use Nova to the elite Infinity Card. Turn your passive yield into everyday spending power, online or offline.</p>
           </div>
 
           <div className={styles.ecoCard}>
             <div className={styles.ecoImageWrapper}>
-              <img src="/images/aurum_neobank_promo.png" alt="Aurum NeoBank" className={styles.ecoImage} />
+              <img src="/images/neo_neobank_promo.png" alt="Neo NeoBank" className={styles.ecoImage} />
             </div>
-            <h3>Aurum NeoBank</h3>
+            <h3>Neo NeoBank</h3>
             <p><strong>Your all-in-one crypto + fiat bank account.</strong> Secure, private Web3 banking in a single app. Manage everything in one place with zero compromise.</p>
           </div>
 
           <div className={styles.ecoCard}>
             <div className={styles.ecoImageWrapper}>
-              <img src="/images/aurum_zeus_bot_promo.png" alt="Aurum Zeus Bot" className={styles.ecoImage} />
+              <img src="/images/neo_zeus_bot_promo.png" alt="Neo Zeus Bot" className={styles.ecoImage} />
             </div>
             <h3>Zeus AI Bot</h3>
             <p><strong>Mid-term yield optimizer that works while you live your life.</strong> Institutional-grade AI that spots opportunities and automatically adjusts strategies — no charts, no stress, just steady passive gains.</p>
@@ -441,7 +441,7 @@ export default function Home() {
 
           <div className={styles.ecoCard}>
             <div className={styles.ecoImageWrapper}>
-              <img src="/images/aurum_exai_bot_promo.png" alt="Aurum EX-AI Bot" className={styles.ecoImage} />
+              <img src="/images/neo_exai_bot_promo.png" alt="Neo EX-AI Bot" className={styles.ecoImage} />
             </div>
             <h3>EX-AI Delta Bot</h3>
             <p><strong>The 24/7 autonomous trader that does all the work for you.</strong> Fully autonomous gap-capturing bot. It scans, executes, and compounds profits 24/7 with zero effort on your end.</p>
@@ -542,7 +542,7 @@ export default function Home() {
         <div className={styles.faqGrid}>
           <div className={styles.faqItem}>
             <h4 className={styles.faqQuestion}>Can I actually take my money out?</h4>
-            <p className={styles.faqAnswer}>How important is it to you that you can withdraw or spend your daily profits without friction? With the Aurum ecosystem, your daily profits are always available (processing within 24-48 hours). If you decide to put your initial deposit into the automated bot, that specific deposit is locked in for one year to keep the system stable. While early withdrawal is available with a 30% fee, the profits it makes every single day are 100% yours to spend or withdraw whenever you want. Fair, right?</p>
+            <p className={styles.faqAnswer}>How important is it to you that you can withdraw or spend your daily profits without friction? With the Neo ecosystem, your daily profits are always available (processing within 24-48 hours). If you decide to put your initial deposit into the automated bot, that specific deposit is locked in for one year to keep the system stable. While early withdrawal is available with a 30% fee, the profits it makes every single day are 100% yours to spend or withdraw whenever you want. Fair, right?</p>
           </div>
           <div className={styles.faqItem}>
             <h4 className={styles.faqQuestion}>How does the software actually make money?</h4>
@@ -561,7 +561,7 @@ export default function Home() {
           <div className={styles.videoWrapper}>
             <iframe 
               src="https://www.youtube.com/embed/WnrMvNnGYkk?rel=0&autoplay=0" 
-              title="AURUM Breakdown" 
+              title="NEO Breakdown" 
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
               allowFullScreen
               className={styles.videoFrame}
@@ -571,7 +571,7 @@ export default function Home() {
 
         <h2 className={styles.title}>Is It Time to See the Numbers for Yourself?</h2>
         <p className={styles.finalCtaSub}>
-          Instead of trying to convince you with hype, we believe in radical transparency. See the live algorithms, test the system, and decide if the Aurum ecosystem is the logical fit for your capital.
+          Instead of trying to convince you with hype, we believe in radical transparency. See the live algorithms, test the system, and decide if the Neo ecosystem is the logical fit for your capital.
         </p>
 
         <a 
@@ -595,7 +595,7 @@ export default function Home() {
         <div className={styles.disclaimer}>
           Past performance does not guarantee future results. Yield is generated through automated market activities and involves risk.
         </div>
-        <p className={styles.copyright}>© 2026 AURUMRISE. All rights reserved.</p>
+        <p className={styles.copyright}>© 2026 NEORISE. All rights reserved.</p>
         <div className={styles.footerLinks}>
           <a href="#">Privacy Policy</a>
           <a href="#">Terms of Service</a>

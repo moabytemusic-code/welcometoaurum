@@ -18,7 +18,7 @@ export async function GET() {
 
     // Fetch latest leads
     const { data: leads, error: leadError } = await supabase
-      .from('aurum_leads')
+      .from('neo_leads')
       .select('id, email, first_name, landing_variant, created_at')
       .order('created_at', { ascending: false })
       .limit(10);
@@ -27,7 +27,7 @@ export async function GET() {
 
     // Fetch partners with recent activity
     const { data: partners, error } = await supabase
-      .from('aurum_affiliates')
+      .from('neo_affiliates')
       .select('id, full_name, created_at, last_served_at')
       .order('last_served_at', { ascending: false, nullsFirst: false })
       .limit(10);

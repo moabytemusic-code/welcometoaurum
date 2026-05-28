@@ -99,7 +99,7 @@ function OnboardingContent() {
                     <span style={{ color: '#ff3232', fontSize: '14px', fontWeight: 'bold', textTransform: 'uppercase' }}>Cannot find the email?</span>
                   </div>
                   <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '13px', lineHeight: '1.5' }}>
-                    Check your <strong>Spam or Promotions folder</strong> for an email from the <strong>"Aurum Rise Onboarding Team"</strong>.
+                    Check your <strong>Spam or Promotions folder</strong> for an email from the <strong>"Neo Onboarding Team"</strong>.
                   </p>
                 </div>
               </div>
@@ -125,7 +125,7 @@ function OnboardingContent() {
         <div style={{ marginTop: '60px', textAlign: 'center' }}>
           <h2 style={{ fontSize: '24px', fontWeight: '800', marginBottom: '24px' }}>Ready to Activate?</h2>
           <a 
-            href={`https://backoffice.aurum.foundation/register?ref=${ref}`}
+            href={`https://backoffice.neo.foundation/register?ref=${ref}`}
             style={{ 
               display: 'inline-flex', 
               alignItems: 'center', 
@@ -143,7 +143,7 @@ function OnboardingContent() {
               transition: 'all 0.3s ease'
             }}
           >
-            Create My Aurum Account <ArrowRight size={20} />
+            Create My Neo Account <ArrowRight size={20} />
           </a>
           <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '13px', marginTop: '16px' }}>
             Assigned Sponsor Code: <strong style={{ color: '#d4af37' }}>{ref}</strong>
@@ -153,7 +153,7 @@ function OnboardingContent() {
         {/* Footer */}
         <div style={{ marginTop: '80px', paddingBottom: '60px' }}>
           <p style={{ fontSize: '10px', color: 'rgba(255,255,255,0.2)', textTransform: 'uppercase', letterSpacing: '3px', fontWeight: '700' }}>
-            AURUM RISE ONBOARDING TEAM • SECURE ACCESS
+            NEO ONBOARDING TEAM • SECURE ACCESS
           </p>
         </div>
 
