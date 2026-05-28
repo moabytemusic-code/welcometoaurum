@@ -140,7 +140,7 @@ export default function AdminOverview() {
                 <a href="/neyro/wrapper" target="_blank" style={{ color: '#00ff88', fontSize: '12px', textDecoration: 'none' }}>/neyro/wrapper ↗</a>
               </div>
               <div style={{ padding: '16px', background: 'rgba(16, 185, 129, 0.05)', borderRadius: '12px', border: '1px solid rgba(16, 185, 129, 0.2)' }}>
-                <strong style={{ display: 'block', marginBottom: '4px', color: '#10b981' }}>AI Chatbot Assistant</strong>
+                <strong style={{ display: 'block', marginBottom: '4px', color: '#10b981' }}>Neo AI</strong>
                 <div style={{ display: 'flex', gap: '16px' }}>
                   <a href="/chat" target="_blank" style={{ color: '#00ff88', fontSize: '12px', textDecoration: 'none' }}>Live Preview ↗</a>
                   <a href="/chat/admin" target="_blank" style={{ color: '#00ff88', fontSize: '12px', textDecoration: 'none' }}>Admin Console ↗</a>

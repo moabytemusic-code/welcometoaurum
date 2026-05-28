@@ -71,7 +71,7 @@ export default function ChatWidgetEmbed({
       <iframe
         ref={iframeRef}
         src={`/chat?embed=true&welcome=${encodedWelcome}`}
-        title="Aurum AI Chatbot"
+        title="Neo AI"
         style={{
           width: "100%",
           height: "100%",
