@@ -39,21 +39,11 @@ export async function GET() {
       .eq('affiliate_id', partner.id)
       .order('created_at', { ascending: false });
 
-    // 4. Fetch all active projects (funnels)
-    const { data: fetchedFunnels, error: funnelErr } = await supabase
+    const { data: activeFunnels, error: funnelErr } = await supabase
       .from('aurum_projects')
       .select('id, name, slug, angle')
       .eq('is_active', true)
       .order('name', { ascending: true });
-
-    const activeFunnels = fetchedFunnels ? [...fetchedFunnels] : [];
-    // Inject Home Page as a permanent assignable funnel
-    activeFunnels.unshift({
-      id: 'aurum-home-page',
-      name: 'Main Home Page',
-      slug: 'home',
-      angle: 'home'
-    });
 
     // 5. Default funnel for first-time login
     if (activeFunnels && activeFunnels.length > 0 && (!partner.unlocked_funnels || partner.unlocked_funnels.trim() === '')) {
