@@ -17,7 +17,7 @@ export default function AffiliatesManager() {
   const [showQrModal, setShowQrModal] = useState(false);
 
   // Form States
-  const [newPartner, setNewPartner] = useState({ full_name: '', email: '', affiliate_code: '', phone: '' });
+  const [newPartner, setNewPartner] = useState({ full_name: '', email: '', affiliate_code: '', phone: '', password: '', plan: 'BASE', rotator_runs: 0 });
   const [editingPartner, setEditingPartner] = useState(null);
   const [deletingPartner, setDeletingPartner] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -209,7 +209,7 @@ export default function AffiliatesManager() {
       });
       if (res.ok) {
         setShowAddModal(false);
-        setNewPartner({ full_name: '', email: '', affiliate_code: '', phone: '' });
+        setNewPartner({ full_name: '', email: '', affiliate_code: '', phone: '', password: '', plan: 'BASE', rotator_runs: 0 });
         fetchPartners();
       }
     } catch (e) {
@@ -297,9 +297,22 @@ export default function AffiliatesManager() {
                   background: hasConfigIssue ? 'rgba(255,68,68,0.02)' : 'transparent'
                 }}>
                   <td style={{ padding: '32px' }}>
-                    <div style={{ fontWeight: '800', color: '#fff', fontSize: '15px', marginBottom: '4px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <div style={{ fontWeight: '800', color: '#fff', fontSize: '15px', marginBottom: '4px', display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
                       {p.full_name}
                       {hasConfigIssue && <AlertTriangle size={14} color="#ff4444" />}
+                      <span style={{
+                        fontSize: '9px',
+                        fontWeight: '900',
+                        padding: '2px 8px',
+                        borderRadius: '4px',
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.5px',
+                        background: p.plan === 'VIP' ? 'rgba(255, 215, 0, 0.1)' : p.plan === 'PRO' ? 'rgba(0, 191, 255, 0.1)' : 'rgba(255, 255, 255, 0.05)',
+                        color: p.plan === 'VIP' ? '#ffd700' : p.plan === 'PRO' ? '#00bfff' : 'rgba(255, 255, 255, 0.4)',
+                        border: `1px solid ${p.plan === 'VIP' ? 'rgba(255, 215, 0, 0.2)' : p.plan === 'PRO' ? 'rgba(0, 191, 255, 0.2)' : 'rgba(255, 255, 255, 0.08)'}`
+                      }}>
+                        {p.plan || 'BASE'}
+                      </span>
                     </div>
                     <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.3)' }}>{p.email}</div>
                   </td>
@@ -371,21 +384,28 @@ export default function AffiliatesManager() {
                     </div>
                   </td>
                   <td style={{ padding: '32px' }}>
-                    <button 
-                      onClick={() => toggleRotator(p)}
-                      style={{ 
-                        padding: '8px 20px', 
-                        borderRadius: '100px', 
-                        fontSize: '11px', 
-                        fontWeight: '900', 
-                        cursor: 'pointer',
-                        background: p.is_rotator ? 'rgba(0, 255, 136, 0.08)' : 'rgba(255, 255, 255, 0.03)',
-                        border: `1px solid ${p.is_rotator ? 'rgba(0, 255, 136, 0.2)' : 'rgba(255,255,255,0.05)'}`,
-                        color: p.is_rotator ? '#00ff88' : 'rgba(255,255,255,0.2)'
-                      }}
-                    >
-                      {p.is_rotator ? 'LIVE' : 'OFF'}
-                    </button>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', alignItems: 'flex-start' }}>
+                      <button 
+                        onClick={() => toggleRotator(p)}
+                        style={{ 
+                          padding: '8px 20px', 
+                          borderRadius: '100px', 
+                          fontSize: '11px', 
+                          fontWeight: '900', 
+                          cursor: 'pointer',
+                          background: p.is_rotator ? 'rgba(0, 255, 136, 0.08)' : 'rgba(255, 255, 255, 0.03)',
+                          border: `1px solid ${p.is_rotator ? 'rgba(0, 255, 136, 0.2)' : 'rgba(255,255,255,0.05)'}`,
+                          color: p.is_rotator ? '#00ff88' : 'rgba(255,255,255,0.2)'
+                        }}
+                      >
+                        {p.is_rotator ? 'LIVE' : 'OFF'}
+                      </button>
+                      {p.is_rotator && (
+                        <span style={{ fontSize: '11px', color: 'rgba(255, 255, 255, 0.4)', paddingLeft: '4px' }}>
+                          Runs left: <strong style={{ color: '#00ff88' }}>{p.rotator_runs ?? 0}</strong>
+                        </span>
+                      )}
+                    </div>
                   </td>
                   <td style={{ padding: '32px', textAlign: 'right' }}>
                     <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '20px' }}>
@@ -452,14 +472,106 @@ export default function AffiliatesManager() {
       {/* Other Modals (Center Aligned) */}
       {showAddModal && (
         <div className={styles.modalOverlay} style={{ zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <div className={styles.modalContent} style={{ maxWidth: '500px', width: '90%', padding: '40px', background: '#111', borderRadius: '32px' }}>
+          <div className={styles.modalContent} style={{ maxWidth: '500px', width: '90%', padding: '40px', background: '#111', borderRadius: '32px', maxHeight: '90vh', overflowY: 'auto' }}>
             <h2 className={styles.modalTitle}>Register New Partner</h2>
             <form onSubmit={handleRegister} className={styles.modalForm}>
-              <input type="text" placeholder="Full Name" required className={styles.modalInput} value={newPartner.full_name} onChange={(e) => setNewPartner({...newPartner, full_name: e.target.value})} />
-              <input type="email" placeholder="Email Address" required className={styles.modalInput} value={newPartner.email} onChange={(e) => setNewPartner({...newPartner, email: e.target.value})} />
-              <input type="text" placeholder="Affiliate Code" required className={styles.modalInput} value={newPartner.affiliate_code} onChange={(e) => setNewPartner({...newPartner, affiliate_code: e.target.value})} />
-              <div style={{ display: 'flex', gap: '16px', marginTop: '16px' }}>
-                <button type="submit" className={styles.primaryCta} style={{ flex: 1, padding: '16px', borderRadius: '12px' }}>Complete Registration</button>
+              <div style={{ textAlign: 'left', marginBottom: '16px' }}>
+                <label style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '1px', display: 'block', marginBottom: '8px' }}>Full Name</label>
+                <input 
+                  type="text" 
+                  required 
+                  className={styles.modalInput} 
+                  value={newPartner.full_name} 
+                  onChange={(e) => setNewPartner({...newPartner, full_name: e.target.value})} 
+                  placeholder="Full Name"
+                />
+              </div>
+              <div style={{ textAlign: 'left', marginBottom: '16px' }}>
+                <label style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '1px', display: 'block', marginBottom: '8px' }}>Email Address</label>
+                <input 
+                  type="email" 
+                  required 
+                  className={styles.modalInput} 
+                  value={newPartner.email} 
+                  onChange={(e) => setNewPartner({...newPartner, email: e.target.value})} 
+                  placeholder="name@example.com"
+                />
+              </div>
+              <div style={{ textAlign: 'left', marginBottom: '16px' }}>
+                <label style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '1px', display: 'block', marginBottom: '8px' }}>Affiliate Code</label>
+                <input 
+                  type="text" 
+                  required 
+                  className={styles.modalInput} 
+                  value={newPartner.affiliate_code} 
+                  onChange={(e) => setNewPartner({...newPartner, affiliate_code: e.target.value})} 
+                  placeholder="E.g., MYCODE"
+                />
+              </div>
+              <div style={{ textAlign: 'left', marginBottom: '16px' }}>
+                <label style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '1px', display: 'block', marginBottom: '8px' }}>Password</label>
+                <input 
+                  type="text" 
+                  required
+                  className={styles.modalInput} 
+                  value={newPartner.password} 
+                  onChange={(e) => setNewPartner({...newPartner, password: e.target.value})} 
+                  placeholder="Password"
+                />
+              </div>
+              <div style={{ textAlign: 'left', marginBottom: '16px' }}>
+                <label style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '1px', display: 'block', marginBottom: '8px' }}>Phone</label>
+                <input 
+                  type="text" 
+                  className={styles.modalInput} 
+                  value={newPartner.phone} 
+                  onChange={(e) => setNewPartner({...newPartner, phone: e.target.value})} 
+                  placeholder="Optional phone number"
+                />
+              </div>
+              <div style={{ textAlign: 'left', marginBottom: '16px' }}>
+                <label style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '1px', display: 'block', marginBottom: '8px' }}>Service Plan Level</label>
+                <select 
+                  className={styles.modalInput} 
+                  style={{
+                    width: '100%',
+                    background: 'rgba(255, 255, 255, 0.03)',
+                    border: '1px solid rgba(255, 255, 255, 0.08)',
+                    borderRadius: '12px',
+                    padding: '14px 16px',
+                    color: '#fff',
+                    fontSize: '15px',
+                    outline: 'none',
+                    appearance: 'none',
+                    backgroundImage: 'url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'rgba(255,255,255,0.5)\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'%3e%3cpolyline points=\'6 9 12 15 18 9\'%3e%3c/polyline%3e%3c/svg%3e")',
+                    backgroundRepeat: 'no-repeat',
+                    backgroundPosition: 'right 16px center',
+                    backgroundSize: '16px'
+                  }}
+                  value={newPartner.plan || 'BASE'} 
+                  onChange={(e) => setNewPartner({...newPartner, plan: e.target.value})}
+                >
+                  <option value="BASE" style={{ background: '#111', color: '#fff' }}>BASE</option>
+                  <option value="PRO" style={{ background: '#111', color: '#fff' }}>PRO</option>
+                  <option value="VIP" style={{ background: '#111', color: '#fff' }}>VIP</option>
+                </select>
+              </div>
+              <div style={{ textAlign: 'left', marginBottom: '16px' }}>
+                <label style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '1px', display: 'block', marginBottom: '8px' }}>Rotator Runs</label>
+                <input 
+                  type="number" 
+                  className={styles.modalInput} 
+                  value={newPartner.rotator_runs} 
+                  onChange={(e) => setNewPartner({...newPartner, rotator_runs: parseInt(e.target.value, 10) || 0})} 
+                />
+              </div>
+              <div style={{ display: 'flex', gap: '16px', marginTop: '24px' }}>
+                <button type="submit" disabled={isSubmitting} className={styles.primaryCta} style={{ flex: 1, padding: '16px', borderRadius: '12px' }}>
+                  {isSubmitting ? 'Registering...' : 'Complete Registration'}
+                </button>
+                <button type="button" onClick={() => { setShowAddModal(false); setNewPartner({ full_name: '', email: '', affiliate_code: '', phone: '', password: '', plan: 'BASE', rotator_runs: 0 }); }} className={styles.secondaryBtn} style={{ flex: 1, padding: '16px', borderRadius: '12px' }}>
+                  Cancel
+                </button>
               </div>
             </form>
           </div>
@@ -468,7 +580,7 @@ export default function AffiliatesManager() {
 
       {showEditModal && editingPartner && (
         <div className={styles.modalOverlay} style={{ zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <div className={styles.modalContent} style={{ maxWidth: '500px', width: '90%', padding: '40px', background: '#111', borderRadius: '32px' }}>
+          <div className={styles.modalContent} style={{ maxWidth: '500px', width: '90%', padding: '40px', background: '#111', borderRadius: '32px', maxHeight: '90vh', overflowY: 'auto' }}>
             <h2 className={styles.modalTitle}>Edit Partner Details</h2>
             <form onSubmit={handleEditSubmit} className={styles.modalForm}>
               <div style={{ textAlign: 'left', marginBottom: '16px' }}>
@@ -519,6 +631,33 @@ export default function AffiliatesManager() {
                   value={editingPartner.phone || ''} 
                   onChange={(e) => setEditingPartner({...editingPartner, phone: e.target.value})} 
                 />
+              </div>
+              <div style={{ textAlign: 'left', marginBottom: '16px' }}>
+                <label style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '1px', display: 'block', marginBottom: '8px' }}>Service Plan Level</label>
+                <select 
+                  className={styles.modalInput} 
+                  style={{
+                    width: '100%',
+                    background: 'rgba(255, 255, 255, 0.03)',
+                    border: '1px solid rgba(255, 255, 255, 0.08)',
+                    borderRadius: '12px',
+                    padding: '14px 16px',
+                    color: '#fff',
+                    fontSize: '15px',
+                    outline: 'none',
+                    appearance: 'none',
+                    backgroundImage: 'url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'rgba(255,255,255,0.5)\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'%3e%3cpolyline points=\'6 9 12 15 18 9\'%3e%3c/polyline%3e%3c/svg%3e")',
+                    backgroundRepeat: 'no-repeat',
+                    backgroundPosition: 'right 16px center',
+                    backgroundSize: '16px'
+                  }}
+                  value={editingPartner.plan || 'BASE'} 
+                  onChange={(e) => setEditingPartner({...editingPartner, plan: e.target.value})}
+                >
+                  <option value="BASE" style={{ background: '#111', color: '#fff' }}>BASE</option>
+                  <option value="PRO" style={{ background: '#111', color: '#fff' }}>PRO</option>
+                  <option value="VIP" style={{ background: '#111', color: '#fff' }}>VIP</option>
+                </select>
               </div>
               <div style={{ textAlign: 'left', marginBottom: '16px' }}>
                 <label style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '1px', display: 'block', marginBottom: '8px' }}>Rotator Runs</label>
