@@ -43,7 +43,7 @@ function FreeTrialContent() {
     
     // Redirect instantly to the portal
     setTimeout(() => {
-      window.location.href = `https://aurum-education-portal.vercel.app/syllabus?email=${encodeURIComponent(inputEmail)}`;
+      window.location.href = `https://www.welcometoaurum.com/syllabus?email=${encodeURIComponent(inputEmail)}`;
     }, 500);
   };
 
@@ -110,7 +110,7 @@ function FreeTrialContent() {
               </p>
               
               <a 
-                href={`https://aurum-education-portal.vercel.app/syllabus?email=${encodeURIComponent(email)}`}
+                href={`https://www.welcometoaurum.com/syllabus?email=${encodeURIComponent(email)}`}
                 className="w-full bg-gradient-to-r from-[#00ff88] to-[#00cc6a] text-black font-black py-4 px-8 rounded-xl transition-all flex items-center justify-center gap-2 hover:scale-[1.02] hover:shadow-[0_0_25px_rgba(0,255,136,0.3)] text-lg mb-4"
               >
                 Enter Education Portal <ArrowRight size={20} />

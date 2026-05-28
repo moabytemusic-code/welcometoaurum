@@ -142,7 +142,7 @@ export default function ServicesPage() {
               To finalize your upgrade, please proceed to the secure crypto checkout portal to select your preferred network and verify your transaction.
             </p>
             <a 
-              href={`https://aurum-education-portal.vercel.app/syllabus/checkout.html?email=${encodeURIComponent(formData.email)}&firstName=${encodeURIComponent(formData.firstName)}&lastName=${encodeURIComponent(formData.lastName)}`}
+              href={`https://www.welcometoaurum.com/syllabus/checkout.html?email=${encodeURIComponent(formData.email)}&firstName=${encodeURIComponent(formData.firstName)}&lastName=${encodeURIComponent(formData.lastName)}`}
               className="inline-flex bg-gradient-to-r from-[#00ff88] to-[#00cc6a] text-black font-black py-4 px-8 rounded-xl transition-all items-center justify-center gap-2 hover:scale-[1.02] hover:shadow-[0_0_25px_rgba(0,255,136,0.3)] text-lg"
             >
               Proceed to Crypto Checkout <ArrowRight size={20} />

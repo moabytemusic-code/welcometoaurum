@@ -45,7 +45,7 @@ export default function ThankYouSyllabusPage() {
           </p>
 
           <a 
-            href={`https://aurum-education-portal.vercel.app/syllabus/register${email ? `?email=${encodeURIComponent(email)}` : ''}`}
+            href={`https://www.welcometoaurum.com/syllabus/register${email ? `?email=${encodeURIComponent(email)}` : ''}`}
             className="w-full sm:w-auto inline-flex bg-gradient-to-r from-[#00ff88] to-[#00cc6a] text-black font-black text-lg px-8 py-4 rounded-xl hover:shadow-[0_0_20px_rgba(0,255,136,0.4)] hover:scale-105 transition-all justify-center items-center gap-2"
           >
             Create Your Free Account <ChevronRight size={20} />
