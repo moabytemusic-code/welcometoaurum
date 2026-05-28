@@ -47,7 +47,7 @@ export default function AdminLayout({ children }) {
           </Link>
           <Link href="/chat/admin" className={styles.navItem}>
             <MessageSquare className={styles.navIcon} />
-            <span>Neo AI Admin</span>
+            <span>Syllabus Admin</span>
           </Link>
           <Link href="/admin/payments" className={styles.navItem}>
             <span style={{ fontSize: '18px', marginRight: '12px' }}>🪙</span>
