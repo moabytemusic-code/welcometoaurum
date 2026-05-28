@@ -465,6 +465,101 @@ export default function AffiliatesManager() {
           </div>
         </div>
       )}
+
+      {showEditModal && editingPartner && (
+        <div className={styles.modalOverlay} style={{ zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div className={styles.modalContent} style={{ maxWidth: '500px', width: '90%', padding: '40px', background: '#111', borderRadius: '32px' }}>
+            <h2 className={styles.modalTitle}>Edit Partner Details</h2>
+            <form onSubmit={handleEditSubmit} className={styles.modalForm}>
+              <div style={{ textAlign: 'left', marginBottom: '16px' }}>
+                <label style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '1px', display: 'block', marginBottom: '8px' }}>Full Name</label>
+                <input 
+                  type="text" 
+                  required 
+                  className={styles.modalInput} 
+                  value={editingPartner.full_name || ''} 
+                  onChange={(e) => setEditingPartner({...editingPartner, full_name: e.target.value})} 
+                />
+              </div>
+              <div style={{ textAlign: 'left', marginBottom: '16px' }}>
+                <label style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '1px', display: 'block', marginBottom: '8px' }}>Email Address</label>
+                <input 
+                  type="email" 
+                  required 
+                  className={styles.modalInput} 
+                  value={editingPartner.email || ''} 
+                  onChange={(e) => setEditingPartner({...editingPartner, email: e.target.value})} 
+                />
+              </div>
+              <div style={{ textAlign: 'left', marginBottom: '16px' }}>
+                <label style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '1px', display: 'block', marginBottom: '8px' }}>Affiliate Code</label>
+                <input 
+                  type="text" 
+                  required 
+                  className={styles.modalInput} 
+                  value={editingPartner.affiliate_code || ''} 
+                  onChange={(e) => setEditingPartner({...editingPartner, affiliate_code: e.target.value})} 
+                />
+              </div>
+              <div style={{ textAlign: 'left', marginBottom: '16px' }}>
+                <label style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '1px', display: 'block', marginBottom: '8px' }}>Password</label>
+                <input 
+                  type="text" 
+                  className={styles.modalInput} 
+                  value={editingPartner.password || ''} 
+                  onChange={(e) => setEditingPartner({...editingPartner, password: e.target.value})} 
+                  placeholder="Set password"
+                />
+              </div>
+              <div style={{ textAlign: 'left', marginBottom: '16px' }}>
+                <label style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '1px', display: 'block', marginBottom: '8px' }}>Phone</label>
+                <input 
+                  type="text" 
+                  className={styles.modalInput} 
+                  value={editingPartner.phone || ''} 
+                  onChange={(e) => setEditingPartner({...editingPartner, phone: e.target.value})} 
+                />
+              </div>
+              <div style={{ textAlign: 'left', marginBottom: '16px' }}>
+                <label style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '1px', display: 'block', marginBottom: '8px' }}>Rotator Runs</label>
+                <input 
+                  type="number" 
+                  className={styles.modalInput} 
+                  value={editingPartner.rotator_runs ?? 0} 
+                  onChange={(e) => setEditingPartner({...editingPartner, rotator_runs: parseInt(e.target.value, 10) || 0})} 
+                />
+              </div>
+              <div style={{ display: 'flex', gap: '16px', marginTop: '24px' }}>
+                <button type="submit" disabled={isSubmitting} className={styles.primaryCta} style={{ flex: 1, padding: '16px', borderRadius: '12px' }}>
+                  {isSubmitting ? 'Saving...' : 'Save Changes'}
+                </button>
+                <button type="button" onClick={() => { setShowEditModal(false); setEditingPartner(null); }} className={styles.secondaryBtn} style={{ flex: 1, padding: '16px', borderRadius: '12px' }}>
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {showDeleteModal && deletingPartner && (
+        <div className={styles.modalOverlay} style={{ zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div className={styles.modalContent} style={{ maxWidth: '500px', width: '90%', padding: '40px', background: '#111', borderRadius: '32px', textAlign: 'center' }}>
+            <h2 className={styles.modalTitle} style={{ color: '#ff4444' }}>Delete Partner</h2>
+            <p style={{ color: 'rgba(255,255,255,0.6)', marginBottom: '24px', fontSize: '14px' }}>
+              Are you sure you want to delete <strong>{deletingPartner.full_name}</strong> ({deletingPartner.email})? This action cannot be undone.
+            </p>
+            <div style={{ display: 'flex', gap: '16px' }}>
+              <button onClick={performDelete} disabled={isSubmitting} className={styles.primaryCta} style={{ flex: 1, padding: '16px', borderRadius: '12px', background: '#ff4444', color: '#fff', boxShadow: '0 4px 12px rgba(255, 68, 68, 0.2)' }}>
+                {isSubmitting ? 'Deleting...' : 'Yes, Delete'}
+              </button>
+              <button onClick={() => { setShowDeleteModal(false); setDeletingPartner(null); }} className={styles.secondaryBtn} style={{ flex: 1, padding: '16px', borderRadius: '12px' }}>
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
