@@ -7,7 +7,7 @@ import { ChevronRight, ChevronLeft, Shield, CheckCircle2, ChevronDown, ChevronUp
 export default function NeyroWrapper() {
   const [sponsorData, setSponsorData] = useState({ 
     code: '1W145K', 
-    name: 'Neo Corporate'
+    name: 'Aurum Corporate'
   });
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
@@ -145,7 +145,7 @@ export default function NeyroWrapper() {
         {/* Sticky Footer CTA */}
         <div style={{ padding: '24px', borderTop: '1px solid rgba(255,255,255,0.05)', background: 'rgba(0,0,0,0.5)' }}>
           <a 
-            href={`https://backoffice.neo.foundation/register?ref=${sponsorData.code}`}
+            href={`https://backoffice.aurum.foundation/register?ref=${sponsorData.code}`}
             target="_blank"
             rel="noopener noreferrer"
             className="registerBtn"
@@ -153,7 +153,7 @@ export default function NeyroWrapper() {
             Activate My AI Agent
           </a>
           <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.3)', textAlign: 'center', marginTop: '12px' }}>
-            Opens Neo secure portal in a new tab
+            Opens Aurum secure portal in a new tab
           </p>
         </div>
 

@@ -7,19 +7,19 @@ export default function LeadCapture() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [status, setStatus] = useState('');
   const [formData, setFormData] = useState({ name: '', email: '', phone: '' });
-  const [sponsorData, setSponsorData] = useState({ code: '1W145K', name: 'Neo Corporate' });
+  const [sponsorData, setSponsorData] = useState({ code: '1W145K', name: 'Aurum Corporate' });
 
   useEffect(() => {
     const resolveSponsor = async () => {
       // 1. Check for existing session
-      const stored = localStorage.getItem('neo_affiliate');
+      const stored = localStorage.getItem('aurum_affiliate');
       if (stored) {
         try {
           const parsed = JSON.parse(stored);
           setSponsorData(parsed);
           return;
         } catch (e) {
-          localStorage.removeItem('neo_affiliate');
+          localStorage.removeItem('aurum_affiliate');
         }
       }
 
@@ -36,7 +36,7 @@ export default function LeadCapture() {
         if (res.ok) {
           const data = await res.json();
           setSponsorData(data);
-          localStorage.setItem('neo_affiliate', JSON.stringify(data));
+          localStorage.setItem('aurum_affiliate', JSON.stringify(data));
         }
       } catch (err) {
         console.error('Sponsor resolution error:', err);
@@ -55,7 +55,7 @@ export default function LeadCapture() {
       await new Promise(r => setTimeout(r, 800));
       setStatus('VERIFYING CONTACT INTEGRITY...');
       await new Promise(r => setTimeout(r, 800));
-      setStatus('SYNCING WITH NEO ECOSYSTEM...');
+      setStatus('SYNCING WITH AURUM ECOSYSTEM...');
 
       // Step 2: API Opt-in
       const res = await fetch('/api/optin', {

@@ -35,7 +35,7 @@ export async function GET(request, { params }) {
     if (!assignedMemberId) {
       // Fallback behavior if rotator is empty or completed
       // You can change this to a default admin link or a different page.
-      const fallbackUrl = 'https://backoffice.neo.foundation/register';
+      const fallbackUrl = 'https://backoffice.aurum.foundation/register';
       return NextResponse.redirect(fallbackUrl);
     }
 
@@ -45,7 +45,7 @@ export async function GET(request, { params }) {
       const origin = request.nextUrl.origin;
       finalUrl = `${origin}/onboarding?ref=${assignedMemberId}`;
     } else {
-      finalUrl = `https://backoffice.neo.foundation/register?ref=${assignedMemberId}`;
+      finalUrl = `https://backoffice.aurum.foundation/register?ref=${assignedMemberId}`;
     }
 
     // Perform a 302 temporary redirect so the browser doesn't cache the assigned link

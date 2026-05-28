@@ -5,7 +5,7 @@ import { createClient } from '@supabase/supabase-js';
 export async function POST(request) {
   try {
     const cookieStore = await cookies();
-    const partnerCode = cookieStore.get('neo_partner_session')?.value;
+    const partnerCode = cookieStore.get('aurum_partner_session')?.value;
 
     if (!partnerCode) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -22,7 +22,7 @@ export async function POST(request) {
 
     // Fetch the partner's internal UUID
     const { data: partner, error: partnerErr } = await supabase
-      .from('neo_affiliates')
+      .from('aurum_affiliates')
       .select('id')
       .eq('affiliate_code', partnerCode)
       .maybeSingle();
@@ -33,7 +33,7 @@ export async function POST(request) {
 
     // Insert the payment transaction request
     const { error: insertErr } = await supabase
-      .from('neo_crypto_payments')
+      .from('aurum_crypto_payments')
       .insert([{
         affiliate_id: partner.id,
         coin_type: coinType,

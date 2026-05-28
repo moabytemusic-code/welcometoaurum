@@ -61,8 +61,8 @@ export default function PartnerLogin() {
       }}>
         <div style={{ marginBottom: '24px', display: 'flex', justifyContent: 'center' }}>
           <img 
-            src="/images/neo_logo.png" 
-            alt="Neo Logo" 
+            src="/images/aurum_logo.png" 
+            alt="Aurum Rise Logo" 
             style={{ width: '100%', maxWidth: '240px', height: 'auto' }}
           />
         </div>

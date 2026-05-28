@@ -12,7 +12,7 @@ const BotEarningsBadge = ({ type = 'EX-AI', targetYield = null }) => {
   useEffect(() => {
     const fetchEarnings = async () => {
       try {
-        const res = await fetch('/api/neo-bot', { cache: 'no-store' });
+        const res = await fetch('/api/aurum-bot', { cache: 'no-store' });
         if (!res.ok) throw new Error('Bot proxy fail');
         const data = await res.json();
         setEarnings({ 
@@ -48,7 +48,7 @@ const BotEarningsBadge = ({ type = 'EX-AI', targetYield = null }) => {
       
       {/* Header */}
       <div className={styles.windowHeader}>
-        <div className={styles.windowTitle}>NEO</div>
+        <div className={styles.windowTitle}>AURUM</div>
         <div className={styles.windowSubtitle}>{isZeus ? 'Core Performance' : 'Daily Performance'}</div>
         <div className={styles.windowTimestamp}>
           <span className={styles.indicatorPulse} style={{ background: '#00ff88' }} />

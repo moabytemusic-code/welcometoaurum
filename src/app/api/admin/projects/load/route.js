@@ -21,7 +21,7 @@ export async function GET(request) {
     const supabase = createClient(supabaseUrl, supabaseKey);
 
     const { data: project, error } = await supabase
-      .from('neo_projects')
+      .from('aurum_projects')
       .select('*')
       .eq('slug', slug)
       .maybeSingle();

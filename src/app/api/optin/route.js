@@ -48,7 +48,7 @@ export async function POST(req) {
 
       const cleanSponsor = (sponsor_code || '1W145K').trim();
 
-      await supabase.from('neo_leads').insert([{
+      await supabase.from('aurum_leads').insert([{
         email,
         first_name,
         sponsor_code: cleanSponsor,
@@ -59,14 +59,14 @@ export async function POST(req) {
       // Decrement rotator run if sponsor is in rotator and has runs left
       if (cleanSponsor && cleanSponsor !== '1W145K') {
         const { data: partner } = await supabase
-          .from('neo_affiliates')
+          .from('aurum_affiliates')
           .select('id, rotator_runs, is_rotator')
           .eq('affiliate_code', cleanSponsor)
           .maybeSingle();
 
         if (partner && partner.is_rotator && (partner.rotator_runs || 0) > 0) {
           await supabase
-            .from('neo_affiliates')
+            .from('aurum_affiliates')
             .update({ rotator_runs: partner.rotator_runs - 1 })
             .eq('id', partner.id);
           console.log(`Successfully decremented rotator_runs for partner ${cleanSponsor}. Remaining: ${partner.rotator_runs - 1}`);
@@ -91,7 +91,7 @@ export async function POST(req) {
         FIRSTNAME: first_name,
         SMS: phone || '', 
         SPONSOR_CODE: sponsor_code || '1W145K',
-        SPONSOR_NAME: sponsor_name || 'Neo Corporate',
+        SPONSOR_NAME: sponsor_name || 'Aurum Corporate',
         LANDING_VARIANT: landing_variant || 'unknown'
       },
       listIds: [variantList],
@@ -163,7 +163,7 @@ export async function POST(req) {
             templateId,
             params: {
               FIRSTNAME: first_name || '',
-              SPONSOR_NAME: sponsor_name || 'Neo Corporate'
+              SPONSOR_NAME: sponsor_name || 'Aurum Corporate'
             }
           })
         });

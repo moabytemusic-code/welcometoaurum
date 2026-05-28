@@ -60,7 +60,7 @@ export async function POST(request) {
 
     // ULTIMATE DIRECT CONNECT logic (Bypassing Library for absolute production stability)
     console.log('--- DB SYNC START ---');
-    const restUrl = `${supabaseUrl}/rest/v1/neo_affiliates?on_conflict=email`;
+    const restUrl = `${supabaseUrl}/rest/v1/aurum_affiliates?on_conflict=email`;
     
     const dbRes = await fetch(restUrl, {
       method: 'POST',

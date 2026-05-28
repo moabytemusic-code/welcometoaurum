@@ -16,7 +16,7 @@ export async function GET() {
 
     // Fetch all leads to calculate stats locally (Simple for 10k leads)
     const { data: leads, error } = await supabase
-      .from('neo_leads')
+      .from('aurum_leads')
       .select('landing_variant');
 
     if (error) throw error;

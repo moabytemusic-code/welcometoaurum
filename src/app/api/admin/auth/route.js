@@ -13,7 +13,7 @@ export async function POST(request) {
       const response = NextResponse.json({ success: true });
       
       // Set a robust production-ready session cookie
-      response.cookies.set('neo_admin_session', 'authenticated', {
+      response.cookies.set('aurum_admin_session', 'authenticated', {
         httpOnly: true,
         secure: true, // Always use secure in production/https
         sameSite: 'lax',
@@ -32,6 +32,6 @@ export async function POST(request) {
 
 export async function DELETE() {
   const response = NextResponse.json({ success: true });
-  response.cookies.set('neo_admin_session', '', { maxAge: 0 });
+  response.cookies.set('aurum_admin_session', '', { maxAge: 0 });
   return response;
 }

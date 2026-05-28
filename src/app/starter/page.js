@@ -10,8 +10,8 @@ export default function StarterFunnel() {
   const [status, setStatus] = useState('');
   const [sponsorData, setSponsorData] = useState({ 
     code: '1W145K', 
-    name: 'Neo Corporate', 
-    url: 'https://backoffice.neo.foundation/auth/sign-up?ref=1W145K' 
+    name: 'Aurum Corporate', 
+    url: 'https://backoffice.aurum.foundation/auth/sign-up?ref=1W145K' 
   });
 
   useEffect(() => {
@@ -26,17 +26,17 @@ export default function StarterFunnel() {
           if (res.ok) {
             const data = await res.json();
             setSponsorData(data);
-            localStorage.setItem('neo_affiliate', JSON.stringify(data));
+            localStorage.setItem('aurum_affiliate', JSON.stringify(data));
           }
         } catch (err) { console.error('Sponsor error:', err); }
       } else {
         // 2. No ref code in URL. Check local storage.
-        const stored = localStorage.getItem('neo_affiliate');
+        const stored = localStorage.getItem('aurum_affiliate');
         if (stored) {
           try {
             setSponsorData(JSON.parse(stored));
           } catch (e) {
-            localStorage.removeItem('neo_affiliate');
+            localStorage.removeItem('aurum_affiliate');
           }
         } else {
           // 3. No ref, no local storage -> ROTATOR
@@ -45,7 +45,7 @@ export default function StarterFunnel() {
             if (res.ok) {
               const data = await res.json();
               setSponsorData(data);
-              localStorage.setItem('neo_affiliate', JSON.stringify(data));
+              localStorage.setItem('aurum_affiliate', JSON.stringify(data));
             }
           } catch (err) { console.error('Sponsor error:', err); }
         }
@@ -111,7 +111,7 @@ export default function StarterFunnel() {
           </div>
           
           <h1 style={{ fontSize: '38px', fontWeight: '950', lineHeight: '1.05', marginBottom: '20px', color: '#fff' }}>
-            Get Your FREE Neo Starter Guide + Instant Backoffice Access
+            Get Your FREE Aurum Starter Guide + Instant Backoffice Access
           </h1>
           
           <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '18px', fontWeight: '500', marginBottom: '40px', lineHeight: '1.4' }}>
@@ -207,13 +207,13 @@ export default function StarterFunnel() {
         <div style={{ display: 'flex', gap: '24px', overflowX: 'auto', paddingBottom: '32px', margin: '0 -20px', padding: '0 20px', scrollSnapType: 'x mandatory', alignItems: 'stretch' }}>
           <BotEarningsBadge />
           <ResultCard 
-            src="/images/neo_result_1.png" 
+            src="/images/aurum_result_1.png" 
             title="EX-AI BOT" 
             badge="DAILY PERFORMANCE"
             result="+$14.82 Today"
           />
           <ResultCard 
-            src="/images/neo_result_2.png" 
+            src="/images/aurum_result_2.png" 
             title="ZEUS BOT" 
             badge="CONSISTENT YIELD"
             result="+$8.40 Today"
@@ -262,7 +262,7 @@ export default function StarterFunnel() {
           <div style={{ position: 'relative', width: '100%', aspectRatio: '16/9', borderRadius: '28px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 20px 60px rgba(0,0,0,0.6)' }}>
             <iframe 
               src="https://www.youtube.com/embed/WmlQRcubvR4" 
-              title="Neo System Overview" 
+              title="Aurum System Overview" 
               frameBorder="0" 
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
               allowFullScreen
@@ -341,7 +341,7 @@ export default function StarterFunnel() {
             <p style={{ fontWeight: '800', color: 'rgba(255,255,255,0.5)', marginBottom: '8px', fontSize: '14px' }}>#AD DISCLOSURE & RISK WARNING</p>
             This is an affiliate link. If you activate through my link I may earn a commission at no extra cost to you. 
             Past performance is not indicative of future results. Only invest what you can afford to lose. 
-            Cryptocurrency markets contain inherent risks. Use the Neo software as an automated tool, not a financial guarantee.
+            Cryptocurrency markets contain inherent risks. Use the Aurum software as an automated tool, not a financial guarantee.
           </div>
         </div>
       </section>
@@ -390,7 +390,7 @@ const BotEarningsBadge = () => {
   useEffect(() => {
     const fetchEarnings = async () => {
       try {
-        const res = await fetch('/api/neo-bot');
+        const res = await fetch('/api/aurum-bot');
         if (!res.ok) throw new Error('Bot proxy fail');
         const data = await res.json();
         if (data && data.bot && data.bot !== "N/A") {
@@ -439,14 +439,14 @@ const BotEarningsBadge = () => {
             boxShadow: '0 4px 20px rgba(0,0,0,0.3)'
           }}>
             <img 
-              src="/images/neo_exai_bot_promo.png" 
-              alt="Neo EX-AI Bot" 
+              src="/images/aurum_exai_bot_promo.png" 
+              alt="Aurum EX-AI Bot" 
               style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
             />
           </div>
 
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-            <div style={{ width: '8px', height: '8px', background: '#00ff88', borderRadius: '50%', boxShadow: '0 0 8px #00ff88', animation: 'neoPulseDot 2s infinite' }}></div>
+            <div style={{ width: '8px', height: '8px', background: '#00ff88', borderRadius: '50%', boxShadow: '0 0 8px #00ff88', animation: 'aurumPulseDot 2s infinite' }}></div>
             <span style={{ fontSize: '11px', color: '#00ff88', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '2px' }}>EX-AI BOT ACTIVE</span>
           </div>
         </div>
@@ -477,7 +477,7 @@ const BotEarningsBadge = () => {
         </div>
         
         <style jsx>{`
-          @keyframes neoPulseDot {
+          @keyframes aurumPulseDot {
             0% { opacity: 1; transform: scale(1); }
             50% { opacity: 0.5; transform: scale(1.3); }
             100% { opacity: 1; transform: scale(1); }

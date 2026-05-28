@@ -4,7 +4,7 @@ import { supabase } from '@/lib/supabase';
 export async function POST(request) {
   // 1. Security Check
   const authHeader = request.headers.get('Authorization');
-  const secretKey = process.env.SYNC_SECRET_KEY || 'neo-dev-key'; // Fallback for dev
+  const secretKey = process.env.SYNC_SECRET_KEY || 'aurum-dev-key'; // Fallback for dev
 
   if (authHeader !== `Bearer ${secretKey}`) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -20,7 +20,7 @@ export async function POST(request) {
 
     // 2. Fetch current unlocked list
     const { data, error: fetchError } = await supabase
-      .from('neo_affiliates')
+      .from('aurum_affiliates')
       .select('id, unlocked_funnels')
       .eq('affiliate_code', affiliate_code)
       .single();
@@ -40,7 +40,7 @@ export async function POST(request) {
 
     // 4. Update the database
     const { error: updateError } = await supabase
-      .from('neo_affiliates')
+      .from('aurum_affiliates')
       .update({ unlocked_funnels: updatedString })
       .eq('id', data.id);
 

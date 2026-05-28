@@ -7,7 +7,7 @@ export default function FunnelEngineClient({ initialProject, angleId }) {
   const [project] = useState(initialProject);
   const [isProcessing, setIsProcessing] = useState(false);
   const [status, setStatus] = useState('');
-  const [sponsorData, setSponsorData] = useState({ code: '1W145K', name: 'Neo Corporate' });
+  const [sponsorData, setSponsorData] = useState({ code: '1W145K', name: 'Aurum Corporate' });
 
   useEffect(() => {
     const resolveSponsor = async () => {
@@ -21,17 +21,17 @@ export default function FunnelEngineClient({ initialProject, angleId }) {
           if (res.ok) {
             const data = await res.json();
             setSponsorData(data);
-            localStorage.setItem('neo_affiliate', JSON.stringify(data));
+            localStorage.setItem('aurum_affiliate', JSON.stringify(data));
           }
         } catch (err) { console.error('Sponsor error:', err); }
       } else {
         // 2. No ref code in URL. Check local storage.
-        const stored = localStorage.getItem('neo_affiliate');
+        const stored = localStorage.getItem('aurum_affiliate');
         if (stored) {
           try {
             setSponsorData(JSON.parse(stored));
           } catch (e) {
-            localStorage.removeItem('neo_affiliate');
+            localStorage.removeItem('aurum_affiliate');
           }
         } else {
           // 3. No ref, no local storage -> ROTATOR
@@ -40,7 +40,7 @@ export default function FunnelEngineClient({ initialProject, angleId }) {
             if (res.ok) {
               const data = await res.json();
               setSponsorData(data);
-              localStorage.setItem('neo_affiliate', JSON.stringify(data));
+              localStorage.setItem('aurum_affiliate', JSON.stringify(data));
             }
           } catch (err) { console.error('Sponsor error:', err); }
         }

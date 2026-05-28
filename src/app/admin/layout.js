@@ -25,7 +25,7 @@ export default function AdminLayout({ children }) {
       <aside className={styles.sidebar}>
         <div className={styles.logo}>
           <div className={styles.logoIcon}>A</div>
-          <span>NEO <span>ADMIN</span></span>
+          <span>AURUM <span>ADMIN</span></span>
         </div>
         
         <nav className={styles.nav}>
@@ -46,8 +46,8 @@ export default function AdminLayout({ children }) {
             <span>Downline Rotators</span>
           </Link>
           <Link href="/chat/admin" className={styles.navItem}>
-            <MessageSquare size={16} />
-            <span>Neo AI Admin</span>
+            <MessageSquare className={styles.navIcon} />
+            <span>AI Chatbot Admin</span>
           </Link>
           <Link href="/admin/payments" className={styles.navItem}>
             <span style={{ fontSize: '18px', marginRight: '12px' }}>🪙</span>

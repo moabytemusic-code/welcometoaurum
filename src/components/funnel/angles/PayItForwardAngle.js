@@ -58,7 +58,7 @@ const PayItForwardAngle = ({ project, handleOptIn, isProcessing, status }) => {
           ...content,
           title: content.title || 'Claim Your <span class="highlight">$100 Starting Fund.</span>',
           subtitle: content.subtitle || 'We are funding the first 1,000 accounts to prove the power of simple AI technology.',
-          botImageUrl: "/images/neo_funding_voucher.png",
+          botImageUrl: "/images/aurum_funding_voucher.png",
           botLabel: "VOUCHER ACTIVE",
           botStatus: "FUNDING STATUS",
           botValue: "$100.00"
@@ -68,7 +68,7 @@ const PayItForwardAngle = ({ project, handleOptIn, isProcessing, status }) => {
       {/* Footer Branding */}
       <footer className={styles.footer}>
         <div className={styles.disclaimer}>
-          The $100 credit is a starting capital allocation within the Neo Ecosystem. Terms and conditions apply. Funding is subject to availability of the daily pool.
+          The $100 credit is a starting capital allocation within the Aurum Ecosystem. Terms and conditions apply. Funding is subject to availability of the daily pool.
         </div>
         <p className={styles.copyright}>© 2026 {project.name}. All rights reserved.</p>
       </footer>

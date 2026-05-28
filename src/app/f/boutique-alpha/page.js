@@ -52,7 +52,7 @@ export default function BoutiqueAlphaLanding() {
         {/* Header */}
         <header className="mb-12">
           <div className="text-2xl font-extrabold tracking-widest uppercase bg-clip-text text-transparent bg-gradient-to-r from-[#d4af37] to-[#f9e29c]">
-            Neo Elite: Growth Group
+            Aurum Elite: Growth Group
           </div>
         </header>
 
@@ -82,7 +82,7 @@ export default function BoutiqueAlphaLanding() {
             </div>
             <div className="flex items-start gap-3">
               <Zap className="w-6 h-6 text-[#d4af37] mt-1" />
-              <p className="text-gray-300"><strong>Quick Start:</strong> Start seeing how the Neo system works for you in as little as 15 minutes.</p>
+              <p className="text-gray-300"><strong>Quick Start:</strong> Start seeing how the Aurum system works for you in as little as 15 minutes.</p>
             </div>
           </div>
 

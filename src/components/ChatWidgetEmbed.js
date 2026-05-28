@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 
 export default function ChatWidgetEmbed({ 
-  welcomeMessage = "Hello! I am Neo. Are you ready to unlock the Syllabus?",
+  welcomeMessage = "Hello! Welcome to Aurum Rise. Are you ready to unlock the Syllabus?",
   delaySeconds = 0
 }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,11 +21,11 @@ export default function ChatWidgetEmbed({
 
   useEffect(() => {
     const handleMessage = (event) => {
-      if (event.data && event.data.type === "neo_chat_toggle") {
+      if (event.data && event.data.type === "aurum_chat_toggle") {
         setIsOpen(event.data.isOpen);
         if (event.data.isOpen && iframeRef.current && iframeRef.current.contentWindow) {
           // Tell the actual chatbot app inside the iframe to open
-          iframeRef.current.contentWindow.postMessage({ type: 'neo_chat_open' }, '*');
+          iframeRef.current.contentWindow.postMessage({ type: 'aurum_chat_open' }, '*');
         }
       }
     };
@@ -33,16 +33,16 @@ export default function ChatWidgetEmbed({
     const handleCustomOpen = () => {
       setIsOpen(true);
       if (iframeRef.current && iframeRef.current.contentWindow) {
-        iframeRef.current.contentWindow.postMessage({ type: 'neo_chat_open' }, '*');
+        iframeRef.current.contentWindow.postMessage({ type: 'aurum_chat_open' }, '*');
       }
     };
 
     window.addEventListener("message", handleMessage);
-    window.addEventListener("open_neo_chatbot", handleCustomOpen);
+    window.addEventListener("open_aurum_chatbot", handleCustomOpen);
     
     return () => {
       window.removeEventListener("message", handleMessage);
-      window.removeEventListener("open_neo_chatbot", handleCustomOpen);
+      window.removeEventListener("open_aurum_chatbot", handleCustomOpen);
     };
   }, []);
 
@@ -71,7 +71,7 @@ export default function ChatWidgetEmbed({
       <iframe
         ref={iframeRef}
         src={`/chat?embed=true&welcome=${encodedWelcome}`}
-        title="Neo AI"
+        title="Aurum AI Chatbot"
         style={{
           width: "100%",
           height: "100%",
