@@ -24,6 +24,13 @@ export default function AffiliatesManager() {
   
   const [qrData, setQrData] = useState({ title: '', url: '' });
   const [isSessionAlive, setIsSessionAlive] = useState(null);
+  const [expandedFunnels, setExpandedFunnels] = useState({});
+  const toggleFunnelsExpanded = (partnerId) => {
+    setExpandedFunnels(prev => ({
+      ...prev,
+      [partnerId]: !prev[partnerId]
+    }));
+  };
   const getFunnelUrl = (funnel, code) => {
     if (funnel.id === 'neyro') return `/neyro?ref=${code}`;
     if (funnel.id === 'neyro-gateway') return `/gateway?ref=${code}`;
@@ -336,52 +343,112 @@ export default function AffiliatesManager() {
                     </div>
                   </td>
                   <td style={{ padding: '32px' }}>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', alignItems: 'flex-start' }}>
-                      {availableFunnels.map(f => {
-                        const isUnlocked = (p.unlocked_funnels || '').includes(f.id);
+                    {(() => {
+                      const unlockedList = (p.unlocked_funnels || '').split(',').map(s => s.trim()).filter(Boolean);
+                      const unlockedCount = availableFunnels.filter(f => unlockedList.includes(f.id)).length;
+                      const isExpanded = !!expandedFunnels[p.id];
+                      
+                      if (!isExpanded) {
                         return (
-                          <div key={f.id} style={{ display: 'flex', alignItems: 'stretch', height: '32px' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                            <span style={{ 
+                              fontSize: '11px', 
+                              background: unlockedCount > 0 ? 'rgba(45, 140, 240, 0.08)' : 'rgba(255, 255, 255, 0.03)', 
+                              color: unlockedCount > 0 ? '#2d8cf0' : 'rgba(255,255,255,0.25)',
+                              padding: '6px 12px', 
+                              borderRadius: '8px', 
+                              fontWeight: '700',
+                              border: `1px solid ${unlockedCount > 0 ? 'rgba(45, 140, 240, 0.2)' : 'rgba(255,255,255,0.06)'}`
+                            }}>
+                              {unlockedCount} / {availableFunnels.length} Unlocked
+                            </span>
                             <button
-                              onClick={() => toggleFunnel(p, f.id)}
+                              onClick={() => toggleFunnelsExpanded(p.id)}
                               style={{
-                                padding: '0 16px',
-                                borderRadius: '6px 0 0 6px',
+                                background: 'none',
+                                border: '1px solid rgba(255, 255, 255, 0.1)',
+                                color: '#fff',
+                                padding: '6px 12px',
+                                borderRadius: '8px',
                                 fontSize: '11px',
                                 fontWeight: '700',
-                                border: '1px solid',
-                                borderRight: 'none',
                                 cursor: 'pointer',
-                                background: isUnlocked ? 'rgba(45, 140, 240, 0.12)' : 'transparent',
-                                borderColor: isUnlocked ? 'rgba(45,140,240,0.3)' : 'rgba(255,255,255,0.08)',
-                                color: isUnlocked ? '#2d8cf0' : 'rgba(255,255,255,0.25)',
-                                display: 'flex',
-                                alignItems: 'center'
+                                transition: 'all 0.2s',
                               }}
                             >
-                              {f.label}
+                              Manage
                             </button>
-                            {isUnlocked && (
-                              <button 
-                                onClick={() => openQr(`${f.label}: ${p.full_name}`, getFunnelUrl(f, p.affiliate_code))}
-                                style={{ 
-                                  padding: '0 12px', 
-                                  borderRadius: '0 6px 6px 0', 
-                                  background: 'rgba(45, 140, 240, 0.15)', 
-                                  border: '1px solid rgba(45,140,240,0.3)',
-                                  borderLeft: 'none',
-                                  color: '#2d8cf0',
-                                  cursor: 'pointer',
-                                  display: 'flex',
-                                  alignItems: 'center'
-                                }}
-                              >
-                                <QrCode size={14} />
-                              </button>
-                            )}
                           </div>
                         );
-                      })}
-                    </div>
+                      }
+
+                      return (
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', alignItems: 'flex-start' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '4px' }}>
+                            <span style={{ fontSize: '11px', color: 'rgba(255,255,255,0.3)' }}>Managing Funnels:</span>
+                            <button
+                              onClick={() => toggleFunnelsExpanded(p.id)}
+                              style={{
+                                background: 'none',
+                                border: 'none',
+                                color: '#2d8cf0',
+                                fontSize: '11px',
+                                fontWeight: '700',
+                                cursor: 'pointer',
+                                textDecoration: 'underline',
+                                padding: 0
+                              }}
+                            >
+                              Collapse
+                            </button>
+                          </div>
+                          {availableFunnels.map(f => {
+                            const isUnlocked = unlockedList.includes(f.id);
+                            return (
+                              <div key={f.id} style={{ display: 'flex', alignItems: 'stretch', height: '32px' }}>
+                                <button
+                                  onClick={() => toggleFunnel(p, f.id)}
+                                  style={{
+                                    padding: '0 16px',
+                                    borderRadius: '6px 0 0 6px',
+                                    fontSize: '11px',
+                                    fontWeight: '700',
+                                    border: '1px solid',
+                                    borderRight: 'none',
+                                    cursor: 'pointer',
+                                    background: isUnlocked ? 'rgba(45, 140, 240, 0.12)' : 'transparent',
+                                    borderColor: isUnlocked ? 'rgba(45,140,240,0.3)' : 'rgba(255,255,255,0.08)',
+                                    color: isUnlocked ? '#2d8cf0' : 'rgba(255,255,255,0.25)',
+                                    display: 'flex',
+                                    alignItems: 'center'
+                                  }}
+                                >
+                                  {f.label}
+                                </button>
+                                {isUnlocked && (
+                                  <button 
+                                    onClick={() => openQr(`${f.label}: ${p.full_name}`, getFunnelUrl(f, p.affiliate_code))}
+                                    style={{ 
+                                      padding: '0 12px', 
+                                      borderRadius: '0 6px 6px 0', 
+                                      background: 'rgba(45, 140, 240, 0.15)', 
+                                      border: '1px solid rgba(45,140,240,0.3)',
+                                      borderLeft: 'none',
+                                      color: '#2d8cf0',
+                                      cursor: 'pointer',
+                                      display: 'flex',
+                                      alignItems: 'center'
+                                    }}
+                                  >
+                                    <QrCode size={14} />
+                                  </button>
+                                )}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      );
+                    })()}
                   </td>
                   <td style={{ padding: '32px' }}>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', alignItems: 'flex-start' }}>
