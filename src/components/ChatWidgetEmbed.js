@@ -37,12 +37,21 @@ export default function ChatWidgetEmbed({
       }
     };
 
+    const handleCustomClose = () => {
+      setIsOpen(false);
+      if (iframeRef.current && iframeRef.current.contentWindow) {
+        iframeRef.current.contentWindow.postMessage({ type: 'aurum_chat_close' }, '*');
+      }
+    };
+
     window.addEventListener("message", handleMessage);
     window.addEventListener("open_aurum_chatbot", handleCustomOpen);
+    window.addEventListener("close_aurum_chatbot", handleCustomClose);
     
     return () => {
       window.removeEventListener("message", handleMessage);
       window.removeEventListener("open_aurum_chatbot", handleCustomOpen);
+      window.removeEventListener("close_aurum_chatbot", handleCustomClose);
     };
   }, []);
 
