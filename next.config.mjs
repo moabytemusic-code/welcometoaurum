@@ -12,17 +12,14 @@ const nextConfig = {
     root: __dirname,
   },
   skipTrailingSlashRedirect: true,
-  async redirects() {
-    return [
-      {
-        source: '/syllabus',
-        destination: '/thank-you-syllabus',
-        permanent: false,
-      },
-    ];
-  },
   async rewrites() {
     return [
+      {
+        source: '/syllabus/:path*',
+        destination: isDev
+          ? 'http://localhost:3000/syllabus/:path*'
+          : 'https://aurum-education-portal.vercel.app/syllabus/:path*',
+      },
       {
         source: '/chat/:path*',
         destination: isDev
