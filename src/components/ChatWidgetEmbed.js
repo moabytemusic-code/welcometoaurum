@@ -7,6 +7,7 @@ export default function ChatWidgetEmbed({
   delaySeconds = 0
 }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [hasGreeting, setHasGreeting] = useState(true);
   const [isVisible, setIsVisible] = useState(delaySeconds === 0);
   const iframeRef = React.useRef(null);
 
@@ -23,6 +24,9 @@ export default function ChatWidgetEmbed({
     const handleMessage = (event) => {
       if (event.data && event.data.type === "aurum_chat_toggle") {
         setIsOpen(event.data.isOpen);
+        if (event.data.showGreeting !== undefined) {
+          setHasGreeting(event.data.showGreeting);
+        }
         if (event.data.isOpen && iframeRef.current && iframeRef.current.contentWindow) {
           // Tell the actual chatbot app inside the iframe to open
           iframeRef.current.contentWindow.postMessage({ type: 'aurum_chat_open' }, '*');
@@ -69,7 +73,7 @@ export default function ChatWidgetEmbed({
         // When open: full viewport so chat panel + backdrop aren't clipped
         // When closed: area large enough to show the floating button AND the speech bubble above it
         width: isOpen ? "100vw" : "300px",
-        height: isOpen ? "100vh" : "250px",
+        height: isOpen ? "100vh" : (hasGreeting ? "250px" : "100px"),
         transition: isOpen
           ? "none" // Open instantly so panel isn't clipped during transition
           : "width 0.3s cubic-bezier(0.16, 1, 0.3, 1), height 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
