@@ -82,8 +82,8 @@ export async function POST(req) {
       return NextResponse.json({ success: true, message: 'Simulated success (API Key missing)' });
     }
 
-    // Route syllabus leads to List 71, otherwise default to 68
-    const variantList = landing_variant === 'syllabus-freemium' ? 71 : 68;
+    // Route syllabus and university leads to List 71, otherwise default to 68
+    const variantList = (landing_variant === 'syllabus-freemium' || landing_variant === 'university-freemium') ? 71 : 68;
 
     const payload = {
       email,
@@ -145,7 +145,7 @@ export async function POST(req) {
 
       if (landing_variant === 'pay-it-forward' || landing_variant === 'pay-it-forward-v2' || landing_variant === 'pay-it-forward-v3') {
         templateId = 829; // Voucher Welcome Email ($100 AI Access)
-      } else if (landing_variant === 'syllabus-freemium') {
+      } else if (landing_variant === 'syllabus-freemium' || landing_variant === 'university-freemium') {
         templateId = 831; // Syllabus Welcome & Upsell Email
         skipSmtp = false; 
       }
