@@ -3,6 +3,14 @@ import { NextResponse } from 'next/server';
 export async function GET() {
   const funnels = [
     { 
+      id: 'home', 
+      name: 'Home Page Masterclass', 
+      desc: 'The primary landing page featuring the free Syllabus Masterclass and Neo AI chatbot.',
+      audience: 'General / Freemium',
+      previewUrl: '/',
+      public: true 
+    },
+    { 
       id: 'breakdown', 
       name: 'Breakdown Masterpiece', 
       desc: 'The original high-conversion funnel. Focuses on the "Digital Marketing Lifestyle" and automated wealth building.',

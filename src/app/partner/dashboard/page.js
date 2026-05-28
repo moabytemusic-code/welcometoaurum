@@ -379,12 +379,14 @@ export default function PartnerDashboard() {
                   else if (funnel.slug === 'neyro-gateway') viewUrl = `/gateway?ref=${partner?.affiliate_code}`;
                   else if (funnel.slug === 'aurum-pitch') viewUrl = `/pitch?ref=${partner?.affiliate_code}`;
                   else if (funnel.slug === 'aurum-consultative') viewUrl = `/consultative?ref=${partner?.affiliate_code}`;
+                  else if (funnel.slug === 'home') viewUrl = `/?ref=${partner?.affiliate_code}`;
 
                   // Descriptions
                   let desc = 'AI-driven wealth acceleration';
                   if (funnel.angle === 'gateway') desc = 'Immediate opt-in gate';
                   else if (funnel.angle === 'consultative') desc = 'Direct video orientation capture';
                   else if (funnel.angle === 'pitch') desc = 'Direct sales pitch opt-in';
+                  else if (funnel.angle === 'home') desc = 'Main page with Syllabus Masterclass and Neo AI';
                   else if (funnel.angle.includes('pay-it-forward')) desc = 'Special promotional entry';
 
                   return (

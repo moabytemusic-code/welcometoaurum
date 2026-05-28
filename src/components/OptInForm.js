@@ -17,12 +17,14 @@ export default function OptInForm({ buttonText = "Unlock Now", variant = "defaul
     setError('');
 
     try {
+      const sponsorCode = localStorage.getItem('aurum_affiliate') || '';
       const response = await fetch('/api/optin', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           email,
           first_name: firstName,
+          sponsor_code: sponsorCode,
           landing_variant: variant
         })
       });

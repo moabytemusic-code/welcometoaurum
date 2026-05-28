@@ -7,6 +7,12 @@ import { Sparkles, BookOpen, Bot, Zap, Shield, ChevronRight } from 'lucide-react
 
 export default function HomePage() {
   useEffect(() => {
+    // Capture and save affiliate ref code if present
+    const params = new URLSearchParams(window.location.search);
+    const ref = params.get('ref');
+    if (ref) {
+      localStorage.setItem('aurum_affiliate', ref);
+    }
     // Chatbot widget will remain closed by default, relying on the waving animation to attract attention.
   }, []);
 
