@@ -288,11 +288,11 @@ export default function AffiliatesManager() {
         <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
           <thead>
             <tr style={{ background: 'rgba(255,255,255,0.03)', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-              <th style={{ padding: '24px 32px', fontSize: '11px', color: 'rgba(255,255,255,0.3)', textTransform: 'uppercase' }}>Partner</th>
-              <th style={{ padding: '24px 32px', fontSize: '11px', color: 'rgba(255,255,255,0.3)', textTransform: 'uppercase' }}>Main Code</th>
-              <th style={{ padding: '24px 32px', fontSize: '11px', color: 'rgba(255,255,255,0.3)', textTransform: 'uppercase' }}>Unlocked Funnels</th>
-              <th style={{ padding: '24px 32px', fontSize: '11px', color: 'rgba(255,255,255,0.3)', textTransform: 'uppercase' }}>Rotator</th>
-              <th style={{ padding: '24px 32px', textAlign: 'right' }}>Actions</th>
+              <th style={{ padding: '24px 32px', fontSize: '11px', color: 'rgba(255,255,255,0.3)', textTransform: 'uppercase', width: '30%' }}>Partner</th>
+              <th style={{ padding: '24px 32px', fontSize: '11px', color: 'rgba(255,255,255,0.3)', textTransform: 'uppercase', width: '15%' }}>Main Code</th>
+              <th style={{ padding: '24px 32px', fontSize: '11px', color: 'rgba(255,255,255,0.3)', textTransform: 'uppercase', width: '30%' }}>Unlocked Funnels</th>
+              <th style={{ padding: '24px 32px', fontSize: '11px', color: 'rgba(255,255,255,0.3)', textTransform: 'uppercase', width: '15%' }}>Rotator</th>
+              <th style={{ padding: '24px 32px', textAlign: 'right', width: '10%' }}>Actions</th>
             </tr>
           </thead>
           <tbody>
