@@ -84,6 +84,7 @@ export default function FaaSManager() {
 
   const getLiveUrl = (project) => {
     if (!project) return '';
+    if (project.slug === 'home') return '/';
     if (project.slug === 'neyro') return '/neyro';
     if (project.slug === 'neyro-gateway') return '/gateway';
     return `/f/${project.slug}/${project.angle}`;
