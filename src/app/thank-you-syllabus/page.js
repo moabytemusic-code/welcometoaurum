@@ -19,9 +19,22 @@ export default function ThankYouSyllabusPage() {
       <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] bg-[#2d8cf0] rounded-full blur-[150px] opacity-10 pointer-events-none" />
 
       <div className="relative z-10 max-w-2xl w-full text-center space-y-8">
-        <div className="flex justify-center mb-4">
-          <div className="bg-[#00ff88]/20 p-4 rounded-full border border-[#00ff88]/30">
-            <CheckCircle className="text-[#00ff88]" size={48} />
+        <div className="flex flex-col items-center gap-4 mb-2">
+          <img 
+            src="/images/aurumrise_university_logo.png" 
+            alt="AurumRise University Logo" 
+            className="h-20 w-20 rounded-2xl border border-white/10 shadow-2xl shadow-[#00ff88]/10" 
+          />
+          <div className="flex flex-col items-center">
+            <span className="text-sm font-black tracking-wider uppercase">AURUMRISE</span>
+            <span className="text-[10px] text-[#00ff88] font-bold tracking-widest uppercase">UNIVERSITY</span>
+          </div>
+        </div>
+
+        <div className="flex justify-center">
+          <div className="bg-[#00ff88]/10 px-4 py-1.5 rounded-full border border-[#00ff88]/20 flex items-center gap-2">
+            <CheckCircle className="text-[#00ff88]" size={16} />
+            <span className="text-xs font-bold text-[#00ff88] uppercase tracking-wider">Access Secured</span>
           </div>
         </div>
 

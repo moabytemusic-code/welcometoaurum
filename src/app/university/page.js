@@ -37,9 +37,9 @@ export default function UniversityLandingPage() {
       {/* Navigation */}
       <nav className="relative z-10 flex items-center justify-between p-4 sm:p-6 max-w-7xl mx-auto border-b border-white/5">
         <div className="flex items-center gap-2 sm:gap-3">
-          <img src="/images/aurum_logo.png" alt="Aurum Rise Logo" className="h-8 sm:h-10 w-auto" />
+          <img src="/images/aurumrise_university_logo.png" alt="AurumRise University Logo" className="h-10 sm:h-12 w-auto rounded-lg border border-white/10 shadow-md shadow-[#00ff88]/10" />
           <div className="flex flex-col">
-            <span className="text-sm sm:text-base font-black tracking-wider uppercase">AURUM RISE</span>
+            <span className="text-sm sm:text-base font-black tracking-wider uppercase">AURUMRISE</span>
             <span className="text-[10px] text-[#00ff88] font-bold tracking-widest uppercase">UNIVERSITY</span>
           </div>
         </div>
@@ -176,11 +176,18 @@ export default function UniversityLandingPage() {
         {/* Section 3: Curriculum / Course Preview */}
         <section className="mt-24 sm:mt-32">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-12">
-            <div>
-              <span className="text-xs font-bold text-[#00ff88] uppercase tracking-widest">
-                OFFICIAL SYLLABUS OUTLINE
-              </span>
-              <h2 className="text-3xl sm:text-4xl font-black mt-2">What You Will Inspect</h2>
+            <div className="flex items-center gap-4">
+              <img 
+                src="/images/aurumrise_university_logo.png" 
+                alt="AurumRise University Seal" 
+                className="h-16 w-16 rounded-xl border border-white/10 shadow-lg shadow-black/50 hidden sm:block"
+              />
+              <div>
+                <span className="text-xs font-bold text-[#00ff88] uppercase tracking-widest">
+                  OFFICIAL SYLLABUS OUTLINE
+                </span>
+                <h2 className="text-3xl sm:text-4xl font-black mt-2">What You Will Inspect</h2>
+              </div>
             </div>
             <p className="text-white/50 max-w-md text-sm">
               Your complimentary pass grants full, unrestricted access to the complete learning modules and active AI chatbot query tools.
