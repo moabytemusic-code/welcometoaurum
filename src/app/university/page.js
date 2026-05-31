@@ -280,7 +280,7 @@ export default function UniversityLandingPage() {
               </span>
               <h2 className="text-3xl font-black mt-2">Binance-Grade Institutional Leadership</h2>
               <p className="text-sm text-white/60 mt-4 leading-relaxed">
-                Aurum Rise is built and managed by veteran operators from leading global digital asset exchanges and algorithmic operations. We value compliance, technical rigor, and complete transparency.
+                Aurum Rise is built and managed by veteran educators. We value compliance, technical rigor, and complete transparency.
               </p>
               
               <div className="flex flex-col gap-4 mt-8">
