@@ -372,6 +372,21 @@ export default function UniversityLandingPage() {
 
       </main>
 
+      {/* Footer */}
+      <footer className="relative z-10 border-t border-white/5 py-12 bg-black/40 text-center">
+        <div className="max-w-7xl mx-auto px-4 text-xs text-white/40 space-y-3">
+          <p className="max-w-2xl mx-auto leading-relaxed">
+            Disclaimer: AurumRise University is an educational platform. Projections and simulations based on historical performance do not guarantee future results. Digital asset participation involves risk.
+          </p>
+          <p>© 2026 AURUMRISE UNIVERSITY. All rights reserved.</p>
+          <div className="flex justify-center gap-6 mt-4">
+            <a href="/about" className="hover:text-[#00ff88] transition-colors font-bold">About Us</a>
+            <a href="/privacy" className="hover:text-[#00ff88] transition-colors font-bold">Privacy Policy</a>
+            <a href="/tos" className="hover:text-[#00ff88] transition-colors font-bold">Terms of Service</a>
+          </div>
+        </div>
+      </footer>
+
       {/* Floating Chat Widget Embed */}
       <ChatWidgetEmbed delaySeconds={20} />
     </div>

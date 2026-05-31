@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 
 export const config = {
-  matcher: ['/', '/admin/:path*', '/api/admin/:path*'],
+  matcher: ['/', '/tos', '/privacy', '/about', '/admin/:path*', '/api/admin/:path*'],
 };
 
 export async function proxy(request) {
@@ -12,9 +12,23 @@ export async function proxy(request) {
   const testingDomain = request.nextUrl.searchParams.get('domain');
   const isUniversityHost = host.includes('aurumriseuniversity.com') || testingDomain === 'aurumriseuniversity.com';
 
-  if (isUniversityHost && url.pathname === '/') {
-    url.pathname = '/university';
-    return NextResponse.rewrite(url);
+  if (isUniversityHost) {
+    if (url.pathname === '/') {
+      url.pathname = '/university';
+      return NextResponse.rewrite(url);
+    }
+    if (url.pathname === '/tos') {
+      url.pathname = '/university/tos';
+      return NextResponse.rewrite(url);
+    }
+    if (url.pathname === '/privacy') {
+      url.pathname = '/university/privacy';
+      return NextResponse.rewrite(url);
+    }
+    if (url.pathname === '/about') {
+      url.pathname = '/university/about';
+      return NextResponse.rewrite(url);
+    }
   }
 
   const { pathname } = request.nextUrl;
