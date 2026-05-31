@@ -363,7 +363,7 @@ export default function UniversityLandingPage() {
                 Who created the curriculum?
               </h4>
               <p className="text-sm text-white/60 mt-2 leading-relaxed pl-6">
-                The curriculum is developed by our founders: Bryan Benson (former Binance Director), Drei Menza (Co-Founder & Director of Trading Operations), and Ahmad Zen (Co-Founder & Marketing Director), ensuring institutional-grade credibility.
+                The curriculum was inspired by our founders: Bryan Benson (former Binance Director), Drei Menza (Co-Founder & Director of Trading Operations), and Ahmad Zen (Co-Founder & Marketing Director), ensuring institutional-grade credibility.
               </p>
             </div>
 
